@@ -5,4 +5,4 @@ The viterbi decoder used in this project is third party IP:
 https://opencores.org/projects/viterbi_decoder_axi4s
 It is under GPL license.
 
-All the remaining files/IP are under MIT license.
+All the remaining files/IPs are under MIT license.
