@@ -1,0 +1,1088 @@
+#----------------------------------------
+# JasperGold Version Info
+# tool      : JasperGold 2019.06
+# platform  : Linux 3.10.0-1062.4.3.el7.x86_64
+# version   : 2019.06p001 64 bits
+# build date: 2019.08.01 18:19:57 PDT
+#----------------------------------------
+# started Sun Apr 19 15:20:18 BRT 2020
+# hostname  : optmaS1
+# pid       : 18530
+# arguments : '-label' 'session_0' '-console' 'optmaS1:40623' '-style' 'windows' '-data' 'AQAAADx/////AAAAAAAAA3oBAAAAEABMAE0AUgBFAE0ATwBWAEU=' '-proj' '/home/Mateus/Área de trabalho/UFMG_digital_design/block_interleaver/formal/mem_size_438_2nd_try/sessionLogs/session_0' '-init' '-hidden' '/home/Mateus/Área de trabalho/UFMG_digital_design/block_interleaver/formal/mem_size_438_2nd_try/.tmp/.initCmds.tcl' 't.tcl'
+
+Any disclosure about the Cadence Design Systems software or its use
+model to any third party violates the written Non-Disclosure Agreement
+between Cadence Design Systems, Inc. and the customer.
+
+THIS SOFTWARE CONTAINS CONFIDENTIAL INFORMATION AND TRADE SECRETS OF
+CADENCE DESIGN SYSTEMS, INC. USE, DISCLOSURE, OR REPRODUCTION IS
+PROHIBITED WITHOUT THE PRIOR EXPRESS WRITTEN PERMISSION OF CADENCE
+DESIGN SYSTEMS, INC.
+
+Copyright (C) 2000-2019 Cadence Design Systems, Inc. All Rights
+Reserved.  Unpublished -- rights reserved under the copyright laws of
+the United States.
+
+This product includes software developed by others and redistributed
+according to license agreement. See doc/third_party_readme.txt for
+further details.
+
+RESTRICTED RIGHTS LEGEND
+
+Use, duplication, or disclosure by the Government is subject to
+restrictions as set forth in subparagraph (c) (1) (ii) of the Rights in
+Technical Data and Computer Software clause at DFARS 252.227-7013 or
+subparagraphs (c) (1) and (2) of Commercial Computer Software -- Restricted
+Rights at 48 CFR 52.227-19, as applicable.
+
+
+                          Cadence Design Systems, Inc. 
+                          2655 Seely Avenue
+                          San Jose, CA 95134
+                          Phone: 408.943.1234
+
+For technical assistance visit http://support.cadence.com.
+
+JasperGold Apps Analysis Session - /home/Mateus/Área de trabalho/UFMG_digital_design/block_interleaver/formal/mem_size_438_2nd_try/sessionLogs/session_0
+
+/home/Mateus/Área de trabalho/UFMG_digital_design/block_interleaver/formal/mem_size_438_2nd_try/jg.log
+INFO: successfully checked out licenses "jasper_interactive" and "jasper_fpv".
+INFO: reading configuration file "/home/Mateus/.config/jasper/jaspergold.conf".
+% clear -all
+INFO (IPF121): Cleared environment completely for new design analysis.
+% set_elaborate_single_run_mode off
+% 
+% proc dut_compilation {MEM_SIZE ROW_NUM WIDTH MODE FUNC_REQ} {
+analyze -vhdl08 -L GENERIC_TYPES ../../generic_components/generic_types.vhd
+analyze -vhdl08 -L GENERIC_FUNCTIONS ../../generic_components/generic_functions.vhd
+analyze -vhdl08 -L GENERIC_COMPONENTS ../../generic_components/generic_components.vhd
+analyze -vhdl08 -L BLOCK_INTERLEAVER_COMPONENTS ../rtl/block_interleaver_components.vhd
+analyze -vhdl08 ../rtl/block_interleaver.vhd\
+		../rtl/rectangular_interleaver.vhd\
+		../rtl/interleaver_controller.vhd\
+		../rtl/interleaver_data_path.vhd\
+		../rtl/block_interleaver_components/flag_signals_generator.vhd\
+		../rtl/block_interleaver_components/m2D_index_counter.vhd\
+		../rtl/block_interleaver_components/wr_rd_status_selector.vhd\
+		../rtl/rectangular_deinterleaver.vhd\
+		../rtl/deinterleaver_data_path.vhd\
+		../rtl/block_interleaver_components/simplified_m2D_index_counter.vhd\
+		../rtl/block_interleaver_components/m2D_index_counter_core.vhd\
+		../rtl/block_interleaver_components/wr_rd_status_selector.vhd\
+		../../generic_components/adder/adder.vhd\
+		../../generic_components/single_port_2D_ram/single_port_2D_ram.vhd\
+		../../generic_components/single_port_linear_ram/single_port_linear_ram.vhd\
+		../../generic_components/decrementer/half_subtractor_unit.vhd\
+		../../generic_components/decrementer/decrementer.vhd\
+		../../generic_components/incrementer/half_adder_unit.vhd\
+		../../generic_components/incrementer/incrementer.vhd\
+		../../generic_components/up_down_counter/up_down_counter.vhd\
+		../../generic_components/sync_ld_dff/sync_ld_dff.vhd\
+		../../generic_components/comparator/comparator.vhd
+if {$FUNC_REQ} {
+	analyze -vhdl08 rtl/block_interleaver_func_verification_model.vhd
+	elaborate -vhdl -top block_interleaver_func_verification_model -parameter NUMBER_OF_ELEMENTS $MEM_SIZE -parameter NUMBER_OF_LINES $ROW_NUM -parameter WORD_LENGTH $WIDTH -bbox_a 900000
+
+} else {
+	analyze -sv09 block_interleaver_fv.sv
+	elaborate -vhdl -top block_interleaver -parameter NUMBER_OF_ELEMENTS $MEM_SIZE -parameter NUMBER_OF_LINES $ROW_NUM -parameter WORD_LENGTH $WIDTH -parameter MODE $MODE -bbox_a 900000
+}
+}
+% 
+% proc formal_setup {} {
+	clock clk
+	reset rst
+}
+% 
+% proc func_req_constraints {MEM_SIZE ROW_NUM WIDTH } {
+clear -all
+dut_compilation $MEM_SIZE $ROW_NUM $WIDTH false 1
+set_property_compile_time_limit 30s
+
+task -create func -set
+#Forcing i_start_cw to 1 for the first cycle
+assume -bound 1 i_start_cw
+assume {i_start_cw |=> not i_start_cw} 
+assume {not i_start_cw |=> not i_start_cw} 
+
+set bound [expr {$MEM_SIZE - 1}]
+set CMD "assume \{i_start_cw |-> not i_end_cw and i_valid \[*1:$bound\] ##1 i_end_cw and i_valid\}"
+eval $CMD
+assume {i_end_cw |=> not i_valid}
+assume {not i_valid |=> not i_valid}
+#Not required anymore
+#assume {not i_valid |-> not i_end_cw}
+
+#External blocks always ready to consume info.
+assume {i_consume_int}
+assume {i_consume_deint}
+
+
+#assume  {DEINTERLEAVER_INST.i_consume = INTERLEAVER_INST.o_valid}
+assume {not INTERLEAVER_INST.GEN_INT.INTERLEAVER_INST.IDP.w_wr_rd_status |-> not w_valid}
+assume {not DEINTERLEAVER_INST.GEN_INT.DEINTERLEAVER_INST.IDP.w_wr_rd_status |-> not o_valid}
+assert {o_valid and o_cnt = 1 |-> o_saved_data = o_data}
+cover {o_valid and o_cnt = 1 |-> o_saved_data = o_data}
+cover {o_end_cw}
+
+clock clk
+reset rst
+set proof_bound [expr {$MEM_SIZE*2 + 2}]
+set_prove_target_bound $proof_bound
+set_max_trace_length $proof_bound
+set_prove_time_limit 10h
+set_engine_mode {Tri Ht}
+prove -task func
+check_return {get_property_list -include {status {cex unreachable}} -task func} {}
+set_prove_target_bound 0
+set_max_trace_length 0
+}
+% 
+% 
+% proc interface_control_and_reset_req {MEM_SIZE ROW_NUM WIDTH is_interleaver} {
+clear -all
+dut_compilation $MEM_SIZE $ROW_NUM $WIDTH $is_interleaver 0
+connect -bind -auto block_interleaver_fv block_interleaver_top -auto -elaborate -parameter NUMBER_OF_ELEMENTS $MEM_SIZE -parameter NUMBER_OF_LINES $ROW_NUM -parameter WORD_LENGTH $WIDTH
+formal_setup
+task -create reset -set -source_task <embedded> -copy_stopats -copy_abstractions all -copy_assumes -copy <embedded>::block_interleaver.block_interleaver_top.REQ_INTER_001_CHECK_01
+task -set reset
+reset -none
+check_return {prove -task reset} "proven"
+reset rst
+task -set <embedded>
+assert -disable <embedded>::block_interleaver.block_interleaver_top.REQ_INTER_001_CHECK_01
+prove -all
+check_return {get_property_list -include {status {cex unreachable}}} {}
+task -create stall -set
+if {$is_interleaver == false} {
+assert {GEN_INT.INTERLEAVER_INST.IC.w_current_state = 1 and not i_valid and not GEN_INT.INTERLEAVER_INST.IC.i_full_ram |=> ##1 $past(GEN_INT.INTERLEAVER_INST.IDP.r_col_cnt) = GEN_INT.INTERLEAVER_INST.IDP.r_col_cnt and\
+					     $past(GEN_INT.INTERLEAVER_INST.IDP.w_ram_wr_en = 0) and\
+				             $past(GEN_INT.INTERLEAVER_INST.IDP.r_lin_cnt) = GEN_INT.INTERLEAVER_INST.IDP.r_lin_cnt}
+check_code "proven" [prove -task stall]
+} else {
+#assert {GEN_INT.DEINTERLEAVER_INST.IC.w_current_state = 1 and not i_valid and not GEN_INT.DEINTERLEAVER_INST.IC.i_full_ram ##1 i_end_cw = 0 |=> $past(GEN_INT.DEINTERLEAVER_INST.IDP.w_ram_wr_en) = 0 and\
+						       $past(GEN_INT.DEINTERLEAVER_INST.IDP.w_ram_addr) = GEN_INT.DEINTERLEAVER_INST.IDP.w_ram_addr}
+}
+
+
+}
+% 
+% set MEM_SIZE 438
+438
+% set ROW_NUM 3
+3
+% set WIDTH 4
+4
+% #time [interface_control_and_reset_req $MEM_SIZE $ROW_NUM $WIDTH false]
+% #time [interface_control_and_reset_req $MEM_SIZE $ROW_NUM $WIDTH true]
+% time [func_req_constraints $MEM_SIZE $ROW_NUM $WIDTH]
+INFO (IPF121): Cleared environment completely for new design analysis.
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/standard_2008.vhd' into library 'std'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/standard_2008.vhd(9): analyzing package 'standard'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/textio_2008.vhd' into library 'std'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/textio_2008.vhd(13): analyzing package 'textio'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/textio_2008.vhd(159): analyzing package body 'textio'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/env_2008.vhd' into library 'std'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/env_2008.vhd(8): analyzing package 'env'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/env_2008.vhd(16): analyzing package body 'env'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/vl/mixed_lang_vltype.vhd' into library 'vl'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/vl/mixed_lang_vltype.vhd(9): analyzing package 'vl_types'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/vl/mixed_lang_vltype.vhd(88): analyzing package body 'vl_types'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/synopsys/syn_attr.vhd' into library 'synopsys'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/synopsys/syn_attr.vhd(39): analyzing package 'attributes'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164.vhdl(50): analyzing package 'std_logic_1164'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164-body.vhdl(48): analyzing package body 'std_logic_1164'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std.vhdl(63): analyzing package 'numeric_std'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std-body.vhdl(59): analyzing package body 'numeric_std'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned.vhdl(49): analyzing package 'numeric_std_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned-body.vhdl(59): analyzing package body 'numeric_std_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit.vhdl(53): analyzing package 'numeric_bit'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit-body.vhdl(51): analyzing package body 'numeric_bit'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned.vhdl(47): analyzing package 'numeric_bit_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned-body.vhdl(50): analyzing package body 'numeric_bit_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_p.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_p.vhd(68): analyzing package 'vital_timing'
+[WARN (VHDL-1721)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_p.vhd(150): return type of pure function cannot be of access type
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_b.vhd' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_b.vhd(54): analyzing package body 'vital_timing'
+[WARN (VHDL-1721)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_b.vhd(1132): return type of pure function cannot be of access type
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_p.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_p.vhd(50): analyzing package 'vital_primitives'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_b.vhd' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_b.vhd(38): analyzing package body 'vital_primitives'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_arit.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_arit.vhd(25): analyzing package 'std_logic_arith'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_arit.vhd(206): analyzing package body 'std_logic_arith'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_unsi.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_unsi.vhd(35): analyzing package 'std_logic_unsigned'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_unsi.vhd(94): analyzing package body 'std_logic_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_sign.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_sign.vhd(35): analyzing package 'std_logic_signed'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_sign.vhd(96): analyzing package body 'std_logic_signed'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_misc_2008.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_misc_2008.vhd(25): analyzing package 'std_logic_misc'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_misc_2008.vhd(112): analyzing package body 'std_logic_misc'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_textio.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_textio.vhdl(38): analyzing package 'std_logic_textio'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/ieee_bit_context.vhd' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/ieee_std_context.vhd' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real.vhdl(45): analyzing package 'math_real'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real-body.vhdl(45): analyzing package body 'math_real'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex.vhdl(46): analyzing package 'math_complex'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex-body.vhdl(47): analyzing package body 'math_complex'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_float_types.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_float_types.vhdl(37): analyzing package 'fixed_float_types'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg.vhdl(43): analyzing package 'fixed_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg-body.vhdl(40): analyzing package body 'fixed_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg.vhdl(43): analyzing package 'float_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg-body.vhdl(37): analyzing package body 'float_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_pkg.vhdl' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_pkg.vhdl' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/arithmetic/mgc_arit_2008.vhd' into library 'arithmetic'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/arithmetic/mgc_arit_2008.vhd(22): analyzing package 'std_logic_arith'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/arithmetic/mgc_arit_2008.vhd(274): analyzing package body 'std_logic_arith'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/qsim_logic/mgc_qsim.vhd' into library 'qsim_logic'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/qsim_logic/mgc_qsim.vhd(18): analyzing package 'qsim_logic'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/qsim_logic/mgc_qsim.vhd(753): analyzing package body 'qsim_logic'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/jasper_package/jasper_package.vhd' into library 'jasper_package'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/jasper_package/jasper_package.vhd(8): analyzing package 'jasper_package'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/generic_types.vhd'
+[INFO (VHDL-1014)] ../../generic_components/generic_types.vhd(11): analyzing package 'generic_types'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/generic_functions.vhd'
+[INFO (VHDL-1014)] ../../generic_components/generic_functions.vhd(10): analyzing package 'generic_functions'
+[INFO (VHDL-1013)] ../../generic_components/generic_functions.vhd(22): analyzing package body 'generic_functions'
+[WARN (VHDL-1087)] ../../generic_components/generic_functions.vhd(108): function 'xor_reducer_from_select_bits' does not always return a value
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/generic_components.vhd'
+[INFO (VHDL-1014)] ../../generic_components/generic_components.vhd(12): analyzing package 'generic_components'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components.vhd'
+[INFO (VHDL-1014)] ../rtl/block_interleaver_components.vhd(6): analyzing package 'block_interleaver_components'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver.vhd(7): analyzing entity 'block_interleaver'
+[INFO (VHDL-1010)] ../rtl/block_interleaver.vhd(31): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/rectangular_interleaver.vhd'
+[INFO (VHDL-1012)] ../rtl/rectangular_interleaver.vhd(8): analyzing entity 'rectangular_interleaver'
+[INFO (VHDL-1010)] ../rtl/rectangular_interleaver.vhd(31): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/interleaver_controller.vhd'
+[INFO (VHDL-1012)] ../rtl/interleaver_controller.vhd(5): analyzing entity 'interleaver_controller'
+[INFO (VHDL-1010)] ../rtl/interleaver_controller.vhd(28): analyzing architecture 'behaviour_ict'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/interleaver_data_path.vhd'
+[INFO (VHDL-1012)] ../rtl/interleaver_data_path.vhd(19): analyzing entity 'interleaver_data_path'
+[INFO (VHDL-1010)] ../rtl/interleaver_data_path.vhd(39): analyzing architecture 'structure_idp'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/flag_signals_generator.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/flag_signals_generator.vhd(14): analyzing entity 'flag_signals_generator'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/flag_signals_generator.vhd(34): analyzing architecture 'structure_fsg1'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/m2D_index_counter.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/m2D_index_counter.vhd(12): analyzing entity 'm2d_index_counter'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/m2D_index_counter.vhd(29): analyzing architecture 'dataflow'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/wr_rd_status_selector.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(11): analyzing entity 'wr_rd_status_selector'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(23): analyzing architecture 'structure_wrss'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/rectangular_deinterleaver.vhd'
+[INFO (VHDL-1012)] ../rtl/rectangular_deinterleaver.vhd(9): analyzing entity 'rectangular_deinterleaver'
+[INFO (VHDL-1010)] ../rtl/rectangular_deinterleaver.vhd(32): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/deinterleaver_data_path.vhd'
+[INFO (VHDL-1012)] ../rtl/deinterleaver_data_path.vhd(20): analyzing entity 'deinterleaver_data_path'
+[INFO (VHDL-1010)] ../rtl/deinterleaver_data_path.vhd(56): analyzing architecture 'structure_ddp'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/simplified_m2D_index_counter.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/simplified_m2D_index_counter.vhd(15): analyzing entity 'simplified_m2d_index_counter'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/simplified_m2D_index_counter.vhd(42): analyzing architecture 'dataflow'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/m2D_index_counter_core.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/m2D_index_counter_core.vhd(11): analyzing entity 'm2d_index_counter_core'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/m2D_index_counter_core.vhd(26): analyzing architecture 'dataflow'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/wr_rd_status_selector.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(11): analyzing entity 'wr_rd_status_selector'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(23): analyzing architecture 'structure_wrss'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/adder/adder.vhd'
+[INFO (VHDL-1012)] ../../generic_components/adder/adder.vhd(5): analyzing entity 'adder'
+[INFO (VHDL-1010)] ../../generic_components/adder/adder.vhd(15): analyzing architecture 'bh_add'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/single_port_2D_ram/single_port_2D_ram.vhd'
+[INFO (VHDL-1012)] ../../generic_components/single_port_2D_ram/single_port_2D_ram.vhd(7): analyzing entity 'single_port_2d_ram'
+[INFO (VHDL-1010)] ../../generic_components/single_port_2D_ram/single_port_2D_ram.vhd(23): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/single_port_linear_ram/single_port_linear_ram.vhd'
+[INFO (VHDL-1012)] ../../generic_components/single_port_linear_ram/single_port_linear_ram.vhd(7): analyzing entity 'single_port_linear_ram'
+[INFO (VHDL-1010)] ../../generic_components/single_port_linear_ram/single_port_linear_ram.vhd(21): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/decrementer/half_subtractor_unit.vhd'
+[INFO (VHDL-1012)] ../../generic_components/decrementer/half_subtractor_unit.vhd(4): analyzing entity 'half_subtractor_unit'
+[INFO (VHDL-1010)] ../../generic_components/decrementer/half_subtractor_unit.vhd(15): analyzing architecture 'dataflow_hsu'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/decrementer/decrementer.vhd'
+[INFO (VHDL-1012)] ../../generic_components/decrementer/decrementer.vhd(4): analyzing entity 'decrementer'
+[INFO (VHDL-1010)] ../../generic_components/decrementer/decrementer.vhd(15): analyzing architecture 'dataflow_dec'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/incrementer/half_adder_unit.vhd'
+[INFO (VHDL-1012)] ../../generic_components/incrementer/half_adder_unit.vhd(4): analyzing entity 'half_adder_unit'
+[INFO (VHDL-1010)] ../../generic_components/incrementer/half_adder_unit.vhd(15): analyzing architecture 'dataflow_hau'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/incrementer/incrementer.vhd'
+[INFO (VHDL-1012)] ../../generic_components/incrementer/incrementer.vhd(4): analyzing entity 'incrementer'
+[INFO (VHDL-1010)] ../../generic_components/incrementer/incrementer.vhd(15): analyzing architecture 'dataflow_inc'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/up_down_counter/up_down_counter.vhd'
+[INFO (VHDL-1012)] ../../generic_components/up_down_counter/up_down_counter.vhd(12): analyzing entity 'up_down_counter'
+[INFO (VHDL-1010)] ../../generic_components/up_down_counter/up_down_counter.vhd(22): analyzing architecture 'arch'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/sync_ld_dff/sync_ld_dff.vhd'
+[INFO (VHDL-1012)] ../../generic_components/sync_ld_dff/sync_ld_dff.vhd(5): analyzing entity 'sync_ld_dff'
+[INFO (VHDL-1010)] ../../generic_components/sync_ld_dff/sync_ld_dff.vhd(16): analyzing architecture 'bh_reg'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/comparator/comparator.vhd'
+[INFO (VHDL-1012)] ../../generic_components/comparator/comparator.vhd(5): analyzing entity 'comparator'
+[INFO (VHDL-1010)] ../../generic_components/comparator/comparator.vhd(16): analyzing architecture 'bh_comp'
+[-- (VHDL-1481)] Analyzing VHDL file 'rtl/block_interleaver_func_verification_model.vhd'
+[INFO (VHDL-1012)] rtl/block_interleaver_func_verification_model.vhd(9): analyzing entity 'block_interleaver_func_verification_model'
+[INFO (VHDL-1010)] rtl/block_interleaver_func_verification_model.vhd(37): analyzing architecture 'behavioral'
+INFO (ISW003): Top module name is "block_interleaver_func_verification_model".
+[INFO (VHDL-1067)] rtl/block_interleaver_func_verification_model.vhd(9): executing 'block_interleaver_func_verification_model(number_of_elements=438,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver.vhd(7): executing 'block_interleaver(number_of_elements=438,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/rectangular_interleaver.vhd(8): executing 'rectangular_interleaver(number_of_elements=438,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/interleaver_controller.vhd(5): executing 'interleaver_controller(behaviour_ict)'
+[INFO (VHDL-9046)] ../rtl/interleaver_controller.vhd(31): creating type property for signal 'w_current_state'
+[INFO (VHDL-9046)] ../rtl/interleaver_controller.vhd(31): creating type property for signal 'w_next_state'
+[INFO (VHDL-1172)] ../rtl/interleaver_controller.vhd(183): others clause is never selected
+[INFO (VHDL-1067)] ../rtl/interleaver_data_path.vhd(19): executing 'interleaver_data_path(number_of_elements=438,word_length=4)(structure_idp)'
+[INFO (VHDL-1067)] ../../generic_components/comparator/comparator.vhd(5): executing 'comparator(word_length=2)(bh_comp)'
+[INFO (VHDL-1067)] ../../generic_components/decrementer/decrementer.vhd(4): executing 'decrementer(word_length=8)(dataflow_dec)'
+[INFO (VHDL-1067)] ../../generic_components/decrementer/half_subtractor_unit.vhd(4): executing 'half_subtractor_unit(dataflow_hsu)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/flag_signals_generator.vhd(14): executing 'flag_signals_generator(number_of_elements=438,word_length=9)(structure_fsg1)'
+[INFO (VHDL-1067)] ../../generic_components/comparator/comparator.vhd(5): executing 'comparator(word_length=9)(bh_comp)'
+[INFO (VHDL-1067)] ../../generic_components/sync_ld_dff/sync_ld_dff.vhd(5): executing 'sync_ld_dff(word_length=9)(bh_reg)'
+[INFO (VHDL-1067)] ../../generic_components/up_down_counter/up_down_counter.vhd(12): executing 'up_down_counter(word_length=9)(arch)'
+[INFO (VHDL-1067)] ../../generic_components/incrementer/incrementer.vhd(4): executing 'incrementer(word_length=9)(dataflow_inc)'
+[INFO (VHDL-1067)] ../../generic_components/incrementer/half_adder_unit.vhd(4): executing 'half_adder_unit(dataflow_hau)'
+[INFO (VHDL-1067)] ../../generic_components/decrementer/decrementer.vhd(4): executing 'decrementer(word_length=9)(dataflow_dec)'
+[INFO (VHDL-1067)] ../../generic_components/sync_ld_dff/sync_ld_dff.vhd(5): executing 'sync_ld_dff(word_length=2)(bh_reg)'
+[INFO (VHDL-1067)] ../../generic_components/sync_ld_dff/sync_ld_dff.vhd(5): executing 'sync_ld_dff(word_length=8)(bh_reg)'
+[INFO (VHDL-1067)] ../../generic_components/sync_ld_dff/sync_ld_dff.vhd(5): executing 'sync_ld_dff(word_length=4)(bh_reg)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/m2D_index_counter.vhd(12): executing 'm2D_index_counter(number_of_elements=438,number_of_lines=3)(dataflow)'
+[INFO (VHDL-1067)] ../../generic_components/comparator/comparator.vhd(5): executing 'comparator(word_length=8)(bh_comp)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/m2D_index_counter_core.vhd(11): executing 'm2D_index_counter_core(word_length=8)(dataflow)'
+[INFO (VHDL-1067)] ../../generic_components/incrementer/incrementer.vhd(4): executing 'incrementer(word_length=8)(dataflow_inc)'
+[INFO (VHDL-1067)] ../../generic_components/single_port_2D_ram/single_port_2D_ram.vhd(7): executing 'single_port_2D_ram(number_of_elements=438,number_of_lines=3,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(11): executing 'wr_rd_status_selector(structure_wrss)'
+[INFO (VHDL-1067)] ../../generic_components/sync_ld_dff/sync_ld_dff.vhd(5): executing 'sync_ld_dff(word_length=1)(bh_reg)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver.vhd(7): executing 'block_interleaver(number_of_elements=438,word_length=4,mode=true)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/rectangular_deinterleaver.vhd(9): executing 'rectangular_deinterleaver(number_of_elements=438,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/deinterleaver_data_path.vhd(20): executing 'deinterleaver_data_path(number_of_elements=438,word_length=4)(structure_ddp)'
+[INFO (VHDL-1067)] ../../generic_components/adder/adder.vhd(5): executing 'adder(word_length=9)(bh_add)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/simplified_m2D_index_counter.vhd(15): executing 'simplified_m2D_index_counter(number_of_elements=438,number_of_lines=3)(dataflow)'
+[WARN (VHDL-1200)] ../rtl/deinterleaver_data_path.vhd(213): range is empty (null range)
+[INFO (VHDL-1067)] ../../generic_components/single_port_linear_ram/single_port_linear_ram.vhd(7): executing 'single_port_linear_ram(number_of_elements=438)(behavioral)'
+INFO (IPM005): The name "func::assume:0" is assigned to assumption "i_start_cw".
+INFO (IPM005): The name "func::assume:1" is assigned to assumption "i_start_cw |=> not i_start_cw".
+INFO (IPM005): The name "func::assume:2" is assigned to assumption "not i_start_cw |=> not i_start_cw".
+INFO (IPM005): The name "func::assume:3" is assigned to assumption "i_start_cw |-> not i_end_cw and i_valid [*1:437] ##1 i_end_cw and i_valid".
+INFO (IPM005): The name "func::assume:4" is assigned to assumption "i_end_cw |=> not i_valid".
+INFO (IPM005): The name "func::assume:5" is assigned to assumption "not i_valid |=> not i_valid".
+INFO (IPM005): The name "func::assume:6" is assigned to assumption "i_consume_int".
+INFO (IPM005): The name "func::assume:7" is assigned to assumption "i_consume_deint".
+INFO (IPM005): The name "func::assume:8" is assigned to assumption "not INTERLEAVER_INST.GEN_INT.INTERLEAVER_INST.IDP.w_wr_rd_status |-> not w_valid".
+INFO (IPM005): The name "func::assume:9" is assigned to assumption "not DEINTERLEAVER_INST.GEN_INT.DEINTERLEAVER_INST.IDP.w_wr_rd_status |-> not o_valid".
+INFO (IPM004): The name "property:0" is assigned to assertion "o_valid and o_cnt = 1 |-> o_saved_data = o_data".
+WARNING (WOBS004): Non-sequence cover property can have non-LRM-compliant semantics. For LRM semantics, use the "elaborate" flag "-lrm_cover_property".
+INFO (IPM033): The name "cover:0" is assigned to cover "o_valid and o_cnt = 1 |-> o_saved_data = o_data".
+INFO (IPM033): The name "cover:1" is assigned to cover "o_end_cw".
+INFO (IPM031): Clearing proof results of all properties.
+INFO (IRS006): Current reset condition is "rst".
+INFO (IPF036): Starting proof on task: "func", 3 properties to prove with 0 already proven/unreachable
+INFO (IRS029): Starting reset analysis: phase 1 of 4.
+INFO (IRS030): Running reset analysis: phase 2 of 4.
+INFO (IRS031): Running reset analysis: phase 3 of 4.
+INFO (IRS020): Starting the reset analysis simulation with a limit of 100 iterations (phase 4 of 4).
+INFO (IRS024): Reset iterations 0 to 4 analyzed.
+INFO (IRS018): Reset analysis simulation executed for 3 iterations. Assigned values for 119 of 3643 design flops, 0 of 0 design latches, 443 of 443 internal elements.
+INFO (IRS039): Reset analysis complete.
+INFO (IPF031): Settings used for proof thread 0:
+    orchestration                 = off (auto)
+    time_limit                    = 36000s
+    per_property_time_limit       = 1s * 10 ^ scan
+    max_trace_length              = 878
+    engine_mode                   = Tri Ht 
+    proofgrid_per_engine_max_jobs = 1
+    max engine jobs               = Tri Ht, total 2
+    proofgrid_mode                = local
+    proofgrid_restarts            = 10
+0: Using multistage preprocessing
+0: Starting reduce
+0: Finished reduce in 0.13s
+0.0.PRE: Performing Proof Simplification...
+0.0.Tri: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Tri: Proof Simplification Iteration 1	[0.00 s]
+0.0.Tri: Proof Simplification Iteration 2	[0.02 s]
+0.0.Tri: Proof Simplification Iteration 3	[0.04 s]
+0.0.Tri: Proof Simplification Iteration 4	[0.06 s]
+0.0.PRE: Proof Simplification completed in 0,11 s
+0: About to start ProofGrid in its own thread with a limit of 10000 pending notifications and a limit of 10 traces.
+0: =============================== ProofGrid start ===============================
+0: ProofGrid usable level: 3
+0: ProofGrid is starting event handling
+0.0.Ht: Proofgrid shell started at 18668@optmaS1(local) jg_18530_optmaS1_1
+0.0.Ht: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Tri: Proofgrid shell started at 18667@optmaS1(local) jg_18530_optmaS1_1
+0: Running jobs with 9 threads on optmaS1 with 8 cores.
+0.0.Tri: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Ht: Trace Attempt  1	[0,03 s]
+0.0.Ht: A trace with 1 cycles was found. [0,04 s]
+INFO (IPF047): 0.0.Ht: The cover property "cover:1" was covered in 1 cycles in 0.14 s.
+0.0.Ht: Trace Attempt  2	[0,04 s]
+0.0.Ht: Trace Attempt  3	[0,04 s]
+0.0.Ht: Trace Attempt  4	[0,05 s]
+0.0.Ht: Trace Attempt  5	[0,06 s]
+0.0.Tri: Next scan (0) will use per property time limit: 1s * 10 ^ 0 = 1s
+0.0.Tri: Starting proof for property "property:0"	[0,00 s].
+0.0.Tri: Trace Attempt  1	[0,00 s]
+0.0.Ht: Trace Attempt  7	[0,08 s]
+0.0.Ht: A trace with 7 cycles was found. [0,08 s]
+INFO (IPF047): 0.0.Ht: The cover property "cover:0" was covered in 7 cycles in 0.15 s.
+0.0.Ht: Trace Attempt  8	[0,10 s]
+0.0.Tri:    0.01" ---- Launching main thread ----
+0.0.Tri:    0.08" ---- Launching abstraction thread ----
+0.0.Tri:    0.09" ---- Launching multi-phase simplification thread ----
+0.0.Tri: Trace Attempt  2	[0,35 s]
+0.0.Tri: Trace Attempt  3	[0,46 s]
+0.0.Tri: Trace Attempt  4	[0,60 s]
+0.0.Tri: Trace Attempt  5	[0,71 s]
+0: ProofGrid usable level: 1
+0.0.Tri: Trace Attempt 13	[1,06 s]
+0.0.Tri: Per property time limit expired (1,00 s) [1,06 s]
+0.0.Tri: Stopped processing property "property:0"	[0,97 s].
+0.0.Tri: Last scan. Per property time limit: 0s
+0.0.Tri: Starting proof for property "property:0"	[0,00 s].
+0.0.Tri: Trace Attempt  1	[0,00 s]
+0.0.Tri:    1.05" ---- Launching main thread ----
+0.0.Tri:    1.10" ---- Launching abstraction thread ----
+0.0.Tri:    1.11" ---- Launching multi-phase simplification thread ----
+0.0.Ht: Trace Attempt 25	[4,17 s]
+0.0.Tri:    4.57" Simplification phase 1 complete
+0.0.Tri: Trace Attempt 23	[4,27 s]
+0.0.Ht: Trace Attempt 28	[8,45 s]
+0.0.Tri: Trace Attempt 31	[8,78 s]
+0.0.Tri: Trace Attempt 37	[13,38 s]
+0.0.Ht: Trace Attempt 34	[15,06 s]
+0.0.Tri:   16.73" Simplification phase 2 complete
+0.0.Tri: Trace Attempt 41	[17,50 s]
+0.0.Ht: Trace Attempt 38	[19,74 s]
+0.0.Tri: Trace Attempt 44	[21,58 s]
+0.0.Ht: Trace Attempt 42	[24,60 s]
+0.0.Tri: Trace Attempt 47	[26,23 s]
+0.0.Ht: Trace Attempt 46	[31,35 s]
+0.0.Tri: Trace Attempt 49	[30,60 s]
+0.0.Tri: Trace Attempt 51	[34,63 s]
+0.0.Ht: Trace Attempt 49	[38,71 s]
+0.0.Tri: Trace Attempt 53	[39,79 s]
+0.0.Tri: Trace Attempt 54	[43,84 s]
+0.0.Ht: Trace Attempt 53	[46,45 s]
+0.0.Tri: Trace Attempt 56	[49,60 s]
+0.0.Tri: Trace Attempt 59	[55,24 s]
+0.0.Ht: Trace Attempt 55	[56,79 s]
+0.0.Tri: Trace Attempt 60	[59,98 s]
+0.0.Tri: Trace Attempt 61	[65,15 s]
+0.0.Ht: Trace Attempt 60	[67,03 s]
+0.0.Tri: Trace Attempt 62	[70,00 s]
+0.0.Tri: Trace Attempt 64	[76,63 s]
+0.0.Ht: Trace Attempt 62	[78,44 s]
+0.0.Tri: Trace Attempt 65	[80,96 s]
+0.0.Tri: Trace Attempt 66	[85,86 s]
+0.0.Ht: Trace Attempt 65	[87,70 s]
+0.0.Tri: Trace Attempt 67	[91,18 s]
+0.0.Ht: Trace Attempt 67	[100,08 s]
+0.0.Tri: Trace Attempt 69	[101,16 s]
+0.0.Tri: Trace Attempt 70	[105,67 s]
+0.0.Ht: Trace Attempt 69	[114,52 s]
+0.0.Tri: Trace Attempt 72	[115,08 s]
+0.0.Tri: Trace Attempt 73	[121,56 s]
+0.0.Tri: Trace Attempt 74	[126,56 s]
+0.0.Ht: Trace Attempt 72	[128,94 s]
+0.0.Tri: Trace Attempt 76	[133,64 s]
+0.0.Tri: Trace Attempt 77	[137,74 s]
+0.0.Tri: Trace Attempt 78	[142,67 s]
+0.0.Ht: Trace Attempt 75	[149,01 s]
+0.0.Tri: Trace Attempt 79	[148,18 s]
+0.0.Tri: Trace Attempt 80	[152,21 s]
+0.0.Tri: Trace Attempt 81	[158,82 s]
+0.0.Tri: Trace Attempt 82	[163,41 s]
+0.0.Ht: Trace Attempt 79	[166,98 s]
+0.0.Tri: Trace Attempt 83	[167,51 s]
+0.0.Tri: Trace Attempt 84	[174,01 s]
+0.0.Tri:  175.16" Simplification phase 3 complete
+0.0.Tri:  175.16" ---- Completed simplification thread ----
+0.0.Tri:  175.17" ---- Restarting main thread on simplified netlist ----
+0.0.Tri:  175.34" ---- Restarting abstraction thread on simplified netlist ----
+0.0.Ht: Trace Attempt 83	[186,60 s]
+0.0.Ht: Trace Attempt 85	[213,46 s]
+0.0.Ht: Trace Attempt 86	[231,52 s]
+0.0.Ht: Trace Attempt 87	[251,25 s]
+0.0.Ht: Trace Attempt 88	[263,63 s]
+0.0.Ht: Trace Attempt 89	[294,05 s]
+0.0.Ht: Trace Attempt 90	[313,49 s]
+0.0.Tri: Trace Attempt 85	[322,85 s]
+0.0.Tri: Trace Attempt 86	[327,62 s]
+0.0.Ht: Trace Attempt 91	[333,11 s]
+0.0.Tri: Trace Attempt 87	[332,39 s]
+0.0.Tri: Trace Attempt 88	[338,86 s]
+0.0.Tri: Trace Attempt 89	[345,40 s]
+0.0.Ht: Trace Attempt 92	[347,36 s]
+0.0.Tri: Trace Attempt 90	[351,63 s]
+0.0.Tri: Trace Attempt 91	[357,48 s]
+0.0.Tri: Trace Attempt 92	[364,36 s]
+0.0.Ht: Trace Attempt 93	[369,86 s]
+0.0.Tri: Trace Attempt 93	[369,69 s]
+0.0.Tri: Trace Attempt 94	[375,13 s]
+0.0.Ht: Trace Attempt 94	[384,44 s]
+0.0.Tri: Trace Attempt 96	[384,50 s]
+0.0.Tri: Trace Attempt 97	[389,55 s]
+0.0.Tri: Trace Attempt 98	[396,95 s]
+0.0.Tri: Trace Attempt 99	[403,38 s]
+0.0.Ht: Trace Attempt 96	[406,86 s]
+0.0.Tri: Trace Attempt 100	[408,08 s]
+0.0.Tri: Trace Attempt 101	[414,28 s]
+0.0.Tri: Trace Attempt 102	[421,31 s]
+0.0.Tri: Trace Attempt 103	[429,08 s]
+0.0.Ht: Trace Attempt 100	[432,39 s]
+0.0.Tri: Trace Attempt 104	[434,33 s]
+0.0.Tri: Trace Attempt 105	[440,83 s]
+0.0.Tri: Trace Attempt 106	[446,71 s]
+0.0.Tri: Trace Attempt 107	[452,52 s]
+0.0.Tri: Trace Attempt 108	[460,87 s]
+0.0.Tri: Trace Attempt 109	[470,53 s]
+0.0.Ht: Trace Attempt 104	[472,12 s]
+0.0.Tri: Trace Attempt 110	[481,02 s]
+0.0.Tri: Trace Attempt 111	[488,72 s]
+0.0.Tri: Trace Attempt 112	[497,83 s]
+0.0.Ht: Trace Attempt 110	[512,24 s]
+0.0.Tri: Trace Attempt 113	[511,97 s]
+0.0.Tri: Trace Attempt 114	[520,95 s]
+0.0.Tri: Trace Attempt 115	[528,52 s]
+0.0.Tri: Trace Attempt 116	[535,96 s]
+0.0.Tri: Trace Attempt 117	[546,09 s]
+0.0.Ht: Trace Attempt 113	[554,62 s]
+0.0.Tri: Trace Attempt 118	[557,11 s]
+0.0.Tri: Trace Attempt 119	[571,59 s]
+0.0.Tri: Trace Attempt 120	[583,51 s]
+0.0.Tri: Trace Attempt 121	[597,67 s]
+0.0.Ht: Trace Attempt 118	[603,08 s]
+0.0.Tri: Trace Attempt 122	[608,36 s]
+0.0.Tri: Trace Attempt 123	[614,47 s]
+0.0.Tri: Trace Attempt 124	[624,30 s]
+0.0.Tri: Trace Attempt 125	[635,50 s]
+0.0.Ht: Trace Attempt 122	[644,87 s]
+0.0.Tri: Trace Attempt 126	[650,41 s]
+0.0.Tri: Trace Attempt 127	[661,86 s]
+0.0.Tri: Trace Attempt 128	[673,69 s]
+0.0.Tri: Trace Attempt 129	[680,40 s]
+0.0.Ht: Trace Attempt 126	[691,65 s]
+0.0.Tri: Trace Attempt 130	[692,54 s]
+0.0.Tri: Trace Attempt 131	[704,17 s]
+0.0.Tri: Trace Attempt 132	[712,32 s]
+0.0.Tri: Trace Attempt 133	[723,58 s]
+0.0.Tri: Trace Attempt 134	[737,22 s]
+0.0.Tri: Trace Attempt 135	[746,00 s]
+0.0.Ht: Trace Attempt 130	[751,32 s]
+0.0.Tri: Trace Attempt 136	[761,66 s]
+0.0.Tri: Trace Attempt 137	[773,04 s]
+0.0.Tri: Trace Attempt 138	[782,83 s]
+0.0.Tri: Trace Attempt 139	[793,07 s]
+0.0.Tri: Trace Attempt 140	[810,15 s]
+0.0.Ht: Trace Attempt 136	[818,86 s]
+0.0.Tri: Trace Attempt 141	[821,53 s]
+0.0.Tri: Trace Attempt 142	[837,51 s]
+0.0.Tri: Trace Attempt 143	[847,91 s]
+0.0.Tri: Trace Attempt 144	[858,83 s]
+0.0.Ht: Trace Attempt 141	[873,15 s]
+0.0.Tri: Trace Attempt 145	[873,00 s]
+0.0.Tri: Trace Attempt 146	[889,89 s]
+0.0.Tri: Trace Attempt 147	[907,14 s]
+0.0.Tri: Trace Attempt 148	[920,73 s]
+0.0.Tri: Trace Attempt 149	[935,00 s]
+0.0.Ht: Trace Attempt 145	[946,01 s]
+0.0.Tri: Trace Attempt 150	[956,60 s]
+0.0.Tri: Trace Attempt 151	[976,07 s]
+0.0.Tri: Trace Attempt 152	[991,69 s]
+0.0.Ht: Trace Attempt 150	[1011,10 s]
+0.0.Tri: Trace Attempt 153	[1014,79 s]
+0.0.Tri: Trace Attempt 154	[1030,88 s]
+0.0.Tri: Trace Attempt 155	[1041,61 s]
+0.0.Tri: Trace Attempt 156	[1056,68 s]
+0.0.Tri: Trace Attempt 157	[1072,89 s]
+0.0.Ht: Trace Attempt 153	[1086,99 s]
+0.0.Tri: Trace Attempt 158	[1094,68 s]
+0.0.Tri: Trace Attempt 159	[1112,14 s]
+0.0.Tri: Trace Attempt 160	[1128,08 s]
+0.0.Ht: Trace Attempt 158	[1143,36 s]
+0.0.Tri: Trace Attempt 161	[1144,97 s]
+0.0.Tri: Trace Attempt 162	[1166,73 s]
+0.0.Tri: Trace Attempt 163	[1194,35 s]
+0.0.Tri: Trace Attempt 164	[1208,97 s]
+0.0.Ht: Trace Attempt 161	[1210,15 s]
+0.0.Tri: Trace Attempt 165	[1225,12 s]
+0.0.Tri: Trace Attempt 166	[1244,60 s]
+0.0.Tri: Trace Attempt 167	[1261,60 s]
+0.0.Ht: Trace Attempt 165	[1274,98 s]
+0.0.Tri: Trace Attempt 168	[1281,92 s]
+0.0.Tri: Trace Attempt 169	[1305,08 s]
+0.0.Tri: Trace Attempt 170	[1328,84 s]
+0.0.Tri: Trace Attempt 171	[1347,57 s]
+0.0.Ht: Trace Attempt 168	[1362,50 s]
+0.0.Tri: Trace Attempt 172	[1363,45 s]
+0.0.Tri: Trace Attempt 173	[1383,46 s]
+0.0.Tri: Trace Attempt 174	[1409,79 s]
+0.0.Tri: Trace Attempt 175	[1429,13 s]
+0.0.Tri: Trace Attempt 176	[1440,80 s]
+0.0.Tri: Trace Attempt 177	[1460,27 s]
+0.0.Ht: Trace Attempt 172	[1462,94 s]
+0.0.Tri: Trace Attempt 178	[1472,30 s]
+0.0.Tri: Trace Attempt 179	[1486,39 s]
+0.0.Tri: Trace Attempt 180	[1516,34 s]
+0.0.Tri: Trace Attempt 181	[1535,50 s]
+0.0.Ht: Trace Attempt 178	[1553,98 s]
+0.0.Tri: Trace Attempt 182	[1556,65 s]
+0.0.Tri: Trace Attempt 183	[1572,83 s]
+0.0.Tri: Trace Attempt 184	[1599,50 s]
+0.0.Tri: Trace Attempt 185	[1625,31 s]
+0.0.Ht: Trace Attempt 182	[1635,15 s]
+0.0.Tri: Trace Attempt 186	[1639,46 s]
+0.0.Tri: Trace Attempt 187	[1661,50 s]
+0.0.Tri: Trace Attempt 188	[1686,08 s]
+0.0.Ht: Trace Attempt 186	[1711,70 s]
+0.0.Tri: Trace Attempt 189	[1712,03 s]
+0.0.Tri: Trace Attempt 190	[1739,96 s]
+0.0.Tri: Trace Attempt 191	[1762,18 s]
+0.0.Tri: Trace Attempt 192	[1780,72 s]
+0.0.Tri: Trace Attempt 193	[1802,12 s]
+0.0.Ht: Trace Attempt 189	[1813,52 s]
+0.0.Tri: Trace Attempt 194	[1831,40 s]
+0.0.Tri: Trace Attempt 195	[1853,30 s]
+0.0.Tri: Trace Attempt 196	[1882,43 s]
+0.0.Ht: Trace Attempt 194	[1886,14 s]
+0.0.Tri: Trace Attempt 197	[1899,80 s]
+0.0.Tri: Trace Attempt 198	[1928,04 s]
+0.0.Tri: Trace Attempt 199	[1959,64 s]
+0.0.Tri: Trace Attempt 200	[1992,60 s]
+0.0.Ht: Trace Attempt 197	[2003,64 s]
+0.0.Tri: Trace Attempt 201	[2025,52 s]
+0.0.Tri: Trace Attempt 202	[2052,53 s]
+0.0.Tri: Trace Attempt 203	[2081,74 s]
+0.0.Tri: Trace Attempt 204	[2107,34 s]
+0.0.Ht: Trace Attempt 201	[2119,41 s]
+0.0.Tri: Trace Attempt 205	[2129,04 s]
+0.0.Tri: Trace Attempt 206	[2159,39 s]
+0.0.Tri: Trace Attempt 207	[2193,35 s]
+0.0.Tri: Trace Attempt 208	[2231,14 s]
+0.0.Ht: Trace Attempt 205	[2240,29 s]
+0.0.Tri: Trace Attempt 209	[2260,86 s]
+0.0.Tri: Trace Attempt 210	[2285,32 s]
+0.0.Tri: Trace Attempt 211	[2312,95 s]
+0.0.Tri: Trace Attempt 212	[2339,51 s]
+0.0.Tri: Trace Attempt 213	[2367,92 s]
+0.0.Ht: Trace Attempt 209	[2369,74 s]
+0.0.Tri: Trace Attempt 214	[2408,04 s]
+0.0.Tri: Trace Attempt 215	[2439,60 s]
+0.0.Tri: Trace Attempt 216	[2470,11 s]
+0.0.Tri: Trace Attempt 217	[2496,24 s]
+0.0.Ht: Trace Attempt 214	[2509,30 s]
+0.0.Tri: Trace Attempt 218	[2536,21 s]
+0.0.Tri: Trace Attempt 219	[2578,26 s]
+0.0.Tri: Trace Attempt 220	[2613,30 s]
+0.0.Tri: Trace Attempt 221	[2644,76 s]
+0.0.Ht: Trace Attempt 218	[2666,73 s]
+0.0.Tri: Trace Attempt 222	[2667,00 s]
+0.0.Tri: Trace Attempt 223	[2714,20 s]
+0.0.Tri: Trace Attempt 224	[2745,58 s]
+0.0.Tri: Trace Attempt 225	[2790,10 s]
+0.0.Tri: Trace Attempt 226	[2820,28 s]
+0.0.Ht: Trace Attempt 222	[2823,23 s]
+0.0.Tri: Trace Attempt 227	[2850,35 s]
+0.0.Tri: Trace Attempt 228	[2892,81 s]
+0.0.Tri: Trace Attempt 229	[2933,95 s]
+0.0.Ht: Trace Attempt 227	[2964,19 s]
+0.0.Tri: Trace Attempt 230	[2965,76 s]
+0.0.Tri: Trace Attempt 231	[3007,33 s]
+0.0.Tri: Trace Attempt 232	[3034,08 s]
+0.0.Tri: Trace Attempt 233	[3092,64 s]
+0.0.Ht: Trace Attempt 230	[3106,97 s]
+0.0.Tri: Trace Attempt 234	[3130,07 s]
+0.0.Tri: Trace Attempt 235	[3161,04 s]
+0.0.Tri: Trace Attempt 236	[3198,76 s]
+0.0.Tri: Trace Attempt 237	[3243,98 s]
+0.0.Ht: Trace Attempt 234	[3263,95 s]
+0.0.Tri: Trace Attempt 238	[3287,02 s]
+0.0.Tri: Trace Attempt 239	[3330,88 s]
+0.0.Tri: Trace Attempt 240	[3368,35 s]
+0.0.Ht: Trace Attempt 238	[3420,13 s]
+0.0.Tri: Trace Attempt 241	[3427,10 s]
+0.0.Tri: Trace Attempt 242	[3456,33 s]
+0.0.Tri: Trace Attempt 243	[3492,30 s]
+0.0.Tri: Trace Attempt 244	[3528,20 s]
+0.0.Ht: Trace Attempt 241	[3576,80 s]
+0.0.Tri: Trace Attempt 245	[3585,51 s]
+0.0.Tri: Trace Attempt 246	[3632,10 s]
+0.0.Tri: Trace Attempt 247	[3673,05 s]
+0.0.Tri: Trace Attempt 248	[3704,55 s]
+0.0.Tri: Trace Attempt 249	[3744,97 s]
+0.0.Tri: Trace Attempt 250	[3800,77 s]
+0.0.Ht: Trace Attempt 245	[3809,67 s]
+0.0.Tri: Trace Attempt 251	[3854,00 s]
+0.0.Tri: Trace Attempt 252	[3890,53 s]
+0.0.Tri: Trace Attempt 253	[3924,36 s]
+0.0.Ht: Trace Attempt 251	[3981,63 s]
+0.0.Tri: Trace Attempt 254	[3981,84 s]
+0.0.Tri: Trace Attempt 255	[4043,26 s]
+0.0.Tri: Trace Attempt 256	[4082,26 s]
+0.0.Tri: Trace Attempt 257	[4121,16 s]
+0.0.Tri: Trace Attempt 258	[4195,77 s]
+0.0.Ht: Trace Attempt 254	[4201,08 s]
+0.0.Tri: Trace Attempt 259	[4242,04 s]
+0.0.Tri: Trace Attempt 260	[4276,40 s]
+0.0.Tri: Trace Attempt 261	[4311,41 s]
+0.0.Tri: Trace Attempt 262	[4377,28 s]
+0.0.Ht: Trace Attempt 259	[4384,74 s]
+0.0.Tri: Trace Attempt 263	[4430,78 s]
+0.0.Tri: Trace Attempt 264	[4474,87 s]
+0.0.Tri: Trace Attempt 265	[4514,85 s]
+0.0.Tri: Trace Attempt 266	[4553,10 s]
+0.0.Tri: Trace Attempt 267	[4585,80 s]
+0.0.Ht: Trace Attempt 263	[4587,62 s]
+0.0.Tri: Trace Attempt 268	[4650,71 s]
+0.0.Tri: Trace Attempt 269	[4716,08 s]
+0.0.Tri: Trace Attempt 270	[4761,33 s]
+0.0.Tri: Trace Attempt 271	[4802,88 s]
+0.0.Ht: Trace Attempt 268	[4805,72 s]
+0.0.Tri: Trace Attempt 272	[4851,81 s]
+0.0.Tri: Trace Attempt 273	[4913,29 s]
+0.0.Tri: Trace Attempt 274	[4998,65 s]
+0.0.Ht: Trace Attempt 272	[5032,94 s]
+0.0.Tri: Trace Attempt 275	[5053,46 s]
+0.0.Tri: Trace Attempt 276	[5110,06 s]
+0.0.Tri: Trace Attempt 277	[5173,36 s]
+0.0.Tri: Trace Attempt 278	[5227,72 s]
+0.0.Tri: Trace Attempt 279	[5285,38 s]
+0.0.Ht: Trace Attempt 275	[5302,13 s]
+0.0.Tri: Trace Attempt 280	[5328,77 s]
+0.0.Tri: Trace Attempt 281	[5379,73 s]
+0.0.Tri: Trace Attempt 282	[5474,90 s]
+0.0.Tri: Trace Attempt 283	[5551,92 s]
+0.0.Tri: Trace Attempt 284	[5603,54 s]
+0.0.Ht: Trace Attempt 280	[5610,54 s]
+0.0.Tri: Trace Attempt 285	[5667,33 s]
+0.0.Tri: Trace Attempt 286	[5765,35 s]
+0.0.Tri: Trace Attempt 287	[5834,65 s]
+0.0.Tri: Trace Attempt 288	[5882,40 s]
+0.0.Tri: Trace Attempt 289	[5943,94 s]
+0.0.Ht: Trace Attempt 285	[5949,90 s]
+0.0.Tri: Trace Attempt 290	[6000,45 s]
+0.0.Tri: Trace Attempt 291	[6067,22 s]
+0.0.Tri: Trace Attempt 292	[6145,42 s]
+0.0.Ht: Trace Attempt 290	[6175,57 s]
+0.0.Tri: Trace Attempt 293	[6196,28 s]
+0.0.Tri: Trace Attempt 294	[6253,29 s]
+0.0.Tri: Trace Attempt 295	[6297,04 s]
+0.0.Tri: Trace Attempt 296	[6381,94 s]
+0.0.Ht: Trace Attempt 293	[6417,60 s]
+0.0.Tri: Trace Attempt 297	[6446,49 s]
+0.0.Tri: Trace Attempt 298	[6509,30 s]
+0.0.Tri: Trace Attempt 299	[6570,84 s]
+0.0.Tri: Trace Attempt 300	[6641,39 s]
+0.0.Tri: Trace Attempt 301	[6716,41 s]
+0.0.Ht: Trace Attempt 297	[6734,64 s]
+0.0.Tri: Trace Attempt 302	[6765,47 s]
+0.0.Tri: Trace Attempt 303	[6830,90 s]
+0.0.Tri: Trace Attempt 304	[6896,90 s]
+0.0.Tri: Trace Attempt 305	[6938,79 s]
+0.0.Tri: Trace Attempt 306	[6989,64 s]
+0.0.Ht: Trace Attempt 302	[6993,01 s]
+0.0.Tri: Trace Attempt 307	[7044,66 s]
+0.0.Tri: Trace Attempt 308	[7126,29 s]
+0.0.Tri: Trace Attempt 309	[7180,90 s]
+0.0.Tri: Trace Attempt 310	[7240,22 s]
+0.0.Ht: Trace Attempt 307	[7245,46 s]
+0.0.Tri: Trace Attempt 311	[7280,61 s]
+0.0.Tri: Trace Attempt 312	[7382,07 s]
+0.0.Tri: Trace Attempt 313	[7442,38 s]
+0.0.Tri: Trace Attempt 314	[7486,20 s]
+0.0.Ht: Trace Attempt 311	[7539,20 s]
+0.0.Tri: Trace Attempt 315	[7546,19 s]
+0.0.Tri: Trace Attempt 316	[7606,08 s]
+0.0.Tri: Trace Attempt 317	[7678,69 s]
+0.0.Tri: Trace Attempt 318	[7764,98 s]
+0.0.Tri: Trace Attempt 319	[7817,45 s]
+0.0.Tri: Trace Attempt 320	[7870,57 s]
+0.0.Tri: Trace Attempt 321	[7919,79 s]
+0.0.Ht: Trace Attempt 315	[7926,95 s]
+0.0.Tri: terminate called after throwing an instance of 'Minisat::OutOfMemoryException'
+
+**** CRASHED **** [signal 6]
+0.0.Tri: Trace Attempt 322	[7985,10 s]
+0.0.Tri: Trace Attempt 323	[8067,11 s]
+0.0.Tri: Trace Attempt 324	[8142,25 s]
+0.0.Tri: Trace Attempt 325	[8211,16 s]
+0.0.Tri: Trace Attempt 326	[8304,02 s]
+0.0.Ht: Trace Attempt 322	[8361,70 s]
+0.0.Tri: Trace Attempt 327	[8385,84 s]
+0.0.Tri: Trace Attempt 328	[8476,48 s]
+0.0.Tri: Trace Attempt 329	[8576,19 s]
+0.0.Tri: Trace Attempt 330	[8649,37 s]
+0.0.Ht: Trace Attempt 327	[8731,78 s]
+0.0.Tri: Trace Attempt 331	[8736,87 s]
+0.0.Tri: Trace Attempt 332	[8820,26 s]
+0.0.Tri: Trace Attempt 333	[8905,57 s]
+0.0.Ht: Trace Attempt 331	[9066,34 s]
+0.0.Ht: Trace Attempt 334	[9401,79 s]
+0.0.Ht: Trace Attempt 335	[9656,72 s]
+0.0.Ht: Trace Attempt 336	[9953,23 s]
+0.0.Ht: Trace Attempt 337	[10206,35 s]
+0.0.Ht: Trace Attempt 338	[10439,86 s]
+0.0.Ht: Trace Attempt 339	[10602,50 s]
+0.0.Ht: Trace Attempt 340	[10803,35 s]
+0.0.Ht: Trace Attempt 341	[11029,55 s]
+0.0.Ht: Trace Attempt 342	[11175,06 s]
+0.0.Ht: Trace Attempt 343	[11327,25 s]
+0.0.Ht: Trace Attempt 344	[11506,58 s]
+0.0.Ht: Trace Attempt 345	[11656,47 s]
+0.0.Ht: Trace Attempt 346	[11842,17 s]
+0.0.Ht: Trace Attempt 347	[11962,50 s]
+0.0.Ht: Trace Attempt 348	[12058,95 s]
+0.0.Ht: Trace Attempt 349	[12213,67 s]
+0.0.Ht: Trace Attempt 350	[12373,44 s]
+0.0.Ht: Trace Attempt 351	[12491,21 s]
+0.0.Ht: Trace Attempt 352	[12624,16 s]
+0.0.Ht: Trace Attempt 353	[12745,50 s]
+0.0.Ht: Trace Attempt 354	[12914,41 s]
+0.0.Ht: Trace Attempt 355	[13038,76 s]
+0.0.Ht: Trace Attempt 356	[13164,95 s]
+0.0.Ht: Trace Attempt 357	[13304,75 s]
+0.0.Ht: Trace Attempt 358	[13428,05 s]
+0.0.Ht: Trace Attempt 359	[13587,53 s]
+0.0.Ht: Trace Attempt 360	[13757,96 s]
+0.0.Ht: Trace Attempt 361	[13895,48 s]
+0.0.Ht: Trace Attempt 362	[14006,32 s]
+0.0.Ht: Trace Attempt 363	[14168,07 s]
+0.0.Ht: Trace Attempt 364	[14325,67 s]
+0.0.Ht: Trace Attempt 365	[14418,27 s]
+0.0.Ht: Trace Attempt 366	[14566,34 s]
+0.0.Ht: Trace Attempt 367	[14684,43 s]
+0.0.Ht: Trace Attempt 368	[14820,65 s]
+0.0.Ht: Trace Attempt 369	[14934,53 s]
+0.0.Ht: Trace Attempt 370	[15087,18 s]
+0.0.Ht: Trace Attempt 371	[15243,09 s]
+0.0.Ht: Trace Attempt 372	[15357,71 s]
+0.0.Ht: Trace Attempt 373	[15482,57 s]
+0.0.Ht: Trace Attempt 374	[15670,89 s]
+0.0.Ht: Trace Attempt 375	[15818,35 s]
+0.0.Ht: Trace Attempt 376	[15984,43 s]
+0.0.Ht: Trace Attempt 377	[16127,88 s]
+0.0.Ht: Trace Attempt 378	[16300,38 s]
+0.0.Ht: Trace Attempt 379	[16435,24 s]
+0.0.Ht: Trace Attempt 380	[16568,02 s]
+0.0.Ht: Trace Attempt 381	[16717,46 s]
+0.0.Ht: Trace Attempt 382	[16900,81 s]
+0.0.Ht: Trace Attempt 383	[17061,36 s]
+0.0.Ht: Trace Attempt 384	[17196,10 s]
+0.0.Ht: Trace Attempt 385	[17387,31 s]
+0.0.Ht: Trace Attempt 386	[17523,65 s]
+0.0.Ht: Trace Attempt 387	[17622,86 s]
+0.0.Ht: Trace Attempt 388	[17746,77 s]
+0.0.Ht: Trace Attempt 389	[17843,48 s]
+0.0.Ht: Trace Attempt 390	[17948,49 s]
+0.0.Ht: Trace Attempt 391	[18038,65 s]
+0.0.Ht: Trace Attempt 392	[18134,55 s]
+0.0.Ht: Trace Attempt 393	[18256,36 s]
+0.0.Ht: Trace Attempt 394	[18373,03 s]
+0.0.Ht: Trace Attempt 395	[18458,15 s]
+0.0.Ht: Trace Attempt 396	[18544,97 s]
+0.0.Ht: Trace Attempt 397	[18644,99 s]
+0.0.Ht: Trace Attempt 398	[18770,10 s]
+0.0.Ht: Trace Attempt 399	[18885,72 s]
+0.0.Ht: Trace Attempt 400	[18987,85 s]
+0.0.Ht: Trace Attempt 401	[19085,83 s]
+0.0.Ht: Trace Attempt 402	[19170,72 s]
+0.0.Ht: Trace Attempt 403	[19271,63 s]
+0.0.Ht: Trace Attempt 404	[19394,52 s]
+0.0.Ht: Trace Attempt 405	[19492,27 s]
+0.0.Ht: Trace Attempt 406	[19601,08 s]
+0.0.Ht: Trace Attempt 407	[19726,44 s]
+0.0.Ht: Trace Attempt 408	[19829,51 s]
+0.0.Ht: Trace Attempt 409	[19934,81 s]
+0.0.Ht: Trace Attempt 410	[20084,59 s]
+0.0.Ht: Trace Attempt 411	[20200,62 s]
+0.0.Ht: Trace Attempt 412	[20329,68 s]
+0.0.Ht: Trace Attempt 413	[20432,63 s]
+0.0.Ht: Trace Attempt 414	[20603,32 s]
+0.0.Ht: Trace Attempt 415	[20712,51 s]
+0.0.Ht: Trace Attempt 416	[20848,96 s]
+0.0.Ht: Trace Attempt 417	[20948,93 s]
+0.0.Ht: Trace Attempt 418	[21068,51 s]
+0.0.Ht: Trace Attempt 419	[21182,92 s]
+0.0.Ht: Trace Attempt 420	[21306,93 s]
+0.0.Ht: Trace Attempt 421	[21403,26 s]
+0.0.Ht: Trace Attempt 422	[21537,59 s]
+0.0.Ht: Trace Attempt 423	[21655,18 s]
+0.0.Ht: Trace Attempt 424	[21776,49 s]
+0.0.Ht: Trace Attempt 425	[21877,83 s]
+0.0.Ht: Trace Attempt 426	[22029,73 s]
+0.0.Ht: Trace Attempt 427	[22157,28 s]
+0.0.Ht: Trace Attempt 428	[22283,69 s]
+0.0.Ht: Trace Attempt 429	[22412,63 s]
+0.0.Ht: Trace Attempt 430	[22566,23 s]
+0.0.Ht: Trace Attempt 431	[22666,72 s]
+0.0.Ht: Trace Attempt 432	[22784,29 s]
+0.0.Ht: Trace Attempt 433	[22932,83 s]
+0.0.Ht: Trace Attempt 434	[23049,39 s]
+0.0.Ht: Trace Attempt 435	[23207,10 s]
+0.0.Ht: Trace Attempt 436	[23368,45 s]
+0.0.Ht: Trace Attempt 437	[23500,77 s]
+0.0.Ht: Trace Attempt 438	[23612,04 s]
+0.0.Ht: Trace Attempt 439	[23728,69 s]
+0.0.Ht: Trace Attempt 440	[23839,08 s]
+0.0.Ht: Trace Attempt 441	[23956,85 s]
+0.0.Ht: Trace Attempt 442	[24083,35 s]
+0.0.Ht: Trace Attempt 443	[24199,57 s]
+0.0.Ht: Trace Attempt 444	[24348,90 s]
+0.0.Ht: Trace Attempt 445	[24468,02 s]
+0.0.Ht: Trace Attempt 446	[24610,74 s]
+0.0.Ht: Trace Attempt 447	[24732,67 s]
+0.0.Ht: Trace Attempt 448	[24870,01 s]
+0.0.Ht: Trace Attempt 449	[24986,64 s]
+0.0.Ht: Trace Attempt 450	[25110,41 s]
+0.0.Ht: Trace Attempt 451	[25249,17 s]
+0.0.Ht: Trace Attempt 452	[25372,54 s]
+0.0.Ht: Trace Attempt 453	[25530,40 s]
+0.0.Ht: Trace Attempt 454	[25655,89 s]
+0.0.Ht: Trace Attempt 455	[25795,85 s]
+0.0.Ht: Trace Attempt 456	[25929,91 s]
+0.0.Ht: Trace Attempt 457	[26086,19 s]
+0.0.Ht: Trace Attempt 458	[26234,28 s]
+0.0.Ht: Trace Attempt 459	[26370,55 s]
+0.0.Ht: Trace Attempt 460	[26488,22 s]
+0.0.Ht: Trace Attempt 461	[26617,83 s]
+0.0.Ht: Trace Attempt 462	[26760,70 s]
+0.0.Ht: Trace Attempt 463	[26886,57 s]
+0.0.Ht: Trace Attempt 464	[27023,78 s]
+0.0.Ht: Trace Attempt 465	[27150,54 s]
+0.0.Ht: Trace Attempt 466	[27307,68 s]
+0.0.Ht: Trace Attempt 467	[27462,96 s]
+0.0.Ht: Trace Attempt 468	[27603,04 s]
+0.0.Ht: Trace Attempt 469	[27720,69 s]
+0.0.Ht: Trace Attempt 470	[27875,84 s]
+0.0.Ht: Trace Attempt 471	[28002,19 s]
+0.0.Ht: Trace Attempt 472	[28140,48 s]
+0.0.Ht: Trace Attempt 473	[28297,16 s]
+0.0.Ht: Trace Attempt 474	[28431,51 s]
+0.0.Ht: Trace Attempt 475	[28536,74 s]
+0.0.Ht: Trace Attempt 476	[28684,31 s]
+0.0.Ht: Trace Attempt 477	[28891,77 s]
+0.0.Ht: Trace Attempt 478	[29062,97 s]
+0.0.Ht: Trace Attempt 479	[29227,13 s]
+0.0.Ht: Trace Attempt 480	[29375,50 s]
+0.0.Ht: Trace Attempt 481	[29540,52 s]
+0.0.Ht: Trace Attempt 482	[29707,81 s]
+0.0.Ht: Trace Attempt 483	[29869,92 s]
+0.0.Ht: Trace Attempt 484	[30050,95 s]
+0.0.Ht: Trace Attempt 485	[30208,04 s]
+0.0.Ht: Trace Attempt 486	[30368,24 s]
+0.0.Ht: Trace Attempt 487	[30532,68 s]
+0.0.Ht: Trace Attempt 488	[30707,52 s]
+0.0.Ht: Trace Attempt 489	[30862,53 s]
+0.0.Ht: Trace Attempt 490	[31016,95 s]
+0.0.Ht: Trace Attempt 491	[31152,42 s]
+0.0.Ht: Trace Attempt 492	[31316,87 s]
+0.0.Ht: Trace Attempt 493	[31471,74 s]
+0.0.Ht: Trace Attempt 494	[31621,33 s]
+0.0.Ht: Trace Attempt 495	[31760,03 s]
+0.0.Ht: Trace Attempt 496	[31931,81 s]
+0.0.Ht: Trace Attempt 497	[32066,11 s]
+0.0.Ht: Trace Attempt 498	[32232,41 s]
+0.0.Ht: Trace Attempt 499	[32378,33 s]
+0.0.Ht: Trace Attempt 500	[32584,72 s]
+0.0.Ht: Trace Attempt 501	[32726,00 s]
+0.0.Ht: Trace Attempt 502	[32889,48 s]
+0.0.Ht: Trace Attempt 503	[33080,60 s]
+0.0.Ht: Trace Attempt 504	[33252,20 s]
+0.0.Ht: Trace Attempt 505	[33403,05 s]
+0.0.Ht: Trace Attempt 506	[33584,71 s]
+0.0.Ht: Trace Attempt 507	[33742,24 s]
+0.0.Ht: Trace Attempt 508	[33888,36 s]
+0.0.Ht: Trace Attempt 509	[34078,39 s]
+0.0.Ht: Trace Attempt 510	[34353,63 s]
+0.0.Ht: Trace Attempt 511	[34499,37 s]
+0.0.Ht: Trace Attempt 512	[34669,74 s]
+0.0.Ht: Trace Attempt 513	[34831,29 s]
+0.0.Ht: Trace Attempt 514	[35061,81 s]
+0.0.Ht: Trace Attempt 515	[35245,78 s]
+0.0.Ht: Trace Attempt 516	[35411,04 s]
+0.0.Ht: Trace Attempt 517	[35614,64 s]
+0.0.Ht: Trace Attempt 518	[35782,44 s]
+0.0.Ht: Trace Attempt 519	[35960,08 s]
+INFO (IPF144): 0: Initiating shutdown of proof [36000,33]
+0.0.Ht: Time limit expired (36000,00 s) [28850,78 s]
+0.0.Tri: Stopped processing property "property:0"	[35999,24 s].
+0.0.Tri: Time limit expired (36000,00 s) [5,41 s]
+0.0.Tri: Exited with Success (@ 36000,38 s)
+0.0.Ht: Exited with Success (@ 36000,78 s)
+0: ProofGrid usable level: 0
+0: --------------------------------------------------------------
+ProofGrid Summary
+--------------------------------------------------------------
+     engines started                               :     2
+     engine jobs started                           :     2
+     jobs where 1 minute load exceeded core count  :     2
+     jobs where 5 minute load exceeded core count  :     2
+     jobs where 15 minute load exceeded core count :     2
+
+    Average time in state (seconds)
+    ------------------------------------------------------
+    Engine  Pending     Running        Dead    Utilization
+    ------------------------------------------------------
+    Tri        0.08    36000.37        0.00      100.00 %
+     Ht        0.06    36000.33        0.00      100.00 %
+    all        0.07    36000.35        0.00      100.00 %
+
+    Data read    : 774.64 kiB
+    Data written : 11.84 kiB
+
+0: All pending notifications were processed.
+----------------------------------------
+| INFO (ICD005): The "prove" command was aborted because of a time_limit expiration.
+|     The current limit is 36000 seconds.
+|     Modify it with the "-time_limit" switch or "set_prove_time_limit" command.
+----------------------------------------
+INFO (IPF059): Completed proof on task: "func" for proof thread 0
+
+==============================================================
+SUMMARY
+==============================================================
+           Properties Considered              : 3
+                 assertions                   : 1
+                  - proven                    : 0 (0%)
+                  - bounded_proven (user)     : 0 (0%)
+                  - bounded_proven (auto)     : 0 (0%)
+                  - marked_proven             : 0 (0%)
+                  - cex                       : 0 (0%)
+                  - ar_cex                    : 0 (0%)
+                  - undetermined              : 1 (100%)
+                  - unknown                   : 0 (0%)
+                  - error                     : 0 (0%)
+                 covers                       : 2
+                  - unreachable               : 0 (0%)
+                  - bounded_unreachable (user): 0 (0%)
+                  - covered                   : 2 (100%)
+                  - ar_covered                : 0 (0%)
+                  - undetermined              : 0 (0%)
+                  - unknown                   : 0 (0%)
+                  - error                     : 0 (0%)
+Evaluating 'get_property_list -include {status {cex unreachable}} -task func'. expected: ''
+0,0 seconds
+4 microseconds per iteration
+INFO (IPL005): Received request to exit from the console.
+INFO: Waiting for proof threads to stop...
+INFO: Proof threads stopped.

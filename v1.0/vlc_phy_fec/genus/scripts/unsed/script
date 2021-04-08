@@ -1,0 +1,149 @@
+######################################################################
+
+# Created by Genus(TM) Synthesis Solution 17.20-p003_1 on Sat Jun 27 18:38:15 -03 2020
+
+# This file contains the RC script for /designs/sync_ld_dff_WORD_LENGTH4
+
+######################################################################
+
+::legacy::set_attribute -quiet init_lib_search_path /home/Mateus/workspace/UFMG_digital_design/vlc_phy_fec/genus /
+::legacy::set_attribute -quiet common_ui false /
+::legacy::set_attribute -quiet design_mode_process no_value /
+::legacy::set_attribute -quiet phys_assume_met_fill 0.0 /
+::legacy::set_attribute -quiet map_placed_for_hum false /
+::legacy::set_attribute -quiet phys_use_invs_extraction true /
+::legacy::set_attribute -quiet phys_route_time_out 120.0 /
+::legacy::set_attribute -quiet capacitance_per_unit_length_mmmc {} /
+::legacy::set_attribute -quiet resistance_per_unit_length_mmmc {} /
+::legacy::set_attribute -quiet runtime_by_stage { {to_generic 0 7 0 6}  {first_condense 0 7 0 6}  {reify 0 7 0 6}  {global_incr_map 0 7 0 6}  {incr_opt 0 7 0 6} } /
+::legacy::set_attribute -quiet tinfo_tstamp_file .rs_Mateus.tstamp /
+::legacy::set_attribute -quiet hdl_unconnected_marking_done true /
+::legacy::set_attribute -quiet compensative_dpul_driver 0 /
+::legacy::set_attribute -quiet phys_use_segment_parasitics true /
+::legacy::set_attribute -quiet probabilistic_extraction true /
+::legacy::set_attribute -quiet ple_correlation_factors {1.9000 2.0000} /
+::legacy::set_attribute -quiet maximum_interval_of_vias inf /
+::legacy::set_attribute -quiet interconnect_mode wireload /
+::legacy::set_attribute -quiet wireload_mode enclosed /
+::legacy::set_attribute -quiet wireload_selection /libraries/tutorial/wireload_selections/ALUMINUM /
+::legacy::set_attribute -quiet tree_type balanced_tree /libraries/tutorial/operating_conditions/worst_case
+::legacy::set_attribute -quiet tree_type balanced_tree /libraries/tutorial/operating_conditions/typical_case
+::legacy::set_attribute -quiet tree_type balanced_tree /libraries/tutorial/operating_conditions/_nominal_
+# BEGIN MSV SECTION
+# END MSV SECTION
+# BEGIN DFT SECTION
+::legacy::set_attribute -quiet dft_scan_style muxed_scan /
+::legacy::set_attribute -quiet dft_scanbit_waveform_analysis false /
+# END DFT SECTION
+::legacy::set_attribute -quiet qos_by_stage {{to_generic {wns -11111111} {tns -111111111} {vep -111111111} {area 21} {cell_count 4} {utilization  0.00} {runtime 0 7 0 6} }{first_condense {wns -11111111} {tns -111111111} {vep -111111111} {area 21} {cell_count 4} {utilization  0.00} {runtime 0 7 0 6} }{reify {wns 214748365} {tns 0} {vep 0} {area 44} {cell_count 25} {utilization  0.00} {runtime 0 7 0 6} }{global_incr_map {wns 214748365} {tns 0} {vep 0} {area 44} {cell_count 25} {utilization  0.00} {runtime 0 7 0 6} }{incr_opt {wns 214748365} {tns 0} {vep 0} {area 44} {cell_count 25} {utilization  0.00} {runtime 0 7 0 6} }} /designs/sync_ld_dff_WORD_LENGTH4
+::legacy::set_attribute -quiet seq_mbci_coverage 0.0 /designs/sync_ld_dff_WORD_LENGTH4
+::legacy::set_attribute -quiet hdl_filelist {{default -vhdl1993 {SYNTHESIS} {../../generic_components/rtl/sync_ld_dff.vhd} {} {}}} /designs/sync_ld_dff_WORD_LENGTH4
+::legacy::set_attribute -quiet hdl_user_name sync_ld_dff /designs/sync_ld_dff_WORD_LENGTH4
+::legacy::set_attribute -quiet verification_directory fv/sync_ld_dff_WORD_LENGTH4 /designs/sync_ld_dff_WORD_LENGTH4
+::legacy::set_attribute -quiet min_transition no_value /designs/sync_ld_dff_WORD_LENGTH4/ports_in/rst
+::legacy::set_attribute -quiet original_name rst /designs/sync_ld_dff_WORD_LENGTH4/ports_in/rst
+::legacy::set_attribute -quiet min_transition no_value /designs/sync_ld_dff_WORD_LENGTH4/ports_in/clk
+::legacy::set_attribute -quiet original_name clk /designs/sync_ld_dff_WORD_LENGTH4/ports_in/clk
+::legacy::set_attribute -quiet min_transition no_value /designs/sync_ld_dff_WORD_LENGTH4/ports_in/ld
+::legacy::set_attribute -quiet original_name ld /designs/sync_ld_dff_WORD_LENGTH4/ports_in/ld
+::legacy::set_attribute -quiet min_transition no_value {/designs/sync_ld_dff_WORD_LENGTH4/ports_in/i_data[3]}
+::legacy::set_attribute -quiet original_name {i_data[3]} {/designs/sync_ld_dff_WORD_LENGTH4/ports_in/i_data[3]}
+::legacy::set_attribute -quiet min_transition no_value {/designs/sync_ld_dff_WORD_LENGTH4/ports_in/i_data[2]}
+::legacy::set_attribute -quiet original_name {i_data[2]} {/designs/sync_ld_dff_WORD_LENGTH4/ports_in/i_data[2]}
+::legacy::set_attribute -quiet min_transition no_value {/designs/sync_ld_dff_WORD_LENGTH4/ports_in/i_data[1]}
+::legacy::set_attribute -quiet original_name {i_data[1]} {/designs/sync_ld_dff_WORD_LENGTH4/ports_in/i_data[1]}
+::legacy::set_attribute -quiet min_transition no_value {/designs/sync_ld_dff_WORD_LENGTH4/ports_in/i_data[0]}
+::legacy::set_attribute -quiet original_name {i_data[0]} {/designs/sync_ld_dff_WORD_LENGTH4/ports_in/i_data[0]}
+::legacy::set_attribute -quiet min_transition no_value {/designs/sync_ld_dff_WORD_LENGTH4/ports_out/o_data[3]}
+::legacy::set_attribute -quiet original_name {o_data[3]} {/designs/sync_ld_dff_WORD_LENGTH4/ports_out/o_data[3]}
+::legacy::set_attribute -quiet min_transition no_value {/designs/sync_ld_dff_WORD_LENGTH4/ports_out/o_data[2]}
+::legacy::set_attribute -quiet original_name {o_data[2]} {/designs/sync_ld_dff_WORD_LENGTH4/ports_out/o_data[2]}
+::legacy::set_attribute -quiet min_transition no_value {/designs/sync_ld_dff_WORD_LENGTH4/ports_out/o_data[1]}
+::legacy::set_attribute -quiet original_name {o_data[1]} {/designs/sync_ld_dff_WORD_LENGTH4/ports_out/o_data[1]}
+::legacy::set_attribute -quiet min_transition no_value {/designs/sync_ld_dff_WORD_LENGTH4/ports_out/o_data[0]}
+::legacy::set_attribute -quiet original_name {o_data[0]} {/designs/sync_ld_dff_WORD_LENGTH4/ports_out/o_data[0]}
+::legacy::set_attribute -quiet original_name {{o_data[0]}} {/designs/sync_ld_dff_WORD_LENGTH4/instances_seq/o_data_reg[0]}
+::legacy::set_attribute -quiet orig_hdl_instantiated false {/designs/sync_ld_dff_WORD_LENGTH4/instances_seq/o_data_reg[0]}
+::legacy::set_attribute -quiet single_bit_orig_name {o_data[0]} {/designs/sync_ld_dff_WORD_LENGTH4/instances_seq/o_data_reg[0]}
+::legacy::set_attribute -quiet gint_phase_inversion false {/designs/sync_ld_dff_WORD_LENGTH4/instances_seq/o_data_reg[0]}
+::legacy::set_attribute -quiet original_name {o_data[0]/q} {/designs/sync_ld_dff_WORD_LENGTH4/instances_seq/o_data_reg[0]/pins_out/Q}
+::legacy::set_attribute -quiet original_name {{o_data[1]}} {/designs/sync_ld_dff_WORD_LENGTH4/instances_seq/o_data_reg[1]}
+::legacy::set_attribute -quiet orig_hdl_instantiated false {/designs/sync_ld_dff_WORD_LENGTH4/instances_seq/o_data_reg[1]}
+::legacy::set_attribute -quiet single_bit_orig_name {o_data[1]} {/designs/sync_ld_dff_WORD_LENGTH4/instances_seq/o_data_reg[1]}
+::legacy::set_attribute -quiet gint_phase_inversion false {/designs/sync_ld_dff_WORD_LENGTH4/instances_seq/o_data_reg[1]}
+::legacy::set_attribute -quiet original_name {o_data[1]/q} {/designs/sync_ld_dff_WORD_LENGTH4/instances_seq/o_data_reg[1]/pins_out/Q}
+::legacy::set_attribute -quiet original_name {{o_data[3]}} {/designs/sync_ld_dff_WORD_LENGTH4/instances_seq/o_data_reg[3]}
+::legacy::set_attribute -quiet orig_hdl_instantiated false {/designs/sync_ld_dff_WORD_LENGTH4/instances_seq/o_data_reg[3]}
+::legacy::set_attribute -quiet single_bit_orig_name {o_data[3]} {/designs/sync_ld_dff_WORD_LENGTH4/instances_seq/o_data_reg[3]}
+::legacy::set_attribute -quiet gint_phase_inversion false {/designs/sync_ld_dff_WORD_LENGTH4/instances_seq/o_data_reg[3]}
+::legacy::set_attribute -quiet original_name {o_data[3]/q} {/designs/sync_ld_dff_WORD_LENGTH4/instances_seq/o_data_reg[3]/pins_out/Q}
+::legacy::set_attribute -quiet original_name {{o_data[2]}} {/designs/sync_ld_dff_WORD_LENGTH4/instances_seq/o_data_reg[2]}
+::legacy::set_attribute -quiet orig_hdl_instantiated false {/designs/sync_ld_dff_WORD_LENGTH4/instances_seq/o_data_reg[2]}
+::legacy::set_attribute -quiet single_bit_orig_name {o_data[2]} {/designs/sync_ld_dff_WORD_LENGTH4/instances_seq/o_data_reg[2]}
+::legacy::set_attribute -quiet gint_phase_inversion false {/designs/sync_ld_dff_WORD_LENGTH4/instances_seq/o_data_reg[2]}
+::legacy::set_attribute -quiet original_name {o_data[2]/q} {/designs/sync_ld_dff_WORD_LENGTH4/instances_seq/o_data_reg[2]/pins_out/Q}
+#############################################################
+#####   FLOW WRITE   ########################################
+##
+## Written by Genus(TM) Synthesis Solution version 17.20-p003_1
+## Written on 18:38:15 27-Jun 2020
+#############################################################
+#####   Flow Definitions   ##################################
+
+#############################################################
+#####   Step Definitions   ##################################
+
+
+#############################################################
+#####   Attribute Definitions   #############################
+
+if {[is_attribute flow_edit_wildcard_end_steps -obj_type root]} {set_flowkit_db flow_edit_wildcard_end_steps {}}
+if {[is_attribute flow_edit_wildcard_start_steps -obj_type root]} {set_flowkit_db flow_edit_wildcard_start_steps {}}
+if {[is_attribute flow_footer_tcl -obj_type root]} {set_flowkit_db flow_footer_tcl {}}
+if {[is_attribute flow_header_tcl -obj_type root]} {set_flowkit_db flow_header_tcl {}}
+if {[is_attribute flow_metadata -obj_type root]} {set_flowkit_db flow_metadata {}}
+if {[is_attribute flow_step_begin_tcl -obj_type root]} {set_flowkit_db flow_step_begin_tcl {}}
+if {[is_attribute flow_step_check_tcl -obj_type root]} {set_flowkit_db flow_step_check_tcl {}}
+if {[is_attribute flow_step_end_tcl -obj_type root]} {set_flowkit_db flow_step_end_tcl {}}
+if {[is_attribute flow_step_order -obj_type root]} {set_flowkit_db flow_step_order {}}
+if {[is_attribute flow_summary_tcl -obj_type root]} {set_flowkit_db flow_summary_tcl {}}
+if {[is_attribute flow_template_feature_definition -obj_type root]} {set_flowkit_db flow_template_feature_definition {}}
+if {[is_attribute flow_template_type -obj_type root]} {set_flowkit_db flow_template_type {}}
+if {[is_attribute flow_template_version -obj_type root]} {set_flowkit_db flow_template_version {}}
+if {[is_attribute flow_user_templates -obj_type root]} {set_flowkit_db flow_user_templates {}}
+
+
+#############################################################
+#####   Flow History   ######################################
+
+if {[is_attribute flow_branch -obj_type root]} {set_flowkit_db flow_branch {}}
+if {[is_attribute flow_caller_data -obj_type root]} {set_flowkit_db flow_caller_data {}}
+if {[is_attribute flow_current -obj_type root]} {set_flowkit_db flow_current {}}
+if {[is_attribute flow_hier_path -obj_type root]} {set_flowkit_db flow_hier_path {}}
+if {[is_attribute flow_database_directory -obj_type root]} {set_flowkit_db flow_database_directory dbs}
+if {[is_attribute flow_exit_when_done -obj_type root]} {set_flowkit_db flow_exit_when_done false}
+if {[is_attribute flow_history -obj_type root]} {set_flowkit_db flow_history {}}
+if {[is_attribute flow_log_directory -obj_type root]} {set_flowkit_db flow_log_directory logs}
+if {[is_attribute flow_mail_on_error -obj_type root]} {set_flowkit_db flow_mail_on_error false}
+if {[is_attribute flow_mail_to -obj_type root]} {set_flowkit_db flow_mail_to {}}
+if {[is_attribute flow_metrics_file -obj_type root]} {set_flowkit_db flow_metrics_file {}}
+if {[is_attribute flow_metrics_snapshot_parent_uuid -obj_type root]} {set_flowkit_db flow_metrics_snapshot_parent_uuid {}}
+if {[is_attribute flow_metrics_snapshot_uuid -obj_type root]} {set_flowkit_db flow_metrics_snapshot_uuid {}}
+if {[is_attribute flow_overwrite_database -obj_type root]} {set_flowkit_db flow_overwrite_database false}
+if {[is_attribute flow_report_directory -obj_type root]} {set_flowkit_db flow_report_directory reports}
+if {[is_attribute flow_run_tag -obj_type root]} {set_flowkit_db flow_run_tag {}}
+if {[is_attribute flow_schedule -obj_type root]} {set_flowkit_db flow_schedule {}}
+if {[is_attribute flow_script -obj_type root]} {set_flowkit_db flow_script {}}
+if {[is_attribute flow_starting_db -obj_type root]} {set_flowkit_db flow_starting_db {}}
+if {[is_attribute flow_status_file -obj_type root]} {set_flowkit_db flow_status_file {}}
+if {[is_attribute flow_step_canonical_current -obj_type root]} {set_flowkit_db flow_step_canonical_current {}}
+if {[is_attribute flow_step_current -obj_type root]} {set_flowkit_db flow_step_current {}}
+if {[is_attribute flow_step_last -obj_type root]} {set_flowkit_db flow_step_last {}}
+if {[is_attribute flow_step_last_msg -obj_type root]} {set_flowkit_db flow_step_last_msg {}}
+if {[is_attribute flow_step_last_status -obj_type root]} {set_flowkit_db flow_step_last_status not_run}
+if {[is_attribute flow_step_next -obj_type root]} {set_flowkit_db flow_step_next {}}
+if {[is_attribute flow_working_directory -obj_type root]} {set_flowkit_db flow_working_directory .}
+
+#############################################################
+#####   User Defined Attributes   ###########################
+

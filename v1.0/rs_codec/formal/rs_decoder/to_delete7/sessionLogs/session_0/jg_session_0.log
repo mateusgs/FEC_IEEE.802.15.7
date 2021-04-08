@@ -1,0 +1,2127 @@
+#----------------------------------------
+# JasperGold Version Info
+# tool      : JasperGold 2019.06
+# platform  : Linux 3.10.0-1127.13.1.el7.x86_64
+# version   : 2019.06p001 64 bits
+# build date: 2019.08.01 18:19:57 PDT
+#----------------------------------------
+# started Thu Jul 30 01:16:41 BRT 2020
+# hostname  : optmaS1
+# pid       : 25025
+# arguments : '-label' 'session_0' '-console' 'optmaS1:38098' '-style' 'windows' '-data' 'AQAAADx/////AAAAAAAAA3oBAAAAEABMAE0AUgBFAE0ATwBWAEU=' '-proj' '/home/Mateus/workspace/UFMG_digital_design/rs_codec/formal/rs_decoder/to_delete7/sessionLogs/session_0' '-init' '-hidden' '/home/Mateus/workspace/UFMG_digital_design/rs_codec/formal/rs_decoder/to_delete7/.tmp/.initCmds.tcl' 'run_formal_functional_reqs.tcl'
+
+Any disclosure about the Cadence Design Systems software or its use
+model to any third party violates the written Non-Disclosure Agreement
+between Cadence Design Systems, Inc. and the customer.
+
+THIS SOFTWARE CONTAINS CONFIDENTIAL INFORMATION AND TRADE SECRETS OF
+CADENCE DESIGN SYSTEMS, INC. USE, DISCLOSURE, OR REPRODUCTION IS
+PROHIBITED WITHOUT THE PRIOR EXPRESS WRITTEN PERMISSION OF CADENCE
+DESIGN SYSTEMS, INC.
+
+Copyright (C) 2000-2019 Cadence Design Systems, Inc. All Rights
+Reserved.  Unpublished -- rights reserved under the copyright laws of
+the United States.
+
+This product includes software developed by others and redistributed
+according to license agreement. See doc/third_party_readme.txt for
+further details.
+
+RESTRICTED RIGHTS LEGEND
+
+Use, duplication, or disclosure by the Government is subject to
+restrictions as set forth in subparagraph (c) (1) (ii) of the Rights in
+Technical Data and Computer Software clause at DFARS 252.227-7013 or
+subparagraphs (c) (1) and (2) of Commercial Computer Software -- Restricted
+Rights at 48 CFR 52.227-19, as applicable.
+
+
+                          Cadence Design Systems, Inc. 
+                          2655 Seely Avenue
+                          San Jose, CA 95134
+                          Phone: 408.943.1234
+
+For technical assistance visit http://support.cadence.com.
+
+JasperGold Apps Analysis Session - /home/Mateus/workspace/UFMG_digital_design/rs_codec/formal/rs_decoder/to_delete7/sessionLogs/session_0
+
+/home/Mateus/workspace/UFMG_digital_design/rs_codec/formal/rs_decoder/to_delete7/jg.log
+INFO: successfully checked out licenses "jasper_interactive" and "jasper_fpv".
+INFO: reading configuration file "/home/Mateus/.config/jasper/jaspergold.conf".
+% proc run_checks_with_disturber {N K RS_GF} {
+    clear -all
+    run_design_compilation $N $K $RS_GF "disturber"
+    clock clk
+    reset rst
+    #TODO:Remove this constraint
+    assume -env i_consume
+    set TWO_TIMES_T [expr {$N - $K}]
+    rs_decoder_stall_checks $TWO_TIMES_T
+    rs_decoder_reset_checks $N $TWO_TIMES_T
+    rs_decoder_codeword_check $N $K $TWO_TIMES_T "disturber"
+}
+% 
+% proc run_checks_with_post_syndrome {N K RS_GF} {
+    clear -all
+    run_design_compilation $N $K $RS_GF "syndrome"
+    clock clk
+    reset rst
+    set TWO_TIMES_T [expr {$N - $K}]
+    rs_decoder_consume_checks
+    rs_decoder_stall_checks $TWO_TIMES_T
+    rs_decoder_reset_checks $N $TWO_TIMES_T
+    rs_decoder_codeword_check $N $K $TWO_TIMES_T "syndrome"
+}
+% 
+% clear -all
+INFO (IPF121): Cleared environment completely for new design analysis.
+% source requirements.itcl
+% source compilation.itcl
+INFO (IPF121): Cleared environment completely for new design analysis.
+% source procs.itcl
+% 
+% set params [get_parameters]
+{15 11 RS_GF_16}
+% 
+% foreach param $params {
+    set N [lindex $param 0]
+    set K [lindex $param 1] 
+    set RS_GF [lindex $param 2] 
+    
+    #run_checks_with_disturber $N $K $RS_GF
+    run_checks_with_post_syndrome $N $K $RS_GF
+}
+INFO (IPF121): Cleared environment completely for new design analysis.
+INFO (IPF121): Cleared environment completely for new design analysis.
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/standard_2008.vhd' into library 'std'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/standard_2008.vhd(9): analyzing package 'standard'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/textio_2008.vhd' into library 'std'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/textio_2008.vhd(13): analyzing package 'textio'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/textio_2008.vhd(159): analyzing package body 'textio'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/env_2008.vhd' into library 'std'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/env_2008.vhd(8): analyzing package 'env'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/env_2008.vhd(16): analyzing package body 'env'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/vl/mixed_lang_vltype.vhd' into library 'vl'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/vl/mixed_lang_vltype.vhd(9): analyzing package 'vl_types'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/vl/mixed_lang_vltype.vhd(88): analyzing package body 'vl_types'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/synopsys/syn_attr.vhd' into library 'synopsys'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/synopsys/syn_attr.vhd(39): analyzing package 'attributes'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164.vhdl(50): analyzing package 'std_logic_1164'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164-body.vhdl(48): analyzing package body 'std_logic_1164'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std.vhdl(63): analyzing package 'numeric_std'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std-body.vhdl(59): analyzing package body 'numeric_std'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned.vhdl(49): analyzing package 'numeric_std_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned-body.vhdl(59): analyzing package body 'numeric_std_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit.vhdl(53): analyzing package 'numeric_bit'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit-body.vhdl(51): analyzing package body 'numeric_bit'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned.vhdl(47): analyzing package 'numeric_bit_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned-body.vhdl(50): analyzing package body 'numeric_bit_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_p.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_p.vhd(68): analyzing package 'vital_timing'
+[WARN (VHDL-1721)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_p.vhd(150): return type of pure function cannot be of access type
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_b.vhd' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_b.vhd(54): analyzing package body 'vital_timing'
+[WARN (VHDL-1721)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_b.vhd(1132): return type of pure function cannot be of access type
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_p.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_p.vhd(50): analyzing package 'vital_primitives'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_b.vhd' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_b.vhd(38): analyzing package body 'vital_primitives'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_arit.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_arit.vhd(25): analyzing package 'std_logic_arith'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_arit.vhd(206): analyzing package body 'std_logic_arith'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_unsi.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_unsi.vhd(35): analyzing package 'std_logic_unsigned'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_unsi.vhd(94): analyzing package body 'std_logic_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_sign.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_sign.vhd(35): analyzing package 'std_logic_signed'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_sign.vhd(96): analyzing package body 'std_logic_signed'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_misc_2008.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_misc_2008.vhd(25): analyzing package 'std_logic_misc'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_misc_2008.vhd(112): analyzing package body 'std_logic_misc'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_textio.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_textio.vhdl(38): analyzing package 'std_logic_textio'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/ieee_bit_context.vhd' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/ieee_std_context.vhd' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real.vhdl(45): analyzing package 'math_real'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real-body.vhdl(45): analyzing package body 'math_real'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex.vhdl(46): analyzing package 'math_complex'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex-body.vhdl(47): analyzing package body 'math_complex'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_float_types.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_float_types.vhdl(37): analyzing package 'fixed_float_types'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg.vhdl(43): analyzing package 'fixed_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg-body.vhdl(40): analyzing package body 'fixed_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg.vhdl(43): analyzing package 'float_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg-body.vhdl(37): analyzing package body 'float_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_pkg.vhdl' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_pkg.vhdl' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/arithmetic/mgc_arit_2008.vhd' into library 'arithmetic'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/arithmetic/mgc_arit_2008.vhd(22): analyzing package 'std_logic_arith'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/arithmetic/mgc_arit_2008.vhd(274): analyzing package body 'std_logic_arith'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/qsim_logic/mgc_qsim.vhd' into library 'qsim_logic'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/qsim_logic/mgc_qsim.vhd(18): analyzing package 'qsim_logic'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/qsim_logic/mgc_qsim.vhd(753): analyzing package body 'qsim_logic'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/jasper_package/jasper_package.vhd' into library 'jasper_package'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/jasper_package/jasper_package.vhd(8): analyzing package 'jasper_package'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/generic_types.vhd'
+[INFO (VHDL-1014)] ../../../generic_components/rtl/generic_types.vhd(11): analyzing package 'generic_types'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/generic_functions.vhd'
+[INFO (VHDL-1014)] ../../../generic_components/rtl/generic_functions.vhd(10): analyzing package 'generic_functions'
+[INFO (VHDL-1013)] ../../../generic_components/rtl/generic_functions.vhd(26): analyzing package body 'generic_functions'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/generic_components.vhd'
+[INFO (VHDL-1014)] ../../../generic_components/rtl/generic_components.vhd(13): analyzing package 'generic_components'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_types.vhd'
+[INFO (VHDL-1014)] ../../rtl/rs_types.vhd(4): analyzing package 'rs_types'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_constants.vhd'
+[INFO (VHDL-1014)] ../../rtl/rs_constants.vhd(11): analyzing package 'rs_constants'
+[INFO (VHDL-1013)] ../../rtl/rs_constants.vhd(4144): analyzing package body 'rs_constants'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_functions.vhd'
+[INFO (VHDL-1014)] ../../rtl/rs_functions.vhd(18): analyzing package 'rs_functions'
+[INFO (VHDL-1013)] ../../rtl/rs_functions.vhd(26): analyzing package body 'rs_functions'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_components.vhd'
+[INFO (VHDL-1014)] ../../rtl/rs_components.vhd(12): analyzing package 'rs_components'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_constants.vhd'
+[INFO (VHDL-1014)] ../../rtl/rs_constants.vhd(11): analyzing package 'rs_constants'
+[INFO (VHDL-1013)] ../../rtl/rs_constants.vhd(4144): analyzing package body 'rs_constants'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_decoder.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_decoder.vhd(22): analyzing entity 'rs_decoder'
+[INFO (VHDL-1010)] ../../rtl/rs_decoder.vhd(47): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/async_dff.vhd'
+[INFO (VHDL-1012)] ../../../generic_components/rtl/async_dff.vhd(11): analyzing entity 'async_dff'
+[INFO (VHDL-1010)] ../../../generic_components/rtl/async_dff.vhd(23): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/d_sync_flop.vhd'
+[INFO (VHDL-1012)] ../../../generic_components/rtl/d_sync_flop.vhd(11): analyzing entity 'sync_dff'
+[INFO (VHDL-1010)] ../../../generic_components/rtl/d_sync_flop.vhd(23): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/no_rst_dff.vhd'
+[INFO (VHDL-1012)] ../../../generic_components/rtl/no_rst_dff.vhd(4): analyzing entity 'no_rst_dff'
+[INFO (VHDL-1010)] ../../../generic_components/rtl/no_rst_dff.vhd(15): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/config_dff_array.vhd'
+[INFO (VHDL-1012)] ../../../generic_components/rtl/config_dff_array.vhd(13): analyzing entity 'config_dff_array'
+[INFO (VHDL-1010)] ../../../generic_components/rtl/config_dff_array.vhd(26): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/sync_dff_array.vhd'
+[INFO (VHDL-1012)] ../../../generic_components/rtl/sync_dff_array.vhd(13): analyzing entity 'sync_dff_array'
+[INFO (VHDL-1010)] ../../../generic_components/rtl/sync_dff_array.vhd(26): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/reg_fifo_array.vhd'
+[INFO (VHDL-1012)] ../../../generic_components/rtl/reg_fifo_array.vhd(30): analyzing entity 'reg_fifo_array'
+[INFO (VHDL-1010)] ../../../generic_components/rtl/reg_fifo_array.vhd(52): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/reg_fifo.vhd'
+[INFO (VHDL-1012)] ../../../generic_components/rtl/reg_fifo.vhd(28): analyzing entity 'reg_fifo'
+[INFO (VHDL-1010)] ../../../generic_components/rtl/reg_fifo.vhd(50): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/up_counter.vhd'
+[INFO (VHDL-1012)] ../../../generic_components/rtl/up_counter.vhd(5): analyzing entity 'up_counter'
+[INFO (VHDL-1010)] ../../../generic_components/rtl/up_counter.vhd(17): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/sync_ld_dff.vhd'
+[INFO (VHDL-1012)] ../../../generic_components/rtl/sync_ld_dff.vhd(5): analyzing entity 'sync_ld_dff'
+[INFO (VHDL-1010)] ../../../generic_components/rtl/sync_ld_dff.vhd(16): analyzing architecture 'bh_reg'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/flop_cascade.vhd'
+[INFO (VHDL-1012)] ../../../generic_components/rtl/flop_cascade.vhd(7): analyzing entity 'flop_cascade'
+[INFO (VHDL-1010)] ../../../generic_components/rtl/flop_cascade.vhd(22): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_adder.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_adder.vhd(4): analyzing entity 'rs_adder'
+[INFO (VHDL-1010)] ../../rtl/rs_adder.vhd(16): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_multiplier_lut.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_multiplier_lut.vhd(15): analyzing entity 'rs_multiplier_lut'
+[INFO (VHDL-1010)] ../../rtl/rs_multiplier_lut.vhd(26): analyzing architecture 'lut'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_multiplier.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_multiplier.vhd(8): analyzing entity 'rs_multiplier'
+[INFO (VHDL-1010)] ../../rtl/rs_multiplier.vhd(20): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_inverse.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_inverse.vhd(15): analyzing entity 'rs_inverse'
+[INFO (VHDL-1010)] ../../rtl/rs_inverse.vhd(26): analyzing architecture 'lut'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_full_multiplier_core.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_full_multiplier_core.vhd(11): analyzing entity 'rs_full_multiplier_core'
+[INFO (VHDL-1010)] ../../rtl/rs_full_multiplier_core.vhd(22): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_full_multiplier.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_full_multiplier.vhd(14): analyzing entity 'rs_full_multiplier'
+[INFO (VHDL-1010)] ../../rtl/rs_full_multiplier.vhd(26): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_reduce_adder.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_reduce_adder.vhd(14): analyzing entity 'rs_reduce_adder'
+[INFO (VHDL-1010)] ../../rtl/rs_reduce_adder.vhd(25): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_syndrome_subunit.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_syndrome_subunit.vhd(9): analyzing entity 'rs_syndrome_subunit'
+[INFO (VHDL-1010)] ../../rtl/rs_syndrome_subunit.vhd(25): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_syndrome.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_syndrome.vhd(6): analyzing entity 'rs_syndrome'
+[INFO (VHDL-1010)] ../../rtl/rs_syndrome.vhd(35): analyzing architecture 'behavioral'
+[INFO (VHDL-1012)] ../../rtl/rs_syndrome.vhd(128): analyzing entity 'rs_syndrome_control'
+[INFO (VHDL-1010)] ../../rtl/rs_syndrome.vhd(155): analyzing architecture 'behavioral'
+[INFO (VHDL-1012)] ../../rtl/rs_syndrome.vhd(339): analyzing entity 'rs_syndrome_unit'
+[INFO (VHDL-1010)] ../../rtl/rs_syndrome.vhd(355): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_berlekamp_massey.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_berlekamp_massey.vhd(5): analyzing entity 'rs_berlekamp_massey_control'
+[INFO (VHDL-1010)] ../../rtl/rs_berlekamp_massey.vhd(25): analyzing architecture 'behavioral'
+[INFO (VHDL-1012)] ../../rtl/rs_berlekamp_massey.vhd(143): analyzing entity 'register_shifter'
+[INFO (VHDL-1010)] ../../rtl/rs_berlekamp_massey.vhd(153): analyzing architecture 'behavioral'
+[INFO (VHDL-1012)] ../../rtl/rs_berlekamp_massey.vhd(183): analyzing entity 'register_feedback_shifter'
+[INFO (VHDL-1010)] ../../rtl/rs_berlekamp_massey.vhd(194): analyzing architecture 'behavioral'
+[INFO (VHDL-1012)] ../../rtl/rs_berlekamp_massey.vhd(233): analyzing entity 'rs_berlekamp_massey_unit'
+[INFO (VHDL-1010)] ../../rtl/rs_berlekamp_massey.vhd(252): analyzing architecture 'behavioral'
+[INFO (VHDL-1012)] ../../rtl/rs_berlekamp_massey.vhd(473): analyzing entity 'rs_berlekamp_massey'
+[INFO (VHDL-1010)] ../../rtl/rs_berlekamp_massey.vhd(492): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_chien.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_chien.vhd(14): analyzing entity 'rs_chien'
+[INFO (VHDL-1010)] ../../rtl/rs_chien.vhd(30): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_forney.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_forney.vhd(13): analyzing entity 'rs_forney'
+[INFO (VHDL-1010)] ../../rtl/rs_forney.vhd(30): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_chien_forney.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_chien_forney.vhd(12): analyzing entity 'rs_chien_forney'
+[INFO (VHDL-1010)] ../../rtl/rs_chien_forney.vhd(38): analyzing architecture 'behavioral'
+[INFO (VHDL-1012)] ../../rtl/rs_chien_forney.vhd(147): analyzing entity 'rs_chien_forney_control'
+[INFO (VHDL-1010)] ../../rtl/rs_chien_forney.vhd(172): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_encoder.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_encoder.vhd(12): analyzing entity 'rs_encoder'
+[INFO (VHDL-1010)] ../../rtl/rs_encoder.vhd(36): analyzing architecture 'behavior'
+[INFO (VHDL-1012)] ../../rtl/rs_encoder.vhd(155): analyzing entity 'rs_encoder_control'
+[INFO (VHDL-1010)] ../../rtl/rs_encoder.vhd(186): analyzing architecture 'behavioral'
+[INFO (VHDL-1012)] ../../rtl/rs_encoder.vhd(365): analyzing entity 'rs_encoder_unit'
+[INFO (VHDL-1010)] ../../rtl/rs_encoder.vhd(383): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/async_dff.vhd'
+[INFO (VHDL-1012)] ../../../generic_components/rtl/async_dff.vhd(11): analyzing entity 'async_dff'
+[INFO (VHDL-1010)] ../../../generic_components/rtl/async_dff.vhd(23): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_remainder_unit.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_remainder_unit.vhd(8): analyzing entity 'rs_remainder_unit'
+[INFO (VHDL-1010)] ../../rtl/rs_remainder_unit.vhd(24): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_syndrome.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_syndrome.vhd(6): analyzing entity 'rs_syndrome'
+[INFO (VHDL-1010)] ../../rtl/rs_syndrome.vhd(35): analyzing architecture 'behavioral'
+[INFO (VHDL-1012)] ../../rtl/rs_syndrome.vhd(128): analyzing entity 'rs_syndrome_control'
+[INFO (VHDL-1010)] ../../rtl/rs_syndrome.vhd(155): analyzing architecture 'behavioral'
+[INFO (VHDL-1012)] ../../rtl/rs_syndrome.vhd(339): analyzing entity 'rs_syndrome_unit'
+[INFO (VHDL-1010)] ../../rtl/rs_syndrome.vhd(355): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_syndrome_subunit.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_syndrome_subunit.vhd(9): analyzing entity 'rs_syndrome_subunit'
+[INFO (VHDL-1010)] ../../rtl/rs_syndrome_subunit.vhd(25): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_encoder_wrapper.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_encoder_wrapper.vhd(15): analyzing entity 'rs_encoder_wrapper'
+[INFO (VHDL-1010)] ../../rtl/rs_encoder_wrapper.vhd(40): analyzing architecture 'behavior'
+[-- (VHDL-1481)] Analyzing VHDL file 'rtl/rs_disturber.vhd'
+[INFO (VHDL-1012)] rtl/rs_disturber.vhd(13): analyzing entity 'rs_disturber'
+[INFO (VHDL-1010)] rtl/rs_disturber.vhd(47): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file 'rtl/rs_codec_with_disturber.vhd'
+[INFO (VHDL-1012)] rtl/rs_codec_with_disturber.vhd(10): analyzing entity 'rs_codec_with_disturber'
+[INFO (VHDL-1010)] rtl/rs_codec_with_disturber.vhd(43): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file 'rtl/rs_decoder_plus_syndrome.vhd'
+[INFO (VHDL-1012)] rtl/rs_decoder_plus_syndrome.vhd(18): analyzing entity 'rs_decoder_plus_syndrome'
+[INFO (VHDL-1010)] rtl/rs_decoder_plus_syndrome.vhd(44): analyzing architecture 'behavior'
+[-- (VERI-1482)] Analyzing Verilog file '/home/tools/jasper_2019.06p001/lib/verilog/packages/std/std.sv' into library 'std'
+[-- (VERI-1482)] Analyzing Verilog file 'fv_decoder.sv'
+INFO (ISW003): Top module name is "rs_decoder_plus_syndrome".
+[INFO (VHDL-1067)] rtl/rs_decoder_plus_syndrome.vhd(18): executing 'rs_decoder_plus_syndrome(n=15,k=11,rs_gf=rs_gf_16)(behavior)'
+[WARN (VHDL-1303)] rtl/rs_decoder_plus_syndrome.vhd(52): using initial value  for 'w_disturb_input' since it is never assigned
+[INFO (VHDL-1067)] ../../rtl/rs_syndrome.vhd(339): executing 'rs_syndrome_unit(word_length=4,two_times_t=4)(behavioral)'
+[INFO (VHDL-1067)] ../../rtl/rs_syndrome_subunit.vhd(9): executing 'rs_syndrome_subunit(word_length=4,i=0)(behavioral)'
+[INFO (VHDL-1067)] ../../rtl/rs_adder.vhd(4): executing 'rs_adder(word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../../rtl/rs_multiplier.vhd(8): executing 'rs_multiplier(word_length=4,mult_constant=1)(behavioral)'
+[INFO (VHDL-1067)] ../../rtl/rs_multiplier_lut.vhd(15): executing 'rs_multiplier_lut(word_length=4,mult_constant=1)(lut)'
+[INFO (VHDL-1067)] ../../../generic_components/rtl/async_dff.vhd(11): executing 'async_dff(word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../../rtl/rs_syndrome_subunit.vhd(9): executing 'rs_syndrome_subunit(word_length=4,i=1)(behavioral)'
+[INFO (VHDL-1067)] ../../rtl/rs_multiplier.vhd(8): executing 'rs_multiplier(word_length=4,mult_constant=2)(behavioral)'
+[INFO (VHDL-1067)] ../../rtl/rs_multiplier_lut.vhd(15): executing 'rs_multiplier_lut(word_length=4,mult_constant=2)(lut)'
+[INFO (VHDL-1067)] ../../rtl/rs_syndrome_subunit.vhd(9): executing 'rs_syndrome_subunit(word_length=4,i=2)(behavioral)'
+[INFO (VHDL-1067)] ../../rtl/rs_multiplier.vhd(8): executing 'rs_multiplier(word_length=4,mult_constant=4)(behavioral)'
+[INFO (VHDL-1067)] ../../rtl/rs_multiplier_lut.vhd(15): executing 'rs_multiplier_lut(word_length=4,mult_constant=4)(lut)'
+[INFO (VHDL-1067)] ../../rtl/rs_syndrome_subunit.vhd(9): executing 'rs_syndrome_subunit(word_length=4,i=3)(behavioral)'
+[INFO (VHDL-1067)] ../../rtl/rs_multiplier.vhd(8): executing 'rs_multiplier(word_length=4,mult_constant=8)(behavioral)'
+[INFO (VHDL-1067)] ../../rtl/rs_multiplier_lut.vhd(15): executing 'rs_multiplier_lut(word_length=4,mult_constant=8)(lut)'
+[INFO (VHDL-1067)] ../../../generic_components/rtl/reg_fifo.vhd(28): executing 'reg_fifo(word_length=4,num_of_elements=46)(behavioral)'
+[INFO (VHDL-9046)] ../../../generic_components/rtl/reg_fifo.vhd(55): creating type property for signal 'r_WR_INDEX'
+[INFO (VHDL-9046)] ../../../generic_components/rtl/reg_fifo.vhd(56): creating type property for signal 'r_RD_INDEX'
+[INFO (VHDL-9046)] ../../../generic_components/rtl/reg_fifo.vhd(59): creating type property for signal 'r_FIFO_COUNT'
+[INFO (VHDL-1067)] ../../../generic_components/rtl/up_counter.vhd(5): executing 'up_counter(word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../../rtl/rs_decoder.vhd(22): executing 'rs_decoder(n=15,k=11,rs_gf=rs_gf_16)(behavioral)'
+[INFO (VHDL-1067)] ../../rtl/rs_syndrome.vhd(6): executing 'rs_syndrome(n=15,k=11,word_length=4,two_times_t=4,output_parity_symbols=true)(behavioral)'
+[INFO (VHDL-1067)] ../../rtl/rs_syndrome.vhd(128): executing 'rs_syndrome_control(n=15,k=11,word_length=4,output_parity_symbols=true)(behavioral)'
+[INFO (VHDL-9046)] ../../rtl/rs_syndrome.vhd(165): creating type property for signal 'r_state'
+[INFO (VHDL-9046)] ../../rtl/rs_syndrome.vhd(166): creating type property for signal 'r_counter'
+[INFO (VHDL-1067)] ../../../generic_components/rtl/reg_fifo_array.vhd(30): executing 'reg_fifo_array(array_width=4,num_of_elements=1,word_length=4)(behavioral)'
+[INFO (VHDL-9046)] ../../../generic_components/rtl/reg_fifo_array.vhd(57): creating type property for signal 'r_WR_INDEX'
+[INFO (VHDL-9046)] ../../../generic_components/rtl/reg_fifo_array.vhd(58): creating type property for signal 'r_RD_INDEX'
+[INFO (VHDL-9046)] ../../../generic_components/rtl/reg_fifo_array.vhd(61): creating type property for signal 'r_FIFO_COUNT'
+[INFO (VHDL-1067)] ../../rtl/rs_berlekamp_massey.vhd(473): executing 'rs_berlekamp_massey(word_length=4,two_times_t=4)(behavioral)'
+[INFO (VHDL-1067)] ../../rtl/rs_berlekamp_massey.vhd(5): executing 'rs_berlekamp_massey_control(word_length=4,two_times_t=4)(behavioral)'
+[INFO (VHDL-9046)] ../../rtl/rs_berlekamp_massey.vhd(32): creating type property for signal 'r_state'
+[INFO (VHDL-1067)] ../../rtl/rs_berlekamp_massey.vhd(233): executing 'rs_berlekamp_massey_unit(word_length=4,two_times_t=4)(behavioral)'
+[INFO (VHDL-9046)] ../../rtl/rs_berlekamp_massey.vhd(279): creating type property for signal 'r_2l'
+[INFO (VHDL-1067)] ../../../generic_components/rtl/config_dff_array.vhd(13): executing 'config_dff_array(num_of_elements=4,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../../../generic_components/rtl/d_sync_flop.vhd(11): executing 'sync_dff(word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../../rtl/rs_berlekamp_massey.vhd(143): executing 'register_shifter(num_of_elements=2,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../../rtl/rs_full_multiplier.vhd(14): executing 'rs_full_multiplier(word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../../rtl/rs_full_multiplier_core.vhd(11): executing 'rs_full_multiplier_core(word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../../rtl/rs_reduce_adder.vhd(14): executing 'rs_reduce_adder(num_of_elements=3,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../../rtl/rs_inverse.vhd(15): executing 'rs_inverse(word_length=4)(lut)'
+[INFO (VHDL-1067)] ../../rtl/rs_berlekamp_massey.vhd(183): executing 'register_feedback_shifter(num_of_elements=2,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../../../generic_components/rtl/sync_dff_array.vhd(13): executing 'sync_dff_array(num_of_elements=2,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../../../generic_components/rtl/reg_fifo_array.vhd(30): executing 'reg_fifo_array(array_width=3,num_of_elements=1,word_length=4)(behavioral)'
+[INFO (VHDL-9046)] ../../../generic_components/rtl/reg_fifo_array.vhd(57): creating type property for signal 'r_WR_INDEX'
+[INFO (VHDL-9046)] ../../../generic_components/rtl/reg_fifo_array.vhd(58): creating type property for signal 'r_RD_INDEX'
+[INFO (VHDL-9046)] ../../../generic_components/rtl/reg_fifo_array.vhd(61): creating type property for signal 'r_FIFO_COUNT'
+[INFO (VHDL-1067)] ../../../generic_components/rtl/reg_fifo_array.vhd(30): executing 'reg_fifo_array(array_width=2,num_of_elements=1,word_length=4)(behavioral)'
+[INFO (VHDL-9046)] ../../../generic_components/rtl/reg_fifo_array.vhd(57): creating type property for signal 'r_WR_INDEX'
+[INFO (VHDL-9046)] ../../../generic_components/rtl/reg_fifo_array.vhd(58): creating type property for signal 'r_RD_INDEX'
+[INFO (VHDL-9046)] ../../../generic_components/rtl/reg_fifo_array.vhd(61): creating type property for signal 'r_FIFO_COUNT'
+[INFO (VHDL-1067)] ../../rtl/rs_chien_forney.vhd(12): executing 'rs_chien_forney(word_length=4,two_times_t=4)(behavioral)'
+[INFO (VHDL-1067)] ../../../generic_components/rtl/no_rst_dff.vhd(4): executing 'no_rst_dff(word_length=1)(behavioral)'
+[INFO (VHDL-1067)] ../../../generic_components/rtl/no_rst_dff.vhd(4): executing 'no_rst_dff(word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../../rtl/rs_chien.vhd(14): executing 'rs_chien(word_length=4,t=2)(behavioral)'
+[WARN (VHDL-1129)] ../../rtl/rs_chien.vhd(39): initial value for signal ignored
+[INFO (VHDL-1067)] ../../rtl/rs_reduce_adder.vhd(14): executing 'rs_reduce_adder(num_of_elements=2,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../../rtl/rs_reduce_adder.vhd(14): executing 'rs_reduce_adder(num_of_elements=1,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../../rtl/rs_forney.vhd(13): executing 'rs_forney(word_length=4,t=2)(behavioral)'
+[INFO (VHDL-1067)] ../../rtl/rs_chien_forney.vhd(147): executing 'rs_chien_forney_control(word_length=4,two_times_t=4)(behavioral)'
+[INFO (VHDL-9046)] ../../rtl/rs_chien_forney.vhd(189): creating type property for signal 'r_state'
+[INFO (VHDL-1067)] ../../../generic_components/rtl/reg_fifo.vhd(28): executing 'reg_fifo(word_length=4,num_of_elements=47,o_full_minus_one=true)(behavioral)'
+[INFO (VHDL-9046)] ../../../generic_components/rtl/reg_fifo.vhd(55): creating type property for signal 'r_WR_INDEX'
+[INFO (VHDL-9046)] ../../../generic_components/rtl/reg_fifo.vhd(56): creating type property for signal 'r_RD_INDEX'
+[INFO (VHDL-9046)] ../../../generic_components/rtl/reg_fifo.vhd(59): creating type property for signal 'r_FIFO_COUNT'
+[INFO (VHDL-1067)] ../../../generic_components/rtl/reg_fifo.vhd(28): executing 'reg_fifo(word_length=4,num_of_elements=4)(behavioral)'
+[INFO (VHDL-9046)] ../../../generic_components/rtl/reg_fifo.vhd(59): creating type property for signal 'r_FIFO_COUNT'
+INFO (IPM031): Clearing proof results of all properties.
+INFO (IRS006): Current reset condition is "rst".
+INFO (IPM004): The name "property:0" is assigned to assertion "not i_consume and o_valid |=> $past(DUT.RS_CHIEN_FORNEY_INST.RS_CHIEN_INST.r_flop) = DUT.RS_CHIEN_FORNEY_INST.RS_CHIEN_INST.r_flop or o_error".
+WARNING (WOBS004): Non-sequence cover property can have non-LRM-compliant semantics. For LRM semantics, use the "elaborate" flag "-lrm_cover_property".
+INFO (IPM033): The name "cover:0" is assigned to cover "not i_consume and o_valid |=> $past(DUT.RS_CHIEN_FORNEY_INST.RS_CHIEN_INST.r_flop) = DUT.RS_CHIEN_FORNEY_INST.RS_CHIEN_INST.r_flop or o_error".
+INFO (IPM004): The name "property:1" is assigned to assertion "not i_consume and o_valid |=> $past(DUT.RS_CHIEN_FORNEY_INST.RS_FORNEY_INST.r_flop) = DUT.RS_CHIEN_FORNEY_INST.RS_FORNEY_INST.r_flop or o_error".
+WARNING (WOBS004): Non-sequence cover property can have non-LRM-compliant semantics. For LRM semantics, use the "elaborate" flag "-lrm_cover_property".
+INFO (IPM033): The name "cover:1" is assigned to cover "not i_consume and o_valid |=> $past(DUT.RS_CHIEN_FORNEY_INST.RS_FORNEY_INST.r_flop) = DUT.RS_CHIEN_FORNEY_INST.RS_FORNEY_INST.r_flop or o_error".
+INFO (IPM004): The name "property:2" is assigned to assertion "not i_consume and o_valid |=> $past(DUT.w_symbol_fifo_output) = DUT.w_symbol_fifo_output or o_error".
+WARNING (WOBS004): Non-sequence cover property can have non-LRM-compliant semantics. For LRM semantics, use the "elaborate" flag "-lrm_cover_property".
+INFO (IPM033): The name "cover:2" is assigned to cover "not i_consume and o_valid |=> $past(DUT.w_symbol_fifo_output) = DUT.w_symbol_fifo_output or o_error".
+Hpcustom1: Custom engine code is hT3NZbhPPfqY2AbBQnsjfOxn6c+6e6yL+/e8fYueaMCoQAEA
+INFO (IPF036): Starting proof on task: "consume", 6 properties to prove with 0 already proven/unreachable
+INFO (IRS029): Starting reset analysis: phase 1 of 4.
+INFO (IRS030): Running reset analysis: phase 2 of 4.
+INFO (IRS031): Running reset analysis: phase 3 of 4.
+INFO (IRS020): Starting the reset analysis simulation with a limit of 100 iterations (phase 4 of 4).
+INFO (IRS024): Reset iterations 0 to 4 analyzed.
+INFO (IRS018): Reset analysis simulation executed for 3 iterations. Assigned values for 201 of 665 design flops, 0 of 0 design latches, 15 of 63 internal elements.
+INFO (IRS039): Reset analysis complete.
+INFO (IPF031): Settings used for proof thread 0:
+    orchestration                 = on (auto)
+    time_limit                    = 86400s
+    per_property_time_limit       = 1s * 10 ^ scan
+    engine_mode                   = auto
+    proofgrid_per_engine_max_jobs = 1
+    max engine jobs               = auto
+    proofgrid_mode                = local
+    proofgrid_restarts            = 10
+AMcustom2: Custom engine code is hT3N/LhP/2Dz3DrVSe2lNjiSpGmyu5Klv2ELvwL2WCQ+iY7rtAZ05ZC7TYTjerFjm57AUr54KxI2LGPAdQPc+eiMri1dI47yA50CRDdixbORmxz6cC+fZzChw2WXiQWUpM8rQS1DvRGCnsdRtkwXwn5/wC8U1oGSk2zvtl/p5mB+RV+nlTid0KCMqOgMR7nmW6XEAQA
+Ncustom3: Custom engine code is hT3NR7hPByLp3DrFSTPhwoIgCxPsqvZp21H/ym7EyTra3ms6eTBVZwJJnDhKmpN3woHootcWDlvmP07qcJRE1mUlIYMcSXUf1ExUD+hh5xN33vG9+qWOknUTM64CUjZpIk7qvPS+5IOws79QOzn5IqFPWD8RgByBUKPsu4ZUa9AO97P6cus4/HdmN+iijpsbAG5PrODXEeit9bdDREds7k7Rd2Vug5lgs78jIAEA
+Ncustom4: Custom engine code is hT3NR7hPByFp3TrFSTLhUmMH4KWtJglTyV/c51BHEeZWamnJv767nE6PCak26bd3gf3XGN3rIRheufhDieCJQVISo+gNYUKhiUedBKGtsP/a18svAnlMJZudHxDFwK5ufsyoxsIyiAeSY2oi3tEuoDHr5gw42DFKAG3PqO3CEsl8Azzdt3pl5nGA1Ifv2H02eYsFzWb/nfp8PMb3F0krE/EgBcm8TD9Div8BAA
+Tricustom5: Custom engine code is hT3Nu7hP3fiYQADBZnYcglNHp9bfd7EOeniIqP/ji8sGLQu8yhsFO+wxJ+O+R0bU8g/IewXFomyos+viQnWc2xYNYmMqpo3i40O7DaZR7qfp4YqNx26KRvQ/qx0BAA
+0: Using multistage preprocessing
+0: Starting reduce
+0: Finished reduce in 0.004s
+0.0.PRE: Performing Proof Simplification...
+0.0.N: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.N: Proof Simplification Iteration 1	[0.00 s]
+0.0.N: Proof Simplification Iteration 2	[0.00 s]
+0.0.N: Proof Simplification Iteration 3	[0.01 s]
+0.0.N: Proof Simplification Iteration 4	[0.01 s]
+0.0.N: Proof Simplification Iteration 5	[0.01 s]
+0.0.PRE: A proof was found: No trace exists. [0,00 s]
+INFO (IPF057): 0.0.PRE: The property ":noDeadEnd" was proven in 0.00 s.
+use check_assumptions -show -dead_end to show this property in the property table
+0.0.PRE: A proof was found: No trace exists. [0,00 s]
+INFO (IPF057): 0.0.PRE: The property ":noConflict" was proven in 0.00 s.
+use check_assumptions -show to show this property in the property table
+INFO (IPF047): 0.0.PRE: The cover property ":live" was covered in 1 cycles in 0.00 s.
+use check_assumptions -show -live to show this property in the property table
+0.0.PRE: Proof Simplification completed in 0,03 s
+0: About to start ProofGrid in its own thread with a limit of 10000 pending notifications and a limit of 10 traces.
+0: =============================== ProofGrid start ===============================
+0: ProofGrid usable level: 6
+0: ProofGrid is starting event handling
+0.0.Hts: Proofgrid shell started at 25524@optmaS1(local) jg_25025_optmaS1_1
+0.0.Hts: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Hts: Next scan (0) will use per property time limit: 1s * 10 ^ 0 = 1s
+0.0.Hts: Starting proof for property "cover:1"	[0,00 s].
+0.0.Hts: Trace Attempt  1	[0,00 s]
+0.0.Hts: Trace Attempt  2	[0,00 s]
+0.0.Hts: Trace Attempt  3	[0,00 s]
+0.0.Hts: Trace Attempt  4	[0,00 s]
+0.0.Hts: Trace Attempt  5	[0,00 s]
+0.0.N: Proofgrid shell started at 25523@optmaS1(local) jg_25025_optmaS1_1
+0.0.N: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.N: Next scan (0) will use per property time limit: 1s * 10 ^ 0 = 1s
+0.0.N: Starting proof for property "cover:1"	[0,00 s].
+0.0.N: Trace Attempt  1	[0,00 s]
+0.0.N: Trace Attempt  2	[0,00 s]
+0.0.N: Trace Attempt  3	[0,00 s]
+0.0.N: Trace Attempt  3	[0,01 s]
+0.0.N: Trace Attempt  4	[0,01 s]
+0.0.N: Trace Attempt  5	[0,01 s]
+0.0.N: Trace Attempt  5	[0,02 s]
+0.0.Hts: Trace Attempt 31	[0,98 s]
+0.0.Hts: Per property time limit expired (1,00 s) [1,00 s]
+0.0.Hts: Stopped processing property "cover:1"	[1,00 s].
+0.0.Hts: Starting proof for property "cover:2"	[0,00 s].
+0.0.Hts: Trace Attempt  1	[0,01 s]
+0.0.Hts: Trace Attempt  2	[0,01 s]
+0.0.Hts: Trace Attempt  3	[0,01 s]
+0.0.Hts: Trace Attempt  4	[0,01 s]
+0.0.Hts: Trace Attempt  5	[0,01 s]
+0.0.N: Stopped processing property "cover:1"	[0,93 s].
+0.0.N: Starting proof for property "cover:2"	[0,00 s].
+0.0.N: Trace Attempt  1	[0,01 s]
+0.0.N: Trace Attempt  2	[0,01 s]
+0.0.N: Trace Attempt  3	[0,01 s]
+0.0.N: Trace Attempt  3	[0,04 s]
+0.0.N: Trace Attempt  4	[0,05 s]
+0.0.N: Trace Attempt  5	[0,05 s]
+0.0.N: Trace Attempt  5	[0,07 s]
+0.0.Hts: Trace Attempt 32	[0,49 s]
+0.0.Hts: A trace with 32 cycles was found. [0,49 s]
+INFO (IPF047): 0.0.Hts: The cover property "cover:2" was covered in 32 cycles in 0.58 s.
+0.0.Hts: Stopped processing property "cover:2"	[0,58 s].
+0.0.Hts: Starting proof for property "property:0"	[0,00 s].
+0.0.Hts: Trace Attempt  1	[0,00 s]
+0.0.Hts: Trace Attempt  2	[0,00 s]
+0.0.Hts: Trace Attempt  3	[0,01 s]
+0.0.Hts: Trace Attempt  4	[0,01 s]
+0.0.Hts: Trace Attempt  5	[0,01 s]
+0.0.N: Stopped processing property "cover:2"	[0,56 s].
+0.0.N: Starting proof for property "property:0"	[0,00 s].
+0.0.N: Trace Attempt  1	[0,00 s]
+0.0.N: Trace Attempt  2	[0,00 s]
+0.0.N: Trace Attempt  3	[0,00 s]
+0.0.N: Trace Attempt  3	[0,00 s]
+0.0.N: Trace Attempt  4	[0,01 s]
+0.0.N: Trace Attempt  5	[0,01 s]
+0.0.N: Trace Attempt  5	[0,01 s]
+0: ProofGrid usable level: 5
+0.0.N: Trace Attempt  1	[0,65 s]
+0.0.N: Trace Attempt  2	[0,65 s]
+0.0.N: Validation of fixpoint was successful. Time = 0.00
+0.0.N: A proof was found: No trace exists. [0,66 s]
+INFO (IPF057): 0.0.N: The property "property:0" was proven in 0.59 s.
+0.0.Hts: Stopped processing property "property:0"	[0,59 s].
+0.0.Hts: Starting proof for property "cover:0"	[0,00 s].
+0.0.Hts: Trace Attempt  1	[0,02 s]
+0.0.Hts: Trace Attempt  2	[0,02 s]
+0.0.Hts: Trace Attempt  3	[0,02 s]
+0.0.N: Stopped processing property "property:0"	[0,61 s].
+0.0.N: Starting proof for property "cover:0"	[0,00 s].
+0.0.Hts: Trace Attempt  4	[0,02 s]
+0.0.Hts: Trace Attempt  5	[0,02 s]
+0.0.N: Trace Attempt  1	[0,01 s]
+0.0.N: Trace Attempt  2	[0,01 s]
+0.0.N: Trace Attempt  3	[0,01 s]
+0.0.N: Trace Attempt  3	[0,03 s]
+0.0.N: Trace Attempt  4	[0,04 s]
+0.0.N: Trace Attempt  5	[0,04 s]
+0.0.N: Trace Attempt  5	[0,06 s]
+0: ProofGrid usable level: 4
+0.0.Hts: Stopped processing property "cover:0"	[0,10 s].
+0.0.Hts: Morphing to K
+0.0.Hts: Trace Attempt 24	[0,10 s]
+0.0.Hts: All properties determined. [0,00 s]
+0.0.Hts: Exited with Success (@ 0,00 s)
+0.0.N: Stopped processing property "cover:0"	[0,08 s].
+0.0.N: Starting proof for property "cover:1"	[0,00 s].
+0.0.K: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.K: Starting proof for property "cover:1"	[0,00 s].
+0.0.K: Trace Attempt 23	[0,05 s]
+0.0.K: Trace Attempt  1	[0,40 s]
+0.0.K: Trace Attempt  2	[0,40 s]
+0.0.K: Trace Attempt  3	[0,40 s]
+0.0.K: Trace Attempt  4	[0,40 s]
+0.0.K: Trace Attempt  5	[0,40 s]
+0: ProofGrid usable level: 4
+0.0.K: Trace Attempt  1	[0,93 s]
+0.0.K: Trace Attempt  2	[0,93 s]
+0.0.K: Trace Attempt  3	[0,94 s]
+0.0.K: Trace Attempt  4	[0,94 s]
+0.0.K: Trace Attempt  5	[0,94 s]
+0.0.K: Trace Attempt 15	[1,00 s]
+0.0.K: Per property time limit expired (1,00 s) [1,01 s]
+0.0.K: Stopped processing property "cover:1"	[1,01 s].
+0.0.K: Starting proof for property "property:1"	[0,00 s].
+0.0.N: Trace Attempt 24	[0,59 s]
+0.0.N: Per property time limit expired (1,00 s) [1,03 s]
+0.0.N: Stopped processing property "cover:1"	[1,04 s].
+0.0.N: Starting proof for property "property:1"	[0,00 s].
+0.0.N: Trace Attempt  1	[0,00 s]
+0.0.N: Trace Attempt  2	[0,01 s]
+0.0.N: Trace Attempt  3	[0,01 s]
+0.0.N: Trace Attempt  3	[0,02 s]
+0.0.N: Trace Attempt  4	[0,02 s]
+0.0.N: Trace Attempt  5	[0,03 s]
+0.0.K: Trace Attempt  3	[0,05 s]
+0.0.K: Trace Attempt  1	[0,06 s]
+0.0.N: Trace Attempt  5	[0,05 s]
+0.0.K: Trace Attempt  1	[0,11 s]
+0.0.K: Trace Attempt  1	[0,35 s]
+0.0.K: Trace Attempt  1	[0,65 s]
+0.0.N: Trace Attempt  1	[0,94 s]
+0.0.N: Trace Attempt  2	[0,94 s]
+0.0.N: Validation of fixpoint was successful. Time = 0.00
+0.0.N: A proof was found: No trace exists. [0,94 s]
+INFO (IPF057): 0.0.N: The property "property:1" was proven in 0.95 s.
+0.0.K: Trace Attempt  1	[0,97 s]
+0.0.K: Stopped processing property "property:1"	[0,97 s].
+0.0.K: Starting proof for property "cover:0"	[0,00 s].
+0.0.N: Stopped processing property "property:1"	[0,98 s].
+0.0.N: Starting proof for property "cover:0"	[0,00 s].
+0.0.K: Trace Attempt  1	[0,03 s]
+0.0.K: Trace Attempt  2	[0,04 s]
+0.0.K: Trace Attempt  3	[0,04 s]
+0.0.K: Trace Attempt  4	[0,04 s]
+0.0.K: Trace Attempt  5	[0,04 s]
+0.0.K: Trace Attempt  1	[0,12 s]
+0.0.K: Trace Attempt  1	[0,50 s]
+0.0.K: Trace Attempt  2	[0,50 s]
+0.0.K: Trace Attempt  3	[0,50 s]
+0.0.K: Trace Attempt  4	[0,50 s]
+0.0.K: Trace Attempt  5	[0,50 s]
+0: ProofGrid usable level: 3
+0.0.K: Trace Attempt  1	[0,82 s]
+0.0.K: Trace Attempt  2	[0,82 s]
+0.0.K: Trace Attempt  3	[0,82 s]
+0.0.K: Trace Attempt  4	[0,82 s]
+0.0.K: Trace Attempt  5	[0,83 s]
+0.0.K: Trace Attempt 24	[0,94 s]
+0.0.K: Per property time limit expired (1,00 s) [1,01 s]
+0.0.K: Stopped processing property "cover:0"	[1,01 s].
+0.0.K: Starting proof for property "cover:1"	[0,00 s].
+0.0.N: Stopped processing property "cover:0"	[1,00 s].
+0.0.N: Starting proof for property "cover:1"	[0,00 s].
+0.0.K: Trace Attempt 24	[0,23 s]
+0.0.K: Trace Attempt 32	[0,78 s]
+0.0.K: Per property time limit expired (1,00 s) [1,01 s]
+0.0.K: Stopped processing property "cover:1"	[1,01 s].
+0.0.K: Starting proof for property "property:2"	[0,00 s].
+0.0.K: Trace Attempt  1	[0,00 s]
+0.0.K: Trace Attempt  1	[0,00 s]
+0.0.K: Trace Attempt  2	[0,00 s]
+0.0.K: Trace Attempt  3	[0,00 s]
+0.0.K: Trace Attempt  3	[0,01 s]
+0.0.K: Trace Attempt  1	[0,01 s]
+0.0.K: Trace Attempt  2	[0,01 s]
+0.0.K: Trace Attempt  3	[0,01 s]
+0.0.K: Trace Attempt  4	[0,01 s]
+0.0.K: Trace Attempt  5	[0,01 s]
+0.0.K: Trace Attempt  5	[0,03 s]
+0.0.N: Trace Attempt 32	[0,76 s]
+0.0.N: Per property time limit expired (1,00 s) [1,04 s]
+0.0.N: Stopped processing property "cover:1"	[1,04 s].
+0.0.N: Starting proof for property "property:2"	[0,00 s].
+0.0.K: Trace Attempt  1	[0,04 s]
+0.0.K: Trace Attempt  2	[0,04 s]
+0.0.K: Trace Attempt  3	[0,04 s]
+0.0.K: Trace Attempt  4	[0,04 s]
+0.0.K: Trace Attempt  5	[0,04 s]
+0.0.K: Trace Attempt  1	[0,07 s]
+0.0.K: Trace Attempt  2	[0,07 s]
+0.0.K: Trace Attempt  3	[0,07 s]
+0.0.K: Trace Attempt  4	[0,07 s]
+0.0.K: Trace Attempt  5	[0,08 s]
+0.0.N: Trace Attempt 12	[0,10 s]
+0.0.N: Stopped processing property "property:2"	[0,16 s].
+0.0.N: Morphing to AM
+0.0.N: Trace Attempt 13	[0,15 s]
+0.0.N: All properties determined. [0,00 s]
+0.0.N: Exited with Success (@ 0,00 s)
+0.0.AM: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.K: Trace Attempt  1	[0,20 s]
+0.0.AM: Starting proof for property "cover:0"	[0,00 s].
+0.0.K: Stopped processing property "property:2"	[0,20 s].
+0.0.K: Morphing to B
+0.0.K: All properties determined. [0,00 s]
+0.0.K: Exited with Success (@ 0,00 s)
+0.0.B: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.B: Starting proof for property "cover:0"	[0,00 s].
+0.0.B: Trace Attempt  1	[0,00 s]
+0.0.B: Trace Attempt  2	[0,01 s]
+0.0.B: Trace Attempt  3	[0,01 s]
+0.0.AM: Trace Attempt  1	[0,02 s]
+0.0.B: Trace Attempt  4	[0,02 s]
+0.0.AM: Trace Attempt  1	[0,02 s]
+0.0.AM: Trace Attempt  2	[0,02 s]
+0.0.AM: Trace Attempt  3	[0,03 s]
+0.0.B: Trace Attempt  5	[0,03 s]
+0.0.AM: Trace Attempt  1	[0,03 s]
+0.0.AM: Trace Attempt  2	[0,03 s]
+0.0.AM: Trace Attempt  3	[0,03 s]
+0.0.AM: Trace Attempt  4	[0,04 s]
+0.0.AM: Trace Attempt  5	[0,06 s]
+0.0.AM: Trace Attempt  1	[0,07 s]
+0.0.AM: Trace Attempt  2	[0,07 s]
+0.0.AM: Trace Attempt  3	[0,08 s]
+0.0.AM: Trace Attempt  1	[0,11 s]
+0.0.AM: Trace Attempt  2	[0,11 s]
+0.0.AM: Trace Attempt  3	[0,11 s]
+0.0.AM: Trace Attempt  1	[0,44 s]
+0.0.AM: Trace Attempt  2	[0,44 s]
+0.0.AM: Trace Attempt  3	[0,44 s]
+0.0.AM: Trace Attempt 22	[0,49 s]
+0.0.AM: Per property time limit expired (0,99 s) [0,99 s]
+0.0.AM: Stopped processing property "cover:0"	[1,00 s].
+0.0.AM: Starting proof for property "property:2"	[0,00 s].
+0.0.B: Trace Attempt 30	[0,94 s]
+0.0.B: Per property time limit expired (0,99 s) [1,00 s]
+0.0.B: Stopped processing property "cover:0"	[1,00 s].
+0.0.B: Starting proof for property "property:2"	[0,00 s].
+0.0.AM: Trace Attempt  1	[0,01 s]
+0.0.B: Trace Attempt  1	[0,00 s]
+0.0.B: Trace Attempt  2	[0,01 s]
+0.0.AM: Trace Attempt  1	[0,02 s]
+0.0.AM: Trace Attempt  2	[0,02 s]
+0.0.B: Trace Attempt  3	[0,01 s]
+0.0.B: Trace Attempt  4	[0,02 s]
+0.0.AM: Trace Attempt  3	[0,04 s]
+0.0.AM: Trace Attempt  1	[0,05 s]
+0.0.B: Trace Attempt  5	[0,04 s]
+0.0.AM: Trace Attempt  2	[0,05 s]
+0.0.AM: Trace Attempt  3	[0,06 s]
+0.0.AM: Trace Attempt  4	[0,06 s]
+0.0.AM: Trace Attempt  5	[0,09 s]
+0.0.AM: Trace Attempt  1	[0,13 s]
+0.0.AM: Trace Attempt  2	[0,14 s]
+0.0.AM: Trace Attempt  3	[0,14 s]
+0.0.AM: Trace Attempt  1	[0,41 s]
+0.0.AM: Trace Attempt  2	[0,41 s]
+0.0.AM: Trace Attempt  3	[0,42 s]
+0.0.AM: Trace Attempt  1	[0,83 s]
+0.0.AM: Trace Attempt  2	[0,84 s]
+0.0.AM: Trace Attempt  3	[0,84 s]
+0.0.AM: Trace Attempt 14	[0,91 s]
+0.0.AM: Per property time limit expired (1,00 s) [1,01 s]
+0.0.AM: Stopped processing property "property:2"	[1,01 s].
+0.0.AM: Starting proof for property "property:2"	[0,00 s].
+0.0.AM: Trace Attempt  1	[0,01 s]
+0.0.AM: Trace Attempt  1	[0,01 s]
+0.0.AM: Trace Attempt  2	[0,01 s]
+0.0.AM: Trace Attempt  3	[0,04 s]
+0.0.AM: Trace Attempt  1	[0,06 s]
+0.0.AM: Trace Attempt  2	[0,06 s]
+0.0.AM: Trace Attempt  3	[0,07 s]
+0.0.B: Trace Attempt 24	[0,96 s]
+0.0.B: Per property time limit expired (1,00 s) [1,08 s]
+0.0.B: Stopped processing property "property:2"	[1,08 s].
+0.0.B: Next scan (1) will use per property time limit: 1s * 10 ^ 1 = 10s
+0.0.B: Starting proof for property "cover:0"	[0,00 s].
+0.0.B: Trace Attempt  1	[0,00 s]
+0.0.AM: Stopped processing property "property:2"	[0,09 s].
+0.0.AM: Next scan (1) will use per property time limit: 1s * 10 ^ 1 = 10s
+0.0.AM: Starting proof for property "cover:0"	[0,00 s].
+0.0.AM: Trace Attempt  1	[0,00 s]
+0.0.AM: Trace Attempt  1	[0,01 s]
+0.0.AM: Trace Attempt  2	[0,01 s]
+0.0.AM: Trace Attempt  3	[0,01 s]
+0.0.AM: Trace Attempt  1	[0,01 s]
+0.0.AM: Trace Attempt  2	[0,01 s]
+0.0.AM: Trace Attempt  3	[0,01 s]
+0.0.AM: Trace Attempt  4	[0,02 s]
+0.0.AM: Trace Attempt  5	[0,03 s]
+0.0.B: Trace Attempt  2	[0,04 s]
+0.0.AM: Trace Attempt  1	[0,04 s]
+0.0.AM: Trace Attempt  2	[0,04 s]
+0.0.AM: Trace Attempt  3	[0,04 s]
+0.0.B: Trace Attempt  3	[0,07 s]
+0.0.B: Trace Attempt  4	[0,09 s]
+0.0.B: Trace Attempt  5	[0,11 s]
+0.0.AM: Trace Attempt  1	[0,17 s]
+0.0.AM: Trace Attempt  2	[0,18 s]
+0.0.AM: Trace Attempt  3	[0,19 s]
+0.0.AM: Trace Attempt  1	[0,59 s]
+0.0.AM: Trace Attempt  2	[0,59 s]
+0.0.AM: Trace Attempt  3	[0,59 s]
+0.0.B: Trace Attempt 32	[1,12 s]
+0.0.B: A trace with 32 cycles was found. [1,15 s]
+INFO (IPF047): 0.0.B: The cover property "cover:0" was covered in 32 cycles in 1.15 s.
+INFO (IPF047): 0.0.B: The cover property "cover:1" was covered in 32 cycles in 1.15 s by the incidental trace "cover:0".
+0.0.AM: Stopped processing property "cover:0"	[1,15 s].
+0.0.AM: Last scan. Per property time limit: 0s
+0.0.AM: Starting proof for property "property:2"	[0,00 s].
+0.0.AM: Trace Attempt  1	[0,01 s]
+0.0.B: Stopped processing property "cover:0"	[1,16 s].
+0.0.B: Last scan. Per property time limit: 0s
+0.0.B: Starting proof for property "property:2"	[0,00 s].
+0.0.AM: Trace Attempt  1	[0,01 s]
+0.0.AM: Trace Attempt  2	[0,01 s]
+0.0.B: Trace Attempt  1	[0,01 s]
+0.0.AM: Trace Attempt  3	[0,02 s]
+0.0.B: Trace Attempt  2	[0,02 s]
+0.0.AM: Trace Attempt  1	[0,03 s]
+0.0.AM: Trace Attempt  2	[0,03 s]
+0.0.B: Trace Attempt  3	[0,03 s]
+0.0.AM: Trace Attempt  3	[0,03 s]
+0.0.AM: Trace Attempt  4	[0,04 s]
+0.0.B: Trace Attempt  4	[0,04 s]
+0.0.B: Trace Attempt  5	[0,05 s]
+0.0.AM: Trace Attempt  5	[0,07 s]
+0.0.AM: Trace Attempt  1	[0,12 s]
+0.0.AM: Trace Attempt  2	[0,12 s]
+0.0.AM: Trace Attempt  3	[0,15 s]
+0.0.AM: Trace Attempt  1	[0,36 s]
+0.0.AM: Trace Attempt  2	[0,36 s]
+0.0.AM: Trace Attempt  3	[0,36 s]
+0: ProofGrid usable level: 1
+0.0.AM: Stopped processing property "property:2"	[0,52 s].
+0.0.AM: Morphing to N
+0.0.AM: Trace Attempt 21	[0,50 s]
+0.0.AM: All properties determined. [0,00 s]
+0.0.AM: Exited with Success (@ 0,00 s)
+0.0.N: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.N: Starting proof for property "property:2"	[0,00 s].
+0.0.N: Trace Attempt 13	[0,03 s]
+0.0.B: Stopped processing property "property:2"	[0,56 s].
+0.0.B: Morphing to I
+0.0.B: Trace Attempt 20	[0,50 s]
+0.0.B: All properties determined. [0,00 s]
+0.0.B: Exited with Success (@ 0,00 s)
+0.0.I: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.I: Starting proof for property "property:2"	[0,00 s].
+0.0.I: Trace Attempt 13	[0,02 s]
+0.0.I: Trace Attempt 27	[4,39 s]
+0.0.N: Trace Attempt 33	[8,23 s]
+0.0.I: Trace Attempt 30	[8,52 s]
+0.0.N: Stopped processing property "property:2"	[11,96 s].
+0.0.N: Morphing to Tri
+0.0.N: Trace Attempt 33	[8,80 s]
+0.0.N: All properties determined. [0,00 s]
+0.0.N: Exited with Success (@ 0,00 s)
+0.0.Tri: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.I: Stopped processing property "property:2"	[11,96 s].
+0.0.I: Morphing to Hts
+0.0.I: Trace Attempt 33	[8,84 s]
+0.0.I: All properties determined. [0,00 s]
+0.0.I: Exited with Success (@ 0,00 s)
+0.0.Hts: Starting proof for property "property:2"	[0,00 s].
+0.0.Tri: Starting proof for property "property:2"	[0,00 s].
+0.0.Tri: Trace Attempt  1	[0,00 s]
+0.0.Hts: Trace Attempt  1	[0,06 s]
+0.0.Hts: Trace Attempt  2	[0,06 s]
+0.0.Hts: Trace Attempt  3	[0,06 s]
+0.0.Hts: Trace Attempt  4	[0,06 s]
+0.0.Hts: Trace Attempt  5	[0,06 s]
+0.0.Tri:    0.00" ---- Launching main thread ----
+0.0.Tri:    0.14" ---- Launching abstraction thread ----
+0.0.Tri:    0.19" ---- Launching multi-phase simplification thread ----
+0.0.Tri: Trace Attempt  2	[0,98 s]
+0.0.Tri: Trace Attempt  3	[1,31 s]
+0.0.Tri: Trace Attempt  4	[1,36 s]
+0.0.Tri: Trace Attempt  5	[1,37 s]
+0.0.Tri: Stopped processing property "property:2"	[2,08 s].
+0.0.Hts: Stopped processing property "property:2"	[2,09 s].
+0.0.Hts: Morphing to AD
+0.0.Hts: Trace Attempt 33	[0,15 s]
+0.0.Hts: All properties determined. [0,00 s]
+0.0.Hts: Exited with Success (@ 0,00 s)
+0.0.AD: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.AD: Starting proof for property "property:2"	[0,00 s].
+0.0.Tri: Morphing to D
+0.0.Tri: Trace Attempt 14	[1,48 s]
+0.0.Tri: All properties determined. [0,00 s]
+0.0.Tri: Exited with Success (@ 0,00 s)
+0.0.D: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.D: Starting proof for property "property:2"	[0,00 s].
+0.0.D: Trace Attempt  1	[0,00 s]
+0.0.AD: Trace Attempt  1	[0,01 s]
+0.0.D: Trace Attempt  2	[0,01 s]
+0.0.AD: Trace Attempt  1	[0,01 s]
+0.0.AD: Trace Attempt  2	[0,02 s]
+0.0.AD: Trace Attempt  3	[0,02 s]
+0.0.D: Trace Attempt  3	[0,02 s]
+0.0.AD: Trace Attempt  1	[0,03 s]
+0.0.AD: Trace Attempt  2	[0,03 s]
+0.0.AD: Trace Attempt  3	[0,04 s]
+0.0.AD: Trace Attempt  4	[0,05 s]
+0.0.AD: Trace Attempt  5	[0,07 s]
+0.0.D: Trace Attempt  4	[0,08 s]
+0.0.AD: Trace Attempt  1	[0,12 s]
+0.0.AD: Trace Attempt  2	[0,12 s]
+0.0.AD: Trace Attempt  3	[0,14 s]
+0.0.D: Trace Attempt  5	[0,14 s]
+0.0.AD: Trace Attempt  4	[0,15 s]
+0.0.AD: Trace Attempt  5	[0,17 s]
+0.0.AD: Trace Attempt  1	[0,53 s]
+0.0.AD: Trace Attempt  2	[0,53 s]
+0.0.AD: Trace Attempt  3	[0,54 s]
+0.0.AD: Trace Attempt  4	[0,56 s]
+0.0.AD: Trace Attempt  5	[0,58 s]
+0.0.AD: Trace Attempt  1	[1,76 s]
+0.0.AD: Trace Attempt  2	[1,76 s]
+0.0.AD: Trace Attempt  3	[1,78 s]
+0.0.AD: Trace Attempt  4	[1,80 s]
+0.0.AD: Trace Attempt  5	[1,83 s]
+INFO (IIM002): *** Stopping all proof jobs ***
+INFO (IPF144): 0: Initiating shutdown of proof [30,20]
+0.0.D: Stopped processing property "property:2"	[5,83 s].
+0.0.D: Trace Attempt 22	[2,88 s]
+0.0.D: Interrupted. [15,10 s]
+0.0.D: Exited with Success (@ 30,23 s)
+0.0.AD: Stopped processing property "property:2"	[5,85 s].
+0.0.AD: Trace Attempt 32	[5,35 s]
+0.0.AD: Interrupted. [16,30 s]
+0.0.AD: Exited with Success (@ 30,27 s)
+0: ProofGrid usable level: 0
+0: --------------------------------------------------------------
+ProofGrid Summary
+--------------------------------------------------------------
+     engines started                               :     9
+     engine jobs started                           :     2
+     jobs where 1 minute load exceeded core count  :     2
+     jobs where 15 minute load exceeded core count :     2
+
+    Average time in state (seconds)
+    ------------------------------------------------------
+    Engine  Pending     Running        Dead    Utilization
+    ------------------------------------------------------
+      D        0.22       29.92        0.00       99.26 %
+     AD        0.12       30.11        0.00       99.59 %
+    all        0.17       30.02        0.00       99.43 %
+
+    Data read    : 81.02 kiB
+    Data written : 9.73 kiB
+
+0: All pending notifications were processed.
+INFO (IPM007): "prove" command stopped.
+
+==============================================================
+SUMMARY
+==============================================================
+           Properties Considered              : 6
+                 assertions                   : 3
+                  - proven                    : 2 (66.6667%)
+                  - bounded_proven (user)     : 0 (0%)
+                  - bounded_proven (auto)     : 0 (0%)
+                  - marked_proven             : 0 (0%)
+                  - cex                       : 0 (0%)
+                  - ar_cex                    : 0 (0%)
+                  - undetermined              : 1 (33.3333%)
+                  - unknown                   : 0 (0%)
+                  - error                     : 0 (0%)
+                 covers                       : 3
+                  - unreachable               : 0 (0%)
+                  - bounded_unreachable (user): 0 (0%)
+                  - covered                   : 3 (100%)
+                  - ar_covered                : 0 (0%)
+                  - undetermined              : 0 (0%)
+                  - unknown                   : 0 (0%)
+                  - error                     : 0 (0%)
+Evaluating 'get_property_list -include {status {cex unreachable}} -task consume'. expected: ''
+0,0 seconds
+INFO (IPM033): The name "cover:3" is assigned to cover "not DUT.i_valid and  (DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = START_SYNDROME or  DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = COMPUTE_SYNDROME or DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = STALL)".
+INFO (IPM004): The name "property:3" is assigned to assertion "not DUT.i_valid and (DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = START_SYNDROME or  DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = COMPUTE_SYNDROME or  DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = STALL)  |=> $stable(DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_counter)".
+INFO (IPM004): The name "property:4" is assigned to assertion "not DUT.i_valid and (DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = START_SYNDROME or  DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = COMPUTE_SYNDROME or  DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = STALL) |=> ##1  $stable(DUT.RS_SYNDROME_INST.RS_SYNDROME_UNIT_INST.GEN_RS_SYNDROME_UNIT(0).RS_SYNDROME_SUBUNIT_INST.r_dff)".
+INFO (IPM004): The name "property:5" is assigned to assertion "not DUT.i_valid and (DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = START_SYNDROME or  DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = COMPUTE_SYNDROME or  DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = STALL) |=> ##1  $stable(DUT.RS_SYNDROME_INST.RS_SYNDROME_UNIT_INST.GEN_RS_SYNDROME_UNIT(1).RS_SYNDROME_SUBUNIT_INST.r_dff)".
+INFO (IPM004): The name "property:6" is assigned to assertion "not DUT.i_valid and (DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = START_SYNDROME or  DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = COMPUTE_SYNDROME or  DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = STALL) |=> ##1  $stable(DUT.RS_SYNDROME_INST.RS_SYNDROME_UNIT_INST.GEN_RS_SYNDROME_UNIT(2).RS_SYNDROME_SUBUNIT_INST.r_dff)".
+INFO (IPM004): The name "property:7" is assigned to assertion "not DUT.i_valid and (DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = START_SYNDROME or  DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = COMPUTE_SYNDROME or  DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = STALL) |=> ##1  $stable(DUT.RS_SYNDROME_INST.RS_SYNDROME_UNIT_INST.GEN_RS_SYNDROME_UNIT(3).RS_SYNDROME_SUBUNIT_INST.r_dff)".
+INFO (IPF036): Starting proof on task: "stall", 6 properties to prove with 0 already proven/unreachable
+INFO (IRS026): Computing reset analysis for expressions.
+INFO (IRS027): Finished computing reset analysis for expressions.
+INFO (IPF031): Settings used for proof thread 1:
+    orchestration                 = on (auto)
+    time_limit                    = 86400s
+    per_property_time_limit       = 1s * 10 ^ scan
+    engine_mode                   = auto
+    proofgrid_per_engine_max_jobs = 1
+    max engine jobs               = auto
+    proofgrid_mode                = local
+    proofgrid_restarts            = 10
+1: Using multistage preprocessing
+1: Starting reduce
+1: Finished reduce in 0.001s
+1.0.PRE: Performing Proof Simplification...
+1.0.N: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+1.0.N: Proof Simplification Iteration 1	[0.00 s]
+1.0.N: Proof Simplification Iteration 2	[0.00 s]
+1.0.N: Proof Simplification Iteration 3	[0.00 s]
+1.0.N: Proof Simplification Iteration 4	[0.00 s]
+1.0.N: Proof Simplification Iteration 5	[0.00 s]
+1.0.N: Proof Simplification Iteration 6	[0.01 s]
+1.0.N: Proof Simplification Iteration 7	[0.01 s]
+1.0.PRE: A proof was found: No trace exists. [0,00 s]
+INFO (IPF057): 1.0.PRE: The property ":noDeadEnd" was proven in 0.00 s.
+use check_assumptions -show -dead_end to show this property in the property table
+1.0.PRE: A proof was found: No trace exists. [0,00 s]
+INFO (IPF057): 1.0.PRE: The property ":noConflict" was proven in 0.00 s.
+use check_assumptions -show to show this property in the property table
+INFO (IPF047): 1.0.PRE: The cover property ":live" was covered in 1 cycles in 0.00 s.
+use check_assumptions -show -live to show this property in the property table
+1.0.PRE: Proof Simplification completed in 0,01 s
+1: About to start ProofGrid in its own thread with a limit of 10000 pending notifications and a limit of 10 traces.
+1: =============================== ProofGrid start ===============================
+1: ProofGrid usable level: 6
+1: ProofGrid is starting event handling
+1.0.N: Proofgrid shell started at 25900@optmaS1(local) jg_25025_optmaS1_2
+1.0.N: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+1.0.N: Next scan (0) will use per property time limit: 1s * 10 ^ 0 = 1s
+1.0.N: Starting proof for property "property:5"	[0,00 s].
+1.0.N: Trace Attempt  1	[0,00 s]
+1.0.N: Trace Attempt  2	[0,00 s]
+1.0.N: Trace Attempt  3	[0,00 s]
+1.0.N: Trace Attempt  3	[0,00 s]
+1.0.N: Trace Attempt  4	[0,00 s]
+1.0.N: Trace Attempt  4	[0,01 s]
+1.0.Tri: Proofgrid shell started at 25901@optmaS1(local) jg_25025_optmaS1_2
+1.0.N: Trace Attempt  5	[0,01 s]
+1.0.Tri: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+1.0.N: Trace Attempt  1	[0,02 s]
+1.0.N: Trace Attempt  2	[0,02 s]
+1.0.N: Trace Attempt  3	[0,02 s]
+1.0.N: Trace Attempt  4	[0,02 s]
+1.0.N: Validation of fixpoint was successful. Time = 0.00
+1.0.N: A proof was found: No trace exists. [0,03 s]
+INFO (IPF057): 1.0.N: The property "property:5" was proven in 0.03 s.
+1.0.N: Stopped processing property "property:5"	[0,03 s].
+1.0.N: Starting proof for property "property:7"	[0,00 s].
+1.0.N: Trace Attempt  1	[0,00 s]
+1.0.N: Trace Attempt  2	[0,00 s]
+1.0.N: Trace Attempt  3	[0,00 s]
+1.0.N: Trace Attempt  3	[0,00 s]
+1.0.N: Trace Attempt  4	[0,01 s]
+1.0.N: Trace Attempt  4	[0,01 s]
+1.0.N: Trace Attempt  5	[0,02 s]
+1.0.N: Trace Attempt  1	[0,03 s]
+1.0.N: Trace Attempt  2	[0,03 s]
+1.0.N: Trace Attempt  3	[0,03 s]
+1.0.N: Trace Attempt  4	[0,03 s]
+1.0.N: Validation of fixpoint was successful. Time = 0.00
+1.0.N: A proof was found: No trace exists. [0,03 s]
+INFO (IPF057): 1.0.N: The property "property:7" was proven in 0.03 s.
+1.0.N: Stopped processing property "property:7"	[0,03 s].
+1.0.N: Starting proof for property "cover:3"	[0,00 s].
+1.0.N: Trace Attempt  1	[0,00 s]
+1.0.N: Trace Attempt  2	[0,00 s]
+1.0.N: Trace Attempt  2	[0,00 s]
+1.0.N: A trace with 2 cycles was found. [0,00 s]
+INFO (IPF047): 1.0.N: The cover property "cover:3" was covered in 2 cycles in 0.01 s.
+1.0.N: Stopped processing property "cover:3"	[0,01 s].
+1.0.N: Starting proof for property "property:3"	[0,00 s].
+1.0.Tri: Next scan (0) will use per property time limit: 1s * 10 ^ 0 = 1s
+1.0.Tri: Starting proof for property "property:3"	[0,00 s].
+1.0.Tri: Trace Attempt  1	[0,00 s]
+1.0.N: Trace Attempt  1	[0,00 s]
+1.0.N: Trace Attempt  2	[0,00 s]
+1.0.N: Trace Attempt  3	[0,00 s]
+1.0.N: Trace Attempt  3	[0,00 s]
+1.0.N: Trace Attempt  4	[0,01 s]
+1.0.N: Trace Attempt  5	[0,01 s]
+1.0.N: Trace Attempt  1	[0,01 s]
+1.0.N: Trace Attempt  2	[0,01 s]
+1.0.N: Validation of fixpoint was successful. Time = 0.00
+1.0.N: A proof was found: No trace exists. [0,01 s]
+INFO (IPF057): 1.0.N: The property "property:3" was proven in 0.01 s.
+1.0.N: Stopped processing property "property:3"	[0,01 s].
+1.0.N: Starting proof for property "property:4"	[0,00 s].
+1.0.N: Trace Attempt  1	[0,00 s]
+1.0.N: Trace Attempt  2	[0,00 s]
+1.0.N: Trace Attempt  3	[0,00 s]
+1.0.N: Trace Attempt  3	[0,00 s]
+1.0.N: Trace Attempt  4	[0,00 s]
+1.0.N: Trace Attempt  4	[0,01 s]
+1.0.N: Trace Attempt  5	[0,01 s]
+1.0.N: Trace Attempt  1	[0,01 s]
+1.0.N: Trace Attempt  2	[0,01 s]
+1.0.N: Trace Attempt  3	[0,01 s]
+1.0.N: Trace Attempt  4	[0,01 s]
+1.0.N: Validation of fixpoint was successful. Time = 0.00
+1.0.N: A proof was found: No trace exists. [0,02 s]
+INFO (IPF057): 1.0.N: The property "property:4" was proven in 0.02 s.
+1.0.N: Stopped processing property "property:4"	[0,02 s].
+1.0.N: Last scan. Per property time limit: 0s
+1.0.N: Starting proof for property "property:6"	[0,00 s].
+1.0.N: Trace Attempt  1	[0,00 s]
+1.0.N: Trace Attempt  2	[0,00 s]
+1.0.N: Trace Attempt  3	[0,00 s]
+1.0.N: Trace Attempt  3	[0,00 s]
+1.0.N: Trace Attempt  4	[0,00 s]
+1.0.N: Trace Attempt  4	[0,01 s]
+1.0.N: Trace Attempt  5	[0,01 s]
+1.0.N: Trace Attempt  1	[0,01 s]
+1.0.N: Trace Attempt  2	[0,01 s]
+1.0.N: Trace Attempt  3	[0,02 s]
+1.0.N: Trace Attempt  4	[0,02 s]
+1.0.N: Validation of fixpoint was successful. Time = 0.00
+1.0.N: Requesting engine job to stop
+1.0.Tri: Requesting engine job to stop
+INFO (IPF144): 1: Initiating shutdown of proof [0,12]
+1.0.N: A proof was found: No trace exists. [0,02 s]
+INFO (IPF057): 1.0.N: The property "property:6" was proven in 0.02 s.
+1.0.N: Stopped processing property "property:6"	[0,02 s].
+1.0.N: All properties determined. [0,05 s]
+1.0.Tri: Stopped processing property "property:3"	[0,20 s].
+1.0.N: Exited with Success (@ 0,28 s)
+1: ProofGrid usable level: 0
+1.0.Tri: All properties determined. [0,00 s]
+1.0.Tri: Exited with Success (@ 0,28 s)
+1: --------------------------------------------------------------
+ProofGrid Summary
+--------------------------------------------------------------
+     engines started                               :     2
+     engine jobs started                           :     2
+     jobs where 1 minute load exceeded core count  :     2
+     jobs where 15 minute load exceeded core count :     2
+
+    Average time in state (seconds)
+    ------------------------------------------------------
+    Engine  Pending     Running        Dead    Utilization
+    ------------------------------------------------------
+      N        0.23        0.12        0.00       34.75 %
+    Tri        0.22        0.10        0.00       31.43 %
+    all        0.23        0.11        0.00       33.15 %
+
+    Data read    : 6.71 kiB
+    Data written : 1.84 kiB
+
+1: All pending notifications were processed.
+INFO (IPF059): Completed proof on task: "stall" for proof thread 1
+
+==============================================================
+SUMMARY
+==============================================================
+           Properties Considered              : 6
+                 assertions                   : 5
+                  - proven                    : 5 (100%)
+                  - bounded_proven (user)     : 0 (0%)
+                  - bounded_proven (auto)     : 0 (0%)
+                  - marked_proven             : 0 (0%)
+                  - cex                       : 0 (0%)
+                  - ar_cex                    : 0 (0%)
+                  - undetermined              : 0 (0%)
+                  - unknown                   : 0 (0%)
+                  - error                     : 0 (0%)
+                 covers                       : 1
+                  - unreachable               : 0 (0%)
+                  - bounded_unreachable (user): 0 (0%)
+                  - covered                   : 1 (100%)
+                  - ar_covered                : 0 (0%)
+                  - undetermined              : 0 (0%)
+                  - unknown                   : 0 (0%)
+                  - error                     : 0 (0%)
+Evaluating 'get_property_list -include {status {cex unreachable}} -task stall'. expected: ''
+0,0 seconds
+INFO (IPM004): The name "property:8" is assigned to assertion "DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = START_SYNDROME or 
+                          DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = REGISTER_RESULT |-> 
+                          DUT.RS_SYNDROME_INST.RS_SYNDROME_UNIT_INST.GEN_RS_SYNDROME_UNIT(0).RS_SYNDROME_SUBUNIT_INST.w_feedback = $past(DUT.i_symbol)".
+INFO (IPM004): The name "property:9" is assigned to assertion "DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = START_SYNDROME or 
+                          DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = REGISTER_RESULT |-> 
+                          DUT.RS_SYNDROME_INST.RS_SYNDROME_UNIT_INST.GEN_RS_SYNDROME_UNIT(1).RS_SYNDROME_SUBUNIT_INST.w_feedback = $past(DUT.i_symbol)".
+INFO (IPM004): The name "property:10" is assigned to assertion "DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = START_SYNDROME or 
+                          DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = REGISTER_RESULT |-> 
+                          DUT.RS_SYNDROME_INST.RS_SYNDROME_UNIT_INST.GEN_RS_SYNDROME_UNIT(2).RS_SYNDROME_SUBUNIT_INST.w_feedback = $past(DUT.i_symbol)".
+INFO (IPM004): The name "property:11" is assigned to assertion "DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = START_SYNDROME or 
+                          DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = REGISTER_RESULT |-> 
+                          DUT.RS_SYNDROME_INST.RS_SYNDROME_UNIT_INST.GEN_RS_SYNDROME_UNIT(3).RS_SYNDROME_SUBUNIT_INST.w_feedback = $past(DUT.i_symbol)".
+INFO (IPM004): The name "property:12" is assigned to assertion "DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = START_SYNDROME ##1
+            DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = COMPUTE_SYNDROME |-> 
+            DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_counter = 1".
+INFO (IPM004): The name "property:13" is assigned to assertion "DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = REGISTER_RESULT ##1
+            DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_state = COMPUTE_SYNDROME |-> 
+            DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST.r_counter = 1".
+INFO (IPM004): The name "property:14" is assigned to assertion "DUT.RS_BERLEKAMP_MASSEY_INST.RS_BERLEKAMP_MASSEY_CONTROL_INST.r_state = END_BM ##1 (DUT.RS_BERLEKAMP_MASSEY_INST.RS_BERLEKAMP_MASSEY_CONTROL_INST.r_state = START_BM or DUT.RS_BERLEKAMP_MASSEY_INST.RS_BERLEKAMP_MASSEY_CONTROL_INST.r_state = WAIT_FOR_SYNDROME) |-> DUT.RS_BERLEKAMP_MASSEY_INST.RS_BERLEKAMP_MASSEY_UNIT_INST.r_syndrome = $past(DUT.RS_BERLEKAMP_MASSEY_INST.RS_BERLEKAMP_MASSEY_UNIT_INST.i_syndrome) and DUT.RS_BERLEKAMP_MASSEY_INST.RS_BERLEKAMP_MASSEY_UNIT_INST.r_first_syndrome = 0 and DUT.RS_BERLEKAMP_MASSEY_INST.RS_BERLEKAMP_MASSEY_UNIT_INST.r_syndrome_shifter = 0 and DUT.RS_BERLEKAMP_MASSEY_INST.RS_BERLEKAMP_MASSEY_UNIT_INST.r_2l = 0 and DUT.RS_BERLEKAMP_MASSEY_INST.RS_BERLEKAMP_MASSEY_UNIT_INST.r_discrepancy = 1 and DUT.RS_BERLEKAMP_MASSEY_INST.RS_BERLEKAMP_MASSEY_UNIT_INST.r_connection_shifter(1) = 1  and DUT.RS_BERLEKAMP_MASSEY_INST.RS_BERLEKAMP_MASSEY_UNIT_INST.r_location_poly = 0 and DUT.RS_BERLEKAMP_MASSEY_INST.RS_BERLEKAMP_MASSEY_UNIT_INST.r_value_poly = 0".
+WARNING (WNL023): Expression sizes mismatch.
+INFO (IPM004): The name "property:15" is assigned to assertion "DUT.RS_CHIEN_FORNEY_INST.RS_CHIEN_FORNEY_CONTROL_INST.r_state = (WAIT_FOR_EUCLIDEAN_TERMS or (END_CHIEN_FORNEY and i_consume)) |-> DUT.RS_CHIEN_FORNEY_INST.RS_CHIEN_INST.w_selector = DUT.RS_CHIEN_FORNEY_INST.RS_CHIEN_INST.i_terms".
+WARNING (WNL023): Expression sizes mismatch.
+INFO (IPM004): The name "property:16" is assigned to assertion "DUT.RS_CHIEN_FORNEY_INST.RS_CHIEN_FORNEY_CONTROL_INST.r_state = (WAIT_FOR_EUCLIDEAN_TERMS or (END_CHIEN_FORNEY and i_consume)) |-> DUT.RS_CHIEN_FORNEY_INST.RS_FORNEY_INST.w_selector = DUT.RS_CHIEN_FORNEY_INST.RS_FORNEY_INST.i_terms".
+INFO (IPF036): Starting proof on task: "reset", 9 properties to prove with 0 already proven/unreachable
+INFO (IRS026): Computing reset analysis for expressions.
+INFO (IRS027): Finished computing reset analysis for expressions.
+INFO (IPF031): Settings used for proof thread 2:
+    orchestration                 = on (auto)
+    time_limit                    = 86400s
+    per_property_time_limit       = 1s * 10 ^ scan
+    engine_mode                   = auto
+    proofgrid_per_engine_max_jobs = 1
+    max engine jobs               = auto
+    proofgrid_mode                = local
+    proofgrid_restarts            = 10
+2: Using multistage preprocessing
+2: Starting reduce
+2: Finished reduce in 0.002s
+2.0.PRE: Performing Proof Simplification...
+2.0.N: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+2.0.N: Proof Simplification Iteration 1	[0.00 s]
+2.0.N: Proof Simplification Iteration 2	[0.00 s]
+2.0.N: Proof Simplification Iteration 3	[0.00 s]
+2.0.N: Proof Simplification Iteration 4	[0.01 s]
+2.0.N: Proof Simplification Iteration 5	[0.01 s]
+2.0.PRE: A proof was found: No trace exists. [0,00 s]
+INFO (IPF057): 2.0.PRE: The property ":noDeadEnd" was proven in 0.00 s.
+use check_assumptions -show -dead_end to show this property in the property table
+2.0.PRE: A proof was found: No trace exists. [0,00 s]
+INFO (IPF057): 2.0.PRE: The property ":noConflict" was proven in 0.00 s.
+use check_assumptions -show to show this property in the property table
+INFO (IPF047): 2.0.PRE: The cover property ":live" was covered in 1 cycles in 0.00 s.
+use check_assumptions -show -live to show this property in the property table
+2.0.PRE: Proof Simplification completed in 0,02 s
+2: About to start ProofGrid in its own thread with a limit of 10000 pending notifications and a limit of 10 traces.
+2: =============================== ProofGrid start ===============================
+2: ProofGrid usable level: 9
+2: ProofGrid is starting event handling
+2.0.Tri: Proofgrid shell started at 25967@optmaS1(local) jg_25025_optmaS1_3
+2.0.Tri: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+2.0.N: Proofgrid shell started at 25966@optmaS1(local) jg_25025_optmaS1_3
+2.0.N: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+2.0.Tri: Next scan (0) will use per property time limit: 1s * 10 ^ 0 = 1s
+2.0.Tri: Starting proof for property "property:11"	[0,00 s].
+2.0.Tri: Trace Attempt  1	[0,00 s]
+2.0.N: Next scan (0) will use per property time limit: 1s * 10 ^ 0 = 1s
+2.0.N: Starting proof for property "property:11"	[0,00 s].
+2.0.N: Trace Attempt  1	[0,01 s]
+2.0.N: Trace Attempt  2	[0,02 s]
+2.0.N: Trace Attempt  2	[0,02 s]
+2.0.N: Trace Attempt  3	[0,02 s]
+2.0.N: Trace Attempt  4	[0,02 s]
+2.0.N: Trace Attempt  5	[0,02 s]
+2.0.N: Trace Attempt  1	[0,03 s]
+2.0.N: Trace Attempt  2	[0,03 s]
+2.0.N: Validation of fixpoint was successful. Time = 0.00
+2.0.N: A proof was found: No trace exists. [0,04 s]
+INFO (IPF057): 2.0.N: The property "property:11" was proven in 0.04 s.
+2.0.N: Stopped processing property "property:11"	[0,04 s].
+2.0.N: Starting proof for property "property:13"	[0,00 s].
+2.0.Tri:    0.00" ---- Launching main thread ----
+2.0.N: Trace Attempt  1	[0,01 s]
+2.0.Tri: Stopped processing property "property:11"	[0,05 s].
+2.0.Tri: Starting proof for property "property:13"	[0,00 s].
+2.0.Tri: Trace Attempt  1	[0,00 s]
+2.0.N: Trace Attempt  2	[0,01 s]
+2.0.N: Trace Attempt  2	[0,01 s]
+2.0.N: Trace Attempt  3	[0,01 s]
+2.0.N: Trace Attempt  4	[0,01 s]
+2.0.N: Trace Attempt  4	[0,02 s]
+2.0.N: Trace Attempt  5	[0,02 s]
+2.0.N: Trace Attempt  1	[0,02 s]
+2.0.N: Trace Attempt  2	[0,02 s]
+2.0.N: Validation of fixpoint was successful. Time = 0.00
+2.0.N: A proof was found: No trace exists. [0,03 s]
+INFO (IPF057): 2.0.N: The property "property:13" was proven in 0.03 s.
+2.0.N: Stopped processing property "property:13"	[0,03 s].
+2.0.N: Starting proof for property "property:8"	[0,00 s].
+2.0.N: Trace Attempt  1	[0,00 s]
+2.0.N: Trace Attempt  2	[0,00 s]
+2.0.N: Trace Attempt  2	[0,00 s]
+2.0.N: Trace Attempt  3	[0,00 s]
+2.0.N: Trace Attempt  4	[0,00 s]
+2.0.N: Trace Attempt  5	[0,00 s]
+2.0.N: Trace Attempt  1	[0,01 s]
+2.0.N: Trace Attempt  2	[0,01 s]
+2.0.N: Validation of fixpoint was successful. Time = 0.00
+2.0.N: A proof was found: No trace exists. [0,01 s]
+INFO (IPF057): 2.0.N: The property "property:8" was proven in 0.01 s.
+2.0.N: Stopped processing property "property:8"	[0,01 s].
+2.0.N: Starting proof for property "property:9"	[0,00 s].
+2.0.N: Trace Attempt  1	[0,00 s]
+2.0.N: Trace Attempt  2	[0,00 s]
+2.0.N: Trace Attempt  2	[0,00 s]
+2.0.N: Trace Attempt  3	[0,01 s]
+2.0.N: Trace Attempt  4	[0,01 s]
+2.0.N: Trace Attempt  5	[0,01 s]
+2.0.N: Trace Attempt  1	[0,01 s]
+2.0.N: Trace Attempt  2	[0,01 s]
+2.0.N: Validation of fixpoint was successful. Time = 0.00
+2.0.N: A proof was found: No trace exists. [0,01 s]
+INFO (IPF057): 2.0.N: The property "property:9" was proven in 0.01 s.
+2.0.N: Stopped processing property "property:9"	[0,01 s].
+2.0.N: Starting proof for property "property:10"	[0,00 s].
+2.0.N: Trace Attempt  1	[0,00 s]
+2.0.N: Trace Attempt  2	[0,00 s]
+2.0.N: Trace Attempt  2	[0,01 s]
+2.0.N: Trace Attempt  3	[0,03 s]
+2.0.N: Trace Attempt  4	[0,03 s]
+2.0.N: Trace Attempt  5	[0,03 s]
+2.0.N: Trace Attempt  1	[0,03 s]
+2.0.N: Trace Attempt  2	[0,03 s]
+2.0.N: Validation of fixpoint was successful. Time = 0.00
+2.0.N: A proof was found: No trace exists. [0,04 s]
+INFO (IPF057): 2.0.N: The property "property:10" was proven in 0.04 s.
+2.0.N: Stopped processing property "property:10"	[0,04 s].
+2.0.N: Starting proof for property "property:12"	[0,00 s].
+2.0.N: Trace Attempt  1	[0,00 s]
+2.0.N: Trace Attempt  2	[0,00 s]
+2.0.N: Trace Attempt  2	[0,00 s]
+2.0.N: Trace Attempt  3	[0,00 s]
+2.0.N: Trace Attempt  3	[0,01 s]
+2.0.N: Trace Attempt  4	[0,01 s]
+2.0.N: Trace Attempt  5	[0,01 s]
+2.0.N: Trace Attempt  1	[0,01 s]
+2.0.N: Trace Attempt  2	[0,01 s]
+2.0.N: Trace Attempt  3	[0,01 s]
+2.0.N: Trace Attempt  5	[0,02 s]
+2.0.N: Validation of fixpoint was successful. Time = 0.00
+2.0.N: Trace Attempt  8	[0,02 s]
+2.0.N: A proof was found: No trace exists. [0,02 s]
+INFO (IPF057): 2.0.N: The property "property:12" was proven in 0.02 s.
+2.0.N: Stopped processing property "property:12"	[0,02 s].
+2.0.N: Starting proof for property "property:14"	[0,00 s].
+2.0.N: Trace Attempt  1	[0,00 s]
+2.0.N: Trace Attempt  2	[0,00 s]
+2.0.N: Trace Attempt  3	[0,00 s]
+2.0.N: Trace Attempt  3	[0,00 s]
+2.0.N: Trace Attempt  4	[0,01 s]
+2.0.N: Trace Attempt  5	[0,01 s]
+2.0.Tri:    0.19" ---- Launching abstraction thread ----
+2.0.Tri: Stopped processing property "property:13"	[0,19 s].
+2.0.Tri: Starting proof for property "property:14"	[0,00 s].
+2.0.Tri: Trace Attempt  1	[0,00 s]
+2.0.Tri:    0.21" ---- Launching multi-phase simplification thread ----
+2.0.Tri:    0.22" ---- Launching main thread ----
+2.0.Tri:    0.36" ---- Launching abstraction thread ----
+2.0.Tri:    0.37" ---- Launching multi-phase simplification thread ----
+2.0.Tri:    0.40" ---- Launching main thread ----
+2.0.Tri:    0.55" ---- Launching abstraction thread ----
+2.0.Tri:    0.57" ---- Launching multi-phase simplification thread ----
+2.0.N: Trace Attempt  1	[0,62 s]
+2.0.N: Trace Attempt  2	[0,63 s]
+2.0.N: Validation of fixpoint was successful. Time = 0.00
+2.0.N: A proof was found: No trace exists. [0,65 s]
+INFO (IPF057): 2.0.N: The property "property:14" was proven in 0.65 s.
+2.0.Tri: Stopped processing property "property:14"	[0,58 s].
+2.0.Tri: Starting proof for property "property:15"	[0,00 s].
+2.0.Tri: Trace Attempt  1	[0,00 s]
+2.0.N: Stopped processing property "property:14"	[0,66 s].
+2.0.Tri:    0.78" ---- Launching main thread ----
+2.0.N: Starting proof for property "property:15"	[0,00 s].
+2.0.N: Trace Attempt  1	[0,00 s]
+2.0.N: Trace Attempt  2	[0,01 s]
+2.0.N: Trace Attempt  3	[0,01 s]
+2.0.N: Trace Attempt  4	[0,01 s]
+2.0.N: Trace Attempt  5	[0,01 s]
+2.0.N: Trace Attempt  1	[0,02 s]
+2.0.N: Trace Attempt  2	[0,02 s]
+2.0.N: Validation of fixpoint was successful. Time = 0.00
+2.0.N: A proof was found: No trace exists. [0,03 s]
+INFO (IPF057): 2.0.N: The property "property:15" was proven in 0.03 s.
+2.0.N: Stopped processing property "property:15"	[0,03 s].
+2.0.N: Last scan. Per property time limit: 0s
+2.0.N: Starting proof for property "property:16"	[0,00 s].
+2.0.N: Trace Attempt  1	[0,00 s]
+2.0.N: Trace Attempt  2	[0,00 s]
+2.0.N: Trace Attempt  3	[0,00 s]
+2.0.N: Trace Attempt  4	[0,00 s]
+2.0.N: Trace Attempt  5	[0,00 s]
+2.0.N: Trace Attempt  1	[0,01 s]
+2.0.N: Trace Attempt  2	[0,01 s]
+2.0.N: Validation of fixpoint was successful. Time = 0.00
+2.0.N: Requesting engine job to stop
+2.0.Tri: Requesting engine job to stop
+INFO (IPF144): 2: Initiating shutdown of proof [0,88]
+2.0.N: A proof was found: No trace exists. [0,01 s]
+INFO (IPF057): 2.0.N: The property "property:16" was proven in 0.01 s.
+2.0.N: Stopped processing property "property:16"	[0,01 s].
+2.0.N: All properties determined. [0,48 s]
+2.0.Tri:    0.92" ---- Launching abstraction thread ----
+2: ProofGrid usable level: 0
+2.0.N: Exited with Success (@ 0,98 s)
+2.0.Tri: Stopped processing property "property:15"	[0,15 s].
+2.0.Tri: All properties determined. [0,00 s]
+2.0.Tri: Exited with Success (@ 0,99 s)
+2: --------------------------------------------------------------
+ProofGrid Summary
+--------------------------------------------------------------
+     engines started                               :     2
+     engine jobs started                           :     2
+     jobs where 1 minute load exceeded core count  :     2
+     jobs where 15 minute load exceeded core count :     2
+
+    Average time in state (seconds)
+    ------------------------------------------------------
+    Engine  Pending     Running        Dead    Utilization
+    ------------------------------------------------------
+      N        0.07        0.87        0.00       92.94 %
+    Tri        0.06        0.87        0.00       93.72 %
+    all        0.06        0.87        0.00       93.33 %
+
+    Data read    : 10.05 kiB
+    Data written : 2.38 kiB
+
+2: All pending notifications were processed.
+INFO (IPF059): Completed proof on task: "reset" for proof thread 2
+
+==============================================================
+SUMMARY
+==============================================================
+           Properties Considered              : 9
+                 assertions                   : 9
+                  - proven                    : 9 (100%)
+                  - bounded_proven (user)     : 0 (0%)
+                  - bounded_proven (auto)     : 0 (0%)
+                  - marked_proven             : 0 (0%)
+                  - cex                       : 0 (0%)
+                  - ar_cex                    : 0 (0%)
+                  - undetermined              : 0 (0%)
+                  - unknown                   : 0 (0%)
+                  - error                     : 0 (0%)
+                 covers                       : 0
+                  - unreachable               : 0
+                  - bounded_unreachable (user): 0
+                  - covered                   : 0
+                  - ar_covered                : 0
+                  - undetermined              : 0
+                  - unknown                   : 0
+                  - error                     : 0
+Evaluating 'get_property_list -include {status {cex unreachable}} -task reset'. expected: ''
+0,0 seconds
+INFO (IPM005): The name "formal::assume:0" is assigned to assumption "i_consume".
+INFO (IPM005): The name "formal::assume:1" is assigned to assumption "i_start_codeword".
+INFO (IPM005): The name "formal::assume:2" is assigned to assumption "i_start_codeword |=> not (i_start_codeword)".
+INFO (IPM005): The name "formal::assume:3" is assigned to assumption "not (i_start_codeword) |=> not (i_start_codeword)".
+INFO (IPM005): The name "formal::assume:4" is assigned to assumption "i_start_codeword |-> not i_end_codeword [*14] ##1 i_end_codeword".
+INFO (IPM005): The name "formal::assume:5" is assigned to assumption "i_start_codeword |-> i_valid [*15]".
+INFO (IPM005): The name "formal::assume:6" is assigned to assumption "i_end_codeword |=> not (i_valid)".
+INFO (IPM005): The name "formal::assume:7" is assigned to assumption "not (i_valid) |=> not (i_valid)".
+WARNING (WOBS004): Non-sequence cover property can have non-LRM-compliant semantics. For LRM semantics, use the "elaborate" flag "-lrm_cover_property".
+INFO (IPF036): Starting proof on task: "formal", 1 properties to prove with 0 already proven/unreachable
+INFO (IPF031): Settings used for proof thread 3:
+    orchestration                 = on (auto)
+    time_limit                    = 86400s
+    per_property_time_limit       = 1s * 10 ^ scan
+    engine_mode                   = auto
+    proofgrid_per_engine_max_jobs = 1
+    max engine jobs               = auto
+    proofgrid_mode                = local
+    proofgrid_restarts            = 10
+3: Using multistage preprocessing
+3: Starting reduce
+3: Finished reduce in 0.01s
+3.0.PRE: Performing Proof Simplification...
+3.0.N: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+3.0.N: Proof Simplification Iteration 1	[0.00 s]
+3.0.N: Proof Simplification Iteration 2	[0.01 s]
+3.0.N: Proof Simplification Iteration 3	[0.01 s]
+3.0.N: Proof Simplification Iteration 4	[0.02 s]
+3.0.N: Proof Simplification Iteration 5	[0.03 s]
+3.0.N: Proof Simplification Iteration 6	[0.04 s]
+3.0.N: Proof Simplification Iteration 7	[0.04 s]
+3.0.N: Proof Simplification Iteration 8	[0.05 s]
+3.0.N: Proof Simplification Iteration 9	[0.05 s]
+3.0.N: Proof Simplification Iteration 10	[0.06 s]
+3.0.N: Proof Simplification Iteration 11	[0.06 s]
+3.0.N: Proof Simplification Iteration 12	[0.06 s]
+3.0.N: Proof Simplification Iteration 13	[0.07 s]
+3.0.N: Proof Simplification Iteration 14	[0.07 s]
+3.0.N: Proof Simplification Iteration 15	[0.07 s]
+3.0.N: Proof Simplification Iteration 16	[0.08 s]
+3.0.N: Proof Simplification Iteration 17	[0.09 s]
+3.0.PRE: Proof Simplification completed in 0,07 s
+3: About to start ProofGrid in its own thread with a limit of 10000 pending notifications and a limit of 10 traces.
+3: =============================== ProofGrid start ===============================
+3: ProofGrid usable level: 1
+3: ProofGrid is starting event handling
+3.0.B: Proofgrid shell started at 26089@optmaS1(local) jg_25025_optmaS1_4
+3.0.B: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+3.0.N: Proofgrid shell started at 26088@optmaS1(local) jg_25025_optmaS1_4
+3.0.N: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+3.0.B: Last scan. Per property time limit: 0s
+3.0.B: Starting proof for property "formal_req_cov_0"	[0,00 s].
+3.0.B: Trace Attempt  1	[0,01 s]
+3.0.N: Last scan. Per property time limit: 0s
+3.0.N: Starting proof for property "formal_req_cov_0"	[0,00 s].
+3.0.B: Trace Attempt  2	[0,02 s]
+3.0.N: Trace Attempt  1	[0,00 s]
+3.0.N: Trace Attempt  2	[0,01 s]
+3.0.N: Trace Attempt  3	[0,01 s]
+3.0.N: Trace Attempt  3	[0,02 s]
+3.0.B: Trace Attempt  3	[0,04 s]
+3.0.N: Trace Attempt  4	[0,03 s]
+3.0.N: Trace Attempt  5	[0,03 s]
+3.0.B: Trace Attempt  4	[0,05 s]
+3.0.N: Trace Attempt  5	[0,05 s]
+3.0.B: Trace Attempt  5	[0,07 s]
+3.0.N: Requesting engine job to stop
+3.0.B: Requesting engine job to stop
+INFO (IPF144): 3: Initiating shutdown of proof [1,33]
+3.0.B: Trace Attempt 31	[0,83 s]
+3.0.B: A trace with 31 cycles was found. [1,32 s]
+INFO (IPF047): 3.0.B: The cover property "formal_req_cov_0" was covered in 31 cycles in 1.33 s.
+3.0.B: Stopped processing property "formal_req_cov_0"	[1,33 s].
+3.0.B: All properties determined. [0,59 s]
+3.0.B: Exited with Success (@ 1,52 s)
+3: ProofGrid usable level: 0
+3.0.N: Stopped processing property "formal_req_cov_0"	[1,49 s].
+3.0.N: Trace Attempt 31	[1,13 s]
+3.0.N: All properties determined. [0,85 s]
+3.0.N: Exited with Success (@ 1,55 s)
+3: --------------------------------------------------------------
+ProofGrid Summary
+--------------------------------------------------------------
+     engines started                               :     2
+     engine jobs started                           :     2
+     jobs where 1 minute load exceeded core count  :     2
+     jobs where 15 minute load exceeded core count :     2
+
+    Average time in state (seconds)
+    ------------------------------------------------------
+    Engine  Pending     Running        Dead    Utilization
+    ------------------------------------------------------
+      N        0.13        1.32        0.00       91.10 %
+      B        0.11        1.33        0.00       92.12 %
+    all        0.12        1.33        0.00       91.61 %
+
+    Data read    : 34.38 kiB
+    Data written : 1.51 kiB
+
+3: All pending notifications were processed.
+INFO (IPF059): Completed proof on task: "formal" for proof thread 3
+
+==============================================================
+SUMMARY
+==============================================================
+           Properties Considered              : 1
+                 assertions                   : 0
+                  - proven                    : 0
+                  - bounded_proven (user)     : 0
+                  - bounded_proven (auto)     : 0
+                  - marked_proven             : 0
+                  - cex                       : 0
+                  - ar_cex                    : 0
+                  - undetermined              : 0
+                  - unknown                   : 0
+                  - error                     : 0
+                 covers                       : 1
+                  - unreachable               : 0 (0%)
+                  - bounded_unreachable (user): 0 (0%)
+                  - covered                   : 1 (100%)
+                  - ar_covered                : 0 (0%)
+                  - undetermined              : 0 (0%)
+                  - unknown                   : 0 (0%)
+                  - error                     : 0 (0%)
+WARNING (WCD001): The command "set_proof_time_limit" has been deprecated. Use "set_prove_time_limit" instead.
+INFO (IPF036): Starting proof on task: "formal", 1 properties to prove with 0 already proven/unreachable
+INFO (IPF031): Settings used for proof thread 4:
+    orchestration                 = on (auto)
+    time_limit                    = 720000s
+    per_property_time_limit       = 1s * 10 ^ scan
+    max_trace_length              = 45
+    engine_mode                   = auto
+    proofgrid_per_engine_max_jobs = 1
+    max engine jobs               = auto
+    proofgrid_mode                = local
+    proofgrid_restarts            = 10
+4: Using multistage preprocessing
+4: Starting reduce
+4: Finished reduce in 0.022s
+4.0.PRE: Performing Proof Simplification...
+4.0.N: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+4.0.N: Proof Simplification Iteration 1	[0.00 s]
+4.0.N: Proof Simplification Iteration 2	[0.02 s]
+4.0.N: Proof Simplification Iteration 3	[0.04 s]
+4.0.N: Proof Simplification Iteration 4	[0.04 s]
+4.0.N: Proof Simplification Iteration 5	[0.05 s]
+4.0.N: Proof Simplification Iteration 6	[0.06 s]
+4.0.N: Proof Simplification Iteration 7	[0.07 s]
+4.0.N: Proof Simplification Iteration 8	[0.07 s]
+4.0.N: Proof Simplification Iteration 9	[0.08 s]
+4.0.N: Proof Simplification Iteration 10	[0.09 s]
+4.0.N: Proof Simplification Iteration 11	[0.10 s]
+4.0.N: Proof Simplification Iteration 12	[0.11 s]
+4.0.N: Proof Simplification Iteration 13	[0.11 s]
+4.0.N: Proof Simplification Iteration 14	[0.13 s]
+4.0.N: Proof Simplification Iteration 15	[0.14 s]
+4.0.N: Proof Simplification Iteration 16	[0.14 s]
+4.0.N: Proof Simplification Iteration 17	[0.15 s]
+4.0.PRE: Proof Simplification completed in 0,08 s
+4: About to start ProofGrid in its own thread with a limit of 10000 pending notifications and a limit of 10 traces.
+4: =============================== ProofGrid start ===============================
+4: ProofGrid usable level: 1
+4: ProofGrid is starting event handling
+Evaluating 'get_property_list -include {status {cex unreachable}} -task formal'. expected: ''
+0,0 seconds
+[formal] % prove -bg -all
+----------------------------------------
+| INFO (IPF035): Proving the following tasks:
+|     1:    <constraints>
+|     2:    <embedded>
+|     3:    consume
+|     4:    formal
+|     5:    reset
+|     6:    stall
+----------------------------------------
+4.0.N: Proofgrid shell started at 26129@optmaS1(local) jg_25025_optmaS1_5
+4.0.N: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+4.0.N: Last scan. Per property time limit: 0s
+4.0.N: Starting proof for property "formal_req"	[0,00 s].
+background 5
+4.0.N: Trace Attempt  1	[0,01 s]
+4.0.N: Trace Attempt  2	[0,01 s]
+4.0.N: Trace Attempt  3	[0,01 s]
+4.0.N: Trace Attempt  3	[0,03 s]
+INFO (IPF036): Starting proof on task: "<constraints>", 21 properties to prove with 0 already proven/unreachable
+4.0.N: Trace Attempt  4	[0,04 s]
+4.0.N: Trace Attempt  5	[0,04 s]
+4.0.N: Trace Attempt  5	[0,08 s]
+4.0.AM: Proofgrid shell started at 26132@optmaS1(local) jg_25025_optmaS1_5
+4.0.AM: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+4.0.AM: Last scan. Per property time limit: 0s
+4.0.AM: Starting proof for property "formal_req"	[0,00 s].
+4.0.AM: Trace Attempt  1	[0,01 s]
+4.0.Tri: Proofgrid shell started at 26131@optmaS1(local) jg_25025_optmaS1_5
+4.0.Tri: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+INFO (IPF031): Settings used for proof thread 5:
+    orchestration                 = on (auto)
+    time_limit                    = 720000s
+    per_property_time_limit       = 1s * 10 ^ scan
+    max_trace_length              = 45
+    engine_mode                   = auto
+    proofgrid_per_engine_max_jobs = 1
+    max engine jobs               = auto
+    proofgrid_mode                = local
+    proofgrid_restarts            = 10
+5: Using multistage preprocessing
+4.0.AM: Trace Attempt  1	[0,03 s]
+4.0.AM: Trace Attempt  2	[0,04 s]
+5: Starting reduce
+5: Finished reduce in 0.008s
+5.0.PRE: A proof was found: No trace exists. [0,00 s]
+INFO (IPF057): 5.0.PRE: The property "DUT.SYNDROME_FIFO_ARRAY_INST._type_constraint_r_WR_INDEX" was proven in 0.00 s.
+5.0.PRE: A proof was found: No trace exists. [0,00 s]
+INFO (IPF057): 5.0.PRE: The property "DUT.SYNDROME_FIFO_ARRAY_INST._type_constraint_r_RD_INDEX" was proven in 0.00 s.
+5.0.PRE: A proof was found: No trace exists. [0,00 s]
+INFO (IPF057): 5.0.PRE: The property "DUT.CHIEN_FIFO_ARRAY_INST._type_constraint_r_WR_INDEX" was proven in 0.00 s.
+5.0.PRE: A proof was found: No trace exists. [0,00 s]
+INFO (IPF057): 5.0.PRE: The property "DUT.CHIEN_FIFO_ARRAY_INST._type_constraint_r_RD_INDEX" was proven in 0.00 s.
+5.0.PRE: A proof was found: No trace exists. [0,00 s]
+INFO (IPF057): 5.0.PRE: The property "DUT.FORNEY_FIFO_ARRAY_INST._type_constraint_r_WR_INDEX" was proven in 0.00 s.
+5.0.PRE: A proof was found: No trace exists. [0,00 s]
+INFO (IPF057): 5.0.PRE: The property "DUT.FORNEY_FIFO_ARRAY_INST._type_constraint_r_RD_INDEX" was proven in 0.00 s.
+5: Found proofs for 6 properties in preprocessing
+5.0.PRE: Performing Proof Simplification...
+5.0.N: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+5.0.N: Proof Simplification Iteration 1	[0.00 s]
+4.0.Tri: Last scan. Per property time limit: 0s
+4.0.Tri: Starting proof for property "formal_req"	[0,00 s].
+4.0.Tri: Trace Attempt  1	[0,00 s]
+5.0.N: Proof Simplification Iteration 2	[0.00 s]
+5.0.N: Proof Simplification Iteration 3	[0.01 s]
+4.0.AM: Trace Attempt  3	[0,10 s]
+5.0.N: Proof Simplification Iteration 4	[0.03 s]
+5.0.N: Proof Simplification Iteration 5	[0.04 s]
+5.0.PRE: A proof was found: No trace exists. [0,00 s]
+INFO (IPF057): 5.0.PRE: The property ":noDeadEnd" was proven in 0.00 s.
+use check_assumptions -show -dead_end to show this property in the property table
+5.0.PRE: A proof was found: No trace exists. [0,00 s]
+INFO (IPF057): 5.0.PRE: The property ":noConflict" was proven in 0.00 s.
+use check_assumptions -show to show this property in the property table
+INFO (IPF047): 5.0.PRE: The cover property ":live" was covered in 1 cycles in 0.00 s.
+use check_assumptions -show -live to show this property in the property table
+5.0.PRE: Proof Simplification completed in 0,03 s
+5: About to start ProofGrid in its own thread with a limit of 10000 pending notifications and a limit of 10 traces.
+4.0.AM: Trace Attempt  1	[0,13 s]
+4.0.AM: Trace Attempt  2	[0,13 s]
+4.0.AM: Trace Attempt  3	[0,14 s]
+5: =============================== ProofGrid start ===============================
+5: ProofGrid usable level: 15
+4.0.AM: Trace Attempt  4	[0,15 s]
+4.0.AM: Trace Attempt  5	[0,15 s]
+5: ProofGrid is starting event handling
+4.0.AM: Trace Attempt  1	[0,17 s]
+4.0.AM: Trace Attempt  2	[0,18 s]
+4.0.AM: Trace Attempt  3	[0,19 s]
+4.0.Tri:    0.01" ---- Launching main thread ----
+4.0.Tri:    0.20" ---- Launching abstraction thread ----
+4.0.Tri:    0.21" ---- Launching multi-phase simplification thread ----
+5.0.N: Proofgrid shell started at 26160@optmaS1(local) jg_25025_optmaS1_6
+5.0.N: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+5.0.N: Next scan (0) will use per property time limit: 1s * 10 ^ 0 = 1s
+5.0.N: Starting proof for property "DUT.RS_CHIEN_FORNEY_INST.RS_CHIEN_FORNEY_CONTROL_INST._type_constraint_r_state"	[0,00 s].
+4.0.AM: Trace Attempt  1	[0,51 s]
+4.0.AM: Trace Attempt  2	[0,51 s]
+5.0.N: Trace Attempt  1	[0,01 s]
+5.0.N: Trace Attempt  2	[0,01 s]
+5.0.N: Trace Attempt  3	[0,02 s]
+5.0.N: Trace Attempt  3	[0,03 s]
+5.0.N: Trace Attempt  4	[0,04 s]
+5.0.N: Trace Attempt  5	[0,04 s]
+4.0.AM: Trace Attempt  3	[0,54 s]
+5.0.Tri: Proofgrid shell started at 26161@optmaS1(local) jg_25025_optmaS1_6
+5.0.N: Trace Attempt  1	[0,10 s]
+5.0.N: Trace Attempt  2	[0,10 s]
+5.0.Tri: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+5.0.N: Validation of fixpoint was successful. Time = 0.00
+5.0.N: A proof was found: No trace exists. [0,10 s]
+INFO (IPF057): 5.0.N: The property "DUT.RS_CHIEN_FORNEY_INST.RS_CHIEN_FORNEY_CONTROL_INST._type_constraint_r_state" was proven in 0.11 s.
+5.0.N: Stopped processing property "DUT.RS_CHIEN_FORNEY_INST.RS_CHIEN_FORNEY_CONTROL_INST._type_constraint_r_state"	[0,11 s].
+5.0.N: Starting proof for property "SYMBOL_FIFO_ORIGINAL_SYMBOL._type_constraint_r_FIFO_COUNT"	[0,00 s].
+5.0.Tri: Next scan (0) will use per property time limit: 1s * 10 ^ 0 = 1s
+5.0.Tri: Starting proof for property "SYMBOL_FIFO_ORIGINAL_SYMBOL._type_constraint_r_FIFO_COUNT"	[0,00 s].
+5.0.Tri: Trace Attempt  1	[0,00 s]
+5.0.N: Trace Attempt  1	[0,01 s]
+5.0.N: Trace Attempt  2	[0,01 s]
+5.0.N: Trace Attempt  3	[0,01 s]
+5.0.N: Trace Attempt  3	[0,02 s]
+5.0.N: Trace Attempt  4	[0,04 s]
+5.0.N: Trace Attempt  5	[0,04 s]
+5.0.N: Trace Attempt  5	[0,05 s]
+5.0.Tri:    0.00" ---- Launching main thread ----
+4.0.Tri: Trace Attempt  2	[0,86 s]
+4.0.Tri: Trace Attempt  3	[0,89 s]
+5.0.Tri:    0.16" ---- Launching abstraction thread ----
+5.0.Tri:    0.18" ---- Launching multi-phase simplification thread ----
+5: ProofGrid usable level: 14
+5.0.Tri: Trace Attempt  2	[0,54 s]
+5.0.Tri: Trace Attempt  3	[0,55 s]
+5.0.Tri: Trace Attempt  4	[0,55 s]
+5.0.Tri: Trace Attempt  5	[0,55 s]
+5.0.N: Trace Attempt  1	[0,78 s]
+5.0.N: Trace Attempt  2	[0,78 s]
+5.0.N: Trace Attempt  3	[0,79 s]
+5.0.N: Trace Attempt  4	[0,79 s]
+5.0.N: Trace Attempt  5	[0,79 s]
+4.0.Tri: Trace Attempt  4	[1,47 s]
+4.0.Tri: Trace Attempt  5	[1,50 s]
+5.0.N: Trace Attempt 10	[0,85 s]
+5.0.N: Per property time limit expired (1,00 s) [1,00 s]
+5.0.N: Stopped processing property "SYMBOL_FIFO_ORIGINAL_SYMBOL._type_constraint_r_FIFO_COUNT"	[1,00 s].
+5.0.N: Starting proof for property "SYMBOL_FIFO_ORIGINAL_SYMBOL._type_constraint_r_WR_INDEX"	[0,00 s].
+5.0.N: Trace Attempt  1	[0,01 s]
+5.0.N: Trace Attempt  2	[0,01 s]
+5.0.N: Trace Attempt  3	[0,01 s]
+5.0.N: Trace Attempt  3	[0,01 s]
+5.0.N: Trace Attempt  4	[0,02 s]
+5.0.N: Trace Attempt  5	[0,02 s]
+5.0.N: Trace Attempt  1	[0,05 s]
+5.0.N: Trace Attempt  2	[0,05 s]
+5.0.N: Validation of fixpoint was successful. Time = 0.00
+5.0.N: A proof was found: No trace exists. [0,05 s]
+INFO (IPF057): 5.0.N: The property "SYMBOL_FIFO_ORIGINAL_SYMBOL._type_constraint_r_WR_INDEX" was proven in 0.05 s.
+5.0.N: Stopped processing property "SYMBOL_FIFO_ORIGINAL_SYMBOL._type_constraint_r_WR_INDEX"	[0,06 s].
+5.0.N: Starting proof for property "SYMBOL_FIFO_ORIGINAL_SYMBOL._type_constraint_r_RD_INDEX"	[0,00 s].
+5.0.N: Trace Attempt  1	[0,01 s]
+5.0.N: Trace Attempt  2	[0,01 s]
+5.0.N: Trace Attempt  3	[0,01 s]
+5.0.N: Trace Attempt  3	[0,01 s]
+5.0.N: Trace Attempt  4	[0,01 s]
+5.0.N: Trace Attempt  5	[0,02 s]
+5.0.N: Trace Attempt  1	[0,09 s]
+5.0.N: Trace Attempt  2	[0,09 s]
+5.0.N: Validation of fixpoint was successful. Time = 0.00
+5.0.N: A proof was found: No trace exists. [0,10 s]
+INFO (IPF057): 5.0.N: The property "SYMBOL_FIFO_ORIGINAL_SYMBOL._type_constraint_r_RD_INDEX" was proven in 0.10 s.
+5.0.Tri: Trace Attempt 16	[0,56 s]
+5.0.Tri: Per property time limit expired (1,00 s) [1,17 s]
+5.0.Tri: Stopped processing property "SYMBOL_FIFO_ORIGINAL_SYMBOL._type_constraint_r_FIFO_COUNT"	[1,17 s].
+5.0.Tri: Starting proof for property "SYMBOL_FIFO_ORIGINAL_SYMBOL._type_constraint_r_FIFO_COUNT"	[0,00 s].
+5.0.Tri: Trace Attempt  1	[0,00 s]
+5.0.Tri:    0.92" ---- Launching main thread ----
+5.0.N: Stopped processing property "SYMBOL_FIFO_ORIGINAL_SYMBOL._type_constraint_r_RD_INDEX"	[0,13 s].
+5.0.N: Starting proof for property "SYMBOL_FIFO_ORIGINAL_SYMBOL._type_constraint_r_FIFO_COUNT"	[0,00 s].
+4.0.AM: Trace Attempt  1	[1,88 s]
+4.0.AM: Trace Attempt  2	[1,88 s]
+4.0.AM: Trace Attempt  3	[1,90 s]
+5.0.Tri:    1.09" ---- Launching abstraction thread ----
+5.0.Tri:    1.14" ---- Launching multi-phase simplification thread ----
+5: ProofGrid usable level: 12
+5.0.Tri: Per property time limit expired (1,00 s) [1,03 s]
+5.0.Tri: Stopped processing property "SYMBOL_FIFO_ORIGINAL_SYMBOL._type_constraint_r_FIFO_COUNT"	[1,03 s].
+5.0.Tri: Starting proof for property "DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST._type_constraint_r_state"	[0,00 s].
+5.0.Tri: Trace Attempt  1	[0,00 s]
+5.0.N: Trace Attempt 24	[0,36 s]
+5.0.N: Per property time limit expired (1,00 s) [1,01 s]
+5.0.N: Stopped processing property "SYMBOL_FIFO_ORIGINAL_SYMBOL._type_constraint_r_FIFO_COUNT"	[1,01 s].
+5.0.N: Starting proof for property "DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST._type_constraint_r_state"	[0,00 s].
+5.0.N: Trace Attempt  1	[0,00 s]
+5.0.N: Trace Attempt  2	[0,00 s]
+5.0.Tri:    1.95" ---- Launching main thread ----
+5.0.N: Trace Attempt  2	[0,00 s]
+5.0.N: Trace Attempt  3	[0,01 s]
+5.0.N: Trace Attempt  3	[0,01 s]
+5.0.N: Trace Attempt  4	[0,02 s]
+5.0.N: Trace Attempt  5	[0,02 s]
+5.0.N: Trace Attempt  1	[0,03 s]
+5.0.N: Trace Attempt  2	[0,03 s]
+5.0.N: Validation of fixpoint was successful. Time = 0.00
+5.0.N: A proof was found: No trace exists. [0,03 s]
+INFO (IPF057): 5.0.N: The property "DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST._type_constraint_r_state" was proven in 0.03 s.
+5.0.N: Stopped processing property "DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST._type_constraint_r_state"	[0,03 s].
+5.0.N: Starting proof for property "DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST._type_constraint_r_counter"	[0,00 s].
+5.0.N: Trace Attempt  1	[0,00 s]
+5.0.N: Trace Attempt  2	[0,00 s]
+5.0.N: Trace Attempt  3	[0,00 s]
+5.0.N: Trace Attempt  3	[0,01 s]
+5.0.N: Trace Attempt  4	[0,01 s]
+5.0.N: Trace Attempt  5	[0,01 s]
+5.0.N: Trace Attempt  5	[0,02 s]
+5.0.N: Trace Attempt  1	[0,06 s]
+5.0.N: Trace Attempt  2	[0,06 s]
+5.0.N: Trace Attempt  3	[0,07 s]
+5.0.N: Trace Attempt  5	[0,07 s]
+5.0.Tri: Stopped processing property "DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST._type_constraint_r_state"	[0,21 s].
+5.0.Tri: Starting proof for property "DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST._type_constraint_r_counter"	[0,00 s].
+5.0.Tri: Trace Attempt  1	[0,00 s]
+5.0.Tri:    2.17" ---- Launching abstraction thread ----
+5.0.N: Stopped processing property "DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST._type_constraint_r_counter"	[0,19 s].
+5.0.N: Starting proof for property "DUT.GEN_NO_PARITY_OUTPUT_TRUE.SYMBOL_FIFO_INST._type_constraint_r_WR_INDEX"	[0,00 s].
+5.0.N: Trace Attempt  1	[0,00 s]
+5.0.N: Trace Attempt  2	[0,01 s]
+5.0.N: Trace Attempt  3	[0,01 s]
+5.0.N: Trace Attempt  3	[0,01 s]
+5.0.N: Trace Attempt  4	[0,01 s]
+5.0.N: Trace Attempt  5	[0,01 s]
+5.0.Tri:    2.23" ---- Launching multi-phase simplification thread ----
+5.0.Tri: Stopped processing property "DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST._type_constraint_r_counter"	[0,08 s].
+5.0.Tri: Starting proof for property "DUT.GEN_NO_PARITY_OUTPUT_TRUE.SYMBOL_FIFO_INST._type_constraint_r_WR_INDEX"	[0,00 s].
+5.0.Tri: Trace Attempt  1	[0,00 s]
+5.0.N: Trace Attempt  1	[0,06 s]
+5.0.N: Trace Attempt  2	[0,06 s]
+5.0.N: Validation of fixpoint was successful. Time = 0.00
+5.0.N: A proof was found: No trace exists. [0,07 s]
+INFO (IPF057): 5.0.N: The property "DUT.GEN_NO_PARITY_OUTPUT_TRUE.SYMBOL_FIFO_INST._type_constraint_r_WR_INDEX" was proven in 0.07 s.
+5.0.N: Stopped processing property "DUT.GEN_NO_PARITY_OUTPUT_TRUE.SYMBOL_FIFO_INST._type_constraint_r_WR_INDEX"	[0,07 s].
+5.0.N: Starting proof for property "DUT.SYNDROME_FIFO_ARRAY_INST._type_constraint_r_FIFO_COUNT"	[0,00 s].
+5.0.N: Trace Attempt  1	[0,00 s]
+5.0.N: Trace Attempt  2	[0,00 s]
+5.0.N: Trace Attempt  3	[0,00 s]
+5.0.N: Trace Attempt  3	[0,01 s]
+5.0.N: Trace Attempt  4	[0,02 s]
+5.0.N: Trace Attempt  5	[0,02 s]
+5.0.N: Trace Attempt  1	[0,02 s]
+5.0.Tri:    2.27" ---- Launching main thread ----
+5.0.N: Trace Attempt  2	[0,03 s]
+5.0.Tri: Stopped processing property "DUT.GEN_NO_PARITY_OUTPUT_TRUE.SYMBOL_FIFO_INST._type_constraint_r_WR_INDEX"	[0,03 s].
+5.0.Tri: Starting proof for property "DUT.SYNDROME_FIFO_ARRAY_INST._type_constraint_r_FIFO_COUNT"	[0,00 s].
+5.0.Tri: Trace Attempt  1	[0,00 s]
+5.0.N: Trace Attempt  3	[0,03 s]
+5.0.N: Trace Attempt  5	[0,03 s]
+5.0.N: Validation of fixpoint was successful. Time = 0.00
+5.0.N: Trace Attempt  7	[0,04 s]
+5.0.N: A proof was found: No trace exists. [0,04 s]
+INFO (IPF057): 5.0.N: The property "DUT.SYNDROME_FIFO_ARRAY_INST._type_constraint_r_FIFO_COUNT" was proven in 0.04 s.
+5.0.N: Stopped processing property "DUT.SYNDROME_FIFO_ARRAY_INST._type_constraint_r_FIFO_COUNT"	[0,04 s].
+5.0.N: Starting proof for property "DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST._type_constraint_r_counter"	[0,00 s].
+5.0.N: Trace Attempt 17	[0,02 s]
+5: ProofGrid usable level: 9
+5.0.N: Trace Attempt  1	[0,10 s]
+5.0.N: Trace Attempt  2	[0,10 s]
+5.0.N: Trace Attempt  3	[0,11 s]
+5.0.N: Trace Attempt  5	[0,11 s]
+5.0.N: Validation of fixpoint was successful. Time = 0.00
+5.0.N: Trace Attempt  7	[0,11 s]
+5.0.N: A proof was found: No trace exists. [0,12 s]
+INFO (IPF057): 5.0.N: The property "DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST._type_constraint_r_counter" was proven in 0.12 s.
+5.0.N: Stopped processing property "DUT.RS_SYNDROME_INST.RS_SYNDROME_CONTROL_INST._type_constraint_r_counter"	[0,12 s].
+5.0.N: Starting proof for property "DUT.RS_BERLEKAMP_MASSEY_INST.RS_BERLEKAMP_MASSEY_CONTROL_INST._type_constraint_r_state"	[0,00 s].
+5.0.N: Trace Attempt  1	[0,00 s]
+5.0.N: Trace Attempt  2	[0,01 s]
+5.0.N: Trace Attempt  3	[0,01 s]
+5.0.N: Trace Attempt  3	[0,01 s]
+5.0.N: Trace Attempt  4	[0,02 s]
+5.0.N: Trace Attempt  5	[0,02 s]
+5.0.N: Trace Attempt  1	[0,05 s]
+5.0.N: Trace Attempt  2	[0,06 s]
+5.0.N: Validation of fixpoint was successful. Time = 0.00
+5.0.N: A proof was found: No trace exists. [0,06 s]
+INFO (IPF057): 5.0.N: The property "DUT.RS_BERLEKAMP_MASSEY_INST.RS_BERLEKAMP_MASSEY_CONTROL_INST._type_constraint_r_state" was proven in 0.06 s.
+5.0.N: Stopped processing property "DUT.RS_BERLEKAMP_MASSEY_INST.RS_BERLEKAMP_MASSEY_CONTROL_INST._type_constraint_r_state"	[0,06 s].
+5.0.N: Starting proof for property "DUT.RS_BERLEKAMP_MASSEY_INST.RS_BERLEKAMP_MASSEY_UNIT_INST._type_constraint_r_2l"	[0,00 s].
+5.0.Tri: Stopped processing property "DUT.SYNDROME_FIFO_ARRAY_INST._type_constraint_r_FIFO_COUNT"	[0,20 s].
+5.0.Tri: Starting proof for property "DUT.RS_BERLEKAMP_MASSEY_INST.RS_BERLEKAMP_MASSEY_UNIT_INST._type_constraint_r_2l"	[0,00 s].
+5.0.Tri: Trace Attempt  1	[0,00 s]
+5.0.N: Trace Attempt  1	[0,00 s]
+5.0.N: Trace Attempt  2	[0,01 s]
+5.0.N: Trace Attempt  3	[0,01 s]
+5.0.N: Trace Attempt  3	[0,02 s]
+5.0.N: Trace Attempt  4	[0,02 s]
+5.0.N: Trace Attempt  5	[0,02 s]
+5.0.Tri:    2.51" ---- Launching abstraction thread ----
+5.0.N: Trace Attempt  5	[0,05 s]
+5.0.Tri:    2.53" ---- Launching multi-phase simplification thread ----
+5.0.N: Trace Attempt  1	[0,08 s]
+5.0.N: Trace Attempt  2	[0,08 s]
+5.0.N: Validation of fixpoint was successful. Time = 0.00
+5.0.N: A proof was found: No trace exists. [0,09 s]
+INFO (IPF057): 5.0.N: The property "DUT.RS_BERLEKAMP_MASSEY_INST.RS_BERLEKAMP_MASSEY_UNIT_INST._type_constraint_r_2l" was proven in 0.09 s.
+5.0.N: Stopped processing property "DUT.RS_BERLEKAMP_MASSEY_INST.RS_BERLEKAMP_MASSEY_UNIT_INST._type_constraint_r_2l"	[0,09 s].
+5.0.N: Starting proof for property "DUT.CHIEN_FIFO_ARRAY_INST._type_constraint_r_FIFO_COUNT"	[0,00 s].
+5.0.N: Trace Attempt  1	[0,00 s]
+5.0.N: Trace Attempt  2	[0,00 s]
+5.0.N: Trace Attempt  3	[0,01 s]
+5.0.N: Trace Attempt  3	[0,01 s]
+5.0.N: Trace Attempt  4	[0,01 s]
+5.0.N: Trace Attempt  5	[0,01 s]
+5.0.Tri:    2.59" ---- Launching main thread ----
+5.0.Tri: Stopped processing property "DUT.RS_BERLEKAMP_MASSEY_INST.RS_BERLEKAMP_MASSEY_UNIT_INST._type_constraint_r_2l"	[0,12 s].
+5.0.Tri: Starting proof for property "DUT.CHIEN_FIFO_ARRAY_INST._type_constraint_r_FIFO_COUNT"	[0,00 s].
+5.0.Tri: Trace Attempt  1	[0,00 s]
+5.0.N: Trace Attempt  1	[0,09 s]
+5.0.N: Trace Attempt  2	[0,09 s]
+5.0.N: Trace Attempt  3	[0,10 s]
+5.0.N: Trace Attempt  5	[0,10 s]
+5.0.N: Validation of fixpoint was successful. Time = 0.00
+5.0.N: Trace Attempt 13	[0,14 s]
+5.0.N: A proof was found: No trace exists. [0,15 s]
+INFO (IPF057): 5.0.N: The property "DUT.CHIEN_FIFO_ARRAY_INST._type_constraint_r_FIFO_COUNT" was proven in 0.15 s.
+5.0.N: Stopped processing property "DUT.CHIEN_FIFO_ARRAY_INST._type_constraint_r_FIFO_COUNT"	[0,16 s].
+5.0.N: Starting proof for property "DUT.FORNEY_FIFO_ARRAY_INST._type_constraint_r_FIFO_COUNT"	[0,00 s].
+5.0.N: Trace Attempt  1	[0,01 s]
+5.0.N: Trace Attempt  2	[0,01 s]
+5.0.N: Trace Attempt  3	[0,01 s]
+5.0.N: Trace Attempt  3	[0,03 s]
+5.0.Tri:    2.76" ---- Launching abstraction thread ----
+5.0.Tri: Stopped processing property "DUT.CHIEN_FIFO_ARRAY_INST._type_constraint_r_FIFO_COUNT"	[0,17 s].
+5.0.Tri: Starting proof for property "DUT.FORNEY_FIFO_ARRAY_INST._type_constraint_r_FIFO_COUNT"	[0,00 s].
+5.0.Tri: Trace Attempt  1	[0,00 s]
+5.0.N: Trace Attempt  4	[0,05 s]
+5.0.N: Trace Attempt  5	[0,05 s]
+5.0.Tri:    2.80" ---- Launching multi-phase simplification thread ----
+5.0.Tri:    2.83" ---- Launching main thread ----
+5.0.N: Trace Attempt  1	[0,20 s]
+5.0.N: Trace Attempt  2	[0,20 s]
+5.0.N: Trace Attempt  3	[0,21 s]
+5.0.N: Trace Attempt  5	[0,21 s]
+5.0.N: Validation of fixpoint was successful. Time = 0.00
+5.0.N: Trace Attempt  7	[0,23 s]
+5.0.N: A proof was found: No trace exists. [0,26 s]
+INFO (IPF057): 5.0.N: The property "DUT.FORNEY_FIFO_ARRAY_INST._type_constraint_r_FIFO_COUNT" was proven in 0.26 s.
+5.0.N: Stopped processing property "DUT.FORNEY_FIFO_ARRAY_INST._type_constraint_r_FIFO_COUNT"	[0,27 s].
+5.0.N: Starting proof for property "DUT.GEN_NO_PARITY_OUTPUT_TRUE.SYMBOL_FIFO_INST._type_constraint_r_RD_INDEX"	[0,00 s].
+5.0.N: Trace Attempt  1	[0,02 s]
+5.0.N: Trace Attempt  2	[0,03 s]
+5.0.N: Trace Attempt  3	[0,03 s]
+5.0.Tri: Stopped processing property "DUT.FORNEY_FIFO_ARRAY_INST._type_constraint_r_FIFO_COUNT"	[0,27 s].
+5.0.Tri: Starting proof for property "DUT.GEN_NO_PARITY_OUTPUT_TRUE.SYMBOL_FIFO_INST._type_constraint_r_RD_INDEX"	[0,00 s].
+5.0.Tri: Trace Attempt  1	[0,00 s]
+5.0.N: Trace Attempt  3	[0,05 s]
+5.0.N: Trace Attempt  4	[0,06 s]
+5.0.N: Trace Attempt  4	[0,07 s]
+5.0.Tri:    3.07" ---- Launching abstraction thread ----
+5.0.N: Trace Attempt  5	[0,09 s]
+5.0.Tri:    3.09" ---- Launching multi-phase simplification thread ----
+5.0.Tri:    3.14" ---- Launching main thread ----
+5: ProofGrid usable level: 4
+5.0.N: Trace Attempt  1	[0,37 s]
+5.0.N: Trace Attempt  2	[0,37 s]
+5.0.Tri:    3.36" ---- Launching abstraction thread ----
+5.0.N: Validation of fixpoint was successful. Time = 0.00
+5.0.N: A proof was found: No trace exists. [0,39 s]
+INFO (IPF057): 5.0.N: The property "DUT.GEN_NO_PARITY_OUTPUT_TRUE.SYMBOL_FIFO_INST._type_constraint_r_RD_INDEX" was proven in 0.39 s.
+5.0.N: Stopped processing property "DUT.GEN_NO_PARITY_OUTPUT_TRUE.SYMBOL_FIFO_INST._type_constraint_r_RD_INDEX"	[0,39 s].
+5.0.N: Starting proof for property "DUT.GEN_NO_PARITY_OUTPUT_TRUE.SYMBOL_FIFO_INST._type_constraint_r_FIFO_COUNT"	[0,00 s].
+5.0.N: Trace Attempt  1	[0,00 s]
+5.0.N: Trace Attempt  2	[0,01 s]
+5.0.N: Trace Attempt  3	[0,01 s]
+5.0.N: Trace Attempt  3	[0,01 s]
+5.0.Tri:    3.40" ---- Launching multi-phase simplification thread ----
+5.0.Tri: Stopped processing property "DUT.GEN_NO_PARITY_OUTPUT_TRUE.SYMBOL_FIFO_INST._type_constraint_r_RD_INDEX"	[0,37 s].
+5.0.Tri: Starting proof for property "DUT.GEN_NO_PARITY_OUTPUT_TRUE.SYMBOL_FIFO_INST._type_constraint_r_FIFO_COUNT"	[0,00 s].
+5.0.Tri: Trace Attempt  1	[0,00 s]
+5.0.N: Trace Attempt  4	[0,02 s]
+5.0.N: Trace Attempt  5	[0,02 s]
+5.0.N: Trace Attempt  5	[0,05 s]
+5.0.Tri:    3.46" ---- Launching main thread ----
+5.0.Tri:    3.71" ---- Launching abstraction thread ----
+5.0.Tri:    3.73" ---- Launching multi-phase simplification thread ----
+5.0.Tri:    3.79" ---- Launching main thread ----
+5.0.Tri:    4.04" ---- Launching abstraction thread ----
+5.0.Tri:    4.05" ---- Launching multi-phase simplification thread ----
+5.0.Tri:    4.08" ---- Launching main thread ----
+5.0.Tri:    4.35" ---- Launching abstraction thread ----
+5: ProofGrid usable level: 3
+5.0.Tri:    4.38" ---- Launching multi-phase simplification thread ----
+5.0.Tri:    4.43" ---- Launching main thread ----
+5.0.Tri: Per property time limit expired (1,00 s) [1,04 s]
+5.0.Tri: Stopped processing property "DUT.GEN_NO_PARITY_OUTPUT_TRUE.SYMBOL_FIFO_INST._type_constraint_r_FIFO_COUNT"	[1,04 s].
+5.0.Tri: Starting proof for property "DUT.NUMBER_OF_SYMBOLS_FIFO_INST._type_constraint_r_FIFO_COUNT"	[0,00 s].
+5.0.Tri: Trace Attempt  1	[0,00 s]
+5.0.N: Trace Attempt 22	[0,89 s]
+5.0.N: Per property time limit expired (1,00 s) [1,06 s]
+5.0.N: Stopped processing property "DUT.GEN_NO_PARITY_OUTPUT_TRUE.SYMBOL_FIFO_INST._type_constraint_r_FIFO_COUNT"	[1,06 s].
+5.0.N: Starting proof for property "DUT.NUMBER_OF_SYMBOLS_FIFO_INST._type_constraint_r_FIFO_COUNT"	[0,00 s].
+5.0.N: Trace Attempt  1	[0,01 s]
+5.0.N: Trace Attempt  2	[0,02 s]
+5.0.N: Trace Attempt  3	[0,02 s]
+5.0.N: Stopped processing property "DUT.NUMBER_OF_SYMBOLS_FIFO_INST._type_constraint_r_FIFO_COUNT"	[0,03 s].
+5.0.N: Starting proof for property "DUT.NUMBER_OF_SYMBOLS_FIFO_INST._type_constraint_r_FIFO_COUNT"	[0,00 s].
+5.0.N: Trace Attempt  1	[0,01 s]
+5.0.N: Trace Attempt  2	[0,03 s]
+5.0.N: Trace Attempt  3	[0,03 s]
+5.0.N: Trace Attempt  3	[0,08 s]
+5.0.N: Trace Attempt  4	[0,12 s]
+5.0.N: Trace Attempt  5	[0,12 s]
+5.0.Tri: Stopped processing property "DUT.NUMBER_OF_SYMBOLS_FIFO_INST._type_constraint_r_FIFO_COUNT"	[0,20 s].
+5.0.Tri: Morphing to D
+5.0.Tri: All properties determined. [0,00 s]
+5.0.Tri: Exited with Success (@ 0,00 s)
+5.0.D: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+5.0.D: Starting proof for property "DUT.NUMBER_OF_SYMBOLS_FIFO_INST._type_constraint_r_FIFO_COUNT"	[0,00 s].
+5.0.D: Trace Attempt  1	[0,00 s]
+5.0.D: Trace Attempt  2	[0,00 s]
+5.0.D: Trace Attempt  3	[0,04 s]
+5.0.N: Trace Attempt  1	[0,32 s]
+5.0.N: Trace Attempt  2	[0,32 s]
+5.0.N: Trace Attempt  3	[0,33 s]
+5.0.N: Trace Attempt  5	[0,33 s]
+5.0.N: Validation of fixpoint was successful. Time = 0.00
+5.0.N: Trace Attempt  9	[0,50 s]
+5.0.N: A proof was found: No trace exists. [0,54 s]
+INFO (IPF057): 5.0.N: The property "DUT.NUMBER_OF_SYMBOLS_FIFO_INST._type_constraint_r_FIFO_COUNT" was proven in 0.54 s.
+5.0.N: Stopped processing property "DUT.NUMBER_OF_SYMBOLS_FIFO_INST._type_constraint_r_FIFO_COUNT"	[0,54 s].
+5.0.D: Stopped processing property "DUT.NUMBER_OF_SYMBOLS_FIFO_INST._type_constraint_r_FIFO_COUNT"	[0,37 s].
+5.0.D: Starting proof for property "DUT.GEN_NO_PARITY_OUTPUT_TRUE.SYMBOL_FIFO_INST._type_constraint_r_FIFO_COUNT"	[0,00 s].
+5.0.N: Starting proof for property "DUT.GEN_NO_PARITY_OUTPUT_TRUE.SYMBOL_FIFO_INST._type_constraint_r_FIFO_COUNT"	[0,00 s].
+5.0.D: Trace Attempt  1	[0,01 s]
+5.0.D: Trace Attempt  2	[0,01 s]
+5.0.D: Trace Attempt  4	[0,03 s]
+5.0.N: Trace Attempt 22	[0,15 s]
+5: ProofGrid usable level: 2
+4.0.Tri: Trace Attempt 22	[6,45 s]
+5.0.N: Trace Attempt 23	[0,97 s]
+5.0.N: Per property time limit expired (1,00 s) [1,00 s]
+5.0.N: Stopped processing property "DUT.GEN_NO_PARITY_OUTPUT_TRUE.SYMBOL_FIFO_INST._type_constraint_r_FIFO_COUNT"	[1,01 s].
+5.0.N: Next scan (1) will use per property time limit: 1s * 10 ^ 1 = 10s
+5.0.N: Starting proof for property "SYMBOL_FIFO_ORIGINAL_SYMBOL._type_constraint_r_FIFO_COUNT"	[0,00 s].
+5.0.D: Trace Attempt 14	[0,49 s]
+5.0.D: Per property time limit expired (1,00 s) [1,02 s]
+5.0.D: Stopped processing property "DUT.GEN_NO_PARITY_OUTPUT_TRUE.SYMBOL_FIFO_INST._type_constraint_r_FIFO_COUNT"	[1,02 s].
+5.0.D: Next scan (1) will use per property time limit: 1s * 10 ^ 1 = 10s
+5.0.D: Starting proof for property "SYMBOL_FIFO_ORIGINAL_SYMBOL._type_constraint_r_FIFO_COUNT"	[0,00 s].
+5.0.D: Trace Attempt  1	[0,01 s]
+5.0.D: Trace Attempt  2	[0,01 s]
+5.0.D: Trace Attempt  4	[0,03 s]
+5.0.N: Trace Attempt 24	[0,07 s]
+5.0.N: Trace Attempt  1	[1,76 s]
+5.0.N: Trace Attempt  2	[1,76 s]
+5.0.N: Trace Attempt  3	[1,77 s]
+5.0.N: Trace Attempt  5	[1,78 s]
+4.0.N: Stopped processing property "formal_req"	[11,78 s].
+4.0.Tri: Requesting engine job to terminate
+4.0.N: Morphing to B
+4.0.N: Trace Attempt 31	[2,39 s]
+4.0.N: All properties determined. [0,00 s]
+4.0.N: Exited with Success (@ 0,00 s)
+4.0.B: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+4.0.B: Starting proof for property "formal_req"	[0,00 s].
+4.0.B: Trace Attempt  1	[0,00 s]
+4.0.B: Trace Attempt  2	[0,01 s]
+4.0.B: Trace Attempt  3	[0,02 s]
+4.0.B: Trace Attempt  4	[0,03 s]
+4.0.B: Trace Attempt  5	[0,04 s]
+4.0.AM: Stopped processing property "formal_req"	[11,78 s].
+4.0.AM: Morphing to D
+4.0.AM: Trace Attempt 31	[3,50 s]
+4.0.AM: All properties determined. [0,00 s]
+4.0.AM: Exited with Success (@ 0,00 s)
+4.0.D: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+4.0.D: Starting proof for property "formal_req"	[0,00 s].
+4.0.Tri: Stopped processing property "formal_req"	[11,73 s].
+4.0.Tri: Trace Attempt 31	[8,52 s]
+4.0.Tri: Interrupted. [0,01 s]
+4.0.Tri: Exited with Success (@ 11,93 s)
+4.0.D: Trace Attempt  1	[0,02 s]
+4.0.D: Trace Attempt  2	[0,04 s]
+4.0.D: Trace Attempt  3	[0,15 s]
+4.0.D: Trace Attempt  4	[0,32 s]
+4.0.D: Trace Attempt  5	[0,52 s]
+5.0.D: Trace Attempt 24	[5,96 s]
+5.0.N: Trace Attempt 26	[8,87 s]
+5.0.N: Trace Attempt 27	[8,89 s]
+5.0.N: Per property time limit expired (10,00 s) [10,03 s]
+5.0.N: Stopped processing property "SYMBOL_FIFO_ORIGINAL_SYMBOL._type_constraint_r_FIFO_COUNT"	[10,02 s].
+5.0.N: Starting proof for property "DUT.GEN_NO_PARITY_OUTPUT_TRUE.SYMBOL_FIFO_INST._type_constraint_r_FIFO_COUNT"	[0,00 s].
+5.0.D: Stopped processing property "SYMBOL_FIFO_ORIGINAL_SYMBOL._type_constraint_r_FIFO_COUNT"	[10,03 s].
+5.0.D: Starting proof for property "DUT.GEN_NO_PARITY_OUTPUT_TRUE.SYMBOL_FIFO_INST._type_constraint_r_FIFO_COUNT"	[0,00 s].
+5.0.N: Trace Attempt 22	[0,05 s]
+4.0.D: Trace Attempt 31	[5,66 s]
+INFO (IPL005): Received request to exit from the console.
+INFO: Waiting for proof threads to stop...
+INFO (IPF144): 5: Initiating shutdown of proof [17,86]
+5.0.N: Stopped processing property "DUT.GEN_NO_PARITY_OUTPUT_TRUE.SYMBOL_FIFO_INST._type_constraint_r_FIFO_COUNT"	[1,42 s].
+5.0.D: Stopped processing property "DUT.GEN_NO_PARITY_OUTPUT_TRUE.SYMBOL_FIFO_INST._type_constraint_r_FIFO_COUNT"	[1,41 s].
+5.0.D: Trace Attempt 20	[0,93 s]
+5.0.D: Interrupted. [4,68 s]
+5.0.N: Trace Attempt 25	[1,41 s]
+5.0.N: Interrupted. [5,88 s]
+5.0.D: Exited with Success (@ 17,88 s)
+5.0.N: Exited with Success (@ 17,89 s)
+5: ProofGrid usable level: 0
+5: --------------------------------------------------------------
+ProofGrid Summary
+--------------------------------------------------------------
+     engines started                               :     3
+     engine jobs started                           :     2
+     jobs where 1 minute load exceeded core count  :     2
+     jobs where 15 minute load exceeded core count :     2
+
+    Average time in state (seconds)
+    ------------------------------------------------------
+    Engine  Pending     Running        Dead    Utilization
+    ------------------------------------------------------
+      N        0.34       17.87        0.00       98.15 %
+      D        0.43       17.58        0.00       97.60 %
+    all        0.38       17.73        0.00       97.87 %
+
+    Data read    : 31.52 kiB
+    Data written : 4.92 kiB
+
+5: All pending notifications were processed.
+INFO (IPM007): "prove" command stopped.
+
+==============================================================
+SUMMARY
+==============================================================
+           Total Tasks                        : 6
+           Total Properties                   : 95
+                 assumptions                  : 0
+                  - approved                  : 0
+                  - temporary                 : 0
+                 soft assumptions             : 0
+                 assertions                   : 89
+                  - proven                    : 35 (39.3258%)
+                  - bounded_proven (user)     : 0 (0%)
+                  - bounded_proven (auto)     : 0 (0%)
+                  - marked_proven             : 0 (0%)
+                  - cex                       : 0 (0%)
+                  - ar_cex                    : 0 (0%)
+                  - undetermined              : 4 (4.49438%)
+                  - unknown                   : 50 (56.1798%)
+                  - error                     : 0 (0%)
+                 covers                       : 6
+                  - unreachable               : 0 (0%)
+                  - bounded_unreachable (user): 0 (0%)
+                  - covered                   : 5 (83.3333%)
+                  - ar_covered                : 0 (0%)
+                  - undetermined              : 0 (0%)
+                  - unknown                   : 1 (16.6667%)
+                  - error                     : 0 (0%)
+INFO (IPF144): 4: Initiating shutdown of proof [18,58]
+4.0.B: Stopped processing property "formal_req"	[6,83 s].
+4.0.B: Trace Attempt 31	[0,54 s]
+4.0.B: Interrupted. [6,30 s]
+4.0.B: Exited with Success (@ 18,68 s)
+4.0.D: Stopped processing property "formal_req"	[6,76 s].
+4.0.D: Interrupted. [7,26 s]
+4.0.D: Exited with Success (@ 18,71 s)
+4: ProofGrid usable level: 0
+4: --------------------------------------------------------------
+ProofGrid Summary
+--------------------------------------------------------------
+     engines started                               :     5
+     engine jobs started                           :     3
+     jobs where 1 minute load exceeded core count  :     3
+     jobs where 15 minute load exceeded core count :     3
+
+    Average time in state (seconds)
+    ------------------------------------------------------
+    Engine  Pending     Running        Dead    Utilization
+    ------------------------------------------------------
+    Tri        0.27       11.66        0.00       97.70 %
+      B        0.16       18.55        0.00       99.17 %
+      D        0.25       18.43        0.00       98.64 %
+    all        0.23       16.21        0.00       98.62 %
+
+    Data read    : 9.62 kiB
+    Data written : 3.73 kiB
+
+4: All pending notifications were processed.
+INFO (IPM007): "prove" command stopped.
+INFO: Proof threads stopped.

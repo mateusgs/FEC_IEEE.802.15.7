@@ -1,0 +1,1123 @@
+########################################################################################
+#                                                                                      #
+# Created by Genus(TM) Synthesis Solution 17.20-p003_1 on Sun Sep 06 12:48:30 -03 2020 #
+#                                                                                      #
+########################################################################################
+
+upf_version 2.1
+
+set_scope VPFD
+
+set_scope RS
+
+set_scope RS_15_11
+
+create_supply_set SS_RS_DECODER_15_11
+
+create_power_domain PD_RS_DECODER_15_11 \
+	 -elements ""
+
+create_supply_port vdd \
+	 -direction in
+
+create_supply_port gnd \
+	 -direction in
+
+create_supply_net vdd \
+	 -resolve unresolved
+
+create_supply_net gnd \
+	 -resolve unresolved
+
+create_supply_net vdd_ps_fec_rs_15_11 \
+	 -resolve unresolved
+
+create_supply_set SS_RS_DECODER_15_11 \
+	 -function { power vdd_ps_fec_rs_15_11 } \
+	 -function { ground gnd } \
+	 -update
+
+create_power_domain PD_RS_DECODER_15_11 \
+	 -elements . \
+	 -supply { primary SS_RS_DECODER_15_11 } \
+	 -update
+
+connect_supply_net vdd \
+	 -ports vdd
+
+connect_supply_net gnd \
+	 -ports gnd
+
+add_power_state PD_RS_DECODER_15_11.primary -supply -state { ON  \
+	 -simstate NORMAL \
+	 -supply_expr { power == {FULL_ON  0.8} && ground == {FULL_ON  0.0} } }
+
+add_power_state PD_RS_DECODER_15_11.primary -supply -state { OFF  \
+	 -simstate CORRUPT \
+	 -supply_expr { power == OFF || ground == OFF } } -update
+
+set_scope ..
+
+set_scope RS_15_2
+
+create_supply_set SS_RS_DECODER_15_2
+
+create_power_domain PD_RS_DECODER_15_2 \
+	 -elements ""
+
+create_supply_port vdd \
+	 -direction in
+
+create_supply_port gnd \
+	 -direction in
+
+create_supply_net vdd \
+	 -resolve unresolved
+
+create_supply_net gnd \
+	 -resolve unresolved
+
+create_supply_net vdd_ps_fec_rs_15_2 \
+	 -resolve unresolved
+
+create_supply_set SS_RS_DECODER_15_2 \
+	 -function { power vdd_ps_fec_rs_15_2 } \
+	 -function { ground gnd } \
+	 -update
+
+create_power_domain PD_RS_DECODER_15_2 \
+	 -elements . \
+	 -supply { primary SS_RS_DECODER_15_2 } \
+	 -update
+
+connect_supply_net vdd \
+	 -ports vdd
+
+connect_supply_net gnd \
+	 -ports gnd
+
+add_power_state PD_RS_DECODER_15_2.primary -supply -state { ON  \
+	 -simstate NORMAL \
+	 -supply_expr { power == {FULL_ON  0.8} && ground == {FULL_ON  0.0} } }
+
+add_power_state PD_RS_DECODER_15_2.primary -supply -state { OFF  \
+	 -simstate CORRUPT \
+	 -supply_expr { power == OFF || ground == OFF } } -update
+
+set_scope ..
+
+set_scope RS_15_4
+
+create_supply_set SS_RS_DECODER_15_4
+
+create_power_domain PD_RS_DECODER_15_4 \
+	 -elements ""
+
+create_supply_port vdd \
+	 -direction in
+
+create_supply_port gnd \
+	 -direction in
+
+create_supply_net vdd \
+	 -resolve unresolved
+
+create_supply_net gnd \
+	 -resolve unresolved
+
+create_supply_net vdd_ps_fec_rs_15_4 \
+	 -resolve unresolved
+
+create_supply_set SS_RS_DECODER_15_4 \
+	 -function { power vdd_ps_fec_rs_15_4 } \
+	 -function { ground gnd } \
+	 -update
+
+create_power_domain PD_RS_DECODER_15_4 \
+	 -elements . \
+	 -supply { primary SS_RS_DECODER_15_4 } \
+	 -update
+
+connect_supply_net vdd \
+	 -ports vdd
+
+connect_supply_net gnd \
+	 -ports gnd
+
+add_power_state PD_RS_DECODER_15_4.primary -supply -state { ON  \
+	 -simstate NORMAL \
+	 -supply_expr { power == {FULL_ON  0.8} && ground == {FULL_ON  0.0} } }
+
+add_power_state PD_RS_DECODER_15_4.primary -supply -state { OFF  \
+	 -simstate CORRUPT \
+	 -supply_expr { power == OFF || ground == OFF } } -update
+
+set_scope ..
+
+set_scope RS_15_7
+
+create_supply_set SS_RS_DECODER_15_7
+
+create_power_domain PD_RS_DECODER_15_7 \
+	 -elements ""
+
+create_supply_port vdd \
+	 -direction in
+
+create_supply_port gnd \
+	 -direction in
+
+create_supply_net vdd \
+	 -resolve unresolved
+
+create_supply_net gnd \
+	 -resolve unresolved
+
+create_supply_net vdd_ps_fec_rs_15_7 \
+	 -resolve unresolved
+
+create_supply_set SS_RS_DECODER_15_7 \
+	 -function { power vdd_ps_fec_rs_15_7 } \
+	 -function { ground gnd } \
+	 -update
+
+create_power_domain PD_RS_DECODER_15_7 \
+	 -elements . \
+	 -supply { primary SS_RS_DECODER_15_7 } \
+	 -update
+
+connect_supply_net vdd \
+	 -ports vdd
+
+connect_supply_net gnd \
+	 -ports gnd
+
+add_power_state PD_RS_DECODER_15_7.primary -supply -state { ON  \
+	 -simstate NORMAL \
+	 -supply_expr { power == {FULL_ON  0.8} && ground == {FULL_ON  0.0} } }
+
+add_power_state PD_RS_DECODER_15_7.primary -supply -state { OFF  \
+	 -simstate CORRUPT \
+	 -supply_expr { power == OFF || ground == OFF } } -update
+
+set_scope ..
+
+set_scope RS_160_128
+
+create_supply_set SS_RS_DECODER_160_128
+
+create_power_domain PD_RS_DECODER_160_128 \
+	 -elements ""
+
+create_supply_port vdd \
+	 -direction in
+
+create_supply_port gnd \
+	 -direction in
+
+create_supply_net vdd \
+	 -resolve unresolved
+
+create_supply_net gnd \
+	 -resolve unresolved
+
+create_supply_net vdd_ps_fec_rs_160_128 \
+	 -resolve unresolved
+
+create_supply_set SS_RS_DECODER_160_128 \
+	 -function { power vdd_ps_fec_rs_160_128 } \
+	 -function { ground gnd } \
+	 -update
+
+create_power_domain PD_RS_DECODER_160_128 \
+	 -elements . \
+	 -supply { primary SS_RS_DECODER_160_128 } \
+	 -update
+
+connect_supply_net vdd \
+	 -ports vdd
+
+connect_supply_net gnd \
+	 -ports gnd
+
+add_power_state PD_RS_DECODER_160_128.primary -supply -state { ON  \
+	 -simstate NORMAL \
+	 -supply_expr { power == {FULL_ON  0.8} && ground == {FULL_ON  0.0} } }
+
+add_power_state PD_RS_DECODER_160_128.primary -supply -state { OFF  \
+	 -simstate CORRUPT \
+	 -supply_expr { power == OFF || ground == OFF } } -update
+
+set_scope ..
+
+set_scope RS_64_32
+
+create_supply_set SS_RS_DECODER_64_32
+
+create_power_domain PD_RS_DECODER_64_32 \
+	 -elements ""
+
+create_supply_port vdd \
+	 -direction in
+
+create_supply_port gnd \
+	 -direction in
+
+create_supply_net vdd \
+	 -resolve unresolved
+
+create_supply_net gnd \
+	 -resolve unresolved
+
+create_supply_net vdd_ps_fec_rs_64_32 \
+	 -resolve unresolved
+
+create_supply_set SS_RS_DECODER_64_32 \
+	 -function { power vdd_ps_fec_rs_64_32 } \
+	 -function { ground gnd } \
+	 -update
+
+create_power_domain PD_RS_DECODER_64_32 \
+	 -elements . \
+	 -supply { primary SS_RS_DECODER_64_32 } \
+	 -update
+
+connect_supply_net vdd \
+	 -ports vdd
+
+connect_supply_net gnd \
+	 -ports gnd
+
+add_power_state PD_RS_DECODER_64_32.primary -supply -state { ON  \
+	 -simstate NORMAL \
+	 -supply_expr { power == {FULL_ON  0.8} && ground == {FULL_ON  0.0} } }
+
+add_power_state PD_RS_DECODER_64_32.primary -supply -state { OFF  \
+	 -simstate CORRUPT \
+	 -supply_expr { power == OFF || ground == OFF } } -update
+
+set_scope ..
+
+create_supply_set SS_RS_DECODER
+
+create_power_domain PD_RS_DECODER \
+	 -elements ""
+
+create_supply_port vdd \
+	 -direction in
+
+create_supply_port gnd \
+	 -direction in
+
+create_supply_net vdd \
+	 -resolve unresolved
+
+create_supply_net gnd \
+	 -resolve unresolved
+
+create_supply_net vdd_ps_fec_rs_decoder \
+	 -resolve unresolved
+
+create_supply_set SS_RS_DECODER \
+	 -function { power vdd_ps_fec_rs_decoder } \
+	 -function { ground gnd } \
+	 -update
+
+create_power_domain PD_RS_DECODER \
+	 -elements . \
+	 -supply { primary SS_RS_DECODER } \
+	 -update
+
+connect_supply_net vdd \
+	 -ports vdd
+
+connect_supply_net gnd \
+	 -ports gnd
+
+add_power_state PD_RS_DECODER.primary -supply -state { ON  \
+	 -simstate NORMAL \
+	 -supply_expr { power == {FULL_ON  0.8} && ground == {FULL_ON  0.0} } }
+
+add_power_state PD_RS_DECODER.primary -supply -state { OFF  \
+	 -simstate CORRUPT \
+	 -supply_expr { power == OFF || ground == OFF } } -update
+
+connect_supply_net vdd \
+	 -ports RS_15_11/vdd
+
+connect_supply_net gnd \
+	 -ports RS_15_11/gnd
+
+connect_supply_net vdd \
+	 -ports RS_15_7/vdd
+
+connect_supply_net gnd \
+	 -ports RS_15_7/gnd
+
+connect_supply_net vdd \
+	 -ports RS_15_4/vdd
+
+connect_supply_net gnd \
+	 -ports RS_15_4/gnd
+
+connect_supply_net vdd \
+	 -ports RS_15_2/vdd
+
+connect_supply_net gnd \
+	 -ports RS_15_2/gnd
+
+connect_supply_net vdd \
+	 -ports RS_64_32/vdd
+
+connect_supply_net gnd \
+	 -ports RS_64_32/gnd
+
+connect_supply_net vdd \
+	 -ports RS_160_128/vdd
+
+connect_supply_net gnd \
+	 -ports RS_160_128/gnd
+
+set_scope ..
+
+create_supply_set SS_VPFD
+
+create_supply_set SS_INNER_CODE
+
+create_power_domain PD_VPFD \
+	 -elements ""
+
+create_power_domain PD_INNER_CODE \
+	 -elements ""
+
+create_supply_port vdd \
+	 -direction in
+
+create_supply_port gnd \
+	 -direction in
+
+create_supply_net vdd \
+	 -resolve unresolved
+
+create_supply_net gnd \
+	 -resolve unresolved
+
+create_supply_net vdd_ps_fec_decoder \
+	 -resolve unresolved
+
+create_supply_net vdd_ps_fec_inner_code \
+	 -resolve unresolved
+
+create_supply_set SS_VPFD \
+	 -function { power vdd_ps_fec_decoder } \
+	 -function { ground gnd } \
+	 -update
+
+create_supply_set SS_INNER_CODE \
+	 -function { power vdd } \
+	 -function { ground gnd } \
+	 -update
+
+create_power_domain PD_VPFD \
+	 -elements . \
+	 -supply { primary SS_VPFD } \
+	 -update
+
+create_power_domain PD_INNER_CODE \
+	 -elements { DEINT VIT } \
+	 -supply { primary SS_INNER_CODE } \
+	 -update
+
+connect_supply_net vdd \
+	 -ports vdd
+
+connect_supply_net gnd \
+	 -ports gnd
+
+add_power_state PD_VPFD.primary -supply -state { ON  \
+	 -simstate NORMAL \
+	 -supply_expr { power == {FULL_ON  0.8} && ground == {FULL_ON  0.0} } }
+
+add_power_state PD_VPFD.primary -supply -state { OFF  \
+	 -simstate CORRUPT \
+	 -supply_expr { power == OFF || ground == OFF } } -update
+
+add_power_state PD_INNER_CODE.primary -supply -state { ON  \
+	 -simstate NORMAL \
+	 -supply_expr { power == {FULL_ON  0.8} && ground == {FULL_ON  0.0} } }
+
+add_power_state PD_INNER_CODE.primary -supply -state { OFF  \
+	 -simstate CORRUPT \
+	 -supply_expr { power == OFF || ground == OFF } } -update
+
+connect_supply_net vdd \
+	 -ports RS/vdd
+
+connect_supply_net gnd \
+	 -ports RS/gnd
+
+set_scope ..
+
+set_scope VPFE
+
+set_scope RS_ENCODER_UNIT
+
+set_scope RS_15_11
+
+create_supply_set SS_RS_ENCODER_15_11
+
+create_power_domain PD_RS_ENCODER_15_11 \
+	 -elements ""
+
+create_supply_port vdd \
+	 -direction in
+
+create_supply_port gnd \
+	 -direction in
+
+create_supply_net vdd \
+	 -resolve unresolved
+
+create_supply_net gnd \
+	 -resolve unresolved
+
+create_supply_net vdd_ps_fec_rs_15_11 \
+	 -resolve unresolved
+
+create_supply_set SS_RS_ENCODER_15_11 \
+	 -function { power vdd_ps_fec_rs_15_11 } \
+	 -function { ground gnd } \
+	 -update
+
+create_power_domain PD_RS_ENCODER_15_11 \
+	 -elements . \
+	 -supply { primary SS_RS_ENCODER_15_11 } \
+	 -update
+
+connect_supply_net vdd \
+	 -ports vdd
+
+connect_supply_net gnd \
+	 -ports gnd
+
+add_power_state PD_RS_ENCODER_15_11.primary -supply -state { ON  \
+	 -simstate NORMAL \
+	 -supply_expr { power == {FULL_ON  0.8} && ground == {FULL_ON  0.0} } }
+
+add_power_state PD_RS_ENCODER_15_11.primary -supply -state { OFF  \
+	 -simstate CORRUPT \
+	 -supply_expr { power == OFF || ground == OFF } } -update
+
+set_scope ..
+
+set_scope RS_15_2
+
+create_supply_set SS_RS_ENCODER_15_2
+
+create_power_domain PD_RS_ENCODER_15_2 \
+	 -elements ""
+
+create_supply_port vdd \
+	 -direction in
+
+create_supply_port gnd \
+	 -direction in
+
+create_supply_net vdd \
+	 -resolve unresolved
+
+create_supply_net gnd \
+	 -resolve unresolved
+
+create_supply_net vdd_ps_fec_rs_15_2 \
+	 -resolve unresolved
+
+create_supply_set SS_RS_ENCODER_15_2 \
+	 -function { power vdd_ps_fec_rs_15_2 } \
+	 -function { ground gnd } \
+	 -update
+
+create_power_domain PD_RS_ENCODER_15_2 \
+	 -elements . \
+	 -supply { primary SS_RS_ENCODER_15_2 } \
+	 -update
+
+connect_supply_net vdd \
+	 -ports vdd
+
+connect_supply_net gnd \
+	 -ports gnd
+
+add_power_state PD_RS_ENCODER_15_2.primary -supply -state { ON  \
+	 -simstate NORMAL \
+	 -supply_expr { power == {FULL_ON  0.8} && ground == {FULL_ON  0.0} } }
+
+add_power_state PD_RS_ENCODER_15_2.primary -supply -state { OFF  \
+	 -simstate CORRUPT \
+	 -supply_expr { power == OFF || ground == OFF } } -update
+
+set_scope ..
+
+set_scope RS_15_4
+
+create_supply_set SS_RS_ENCODER_15_4
+
+create_power_domain PD_RS_ENCODER_15_4 \
+	 -elements ""
+
+create_supply_port vdd \
+	 -direction in
+
+create_supply_port gnd \
+	 -direction in
+
+create_supply_net vdd \
+	 -resolve unresolved
+
+create_supply_net gnd \
+	 -resolve unresolved
+
+create_supply_net vdd_ps_fec_rs_15_4 \
+	 -resolve unresolved
+
+create_supply_set SS_RS_ENCODER_15_4 \
+	 -function { power vdd_ps_fec_rs_15_4 } \
+	 -function { ground gnd } \
+	 -update
+
+create_power_domain PD_RS_ENCODER_15_4 \
+	 -elements . \
+	 -supply { primary SS_RS_ENCODER_15_4 } \
+	 -update
+
+connect_supply_net vdd \
+	 -ports vdd
+
+connect_supply_net gnd \
+	 -ports gnd
+
+add_power_state PD_RS_ENCODER_15_4.primary -supply -state { ON  \
+	 -simstate NORMAL \
+	 -supply_expr { power == {FULL_ON  0.8} && ground == {FULL_ON  0.0} } }
+
+add_power_state PD_RS_ENCODER_15_4.primary -supply -state { OFF  \
+	 -simstate CORRUPT \
+	 -supply_expr { power == OFF || ground == OFF } } -update
+
+set_scope ..
+
+set_scope RS_15_7
+
+create_supply_set SS_RS_ENCODER_15_7
+
+create_power_domain PD_RS_ENCODER_15_7 \
+	 -elements ""
+
+create_supply_port vdd \
+	 -direction in
+
+create_supply_port gnd \
+	 -direction in
+
+create_supply_net vdd \
+	 -resolve unresolved
+
+create_supply_net gnd \
+	 -resolve unresolved
+
+create_supply_net vdd_ps_fec_rs_15_7 \
+	 -resolve unresolved
+
+create_supply_set SS_RS_ENCODER_15_7 \
+	 -function { power vdd_ps_fec_rs_15_7 } \
+	 -function { ground gnd } \
+	 -update
+
+create_power_domain PD_RS_ENCODER_15_7 \
+	 -elements . \
+	 -supply { primary SS_RS_ENCODER_15_7 } \
+	 -update
+
+connect_supply_net vdd \
+	 -ports vdd
+
+connect_supply_net gnd \
+	 -ports gnd
+
+add_power_state PD_RS_ENCODER_15_7.primary -supply -state { ON  \
+	 -simstate NORMAL \
+	 -supply_expr { power == {FULL_ON  0.8} && ground == {FULL_ON  0.0} } }
+
+add_power_state PD_RS_ENCODER_15_7.primary -supply -state { OFF  \
+	 -simstate CORRUPT \
+	 -supply_expr { power == OFF || ground == OFF } } -update
+
+set_scope ..
+
+set_scope RS_160_128
+
+create_supply_set SS_RS_ENCODER_160_128
+
+create_power_domain PD_RS_ENCODER_160_128 \
+	 -elements ""
+
+create_supply_port vdd \
+	 -direction in
+
+create_supply_port gnd \
+	 -direction in
+
+create_supply_net vdd \
+	 -resolve unresolved
+
+create_supply_net gnd \
+	 -resolve unresolved
+
+create_supply_net vdd_ps_fec_rs_160_128 \
+	 -resolve unresolved
+
+create_supply_set SS_RS_ENCODER_160_128 \
+	 -function { power vdd_ps_fec_rs_160_128 } \
+	 -function { ground gnd } \
+	 -update
+
+create_power_domain PD_RS_ENCODER_160_128 \
+	 -elements . \
+	 -supply { primary SS_RS_ENCODER_160_128 } \
+	 -update
+
+connect_supply_net vdd \
+	 -ports vdd
+
+connect_supply_net gnd \
+	 -ports gnd
+
+add_power_state PD_RS_ENCODER_160_128.primary -supply -state { ON  \
+	 -simstate NORMAL \
+	 -supply_expr { power == {FULL_ON  0.8} && ground == {FULL_ON  0.0} } }
+
+add_power_state PD_RS_ENCODER_160_128.primary -supply -state { OFF  \
+	 -simstate CORRUPT \
+	 -supply_expr { power == OFF || ground == OFF } } -update
+
+set_scope ..
+
+set_scope RS_64_32
+
+create_supply_set SS_RS_ENCODER_64_32
+
+create_power_domain PD_RS_ENCODER_64_32 \
+	 -elements ""
+
+create_supply_port vdd \
+	 -direction in
+
+create_supply_port gnd \
+	 -direction in
+
+create_supply_net vdd \
+	 -resolve unresolved
+
+create_supply_net gnd \
+	 -resolve unresolved
+
+create_supply_net vdd_ps_fec_rs_64_32 \
+	 -resolve unresolved
+
+create_supply_set SS_RS_ENCODER_64_32 \
+	 -function { power vdd_ps_fec_rs_64_32 } \
+	 -function { ground gnd } \
+	 -update
+
+create_power_domain PD_RS_ENCODER_64_32 \
+	 -elements . \
+	 -supply { primary SS_RS_ENCODER_64_32 } \
+	 -update
+
+connect_supply_net vdd \
+	 -ports vdd
+
+connect_supply_net gnd \
+	 -ports gnd
+
+add_power_state PD_RS_ENCODER_64_32.primary -supply -state { ON  \
+	 -simstate NORMAL \
+	 -supply_expr { power == {FULL_ON  0.8} && ground == {FULL_ON  0.0} } }
+
+add_power_state PD_RS_ENCODER_64_32.primary -supply -state { OFF  \
+	 -simstate CORRUPT \
+	 -supply_expr { power == OFF || ground == OFF } } -update
+
+set_scope ..
+
+create_supply_set SS_RS_ENCODER
+
+create_power_domain PD_RS_ENCODER \
+	 -elements ""
+
+create_supply_port vdd \
+	 -direction in
+
+create_supply_port gnd \
+	 -direction in
+
+create_supply_net vdd \
+	 -resolve unresolved
+
+create_supply_net gnd \
+	 -resolve unresolved
+
+create_supply_net vdd_ps_fec_rs_encoder \
+	 -resolve unresolved
+
+create_supply_set SS_RS_ENCODER \
+	 -function { power vdd_ps_fec_rs_encoder } \
+	 -function { ground gnd } \
+	 -update
+
+create_power_domain PD_RS_ENCODER \
+	 -elements . \
+	 -supply { primary SS_RS_ENCODER } \
+	 -update
+
+connect_supply_net vdd \
+	 -ports vdd
+
+connect_supply_net gnd \
+	 -ports gnd
+
+add_power_state PD_RS_ENCODER.primary -supply -state { ON  \
+	 -simstate NORMAL \
+	 -supply_expr { power == {FULL_ON  0.8} && ground == {FULL_ON  0.0} } }
+
+add_power_state PD_RS_ENCODER.primary -supply -state { OFF  \
+	 -simstate CORRUPT \
+	 -supply_expr { power == OFF || ground == OFF } } -update
+
+connect_supply_net vdd \
+	 -ports RS_15_11/vdd
+
+connect_supply_net gnd \
+	 -ports RS_15_11/gnd
+
+connect_supply_net vdd \
+	 -ports RS_15_7/vdd
+
+connect_supply_net gnd \
+	 -ports RS_15_7/gnd
+
+connect_supply_net vdd \
+	 -ports RS_15_4/vdd
+
+connect_supply_net gnd \
+	 -ports RS_15_4/gnd
+
+connect_supply_net vdd \
+	 -ports RS_15_2/vdd
+
+connect_supply_net gnd \
+	 -ports RS_15_2/gnd
+
+connect_supply_net vdd \
+	 -ports RS_64_32/vdd
+
+connect_supply_net gnd \
+	 -ports RS_64_32/gnd
+
+connect_supply_net vdd \
+	 -ports RS_160_128/vdd
+
+connect_supply_net gnd \
+	 -ports RS_160_128/gnd
+
+set_scope ..
+
+create_supply_set SS_VPFE
+
+create_supply_set SS_INNER_CODE
+
+create_power_domain PD_VPFE \
+	 -elements ""
+
+create_power_domain PD_INNER_CODE \
+	 -elements ""
+
+create_supply_port vdd \
+	 -direction in
+
+create_supply_port gnd \
+	 -direction in
+
+create_supply_net vdd \
+	 -resolve unresolved
+
+create_supply_net gnd \
+	 -resolve unresolved
+
+create_supply_net vdd_ps_fec_encoder \
+	 -resolve unresolved
+
+create_supply_net vdd_ps_fec_inner_code \
+	 -resolve unresolved
+
+create_supply_set SS_VPFE \
+	 -function { power vdd_ps_fec_encoder } \
+	 -function { ground gnd } \
+	 -update
+
+create_supply_set SS_INNER_CODE \
+	 -function { power vdd } \
+	 -function { ground gnd } \
+	 -update
+
+create_power_domain PD_VPFE \
+	 -elements . \
+	 -supply { primary SS_VPFE } \
+	 -update
+
+create_power_domain PD_INNER_CODE \
+	 -elements { CONV0 INTERLEAVER_UNIT } \
+	 -supply { primary SS_INNER_CODE } \
+	 -update
+
+connect_supply_net vdd \
+	 -ports vdd
+
+connect_supply_net gnd \
+	 -ports gnd
+
+add_power_state PD_VPFE.primary -supply -state { ON  \
+	 -simstate NORMAL \
+	 -supply_expr { power == {FULL_ON  0.8} && ground == {FULL_ON  0.0} } }
+
+add_power_state PD_VPFE.primary -supply -state { OFF  \
+	 -simstate CORRUPT \
+	 -supply_expr { power == OFF || ground == OFF } } -update
+
+add_power_state PD_INNER_CODE.primary -supply -state { ON  \
+	 -simstate NORMAL \
+	 -supply_expr { power == {FULL_ON  0.8} && ground == {FULL_ON  0.0} } }
+
+add_power_state PD_INNER_CODE.primary -supply -state { OFF  \
+	 -simstate CORRUPT \
+	 -supply_expr { power == OFF || ground == OFF } } -update
+
+connect_supply_net vdd \
+	 -ports RS_ENCODER_UNIT/vdd
+
+connect_supply_net gnd \
+	 -ports RS_ENCODER_UNIT/gnd
+
+set_scope ..
+
+create_supply_set SS_AON
+
+create_power_domain PD_AON \
+	 -include_scope
+
+create_supply_port vdd \
+	 -direction in
+
+create_supply_port gnd \
+	 -direction in
+
+create_supply_net vdd \
+	 -resolve unresolved
+
+create_supply_net gnd \
+	 -resolve unresolved
+
+create_supply_set SS_AON \
+	 -function { power vdd } \
+	 -function { ground gnd } \
+	 -update
+
+create_power_domain PD_AON \
+	 -supply { primary SS_AON } \
+	 -update
+
+set_isolation ISO_ENCODER \
+	 -domain VPFE/PD_VPFE \
+	 -elements { VPFE/o_valid VPFE/o_in_ready } \
+	 -name_suffix _UPF_ISO \
+	 -clamp_value 0
+
+set_isolation ISO_DECODER \
+	 -domain VPFD/PD_VPFD \
+	 -elements { VPFD/o_valid VPFD/o_in_ready } \
+	 -name_suffix _UPF_ISO \
+	 -clamp_value 0
+
+set_isolation ISO_ENCODER \
+	 -domain VPFE/PD_VPFE \
+	 -isolation_signal VPFC/PMC/o_iso_enc \
+	 -isolation_sense high \
+	 -isolation_supply_set SS_AON \
+	 -update
+
+set_isolation ISO_DECODER \
+	 -domain VPFD/PD_VPFD \
+	 -isolation_signal VPFC/PMC/o_iso_dec \
+	 -isolation_sense high \
+	 -isolation_supply_set SS_AON \
+	 -update
+
+connect_supply_net vdd \
+	 -ports vdd
+
+connect_supply_net gnd \
+	 -ports gnd
+
+add_power_state PD_AON.primary -supply -state { ON  \
+	 -simstate NORMAL \
+	 -supply_expr { power == {FULL_ON  0.8} && ground == {FULL_ON  0.0} } }
+
+add_power_state PD_AON.primary -supply -state { OFF  \
+	 -simstate CORRUPT \
+	 -supply_expr { power == OFF || ground == OFF } } -update
+
+connect_supply_net vdd \
+	 -ports VPFE/vdd
+
+connect_supply_net gnd \
+	 -ports VPFE/gnd
+
+connect_supply_net vdd \
+	 -ports VPFD/vdd
+
+connect_supply_net gnd \
+	 -ports VPFD/gnd
+
+create_power_switch ps_fec_encoder \
+	 -output_supply_port { vout VPFE/vdd_ps_fec_encoder } \
+	 -input_supply_port { vin VPFE/vdd } \
+	 -control_port { ss_ctrl VPFC/PMC/o_en_fec_enc } \
+	 -on_state { ss_on vin {ss_ctrl} } \
+	 -off_state { ss_off {!ss_ctrl} }
+
+create_power_switch ps_fec_decoder \
+	 -output_supply_port { vout VPFD/vdd_ps_fec_decoder } \
+	 -input_supply_port { vin VPFD/vdd } \
+	 -control_port { ss_ctrl VPFC/PMC/o_en_fec_dec } \
+	 -on_state { ss_on vin {ss_ctrl} } \
+	 -off_state { ss_off {!ss_ctrl} }
+
+create_power_switch ps_fec_enc_inner_code \
+	 -output_supply_port { vout VPFE/vdd_ps_fec_inner_code } \
+	 -input_supply_port { vin VPFE/vdd } \
+	 -control_port { ss_ctrl VPFC/PMC/o_en_fec_enc_inner_code } \
+	 -on_state { ss_on vin {ss_ctrl} } \
+	 -off_state { ss_off {!ss_ctrl} }
+
+create_power_switch ps_fec_dec_inner_code \
+	 -output_supply_port { vout VPFD/vdd_ps_fec_inner_code } \
+	 -input_supply_port { vin VPFD/vdd } \
+	 -control_port { ss_ctrl VPFC/PMC/o_en_fec_dec_inner_code } \
+	 -on_state { ss_on vin {ss_ctrl} } \
+	 -off_state { ss_off {!ss_ctrl} }
+
+create_power_switch ps_fec_enc_outer_code \
+	 -output_supply_port { vout VPFE/RS_ENCODER_UNIT/vdd_ps_fec_rs_encoder } \
+	 -input_supply_port { vin VPFE/RS_ENCODER_UNIT/vdd } \
+	 -control_port { ss_ctrl VPFC/PMC/o_en_fec_enc_outer_code } \
+	 -on_state { ss_on vin {ss_ctrl} } \
+	 -off_state { ss_off {!ss_ctrl} }
+
+create_power_switch ps_fec_dec_outer_code \
+	 -output_supply_port { vout VPFD/RS/vdd_ps_fec_rs_decoder } \
+	 -input_supply_port { vin VPFD/RS/vdd } \
+	 -control_port { ss_ctrl VPFC/PMC/o_en_fec_enc_outer_code } \
+	 -on_state { ss_on vin {ss_ctrl} } \
+	 -off_state { ss_off {!ss_ctrl} }
+
+create_power_switch ps_fec_rs_encoder_15_11 \
+	 -output_supply_port { vout VPFE/RS_ENCODER_UNIT/RS_15_11/vdd_ps_fec_rs_15_11 } \
+	 -input_supply_port { vin VPFE/RS_ENCODER_UNIT/RS_15_11/vdd } \
+	 -control_port { ss_ctrl VPFC/PMC/o_en_fec_enc_rs_15_11 } \
+	 -on_state { ss_on vin {ss_ctrl} } \
+	 -off_state { ss_off {!ss_ctrl} }
+
+create_power_switch ps_fec_rs_encoder_15_7 \
+	 -output_supply_port { vout VPFE/RS_ENCODER_UNIT/RS_15_7/vdd_ps_fec_rs_15_7 } \
+	 -input_supply_port { vin VPFE/RS_ENCODER_UNIT/RS_15_7/vdd } \
+	 -control_port { ss_ctrl VPFC/PMC/o_en_fec_enc_rs_15_7 } \
+	 -on_state { ss_on vin {ss_ctrl} } \
+	 -off_state { ss_off {!ss_ctrl} }
+
+create_power_switch ps_fec_rs_encoder_15_4 \
+	 -output_supply_port { vout VPFE/RS_ENCODER_UNIT/RS_15_4/vdd_ps_fec_rs_15_4 } \
+	 -input_supply_port { vin VPFE/RS_ENCODER_UNIT/RS_15_4/vdd } \
+	 -control_port { ss_ctrl VPFC/PMC/o_en_fec_enc_rs_15_4 } \
+	 -on_state { ss_on vin {ss_ctrl} } \
+	 -off_state { ss_off {!ss_ctrl} }
+
+create_power_switch ps_fec_rs_encoder_15_2 \
+	 -output_supply_port { vout VPFE/RS_ENCODER_UNIT/RS_15_2/vdd_ps_fec_rs_15_2 } \
+	 -input_supply_port { vin VPFE/RS_ENCODER_UNIT/RS_15_2/vdd } \
+	 -control_port { ss_ctrl VPFC/PMC/o_en_fec_enc_rs_15_2 } \
+	 -on_state { ss_on vin {ss_ctrl} } \
+	 -off_state { ss_off {!ss_ctrl} }
+
+create_power_switch ps_fec_rs_encoder_64_32 \
+	 -output_supply_port { vout VPFE/RS_ENCODER_UNIT/RS_64_32/vdd_ps_fec_rs_64_32 } \
+	 -input_supply_port { vin VPFE/RS_ENCODER_UNIT/RS_64_32/vdd } \
+	 -control_port { ss_ctrl VPFC/PMC/o_en_fec_enc_rs_64_32 } \
+	 -on_state { ss_on vin {ss_ctrl} } \
+	 -off_state { ss_off {!ss_ctrl} }
+
+create_power_switch ps_fec_rs_encoder_160_128 \
+	 -output_supply_port { vout VPFE/RS_ENCODER_UNIT/RS_160_128/vdd_ps_fec_rs_160_128 } \
+	 -input_supply_port { vin VPFE/RS_ENCODER_UNIT/RS_160_128/vdd } \
+	 -control_port { ss_ctrl VPFC/PMC/o_en_fec_enc_rs_160_128 } \
+	 -on_state { ss_on vin {ss_ctrl} } \
+	 -off_state { ss_off {!ss_ctrl} }
+
+create_power_switch ps_fec_rs_decoder_15_11 \
+	 -output_supply_port { vout VPFD/RS/RS_15_11/vdd_ps_fec_rs_15_11 } \
+	 -input_supply_port { vin VPFD/RS/RS_15_11/vdd } \
+	 -control_port { ss_ctrl VPFC/PMC/o_en_fec_dec_rs_15_11 } \
+	 -on_state { ss_on vin {ss_ctrl} } \
+	 -off_state { ss_off {!ss_ctrl} }
+
+create_power_switch ps_fec_rs_decoder_15_7 \
+	 -output_supply_port { vout VPFD/RS/RS_15_7/vdd_ps_fec_rs_15_7 } \
+	 -input_supply_port { vin VPFD/RS/RS_15_7/vdd } \
+	 -control_port { ss_ctrl VPFC/PMC/o_en_fec_dec_rs_15_7 } \
+	 -on_state { ss_on vin {ss_ctrl} } \
+	 -off_state { ss_off {!ss_ctrl} }
+
+create_power_switch ps_fec_rs_decoder_15_4 \
+	 -output_supply_port { vout VPFD/RS/RS_15_4/vdd_ps_fec_rs_15_4 } \
+	 -input_supply_port { vin VPFD/RS/RS_15_4/vdd } \
+	 -control_port { ss_ctrl VPFC/PMC/o_en_fec_dec_rs_15_4 } \
+	 -on_state { ss_on vin {ss_ctrl} } \
+	 -off_state { ss_off {!ss_ctrl} }
+
+create_power_switch ps_fec_rs_decoder_15_2 \
+	 -output_supply_port { vout VPFD/RS/RS_15_2/vdd_ps_fec_rs_15_2 } \
+	 -input_supply_port { vin VPFD/RS/RS_15_2/vdd } \
+	 -control_port { ss_ctrl VPFC/PMC/o_en_fec_dec_rs_15_2 } \
+	 -on_state { ss_on vin {ss_ctrl} } \
+	 -off_state { ss_off {!ss_ctrl} }
+
+create_power_switch ps_fec_rs_decoder_64_32 \
+	 -output_supply_port { vout VPFD/RS/RS_64_32/vdd_ps_fec_rs_64_32 } \
+	 -input_supply_port { vin VPFD/RS/RS_64_32/vdd } \
+	 -control_port { ss_ctrl VPFC/PMC/o_en_fec_dec_rs_64_32 } \
+	 -on_state { ss_on vin {ss_ctrl} } \
+	 -off_state { ss_off {!ss_ctrl} }
+
+create_power_switch ps_fec_rs_decoder_160_128 \
+	 -output_supply_port { vout VPFD/RS/RS_160_128/vdd_ps_fec_rs_160_128 } \
+	 -input_supply_port { vin VPFD/RS/RS_160_128/vdd } \
+	 -control_port { ss_ctrl VPFC/PMC/o_en_fec_dec_rs_160_128 } \
+	 -on_state { ss_on vin {ss_ctrl} } \
+	 -off_state { ss_off {!ss_ctrl} }
+
+set_port_attributes \
+	 -ports { clk rst i_mode i_sync_fec {i_mcs_id[5]} {i_mcs_id[4]} {i_mcs_id[3]} {i_mcs_id[2]} {i_mcs_id[1]} {i_mcs_id[0]} i_last_data_enc i_valid_enc {i_data_enc[7]} {i_data_enc[6]} {i_data_enc[5]} {i_data_enc[4]} {i_data_enc[3]} {i_data_enc[2]} {i_data_enc[1]} {i_data_enc[0]} i_last_data_dec i_valid_dec {i_data_dec[7]} {i_data_dec[6]} {i_data_dec[5]} {i_data_dec[4]} {i_data_dec[3]} {i_data_dec[2]} {i_data_dec[1]} {i_data_dec[0]} i_consume } \
+	 -driver_supply SS_AON
+
+set_port_attributes \
+	 -ports { o_busy o_mode o_in_ready_enc o_in_ready_dec o_last_data_enc o_valid_enc {o_data_dec[7]} {o_data_dec[6]} {o_data_dec[5]} {o_data_dec[4]} {o_data_dec[3]} {o_data_dec[2]} {o_data_dec[1]} {o_data_dec[0]} o_last_data_dec o_valid_dec {o_data_enc[7]} {o_data_enc[6]} {o_data_enc[5]} {o_data_enc[4]} {o_data_enc[3]} {o_data_enc[2]} {o_data_enc[1]} {o_data_enc[0]} } \
+	 -receiver_supply SS_AON

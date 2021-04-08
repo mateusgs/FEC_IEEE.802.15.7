@@ -1,0 +1,3 @@
+clear -all
+source compilation.itcl
+compile_fec

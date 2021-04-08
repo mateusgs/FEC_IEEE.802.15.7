@@ -1,0 +1,126 @@
+create_power_switch ps_fec_encoder\
+	-output_supply_port {vout VPFE/vdd_ps_fec_encoder}\
+	-input_supply_port {vin VPFE/vdd}\
+	-control_port {ss_ctrl VPFC/PMC/o_en_fec_enc}\
+	-on_state {ss_on vin {ss_ctrl}}\
+	-off_state {ss_off {!ss_ctrl}}
+	
+create_power_switch ps_fec_decoder\
+	-output_supply_port {vout VPFD/vdd_ps_fec_decoder}\
+	-input_supply_port {vin VPFD/vdd}\
+	-control_port {ss_ctrl VPFC/PMC/o_en_fec_dec}\
+	-on_state {ss_on vin {ss_ctrl}}\
+	-off_state {ss_off {!ss_ctrl}}
+
+create_power_switch ps_fec_enc_inner_code\
+	-output_supply_port {vout VPFE/vdd_ps_fec_inner_code}\
+	-input_supply_port {vin VPFE/vdd}\
+	-control_port {ss_ctrl VPFC/PMC/o_en_fec_enc_inner_code}\
+	-on_state {ss_on vin {ss_ctrl}}\
+	-off_state {ss_off {!ss_ctrl}}
+
+create_power_switch ps_fec_dec_inner_code\
+	-output_supply_port {vout VPFD/vdd_ps_fec_inner_code}\
+	-input_supply_port {vin VPFD/vdd}\
+	-control_port {ss_ctrl VPFC/PMC/o_en_fec_dec_inner_code}\
+	-on_state {ss_on vin {ss_ctrl}}\
+	-off_state {ss_off {!ss_ctrl}}
+
+create_power_switch ps_fec_enc_outer_code\
+	-output_supply_port {vout VPFE/RS_ENCODER_UNIT/vdd_ps_fec_rs_encoder}\
+	-input_supply_port {vin VPFE/RS_ENCODER_UNIT/vdd}\
+	-control_port {ss_ctrl VPFC/PMC/o_en_fec_enc_outer_code}\
+	-on_state {ss_on vin {ss_ctrl}}\
+	-off_state {ss_off {!ss_ctrl}}
+
+create_power_switch ps_fec_dec_outer_code\
+	-output_supply_port {vout VPFD/RS/vdd_ps_fec_rs_decoder}\
+	-input_supply_port {vin VPFD/RS/vdd}\
+	-control_port {ss_ctrl VPFC/PMC/o_en_fec_enc_outer_code}\
+	-on_state {ss_on vin {ss_ctrl}}\
+	-off_state {ss_off {!ss_ctrl}}
+
+create_power_switch ps_fec_rs_encoder_15_11\
+	-output_supply_port {vout VPFE/RS_ENCODER_UNIT/RS_15_11/vdd_ps_fec_rs_15_11}\
+	-input_supply_port {vin VPFE/RS_ENCODER_UNIT/RS_15_11/vdd}\
+	-control_port {ss_ctrl VPFC/PMC/o_en_fec_enc_rs_15_11}\
+	-on_state {ss_on vin {ss_ctrl}}\
+	-off_state {ss_off {!ss_ctrl}}
+
+create_power_switch ps_fec_rs_encoder_15_7\
+	-output_supply_port {vout VPFE/RS_ENCODER_UNIT/RS_15_7/vdd_ps_fec_rs_15_7}\
+	-input_supply_port {vin VPFE/RS_ENCODER_UNIT/RS_15_7/vdd}\
+	-control_port {ss_ctrl VPFC/PMC/o_en_fec_enc_rs_15_7}\
+	-on_state {ss_on vin {ss_ctrl}}\
+	-off_state {ss_off {!ss_ctrl}}
+
+create_power_switch ps_fec_rs_encoder_15_4\
+	-output_supply_port {vout VPFE/RS_ENCODER_UNIT/RS_15_4/vdd_ps_fec_rs_15_4}\
+	-input_supply_port {vin VPFE/RS_ENCODER_UNIT/RS_15_4/vdd}\
+	-control_port {ss_ctrl VPFC/PMC/o_en_fec_enc_rs_15_4}\
+	-on_state {ss_on vin {ss_ctrl}}\
+	-off_state {ss_off {!ss_ctrl}}
+
+create_power_switch ps_fec_rs_encoder_15_2\
+	-output_supply_port {vout VPFE/RS_ENCODER_UNIT/RS_15_2/vdd_ps_fec_rs_15_2}\
+	-input_supply_port {vin VPFE/RS_ENCODER_UNIT/RS_15_2/vdd}\
+	-control_port {ss_ctrl VPFC/PMC/o_en_fec_enc_rs_15_2}\
+	-on_state {ss_on vin {ss_ctrl}}\
+	-off_state {ss_off {!ss_ctrl}}
+
+create_power_switch ps_fec_rs_encoder_64_32\
+	-output_supply_port {vout VPFE/RS_ENCODER_UNIT/RS_64_32/vdd_ps_fec_rs_64_32}\
+	-input_supply_port {vin VPFE/RS_ENCODER_UNIT/RS_64_32/vdd}\
+	-control_port {ss_ctrl VPFC/PMC/o_en_fec_enc_rs_64_32}\
+	-on_state {ss_on vin {ss_ctrl}}\
+	-off_state {ss_off {!ss_ctrl}}
+
+create_power_switch ps_fec_rs_encoder_160_128\
+	-output_supply_port {vout VPFE/RS_ENCODER_UNIT/RS_160_128/vdd_ps_fec_rs_160_128}\
+	-input_supply_port {vin VPFE/RS_ENCODER_UNIT/RS_160_128/vdd}\
+	-control_port {ss_ctrl VPFC/PMC/o_en_fec_enc_rs_160_128}\
+	-on_state {ss_on vin {ss_ctrl}}\
+	-off_state {ss_off {!ss_ctrl}}
+
+create_power_switch ps_fec_rs_decoder_15_11\
+	-output_supply_port {vout VPFD/RS/RS_15_11/vdd_ps_fec_rs_15_11}\
+	-input_supply_port {vin VPFD/RS/RS_15_11/vdd}\
+	-control_port {ss_ctrl VPFC/PMC/o_en_fec_dec_rs_15_11}\
+	-on_state {ss_on vin {ss_ctrl}}\
+	-off_state {ss_off {!ss_ctrl}}
+
+create_power_switch ps_fec_rs_decoder_15_7\
+	-output_supply_port {vout VPFD/RS/RS_15_7/vdd_ps_fec_rs_15_7}\
+	-input_supply_port {vin VPFD/RS/RS_15_7/vdd}\
+	-control_port {ss_ctrl VPFC/PMC/o_en_fec_dec_rs_15_7}\
+	-on_state {ss_on vin {ss_ctrl}}\
+	-off_state {ss_off {!ss_ctrl}}
+
+create_power_switch ps_fec_rs_decoder_15_4\
+	-output_supply_port {vout VPFD/RS/RS_15_4/vdd_ps_fec_rs_15_4}\
+	-input_supply_port {vin VPFD/RS/RS_15_4/vdd}\
+	-control_port {ss_ctrl VPFC/PMC/o_en_fec_dec_rs_15_4}\
+	-on_state {ss_on vin {ss_ctrl}}\
+	-off_state {ss_off {!ss_ctrl}}
+
+create_power_switch ps_fec_rs_decoder_15_2\
+	-output_supply_port {vout VPFD/RS/RS_15_2/vdd_ps_fec_rs_15_2}\
+	-input_supply_port {vin VPFD/RS/RS_15_2/vdd}\
+	-control_port {ss_ctrl VPFC/PMC/o_en_fec_dec_rs_15_2}\
+	-on_state {ss_on vin {ss_ctrl}}\
+	-off_state {ss_off {!ss_ctrl}}
+
+create_power_switch ps_fec_rs_decoder_64_32\
+	-output_supply_port {vout VPFD/RS/RS_64_32/vdd_ps_fec_rs_64_32}\
+	-input_supply_port {vin VPFD/RS/RS_64_32/vdd}\
+	-control_port {ss_ctrl VPFC/PMC/o_en_fec_dec_rs_64_32}\
+	-on_state {ss_on vin {ss_ctrl}}\
+	-off_state {ss_off {!ss_ctrl}}
+
+create_power_switch ps_fec_rs_decoder_160_128\
+	-output_supply_port {vout VPFD/RS/RS_160_128/vdd_ps_fec_rs_160_128}\
+	-input_supply_port {vin VPFD/RS/RS_160_128/vdd}\
+	-control_port {ss_ctrl VPFC/PMC/o_en_fec_dec_rs_160_128}\
+	-on_state {ss_on vin {ss_ctrl}}\
+	-off_state {ss_off {!ss_ctrl}}
+

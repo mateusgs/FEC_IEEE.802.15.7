@@ -1,0 +1,44 @@
+2020-08-06 22:00:39.395183 (21272) main____ INFO    ----------------------------------------
+2020-08-06 22:00:39.395312 (21272) main____ INFO    JasperGold version info
+2020-08-06 22:00:39.395325 (21272) main____ INFO      tool      : JasperGold 2019.06
+2020-08-06 22:00:39.395337 (21272) main____ INFO      version   : 2019.06p001 64 bits
+2020-08-06 22:00:39.395345 (21272) main____ INFO      build date: 2019.08.01 18:19:57 PDT
+2020-08-06 22:00:39.395352 (21272) main____ INFO    ----------------------------------------
+2020-08-06 22:00:39.395358 (21272) main____ INFO    Runtime info:
+2020-08-06 22:00:39.395365 (21272) main____ INFO      platform  : Linux 3.10.0-1127.13.1.el7.x86_64 x86_64
+2020-08-06 22:00:39.395375 (21272) main____ INFO      hostname  : optmaS1
+2020-08-06 22:00:39.395382 (21272) main____ INFO      pid       : 21272
+2020-08-06 22:00:39.395388 (21272) main____ INFO      arguments : '-style' 'windows'
+2020-08-06 22:00:39.395394 (21272) main____ INFO    ----------------------------------------
+2020-08-06 22:00:39.395400 (21272) main____ INFO    System resource limits info:
+2020-08-06 22:00:39.395406 (21272) main____ INFO      virtual memory: unlimited
+2020-08-06 22:00:39.395412 (21272) main____ INFO      cpu time      : unlimited
+2020-08-06 22:00:39.395437 (21272) main____ INFO      stack size    : 8388608 B
+2020-08-06 22:00:39.395447 (21272) main____ INFO      core file size: 0 B
+2020-08-06 22:00:39.395461 (21272) main____ INFO      open files    : 1024
+2020-08-06 22:00:39.395468 (21272) main____ INFO      file size     : unlimited
+2020-08-06 22:00:39.395475 (21272) main____ INFO    ----------------------------------------
+2020-08-06 22:00:39.395480 (21272) main____ INFO    Memory statistics:
+2020-08-06 22:00:39.395490 (21272) main____ INFO      total physical memory  : 16151352 kB
+2020-08-06 22:00:39.395497 (21272) main____ INFO      free physical memory   : 382492 kB
+2020-08-06 22:00:39.395502 (21272) main____ INFO      committed address space: 26848072 kB
+2020-08-06 22:00:39.395508 (21272) main____ INFO    ----------------------------------------
+2020-08-06 22:00:39.395551 (21272) main____ INFO    Important environment variables:
+2020-08-06 22:00:39.395569 (21272) main____ INFO      CDS_LIC_FILE   : '5280@150.164.33.32'
+2020-08-06 22:00:39.395578 (21272) main____ INFO      DISPLAY        : ':54.0'
+2020-08-06 22:00:39.395587 (21272) main____ INFO      LM_LICENSE_FILE: '5280@150.164.33.32'
+2020-08-06 22:00:39.395593 (21272) main____ INFO    ----------------------------------------
+2020-08-06 22:00:39.396343 (21272) lic_core INFO    Initializing license system ...
+2020-08-06 22:00:39.396975 (21272) lic_core INFO    ... license system initialized.
+2020-08-06 22:00:39.398385 (21272) lic__man INFO    Claim 'main' for <ui>.
+2020-08-06 22:00:39.398472 (21272) lic_core INFO    (1) checking out 'jasper_interactive' ...
+2020-08-06 22:00:39.477250 (21272) lic_core INFO    ... (1) checkout succeeded
+2020-08-06 22:00:39.487142 (21272) lic__man INFO    Claim 'fpv' for <ui>.
+2020-08-06 22:00:39.487222 (21272) lic_core INFO    (2) checking out 'jasper_fpv' ...
+2020-08-06 22:00:39.532191 (21272) lic_core INFO    ... (2) checkout succeeded
+2020-08-06 22:00:47.227183 (21272) lic__man INFO    Claim 'fpv' for <ui>.
+2020-08-06 22:00:48.821585 (21272) lic__man INFO    Unclaim 'fpv' for <ui>.
+2020-08-06 22:00:48.821667 (21272) lic__man INFO    Claim 'fpv' for <ui>.
+2020-08-06 22:00:48.939343 (21272) session_ INFO    Starting analysis session with session id 'session_0' (launcher: <local>) ...
+2020-08-06 22:00:48.941698 (21272) session_ INFO    Analysis session with session id 'session_0' started (pid: 21379)
+2020-08-06 22:01:10.850118 (21272) session_ ERROR   Process for analysis session 'session_0' has exited unexpectedly with exit status '1'.

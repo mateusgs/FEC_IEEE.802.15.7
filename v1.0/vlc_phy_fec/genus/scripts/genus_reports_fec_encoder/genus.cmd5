@@ -1,0 +1,8 @@
+# Cadence Genus(TM) Synthesis Solution, Version 19.10-p002_1, built May 21 2019 13:26:01
+
+# Date: Sun Mar 21 20:11:52 2021
+# Host: optma-WS2 (x86_64 w/Linux 2.6.32-754.30.2.el6.x86_64) (8cores*8cpus*1physical cpu*Intel(R) Xeon(R) Bronze 3106 CPU @ 1.70GHz 11264KB)
+# OS:   CentOS release 6.10 (Final)
+
+source run.tcl
+write_hdl > genus_reports_fec_encoder/genus_netlist.v

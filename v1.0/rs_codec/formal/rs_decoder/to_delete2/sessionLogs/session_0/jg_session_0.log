@@ -1,0 +1,333 @@
+#----------------------------------------
+# JasperGold Version Info
+# tool      : JasperGold 2019.06
+# platform  : Linux 3.10.0-1127.13.1.el7.x86_64
+# version   : 2019.06p001 64 bits
+# build date: 2019.08.01 18:19:57 PDT
+#----------------------------------------
+# started Thu Jul 30 01:07:51 BRT 2020
+# hostname  : optmaS1
+# pid       : 8100
+# arguments : '-label' 'session_0' '-console' 'optmaS1:41968' '-style' 'windows' '-data' 'AQAAADx/////AAAAAAAAA3oBAAAAEABMAE0AUgBFAE0ATwBWAEU=' '-proj' '/home/Mateus/workspace/UFMG_digital_design/rs_codec/formal/rs_decoder/to_delete2/sessionLogs/session_0' '-init' '-hidden' '/home/Mateus/workspace/UFMG_digital_design/rs_codec/formal/rs_decoder/to_delete2/.tmp/.initCmds.tcl' 'run_formal_functional_reqs.tcl'
+
+Any disclosure about the Cadence Design Systems software or its use
+model to any third party violates the written Non-Disclosure Agreement
+between Cadence Design Systems, Inc. and the customer.
+
+THIS SOFTWARE CONTAINS CONFIDENTIAL INFORMATION AND TRADE SECRETS OF
+CADENCE DESIGN SYSTEMS, INC. USE, DISCLOSURE, OR REPRODUCTION IS
+PROHIBITED WITHOUT THE PRIOR EXPRESS WRITTEN PERMISSION OF CADENCE
+DESIGN SYSTEMS, INC.
+
+Copyright (C) 2000-2019 Cadence Design Systems, Inc. All Rights
+Reserved.  Unpublished -- rights reserved under the copyright laws of
+the United States.
+
+This product includes software developed by others and redistributed
+according to license agreement. See doc/third_party_readme.txt for
+further details.
+
+RESTRICTED RIGHTS LEGEND
+
+Use, duplication, or disclosure by the Government is subject to
+restrictions as set forth in subparagraph (c) (1) (ii) of the Rights in
+Technical Data and Computer Software clause at DFARS 252.227-7013 or
+subparagraphs (c) (1) and (2) of Commercial Computer Software -- Restricted
+Rights at 48 CFR 52.227-19, as applicable.
+
+
+                          Cadence Design Systems, Inc. 
+                          2655 Seely Avenue
+                          San Jose, CA 95134
+                          Phone: 408.943.1234
+
+For technical assistance visit http://support.cadence.com.
+
+JasperGold Apps Analysis Session - /home/Mateus/workspace/UFMG_digital_design/rs_codec/formal/rs_decoder/to_delete2/sessionLogs/session_0
+
+/home/Mateus/workspace/UFMG_digital_design/rs_codec/formal/rs_decoder/to_delete2/jg.log
+INFO: successfully checked out licenses "jasper_interactive" and "jasper_fpv".
+INFO: reading configuration file "/home/Mateus/.config/jasper/jaspergold.conf".
+% proc run_checks_with_disturber {N K RS_GF} {
+    clear -all
+    run_design_compilation $N $K $RS_GF "disturber"
+    clock clk
+    reset rst
+    #TODO:Remove this constraint
+    assume -env i_consume
+    set TWO_TIMES_T [expr {$N - $K}]
+    rs_decoder_stall_checks $TWO_TIMES_T
+    rs_decoder_reset_checks $N $TWO_TIMES_T
+    rs_decoder_codeword_check $N $K $TWO_TIMES_T "disturber"
+}
+% 
+% proc run_checks_with_post_syndrome {N K RS_GF} {
+    clear -all
+    run_design_compilation $N $K $RS_GF "syndrome"
+    clock clk
+    reset rst
+    set TWO_TIMES_T [expr {$N - $K}]
+    rs_decoder_consume_checks
+    rs_decoder_stall_checks $TWO_TIMES_T
+    rs_decoder_reset_checks $N $TWO_TIMES_T
+    rs_decoder_codeword_check $N $K $TWO_TIMES_T "syndrome"
+}
+% 
+% clear -all
+INFO (IPF121): Cleared environment completely for new design analysis.
+% source requirements.itcl
+% source compilation.itcl
+INFO (IPF121): Cleared environment completely for new design analysis.
+% source procs.itcl
+% 
+% set params [get_parameters]
+{7 3 RS_GF_8}
+% 
+% foreach param $params {
+    set N [lindex $param 0]
+    set K [lindex $param 1] 
+    set RS_GF [lindex $param 2] 
+    
+    #run_checks_with_disturber $N $K $RS_GF
+    run_checks_with_post_syndrome $N $K $RS_GF
+}
+INFO (IPF121): Cleared environment completely for new design analysis.
+INFO (IPF121): Cleared environment completely for new design analysis.
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/standard_2008.vhd' into library 'std'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/standard_2008.vhd(9): analyzing package 'standard'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/textio_2008.vhd' into library 'std'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/textio_2008.vhd(13): analyzing package 'textio'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/textio_2008.vhd(159): analyzing package body 'textio'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/env_2008.vhd' into library 'std'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/env_2008.vhd(8): analyzing package 'env'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/env_2008.vhd(16): analyzing package body 'env'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/vl/mixed_lang_vltype.vhd' into library 'vl'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/vl/mixed_lang_vltype.vhd(9): analyzing package 'vl_types'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/vl/mixed_lang_vltype.vhd(88): analyzing package body 'vl_types'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/synopsys/syn_attr.vhd' into library 'synopsys'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/synopsys/syn_attr.vhd(39): analyzing package 'attributes'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164.vhdl(50): analyzing package 'std_logic_1164'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164-body.vhdl(48): analyzing package body 'std_logic_1164'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std.vhdl(63): analyzing package 'numeric_std'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std-body.vhdl(59): analyzing package body 'numeric_std'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned.vhdl(49): analyzing package 'numeric_std_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned-body.vhdl(59): analyzing package body 'numeric_std_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit.vhdl(53): analyzing package 'numeric_bit'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit-body.vhdl(51): analyzing package body 'numeric_bit'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned.vhdl(47): analyzing package 'numeric_bit_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned-body.vhdl(50): analyzing package body 'numeric_bit_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_p.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_p.vhd(68): analyzing package 'vital_timing'
+[WARN (VHDL-1721)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_p.vhd(150): return type of pure function cannot be of access type
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_b.vhd' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_b.vhd(54): analyzing package body 'vital_timing'
+[WARN (VHDL-1721)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_b.vhd(1132): return type of pure function cannot be of access type
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_p.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_p.vhd(50): analyzing package 'vital_primitives'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_b.vhd' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_b.vhd(38): analyzing package body 'vital_primitives'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_arit.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_arit.vhd(25): analyzing package 'std_logic_arith'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_arit.vhd(206): analyzing package body 'std_logic_arith'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_unsi.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_unsi.vhd(35): analyzing package 'std_logic_unsigned'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_unsi.vhd(94): analyzing package body 'std_logic_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_sign.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_sign.vhd(35): analyzing package 'std_logic_signed'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_sign.vhd(96): analyzing package body 'std_logic_signed'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_misc_2008.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_misc_2008.vhd(25): analyzing package 'std_logic_misc'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_misc_2008.vhd(112): analyzing package body 'std_logic_misc'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_textio.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_textio.vhdl(38): analyzing package 'std_logic_textio'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/ieee_bit_context.vhd' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/ieee_std_context.vhd' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real.vhdl(45): analyzing package 'math_real'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real-body.vhdl(45): analyzing package body 'math_real'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex.vhdl(46): analyzing package 'math_complex'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex-body.vhdl(47): analyzing package body 'math_complex'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_float_types.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_float_types.vhdl(37): analyzing package 'fixed_float_types'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg.vhdl(43): analyzing package 'fixed_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg-body.vhdl(40): analyzing package body 'fixed_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg.vhdl(43): analyzing package 'float_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg-body.vhdl(37): analyzing package body 'float_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_pkg.vhdl' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_pkg.vhdl' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/arithmetic/mgc_arit_2008.vhd' into library 'arithmetic'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/arithmetic/mgc_arit_2008.vhd(22): analyzing package 'std_logic_arith'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/arithmetic/mgc_arit_2008.vhd(274): analyzing package body 'std_logic_arith'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/qsim_logic/mgc_qsim.vhd' into library 'qsim_logic'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/qsim_logic/mgc_qsim.vhd(18): analyzing package 'qsim_logic'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/qsim_logic/mgc_qsim.vhd(753): analyzing package body 'qsim_logic'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/jasper_package/jasper_package.vhd' into library 'jasper_package'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/jasper_package/jasper_package.vhd(8): analyzing package 'jasper_package'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/generic_types.vhd'
+[INFO (VHDL-1014)] ../../../generic_components/rtl/generic_types.vhd(11): analyzing package 'generic_types'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/generic_functions.vhd'
+[INFO (VHDL-1014)] ../../../generic_components/rtl/generic_functions.vhd(10): analyzing package 'generic_functions'
+[INFO (VHDL-1013)] ../../../generic_components/rtl/generic_functions.vhd(26): analyzing package body 'generic_functions'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/generic_components.vhd'
+[INFO (VHDL-1014)] ../../../generic_components/rtl/generic_components.vhd(13): analyzing package 'generic_components'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_types.vhd'
+[INFO (VHDL-1014)] ../../rtl/rs_types.vhd(4): analyzing package 'rs_types'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_constants.vhd'
+[INFO (VHDL-1014)] ../../rtl/rs_constants.vhd(11): analyzing package 'rs_constants'
+[INFO (VHDL-1013)] ../../rtl/rs_constants.vhd(4144): analyzing package body 'rs_constants'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_functions.vhd'
+[INFO (VHDL-1014)] ../../rtl/rs_functions.vhd(18): analyzing package 'rs_functions'
+[INFO (VHDL-1013)] ../../rtl/rs_functions.vhd(26): analyzing package body 'rs_functions'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_components.vhd'
+[INFO (VHDL-1014)] ../../rtl/rs_components.vhd(12): analyzing package 'rs_components'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_constants.vhd'
+[INFO (VHDL-1014)] ../../rtl/rs_constants.vhd(11): analyzing package 'rs_constants'
+[INFO (VHDL-1013)] ../../rtl/rs_constants.vhd(4144): analyzing package body 'rs_constants'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_decoder.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_decoder.vhd(22): analyzing entity 'rs_decoder'
+[INFO (VHDL-1010)] ../../rtl/rs_decoder.vhd(47): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/async_dff.vhd'
+[INFO (VHDL-1012)] ../../../generic_components/rtl/async_dff.vhd(11): analyzing entity 'async_dff'
+[INFO (VHDL-1010)] ../../../generic_components/rtl/async_dff.vhd(23): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/d_sync_flop.vhd'
+[INFO (VHDL-1012)] ../../../generic_components/rtl/d_sync_flop.vhd(11): analyzing entity 'sync_dff'
+[INFO (VHDL-1010)] ../../../generic_components/rtl/d_sync_flop.vhd(23): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/no_rst_dff.vhd'
+[INFO (VHDL-1012)] ../../../generic_components/rtl/no_rst_dff.vhd(4): analyzing entity 'no_rst_dff'
+[INFO (VHDL-1010)] ../../../generic_components/rtl/no_rst_dff.vhd(15): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/config_dff_array.vhd'
+[INFO (VHDL-1012)] ../../../generic_components/rtl/config_dff_array.vhd(13): analyzing entity 'config_dff_array'
+[INFO (VHDL-1010)] ../../../generic_components/rtl/config_dff_array.vhd(26): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/sync_dff_array.vhd'
+[INFO (VHDL-1012)] ../../../generic_components/rtl/sync_dff_array.vhd(13): analyzing entity 'sync_dff_array'
+[INFO (VHDL-1010)] ../../../generic_components/rtl/sync_dff_array.vhd(26): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/reg_fifo_array.vhd'
+[INFO (VHDL-1012)] ../../../generic_components/rtl/reg_fifo_array.vhd(30): analyzing entity 'reg_fifo_array'
+[INFO (VHDL-1010)] ../../../generic_components/rtl/reg_fifo_array.vhd(52): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/reg_fifo.vhd'
+[INFO (VHDL-1012)] ../../../generic_components/rtl/reg_fifo.vhd(28): analyzing entity 'reg_fifo'
+[INFO (VHDL-1010)] ../../../generic_components/rtl/reg_fifo.vhd(50): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/up_counter.vhd'
+[INFO (VHDL-1012)] ../../../generic_components/rtl/up_counter.vhd(5): analyzing entity 'up_counter'
+[INFO (VHDL-1010)] ../../../generic_components/rtl/up_counter.vhd(17): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/sync_ld_dff.vhd'
+[INFO (VHDL-1012)] ../../../generic_components/rtl/sync_ld_dff.vhd(5): analyzing entity 'sync_ld_dff'
+[INFO (VHDL-1010)] ../../../generic_components/rtl/sync_ld_dff.vhd(16): analyzing architecture 'bh_reg'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/flop_cascade.vhd'
+[INFO (VHDL-1012)] ../../../generic_components/rtl/flop_cascade.vhd(7): analyzing entity 'flop_cascade'
+[INFO (VHDL-1010)] ../../../generic_components/rtl/flop_cascade.vhd(22): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_adder.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_adder.vhd(4): analyzing entity 'rs_adder'
+[INFO (VHDL-1010)] ../../rtl/rs_adder.vhd(16): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_multiplier_lut.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_multiplier_lut.vhd(15): analyzing entity 'rs_multiplier_lut'
+[INFO (VHDL-1010)] ../../rtl/rs_multiplier_lut.vhd(26): analyzing architecture 'lut'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_multiplier.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_multiplier.vhd(8): analyzing entity 'rs_multiplier'
+[INFO (VHDL-1010)] ../../rtl/rs_multiplier.vhd(20): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_inverse.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_inverse.vhd(15): analyzing entity 'rs_inverse'
+[INFO (VHDL-1010)] ../../rtl/rs_inverse.vhd(26): analyzing architecture 'lut'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_full_multiplier_core.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_full_multiplier_core.vhd(11): analyzing entity 'rs_full_multiplier_core'
+[INFO (VHDL-1010)] ../../rtl/rs_full_multiplier_core.vhd(22): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_full_multiplier.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_full_multiplier.vhd(14): analyzing entity 'rs_full_multiplier'
+[INFO (VHDL-1010)] ../../rtl/rs_full_multiplier.vhd(26): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_reduce_adder.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_reduce_adder.vhd(14): analyzing entity 'rs_reduce_adder'
+[INFO (VHDL-1010)] ../../rtl/rs_reduce_adder.vhd(25): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_syndrome_subunit.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_syndrome_subunit.vhd(9): analyzing entity 'rs_syndrome_subunit'
+[INFO (VHDL-1010)] ../../rtl/rs_syndrome_subunit.vhd(25): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_syndrome.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_syndrome.vhd(6): analyzing entity 'rs_syndrome'
+[INFO (VHDL-1010)] ../../rtl/rs_syndrome.vhd(35): analyzing architecture 'behavioral'
+[INFO (VHDL-1012)] ../../rtl/rs_syndrome.vhd(128): analyzing entity 'rs_syndrome_control'
+[INFO (VHDL-1010)] ../../rtl/rs_syndrome.vhd(155): analyzing architecture 'behavioral'
+[INFO (VHDL-1012)] ../../rtl/rs_syndrome.vhd(339): analyzing entity 'rs_syndrome_unit'
+[INFO (VHDL-1010)] ../../rtl/rs_syndrome.vhd(355): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_berlekamp_massey.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_berlekamp_massey.vhd(5): analyzing entity 'rs_berlekamp_massey_control'
+[INFO (VHDL-1010)] ../../rtl/rs_berlekamp_massey.vhd(25): analyzing architecture 'behavioral'
+[INFO (VHDL-1012)] ../../rtl/rs_berlekamp_massey.vhd(143): analyzing entity 'register_shifter'
+[INFO (VHDL-1010)] ../../rtl/rs_berlekamp_massey.vhd(153): analyzing architecture 'behavioral'
+[INFO (VHDL-1012)] ../../rtl/rs_berlekamp_massey.vhd(183): analyzing entity 'register_feedback_shifter'
+[INFO (VHDL-1010)] ../../rtl/rs_berlekamp_massey.vhd(194): analyzing architecture 'behavioral'
+[INFO (VHDL-1012)] ../../rtl/rs_berlekamp_massey.vhd(233): analyzing entity 'rs_berlekamp_massey_unit'
+[INFO (VHDL-1010)] ../../rtl/rs_berlekamp_massey.vhd(252): analyzing architecture 'behavioral'
+[INFO (VHDL-1012)] ../../rtl/rs_berlekamp_massey.vhd(473): analyzing entity 'rs_berlekamp_massey'
+[INFO (VHDL-1010)] ../../rtl/rs_berlekamp_massey.vhd(492): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_chien.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_chien.vhd(14): analyzing entity 'rs_chien'
+[INFO (VHDL-1010)] ../../rtl/rs_chien.vhd(30): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_forney.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_forney.vhd(13): analyzing entity 'rs_forney'
+[INFO (VHDL-1010)] ../../rtl/rs_forney.vhd(30): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_chien_forney.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_chien_forney.vhd(12): analyzing entity 'rs_chien_forney'
+[INFO (VHDL-1010)] ../../rtl/rs_chien_forney.vhd(38): analyzing architecture 'behavioral'
+[INFO (VHDL-1012)] ../../rtl/rs_chien_forney.vhd(147): analyzing entity 'rs_chien_forney_control'
+[INFO (VHDL-1010)] ../../rtl/rs_chien_forney.vhd(172): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_encoder.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_encoder.vhd(12): analyzing entity 'rs_encoder'
+[INFO (VHDL-1010)] ../../rtl/rs_encoder.vhd(36): analyzing architecture 'behavior'
+[INFO (VHDL-1012)] ../../rtl/rs_encoder.vhd(155): analyzing entity 'rs_encoder_control'
+[INFO (VHDL-1010)] ../../rtl/rs_encoder.vhd(186): analyzing architecture 'behavioral'
+[INFO (VHDL-1012)] ../../rtl/rs_encoder.vhd(365): analyzing entity 'rs_encoder_unit'
+[INFO (VHDL-1010)] ../../rtl/rs_encoder.vhd(383): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../../generic_components/rtl/async_dff.vhd'
+[INFO (VHDL-1012)] ../../../generic_components/rtl/async_dff.vhd(11): analyzing entity 'async_dff'
+[INFO (VHDL-1010)] ../../../generic_components/rtl/async_dff.vhd(23): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_remainder_unit.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_remainder_unit.vhd(8): analyzing entity 'rs_remainder_unit'
+[INFO (VHDL-1010)] ../../rtl/rs_remainder_unit.vhd(24): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_syndrome.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_syndrome.vhd(6): analyzing entity 'rs_syndrome'
+[INFO (VHDL-1010)] ../../rtl/rs_syndrome.vhd(35): analyzing architecture 'behavioral'
+[INFO (VHDL-1012)] ../../rtl/rs_syndrome.vhd(128): analyzing entity 'rs_syndrome_control'
+[INFO (VHDL-1010)] ../../rtl/rs_syndrome.vhd(155): analyzing architecture 'behavioral'
+[INFO (VHDL-1012)] ../../rtl/rs_syndrome.vhd(339): analyzing entity 'rs_syndrome_unit'
+[INFO (VHDL-1010)] ../../rtl/rs_syndrome.vhd(355): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_syndrome_subunit.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_syndrome_subunit.vhd(9): analyzing entity 'rs_syndrome_subunit'
+[INFO (VHDL-1010)] ../../rtl/rs_syndrome_subunit.vhd(25): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../rtl/rs_encoder_wrapper.vhd'
+[INFO (VHDL-1012)] ../../rtl/rs_encoder_wrapper.vhd(15): analyzing entity 'rs_encoder_wrapper'
+[INFO (VHDL-1010)] ../../rtl/rs_encoder_wrapper.vhd(40): analyzing architecture 'behavior'
+[-- (VHDL-1481)] Analyzing VHDL file 'rtl/rs_disturber.vhd'
+[INFO (VHDL-1012)] rtl/rs_disturber.vhd(13): analyzing entity 'rs_disturber'
+[INFO (VHDL-1010)] rtl/rs_disturber.vhd(47): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file 'rtl/rs_codec_with_disturber.vhd'
+[INFO (VHDL-1012)] rtl/rs_codec_with_disturber.vhd(10): analyzing entity 'rs_codec_with_disturber'
+[INFO (VHDL-1010)] rtl/rs_codec_with_disturber.vhd(43): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file 'rtl/rs_decoder_plus_syndrome.vhd'
+[INFO (VHDL-1012)] rtl/rs_decoder_plus_syndrome.vhd(18): analyzing entity 'rs_decoder_plus_syndrome'
+[INFO (VHDL-1010)] rtl/rs_decoder_plus_syndrome.vhd(44): analyzing architecture 'behavior'
+[-- (VERI-1482)] Analyzing Verilog file '/home/tools/jasper_2019.06p001/lib/verilog/packages/std/std.sv' into library 'std'
+[-- (VERI-1482)] Analyzing Verilog file 'fv_decoder.sv'
+INFO (ISW003): Top module name is "rs_decoder_plus_syndrome".
+INFO (IPL005): Received request to exit from the console.
+ERROR (ENL108): Elaboration process on main design terminated due to unexpected UNIX signal "9" (Kill signal)
+
+ERROR: problem encountered at line 33 in file run_formal_functional_reqs.tcl
+
+INFO: Waiting for proof threads to stop...
+INFO: Proof threads stopped.

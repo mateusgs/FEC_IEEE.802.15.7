@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2020.1 (64-bit)
+# SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+# IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+# Start of session at: Mon Aug 17 16:51:50 2020
+# Process ID: 14848
+# Current directory: C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/syn/block_interleaver/block_interleaver.runs/synth_1
+# Command line: vivado.exe -log block_interleaver.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source block_interleaver.tcl
+# Log file: C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/syn/block_interleaver/block_interleaver.runs/synth_1/block_interleaver.vds
+# Journal file: C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/syn/block_interleaver/block_interleaver.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source block_interleaver.tcl -notrace

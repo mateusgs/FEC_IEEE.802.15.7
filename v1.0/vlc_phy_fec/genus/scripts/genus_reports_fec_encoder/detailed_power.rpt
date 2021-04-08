@@ -1,0 +1,91 @@
+Power Unit: W
+PDB Frame : /stim#0/frame#0
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Cells Pct_cells     Leakage    Internal   Switching       Total Lvl Instance                                                                                                        
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+45130   100.00% 4.49343e-06 7.10115e-01 4.19362e-02 7.52056e-01   0 /vlc_phy_fec_TX                                                                                                 
+45130   100.00% 4.49343e-06 7.10115e-01 4.18697e-02 7.51990e-01   1 /vlc_phy_fec_TX/VPF                                                                                             
+45064    99.85% 4.48961e-06 7.09730e-01 4.17206e-02 7.51455e-01   2 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE                                                                            
+41061    90.98% 4.10218e-06 6.21066e-01 1.83996e-02 6.39470e-01   3 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/INTERLEAVER_UNIT                                                           
+41059    90.98% 4.10197e-06 6.21032e-01 1.83978e-02 6.39434e-01   4 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/INTERLEAVER_UNIT/GEN_INTERLEAVER.RIT                                       
+41018    90.89% 4.10010e-06 6.20868e-01 1.83240e-02 6.39196e-01   5 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/INTERLEAVER_UNIT/GEN_INTERLEAVER.RIT/IDP                                   
+40776    90.35% 4.07715e-06 6.18147e-01 1.78295e-02 6.35980e-01   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/INTERLEAVER_UNIT/GEN_INTERLEAVER.RIT/IDP/SPR0                              
+   91     0.20% 1.00430e-08 1.05173e-03 2.80565e-04 1.33231e-03   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/INTERLEAVER_UNIT/GEN_INTERLEAVER.RIT/IDP/M2D0                              
+   84     0.19% 7.02477e-09 8.24840e-04 1.02459e-04 9.27306e-04   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/INTERLEAVER_UNIT/GEN_INTERLEAVER.RIT/IDP/FSG0                              
+   10     0.02% 1.67892e-09 3.95532e-04 1.40283e-05 4.09562e-04   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/INTERLEAVER_UNIT/GEN_INTERLEAVER.RIT/IDP/REG4                              
+    5     0.01% 7.59010e-10 1.77776e-04 5.28530e-06 1.83062e-04   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/INTERLEAVER_UNIT/GEN_INTERLEAVER.RIT/IDP/REG3                              
+    4     0.01% 6.06648e-10 1.50703e-04 2.80287e-05 1.78733e-04   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/INTERLEAVER_UNIT/GEN_INTERLEAVER.RIT/IDP/REG5                              
+    5     0.01% 3.39148e-10 4.30308e-05 2.65061e-05 6.95372e-05   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/INTERLEAVER_UNIT/GEN_INTERLEAVER.RIT/IDP/WRSS0                             
+   22     0.05% 1.32159e-09 2.99442e-05 1.53003e-05 4.52458e-05   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/INTERLEAVER_UNIT/GEN_INTERLEAVER.RIT/IDP/DEC0                              
+   11     0.02% 4.58959e-10 1.27750e-05 1.23365e-05 2.51119e-05   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/INTERLEAVER_UNIT/GEN_INTERLEAVER.RIT/IDP/COMP2                             
+   41     0.09% 1.87253e-09 1.64083e-04 7.38635e-05 2.37948e-04   5 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/INTERLEAVER_UNIT/GEN_INTERLEAVER.RIT/IC                                    
+    2     0.00% 2.07733e-10 3.41084e-05 1.81058e-06 3.59192e-05   4 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/INTERLEAVER_UNIT/REG0                                                      
+ 3752     8.31% 3.68339e-07 8.56767e-02 2.20522e-02 1.07729e-01   3 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT                                                            
+ 1304     2.89% 1.39171e-07 3.41914e-02 9.21939e-03 4.34109e-02   4 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_160_128                                                 
+ 1304     2.89% 1.39171e-07 3.41914e-02 9.21939e-03 4.34109e-02   5 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_160_128/GEN_ENCODER.ENCODER_INST                        
+ 1167     2.59% 1.31450e-07 3.27607e-02 8.85459e-03 4.16154e-02   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_160_128/GEN_ENCODER.ENCODER_INST/rs_PROCESS_UNIT        
+  117     0.26% 5.57553e-09 9.04336e-04 2.63904e-04 1.16825e-03   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_160_128/GEN_ENCODER.ENCODER_INST/rs_CONTROL             
+    9     0.02% 1.30428e-09 3.92290e-04 2.98167e-05 4.22108e-04   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_160_128/GEN_ENCODER.ENCODER_INST/INPUT_ASYNC_DFF        
+    2     0.00% 1.80009e-10 5.00634e-05 1.68683e-06 5.17504e-05   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_160_128/GEN_ENCODER.ENCODER_INST/STALL_ASYNC_DFF        
+ 1280     2.84% 1.38976e-07 3.25274e-02 8.44463e-03 4.09722e-02   4 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_64_32                                                   
+ 1280     2.84% 1.38976e-07 3.25274e-02 8.44463e-03 4.09722e-02   5 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_64_32/GEN_ENCODER.ENCODER_INST                          
+ 1167     2.59% 1.31944e-07 3.13865e-02 8.19227e-03 3.95789e-02   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_64_32/GEN_ENCODER.ENCODER_INST/rs_PROCESS_UNIT          
+   93     0.21% 4.86562e-09 6.23814e-04 1.67407e-04 7.91226e-04   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_64_32/GEN_ENCODER.ENCODER_INST/rs_CONTROL               
+    9     0.02% 1.30428e-09 3.88828e-04 3.24771e-05 4.21306e-04   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_64_32/GEN_ENCODER.ENCODER_INST/INPUT_ASYNC_DFF          
+    2     0.00% 1.80880e-10 4.90554e-05 1.47521e-06 5.05308e-05   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_64_32/GEN_ENCODER.ENCODER_INST/STALL_ASYNC_DFF          
+  315     0.70% 2.68255e-08 6.22804e-03 1.41453e-03 7.64260e-03   4 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_15_2                                                    
+  315     0.70% 2.68255e-08 6.22804e-03 1.41453e-03 7.64260e-03   5 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_15_2/GEN_ENCODER.ENCODER_INST                           
+  211     0.47% 2.14551e-08 5.36294e-03 1.06317e-03 6.42613e-03   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_15_2/GEN_ENCODER.ENCODER_INST/rs_PROCESS_UNIT           
+   92     0.20% 4.13876e-09 5.70846e-04 1.83346e-04 7.54197e-04   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_15_2/GEN_ENCODER.ENCODER_INST/rs_CONTROL                
+    5     0.01% 6.62437e-10 1.95769e-04 1.44053e-05 2.10175e-04   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_15_2/GEN_ENCODER.ENCODER_INST/INPUT_ASYNC_DFF           
+    2     0.00% 1.79965e-10 4.95421e-05 1.29559e-06 5.08378e-05   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_15_2/GEN_ENCODER.ENCODER_INST/STALL_ASYNC_DFF           
+  320     0.71% 2.60270e-08 5.77672e-03 1.36382e-03 7.14057e-03   4 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_15_4                                                    
+  320     0.71% 2.60270e-08 5.77672e-03 1.36382e-03 7.14057e-03   5 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_15_4/GEN_ENCODER.ENCODER_INST                           
+  198     0.44% 2.00478e-08 4.93876e-03 1.07930e-03 6.01808e-03   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_15_4/GEN_ENCODER.ENCODER_INST/rs_PROCESS_UNIT           
+  110     0.24% 4.74723e-09 5.52589e-04 1.58401e-04 7.10994e-04   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_15_4/GEN_ENCODER.ENCODER_INST/rs_CONTROL                
+    5     0.01% 6.62437e-10 1.94208e-04 1.39718e-05 2.08180e-04   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_15_4/GEN_ENCODER.ENCODER_INST/INPUT_ASYNC_DFF           
+    2     0.00% 1.80633e-10 4.86653e-05 1.28219e-06 4.99477e-05   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_15_4/GEN_ENCODER.ENCODER_INST/STALL_ASYNC_DFF           
+  237     0.53% 1.84263e-08 3.73147e-03 7.62613e-04 4.49410e-03   4 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_15_7                                                    
+  237     0.53% 1.84263e-08 3.73147e-03 7.62613e-04 4.49410e-03   5 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_15_7/GEN_ENCODER.ENCODER_INST                           
+  129     0.29% 1.29315e-08 2.91811e-03 5.38803e-04 3.45693e-03   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_15_7/GEN_ENCODER.ENCODER_INST/rs_PROCESS_UNIT           
+   96     0.21% 4.26294e-09 5.23886e-04 1.34007e-04 6.57898e-04   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_15_7/GEN_ENCODER.ENCODER_INST/rs_CONTROL                
+    5     0.01% 6.62437e-10 1.93235e-04 1.48867e-05 2.08122e-04   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_15_7/GEN_ENCODER.ENCODER_INST/INPUT_ASYNC_DFF           
+    2     0.00% 1.80101e-10 5.00282e-05 1.26019e-06 5.12886e-05   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_15_7/GEN_ENCODER.ENCODER_INST/STALL_ASYNC_DFF           
+  182     0.40% 1.26019e-08 2.65507e-03 6.49416e-04 3.30450e-03   4 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_15_11                                                   
+  182     0.40% 1.26019e-08 2.65507e-03 6.49416e-04 3.30450e-03   5 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_15_11/GEN_ENCODER.ENCODER_INST                          
+   72     0.16% 6.93128e-09 1.72010e-03 3.63656e-04 2.08377e-03   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_15_11/GEN_ENCODER.ENCODER_INST/rs_PROCESS_UNIT          
+   98     0.22% 4.46135e-09 6.26209e-04 2.10515e-04 8.36729e-04   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_15_11/GEN_ENCODER.ENCODER_INST/rs_CONTROL               
+    5     0.01% 6.62437e-10 1.96905e-04 1.44040e-05 2.11310e-04   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_15_11/GEN_ENCODER.ENCODER_INST/INPUT_ASYNC_DFF          
+    2     0.00% 1.79751e-10 5.26523e-05 1.02343e-06 5.36759e-05   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/RS_15_11/GEN_ENCODER.ENCODER_INST/STALL_ASYNC_DFF          
+   19     0.04% 2.48683e-09 3.36980e-04 2.00547e-05 3.57037e-04   4 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/UC                                                         
+   48     0.11% 1.72042e-09 1.25023e-04 1.31366e-04 2.56390e-04   4 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/MUX1                                                       
+   12     0.03% 7.51464e-10 3.16800e-05 6.24539e-06 3.79262e-05   4 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/COMP1                                                      
+   13     0.03% 5.70440e-10 2.29674e-05 1.39314e-05 3.68994e-05   4 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/GEN_MUX_ENC.MUX_ENC                                        
+    2     0.00% 2.16404e-10 3.67410e-05 1.07541e-07 3.68488e-05   4 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/SLD                                                        
+   11     0.02% 2.17069e-10 5.56762e-06 4.67386e-06 1.02417e-05   4 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/DEMUX0                                                     
+    3     0.01% 6.17770e-11 1.44621e-06 1.14018e-06 2.58645e-06   4 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_UNIT/COMP0                                                      
+   90     0.20% 7.07607e-09 1.01910e-03 1.21288e-04 1.14040e-03   3 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/CONV0                                                                      
+   37     0.08% 3.41704e-09 4.80992e-04 5.61675e-05 5.37163e-04   4 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/CONV0/CE                                                                   
+   17     0.04% 1.89969e-09 2.87187e-04 1.78683e-05 3.05057e-04   5 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/CONV0/CE/FLC0                                                              
+    2     0.00% 2.07594e-10 4.40549e-05 1.31237e-06 4.53675e-05   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/CONV0/CE/FLC0/GEN_CONVOLUTIONAL_PATH[1].GEN_NOT_FIRST_TERM.SYNC_D_FLOP_INST
+    2     0.00% 2.13134e-10 4.26769e-05 9.86370e-07 4.36634e-05   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/CONV0/CE/FLC0/GEN_CONVOLUTIONAL_PATH[5].GEN_NOT_FIRST_TERM.SYNC_D_FLOP_INST
+    2     0.00% 2.12740e-10 4.26402e-05 9.31051e-07 4.35715e-05   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/CONV0/CE/FLC0/GEN_CONVOLUTIONAL_PATH[4].GEN_NOT_FIRST_TERM.SYNC_D_FLOP_INST
+    2     0.00% 2.11937e-10 4.25640e-05 9.72554e-07 4.35367e-05   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/CONV0/CE/FLC0/GEN_CONVOLUTIONAL_PATH[3].GEN_NOT_FIRST_TERM.SYNC_D_FLOP_INST
+    2     0.00% 2.13316e-10 4.26875e-05 6.01371e-07 4.32890e-05   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/CONV0/CE/FLC0/GEN_CONVOLUTIONAL_PATH[6].GEN_NOT_FIRST_TERM.SYNC_D_FLOP_INST
+    2     0.00% 2.10450e-10 4.24554e-05 8.11889e-07 4.32675e-05   6 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/CONV0/CE/FLC0/GEN_CONVOLUTIONAL_PATH[2].GEN_NOT_FIRST_TERM.SYNC_D_FLOP_INST
+    8     0.02% 9.44946e-10 1.45317e-04 1.16020e-05 1.56920e-04   5 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/CONV0/CE/UPC0                                                              
+    2     0.00% 2.07540e-10 3.54534e-05 2.21062e-06 3.76642e-05   5 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/CONV0/CE/SLD0                                                              
+    2     0.00% 5.81870e-11 1.87835e-06 3.71815e-06 5.59655e-06   5 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/CONV0/CE/COMP0                                                             
+   31     0.07% 2.18433e-09 3.42969e-04 4.52547e-05 3.88226e-04   4 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/CONV0/PTS                                                                  
+   17     0.04% 1.16213e-09 1.56416e-04 1.71732e-05 1.73591e-04   4 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/CONV0/VPP                                                                  
+    8     0.02% 7.31218e-10 1.38362e-04 6.60547e-06 1.44968e-04   5 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/CONV0/VPP/P23                                                              
+    2     0.00% 1.97723e-10 3.49534e-05 1.40062e-06 3.63542e-05   4 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/CONV0/REG                                                                  
+   63     0.14% 5.26368e-09 8.99976e-04 1.72718e-04 1.07270e-03   3 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_INTERLEAVER_DATA_OUTPUT                                                 
+   59     0.13% 4.65418e-09 8.99271e-04 1.55596e-04 1.05487e-03   3 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/RS_ENCODER_DATA_OUTPUT                                                     
+    2     0.00% 1.97591e-10 3.64299e-05 1.81440e-06 3.82445e-05   3 /vlc_phy_fec_TX/VPF/GEN_ENCODER.VPFE/FRAME_RECEIVED                                                             
+   60     0.13% 3.62291e-09 3.76788e-04 9.58134e-05 4.72605e-04   2 /vlc_phy_fec_TX/VPF/VPFC                                                                                        
+    7     0.02% 1.19416e-09 2.45848e-04 9.38338e-06 2.55232e-04   3 /vlc_phy_fec_TX/VPF/VPFC/MCS_ID_REG                                                                             
+    3     0.01% 2.71560e-10 4.08472e-05 4.12871e-05 8.21346e-05   3 /vlc_phy_fec_TX/VPF/VPFC/BUSY_REG                                                                               
+   35     0.08% 1.10833e-09 2.30576e-05 3.28270e-05 5.58857e-05   3 /vlc_phy_fec_TX/VPF/VPFC/MCS_ID_DEC                                                                             
+    2     0.00% 2.14981e-10 4.09716e-05 1.04536e-06 4.20171e-05   3 /vlc_phy_fec_TX/VPF/VPFC/MODE_REG                                                                               
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

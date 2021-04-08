@@ -1,0 +1,1302 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f64143d49e4, pid=10987, tid=140067352639232
+#
+# JRE version: 6.0_33-b04
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (20.8-b03 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libJasperRTLDS.so+0x789e4]  rtlds::RTLDSFlow::clearResetSignals()+0x4
+#
+# If you would like to submit a bug report, please visit:
+#   http://java.sun.com/webapps/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0000000003482800):  JavaThread "main" [_thread_in_native, id=11131, stack(0x00007f63f84c8000,0x00007f63f8cc8000)]
+
+siginfo:si_signo=SIGSEGV: si_errno=0, si_code=1 (SEGV_MAPERR), si_addr=0x00007f63f4e95d20
+
+Registers:
+RAX=0x00007f641da6fc01, RBX=0x00007f641ed4a7c0, RCX=0x0000000000000001, RDX=0x00007f641ed4af01
+RSP=0x00007f63f8cc4498, RBP=0x0000000003ba86d0, RSI=0x0000000000000000, RDI=0x00007f63f4e95d20
+R8 =0x0000000000000000, R9 =0x0000000000000000, R10=0x00000000fffffffe, R11=0x00007f641cb204d0
+R12=0x0000000003ba86d0, R13=0x0000000007892ab0, R14=0x00000000021a9c50, R15=0x0000000000000000
+RIP=0x00007f64143d49e4, EFLAGS=0x0000000000010206, CSGSFS=0x0000000000000033, ERR=0x0000000000000004
+  TRAPNO=0x000000000000000e
+
+Top of Stack: (sp=0x00007f63f8cc4498)
+0x00007f63f8cc4498:   00007f6418dbe252 00007f641ed4a7c0
+0x00007f63f8cc44a8:   00007f641ed4a7c0 00007f6418de59f0
+0x00007f63f8cc44b8:   00007f6418dbe628 0000000006f3ad20
+0x00007f63f8cc44c8:   00007f63f8cc4450 0000000b00000003
+0x00007f63f8cc44d8:   0000001300000004 00007f641105c660
+0x00007f63f8cc44e8:   00007f641097b7e9 0000000007f81068
+0x00007f63f8cc44f8:   00007f641ed4a7c0 00007f641ed4a7a8
+0x00007f63f8cc4508:   0000000008cd0628 0000000007892ab0
+0x00007f63f8cc4518:   00000000021a9c50 0000000000000000
+0x00007f63f8cc4528:   00007f641e25b910 0000000000000000
+0x00007f63f8cc4538:   0000000000000000 0000000000000000
+0x00007f63f8cc4548:   0000000006c37dd0 0000000008cd0628
+0x00007f63f8cc4558:   00007f641430642f 00000000021f5340
+0x00007f63f8cc4568:   0000000000000000 00007f63f8cc4690
+0x00007f63f8cc4578:   0000000000000030 00007f63f8cc4600
+0x00007f63f8cc4588:   00007f63f8cc4990 00007f63f8cc46a0
+0x00007f63f8cc4598:   00007f6300000000 00007f63f8cc46b0
+0x00007f63f8cc45a8:   00000000021a9c50 00007f641fc388b8
+0x00007f63f8cc45b8:   00000000088f6c28 00007f63f8cc4ea0
+0x00007f63f8cc45c8:   00007f63f8cc4910 00007f63f8cc4bd0
+0x00007f63f8cc45d8:   00007f63f8cc48d0 00007f63f8cc47c0
+0x00007f63f8cc45e8:   000000000000000c 00007f63f8cc4bd0
+0x00007f63f8cc45f8:   00007f641fc1f3af 00007f641da6fcc0
+0x00007f63f8cc4608:   00007f63f8cc4610 00007f63f8cc4bd0
+0x00007f63f8cc4618:   0000000000000002 0000000008925001
+0x00007f63f8cc4628:   0000000007671e00 00007f63f8cc4bd0
+0x00007f63f8cc4638:   0000000000000002 0000000008925001
+0x00007f63f8cc4648:   00007f63f8cc46d0 00007f63f8cc4e60
+0x00007f63f8cc4658:   00007f641d6facf7 00007f63f8cc46d0
+0x00007f63f8cc4668:   0000000008925038 0000000003f3d840
+0x00007f63f8cc4678:   000000000000000c 0000000004b95748
+0x00007f63f8cc4688:   00000000089249da 00007f641da6fcc0 
+
+Instructions: (pc=0x00007f64143d49e4)
+0x00007f64143d49c4:   10 00 00 00 e8 63 88 fe ff 48 89 df e8 5b 85 fe
+0x00007f64143d49d4:   ff 90 66 2e 0f 1f 84 00 00 00 00 00 48 8b 7f 30
+0x00007f64143d49e4:   48 8b 07 ff a0 50 02 00 00 90 66 90 48 8b 07 53
+0x00007f64143d49f4:   89 d3 ff 50 28 39 d8 0f 94 c0 5b c3 41 57 41 56 
+
+Register to memory mapping:
+
+RAX=0x00007f641da6fc01: <offset 0x475c01> in /home/tools/jasper_2019.06p001/Linux64/lib/libQtCore.so.4 at 0x00007f641d5fa000
+RBX=0x00007f641ed4a7c0: _ZZN3cdc7CDCFlow11getInstanceEvE2me+0 in /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSession.so at 0x00007f641de3f000
+RCX=0x0000000000000001 is an unknown value
+RDX=0x00007f641ed4af01: _ZZN3cdc7CDCFlow11getInstanceEvE2me+0x741 in /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSession.so at 0x00007f641de3f000
+RSP=0x00007f63f8cc4498 is pointing into the stack for thread: 0x0000000003482800
+RBP=0x0000000003ba86d0 is an unknown value
+RSI=0x0000000000000000 is an unknown value
+RDI=0x00007f63f4e95d20 is an unknown value
+R8 =0x0000000000000000 is an unknown value
+R9 =0x0000000000000000 is an unknown value
+R10=0x00000000fffffffe is an unknown value
+R11=0x00007f641cb204d0: <offset 0x18e4d0> in /lib64/libc.so.6 at 0x00007f641c992000
+R12=0x0000000003ba86d0 is an unknown value
+R13=0x0000000007892ab0 is an unknown value
+R14=0x00000000021a9c50 is an unknown value
+R15=0x0000000000000000 is an unknown value
+
+
+Stack: [0x00007f63f84c8000,0x00007f63f8cc8000],  sp=0x00007f63f8cc4498,  free space=8177k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [libJasperRTLDS.so+0x789e4]  rtlds::RTLDSFlow::clearResetSignals()+0x4
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+j  COM.tfi.shell.NativeTclEvaluator.evalFromJava(JLjava/lang/String;IZ)LCOM/tfi/shell/TclResult;+0
+j  COM.tfi.shell.NativeTclEvaluator.evalInNative(Ljava/lang/String;IZ)V+7
+j  COM.tfi.shell.JgInterp.eval(Ljava/lang/String;I)V+15
+j  COM.tfi.shell.JgInterp.eval(Ljava/lang/String;)V+3
+J  COM.tfi.shell.QuestCommands$ClearOps.clear(Ltcl/lang/Interp;ZZZZZZZZZ)V
+j  COM.tfi.shell.ClearCmd.cmdProcLocal(Ltcl/lang/Interp;[Ljava/lang/String;)V+217
+j  COM.tfi.shell.NewCommand.cmdProcLocal(Ltcl/lang/Interp;[Ltcl/lang/TclObject;)V+36
+j  COM.tfi.shell.QuestCommands$BaseCommand.cmdProc(Ltcl/lang/Interp;[Ljava/lang/String;Z)V+61
+j  COM.tfi.shell.JgInterp.directCommandCall([Ljava/lang/String;Z)V+20
+j  COM.tfi.shell.NativeTclEvaluator.evalInJava([Ljava/lang/String;Z)LCOM/tfi/shell/TclResult;+25
+v  ~StubRoutines::call_stub
+j  COM.tfi.shell.NativeTclEvaluator.evalLineNative(JLjava/lang/String;IZLjava/lang/String;Z)I+0
+j  COM.tfi.shell.NativeTclEvaluator.evalLine(Ljava/lang/String;LCOM/tfi/shell/EventSourceType;ZLjava/lang/String;Z)Z+14
+j  COM.tfi.shell.NativeTclEvaluator.evalLine(Ljava/lang/String;LCOM/tfi/shell/EventSourceType;LCOM/tfi/shell/ErrorMessageGenerator;)V+52
+j  COM.tfi.shell.NativeTclEvaluator.evalLine(Ljava/lang/String;Ljava/lang/String;IZ)V+41
+j  COM.tfi.shell.NativeTclEvaluator.evalFile(Ljava/lang/String;Z)V+110
+j  COM.tfi.shell.NativeTclEvaluator.evalFiles(Ljava/lang/Iterable;)V+55
+j  COM.tfi.shell.Shell.mainCore([Ljava/lang/String;)V+645
+j  COM.tfi.shell.Shell.main([Ljava/lang/String;)V+146
+v  ~StubRoutines::call_stub
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x0000000003c73000 JavaThread "qtgui-main" [_thread_blocked, id=11235, stack(0x00007f63f7133000,0x00007f63f7234000)]
+  0x0000000003483000 JavaThread "ManagedSystemInStream reader thread" daemon [_thread_blocked, id=11148, stack(0x00007f63f8350000,0x00007f63f8451000)]
+=>0x0000000003482800 JavaThread "main" [_thread_in_native, id=11131, stack(0x00007f63f84c8000,0x00007f63f8cc8000)]
+  0x0000000003481000 JavaThread "Low Memory Detector" daemon [_thread_blocked, id=11119, stack(0x00007f63f95ca000,0x00007f63f96cb000)]
+  0x0000000003480000 JavaThread "C2 CompilerThread1" daemon [_thread_blocked, id=11116, stack(0x00007f63f96cc000,0x00007f63f97cc000)]
+  0x0000000002a99000 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=11113, stack(0x00007f63f97cd000,0x00007f63f98cd000)]
+  0x0000000002a98800 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=11111, stack(0x00007f63f98cd000,0x00007f63f99ce000)]
+  0x0000000002a97800 JavaThread "Finalizer" daemon [_thread_blocked, id=11109, stack(0x00007f6400124000,0x00007f6400225000)]
+  0x0000000002a97000 JavaThread "Reference Handler" daemon [_thread_blocked, id=11108, stack(0x00007f6400225000,0x00007f6400326000)]
+  0x0000000002a96000 JavaThread "main" [_thread_in_native, id=10987, stack(0x00007fff81c53000,0x00007fff81d53000)]
+
+Other Threads:
+  0x0000000002ab0800 VMThread [stack: 0x00007f6400327000,0x00007f6400427000] [id=11106]
+
+VM state:at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x0000000002525a80] Threads_lock - owner thread: 0x0000000002ab0800
+
+Heap
+ PSYoungGen      total 72064K, used 68037K [0x00000007aaab0000, 0x00000007b0550000, 0x0000000800000000)
+  eden space 61568K, 93% used [0x00000007aaab0000,0x00000007ae2e8f88,0x00000007ae6d0000)
+  from space 10496K, 99% used [0x00000007ae850000,0x00000007af288748,0x00000007af290000)
+  to   space 15616K, 0% used [0x00000007af610000,0x00000007af610000,0x00000007b0550000)
+ PSOldGen        total 168320K, used 1532K [0x0000000700000000, 0x000000070a460000, 0x00000007aaab0000)
+  object space 168320K, 0% used [0x0000000700000000,0x000000070017f030,0x000000070a460000)
+ PSPermGen       total 21248K, used 13905K [0x00000006fae00000, 0x00000006fc2c0000, 0x0000000700000000)
+  object space 21248K, 65% used [0x00000006fae00000,0x00000006fbb94668,0x00000006fc2c0000)
+
+Code Cache  [0x00007f6401c2f000, 0x00007f6401e9f000, 0x00007f6404c2f000)
+ total_blobs=699 nmethods=308 adapters=345 free_code_cache=48848576 largest_free_block=8192
+
+Dynamic libraries:
+00400000-00406000 r-xp 00000000 08:14 14555230                           /home/tools/jasper_2019.06p001/Linux64/bin/java
+00406000-00407000 r--p 00005000 08:14 14555230                           /home/tools/jasper_2019.06p001/Linux64/bin/java
+00407000-00408000 rw-p 00006000 08:14 14555230                           /home/tools/jasper_2019.06p001/Linux64/bin/java
+01831000-0bce0000 rw-p 00000000 00:00 0                                  [heap]
+6fae00000-6fc2c0000 rw-p 00000000 00:00 0 
+6fc2c0000-700000000 rw-p 00000000 00:00 0 
+700000000-70a460000 rw-p 00000000 00:00 0 
+70a460000-7aaab0000 rw-p 00000000 00:00 0 
+7aaab0000-7b0550000 rw-p 00000000 00:00 0 
+7b0550000-800000000 rw-p 00000000 00:00 0 
+7f63f1691000-7f63f1692000 ---p 00000000 00:00 0 
+7f63f1692000-7f63f1695000 ---p 00000000 00:00 0 
+7f63f1695000-7f63f1e92000 rwxp 00000000 00:00 0 
+7f63f1e92000-7f63f1e93000 ---p 00000000 00:00 0 
+7f63f1e93000-7f63f1e96000 ---p 00000000 00:00 0 
+7f63f1e96000-7f63f2693000 rwxp 00000000 00:00 0 
+7f63f2693000-7f63f2694000 ---p 00000000 00:00 0 
+7f63f2694000-7f63f2697000 ---p 00000000 00:00 0 
+7f63f2697000-7f63f3694000 rwxp 00000000 00:00 0 
+7f63f3694000-7f63f3695000 ---p 00000000 00:00 0 
+7f63f3695000-7f63f3e95000 rwxp 00000000 00:00 0 
+7f63f5698000-7f63f56ae000 r-xp 00000000 08:12 2027012                    /usr/lib64/libresolv-2.17.so
+7f63f56ae000-7f63f58ae000 ---p 00016000 08:12 2027012                    /usr/lib64/libresolv-2.17.so
+7f63f58ae000-7f63f58af000 r--p 00016000 08:12 2027012                    /usr/lib64/libresolv-2.17.so
+7f63f58af000-7f63f58b0000 rw-p 00017000 08:12 2027012                    /usr/lib64/libresolv-2.17.so
+7f63f58b0000-7f63f58b2000 rw-p 00000000 00:00 0 
+7f63f615a000-7f63f615d000 ---p 00000000 00:00 0 
+7f63f615d000-7f63f625b000 rwxp 00000000 00:00 0 
+7f63f625b000-7f63f626a000 r-xp 00000000 08:12 1987710                    /usr/lib64/libXi.so.6.1.0
+7f63f626a000-7f63f6469000 ---p 0000f000 08:12 1987710                    /usr/lib64/libXi.so.6.1.0
+7f63f6469000-7f63f646a000 r--p 0000e000 08:12 1987710                    /usr/lib64/libXi.so.6.1.0
+7f63f646a000-7f63f646b000 rw-p 0000f000 08:12 1987710                    /usr/lib64/libXi.so.6.1.0
+7f63f646b000-7f63f646d000 r-xp 00000000 08:12 1987722                    /usr/lib64/libXinerama.so.1.0.0
+7f63f646d000-7f63f666c000 ---p 00002000 08:12 1987722                    /usr/lib64/libXinerama.so.1.0.0
+7f63f666c000-7f63f666d000 r--p 00001000 08:12 1987722                    /usr/lib64/libXinerama.so.1.0.0
+7f63f666d000-7f63f666e000 rw-p 00002000 08:12 1987722                    /usr/lib64/libXinerama.so.1.0.0
+7f63f666e000-7f63f6677000 r-xp 00000000 08:12 1987726                    /usr/lib64/libXcursor.so.1.0.2
+7f63f6677000-7f63f6877000 ---p 00009000 08:12 1987726                    /usr/lib64/libXcursor.so.1.0.2
+7f63f6877000-7f63f6878000 r--p 00009000 08:12 1987726                    /usr/lib64/libXcursor.so.1.0.2
+7f63f6878000-7f63f6879000 rw-p 0000a000 08:12 1987726                    /usr/lib64/libXcursor.so.1.0.2
+7f63f6879000-7f63f687e000 r-xp 00000000 08:12 1987708                    /usr/lib64/libXfixes.so.3.1.0
+7f63f687e000-7f63f6a7d000 ---p 00005000 08:12 1987708                    /usr/lib64/libXfixes.so.3.1.0
+7f63f6a7d000-7f63f6a7e000 r--p 00004000 08:12 1987708                    /usr/lib64/libXfixes.so.3.1.0
+7f63f6a7e000-7f63f6a7f000 rw-p 00005000 08:12 1987708                    /usr/lib64/libXfixes.so.3.1.0
+7f63f6a7f000-7f63f6a81000 r-xp 00000000 08:12 1986785                    /usr/lib64/gconv/ISO8859-1.so
+7f63f6a81000-7f63f6c80000 ---p 00002000 08:12 1986785                    /usr/lib64/gconv/ISO8859-1.so
+7f63f6c80000-7f63f6c81000 r--p 00001000 08:12 1986785                    /usr/lib64/gconv/ISO8859-1.so
+7f63f6c81000-7f63f6c82000 rw-p 00002000 08:12 1986785                    /usr/lib64/gconv/ISO8859-1.so
+7f63f6c82000-7f63f6c97000 r--p 00000000 08:12 1986359                    /usr/share/locale/pt_BR/LC_MESSAGES/libc.mo
+7f63f6c97000-7f63f6ca1000 r-xp 00000000 08:12 1987716                    /usr/lib64/libXrandr.so.2.2.0
+7f63f6ca1000-7f63f6ea0000 ---p 0000a000 08:12 1987716                    /usr/lib64/libXrandr.so.2.2.0
+7f63f6ea0000-7f63f6ea1000 r--p 00009000 08:12 1987716                    /usr/lib64/libXrandr.so.2.2.0
+7f63f6ea1000-7f63f6ea2000 rw-p 0000a000 08:12 1987716                    /usr/lib64/libXrandr.so.2.2.0
+7f63f6ea2000-7f63f6ea4000 r--s 00000000 08:12 2501012                    /usr/lib/fontconfig/cache/50c790f7-7976-49ed-979b-29c9d2a35b34-le64.cache-7
+7f63f6ea4000-7f63f6ea5000 r--s 00000000 08:12 2500739                    /usr/lib/fontconfig/cache/65ec04a6-9f4a-4f54-b138-cddb78c5ce49-le64.cache-7
+7f63f6ea5000-7f63f6ea8000 r--s 00000000 08:12 2501050                    /usr/lib/fontconfig/cache/62355962-0a91-423a-a0fc-3a9e09f0f699-le64.cache-7
+7f63f6ea8000-7f63f6eaa000 r--s 00000000 08:12 2501049                    /usr/lib/fontconfig/cache/1b75d7e8-2f2d-471d-9c2a-e659fe8ef01e-le64.cache-7
+7f63f6eaa000-7f63f6eac000 r--s 00000000 08:12 2501048                    /usr/lib/fontconfig/cache/15d0bc14-9fac-463f-ad6e-a31743ccb6d2-le64.cache-7
+7f63f6eac000-7f63f6ec4000 r--s 00000000 08:12 2496603                    /usr/lib/fontconfig/cache/9f00ffb0-23e6-4e8f-bdf1-4eec73337c98-le64.cache-7
+7f63f6ec4000-7f63f6ecf000 r--s 00000000 08:12 2501047                    /usr/lib/fontconfig/cache/95e67116-9e78-4bc4-b833-9f2429ea708b-le64.cache-7
+7f63f6ecf000-7f63f6ed1000 r--s 00000000 08:12 2501046                    /usr/lib/fontconfig/cache/248cee2a-2cb3-498c-a7a2-c07660d76875-le64.cache-7
+7f63f6ed1000-7f63f6ed4000 r--s 00000000 08:12 2501045                    /usr/lib/fontconfig/cache/824035a0-0673-4a84-9c54-82ece8783955-le64.cache-7
+7f63f6ed4000-7f63f6ed5000 r--s 00000000 08:12 2501044                    /usr/lib/fontconfig/cache/4f25808d-7271-4cdb-a0f8-2d3487f4a5c5-le64.cache-7
+7f63f6ed5000-7f63f6ed6000 r--s 00000000 08:12 2501043                    /usr/lib/fontconfig/cache/59619357-c780-46cd-aef6-e136c22b1de9-le64.cache-7
+7f63f6ed6000-7f63f6ed7000 r--s 00000000 08:12 2501042                    /usr/lib/fontconfig/cache/22e51682-adbf-4bd1-b60a-473edfb279f3-le64.cache-7
+7f63f6ed7000-7f63f6ed8000 r--s 00000000 08:12 2501041                    /usr/lib/fontconfig/cache/35fe245b-8da3-4aad-8eb2-4cb0a5fab655-le64.cache-7
+7f63f6ed8000-7f63f6edb000 r--s 00000000 08:12 2501040                    /usr/lib/fontconfig/cache/321e0ec1-2882-4b62-94ec-d77423784ad9-le64.cache-7
+7f63f6edb000-7f63f6edc000 r--s 00000000 08:12 2501039                    /usr/lib/fontconfig/cache/120100f7-196e-4f68-a717-4421bb49e891-le64.cache-7
+7f63f6edc000-7f63f6ee0000 r--s 00000000 08:12 2501038                    /usr/lib/fontconfig/cache/c17829bc-f9de-4844-8b00-041c799fb351-le64.cache-7
+7f63f6ee0000-7f63f6ee1000 r--s 00000000 08:12 2500722                    /usr/lib/fontconfig/cache/d4645b03-9a9f-4e10-ba6d-f736864942f4-le64.cache-7
+7f63f6ee1000-7f63f6ee5000 r--s 00000000 08:12 2501036                    /usr/lib/fontconfig/cache/89ab14c5-722e-4abf-9baa-f2ae6070dc2b-le64.cache-7
+7f63f6ee5000-7f63f6ee8000 r--s 00000000 08:12 2501035                    /usr/lib/fontconfig/cache/11d868c4-3c13-41be-9241-2c8f5d9b865a-le64.cache-7
+7f63f6ee8000-7f63f6ee9000 r--s 00000000 08:12 2501034                    /usr/lib/fontconfig/cache/5513a63f-3613-4742-a593-25da84c5afcb-le64.cache-7
+7f63f6ee9000-7f63f6eea000 r--s 00000000 08:12 2501033                    /usr/lib/fontconfig/cache/82b04068-2581-4056-8198-73644fb2412a-le64.cache-7
+7f63f6eea000-7f63f6eeb000 r--s 00000000 08:12 2501032                    /usr/lib/fontconfig/cache/c52c3d86-900d-4764-9165-a01054a4aa8c-le64.cache-7
+7f63f6eeb000-7f63f6eec000 r--s 00000000 08:12 2501031                    /usr/lib/fontconfig/cache/c2010545-8d95-4753-9137-fd18526af20f-le64.cache-7
+7f63f6eec000-7f63f6eed000 r--s 00000000 08:12 2501030                    /usr/lib/fontconfig/cache/0591caa1-3b8b-4fdd-9627-608a8541b69f-le64.cache-7
+7f63f6eed000-7f63f6eee000 r--s 00000000 08:12 2501029                    /usr/lib/fontconfig/cache/dc13e00e-38b5-4996-ae50-9915671c0ec8-le64.cache-7
+7f63f6eee000-7f63f6eef000 r--s 00000000 08:12 2501028                    /usr/lib/fontconfig/cache/7816388a-e524-4b21-a091-5d2a40070768-le64.cache-7
+7f63f6eef000-7f63f6ef0000 r--s 00000000 08:12 2501027                    /usr/lib/fontconfig/cache/17daa5c6-9a4b-4ab7-981a-defd7df3b185-le64.cache-7
+7f63f6ef0000-7f63f6ef1000 r--s 00000000 08:12 2501026                    /usr/lib/fontconfig/cache/567b5057-f04f-4952-adfe-083e6935c62b-le64.cache-7
+7f63f6ef1000-7f63f6ef2000 r--s 00000000 08:12 2501025                    /usr/lib/fontconfig/cache/e464e730-9f52-45f7-9fea-d612faaa355e-le64.cache-7
+7f63f6ef2000-7f63f6ef3000 r--s 00000000 08:12 2501024                    /usr/lib/fontconfig/cache/a5f98abc-4ba4-4a3b-8a0b-23ce6d9ef15e-le64.cache-7
+7f63f6ef3000-7f63f6ef4000 r--s 00000000 08:12 2501023                    /usr/lib/fontconfig/cache/35872150-e8b5-493f-bf4a-01f797b60cc2-le64.cache-7
+7f63f6ef4000-7f63f6ef5000 r--s 00000000 08:12 2501022                    /usr/lib/fontconfig/cache/12f33acd-96f8-4304-a946-8c11237e92aa-le64.cache-7
+7f63f6ef5000-7f63f6ef6000 r--s 00000000 08:12 2501021                    /usr/lib/fontconfig/cache/9f42340c-66b1-47c1-b46f-e4bbe522441d-le64.cache-7
+7f63f6ef6000-7f63f6efd000 r--s 00000000 08:12 2500737                    /usr/lib/fontconfig/cache/175bdda1-075f-4859-9670-0dabebfc9c54-le64.cache-7
+7f63f6efd000-7f63f6eff000 r--s 00000000 08:12 2501019                    /usr/lib/fontconfig/cache/45b071d5-7983-4399-941f-ec35948c6152-le64.cache-7
+7f63f6eff000-7f63f6f00000 r--s 00000000 08:12 2501018                    /usr/lib/fontconfig/cache/98f150d6-ecd7-455e-9dcb-35cbec706016-le64.cache-7
+7f63f6f00000-7f63f6f02000 r--s 00000000 08:12 2501017                    /usr/lib/fontconfig/cache/978f4c6d-5dbd-40b9-9907-486e78a46523-le64.cache-7
+7f63f6f02000-7f63f6f04000 r--s 00000000 08:12 2501016                    /usr/lib/fontconfig/cache/da4a7777-8bc4-4404-b124-3c2912d53b42-le64.cache-7
+7f63f6f04000-7f63f6f06000 r--s 00000000 08:12 2501015                    /usr/lib/fontconfig/cache/288bd826-0345-4835-9221-6e38cced14c3-le64.cache-7
+7f63f6f06000-7f63f6f0e000 r--s 00000000 08:12 2501014                    /usr/lib/fontconfig/cache/6bf202ad-1f19-4339-851a-aab003892ce0-le64.cache-7
+7f63f6f0e000-7f63f6f19000 r--s 00000000 08:12 2501013                    /usr/lib/fontconfig/cache/889db613-8f0a-42bd-bb87-18228ddff267-le64.cache-7
+7f63f6f19000-7f63f6f21000 r--s 00000000 08:12 2501010                    /usr/lib/fontconfig/cache/13f1d2e8-7f71-4691-a65d-202287949391-le64.cache-7
+7f63f6f21000-7f63f6f23000 r--s 00000000 08:12 2500384                    /usr/lib/fontconfig/cache/56f294af-aa87-4b7a-8216-76bd2d6e2653-le64.cache-7
+7f63f6f23000-7f63f6f28000 r--s 00000000 08:12 2501051                    /usr/lib/fontconfig/cache/3d55484b-3cb2-4ea6-8dca-8690be090098-le64.cache-7
+7f63f6f28000-7f63f6f2a000 r-xp 00000000 08:12 1986836                    /usr/lib64/gconv/UTF-16.so
+7f63f6f2a000-7f63f712a000 ---p 00002000 08:12 1986836                    /usr/lib64/gconv/UTF-16.so
+7f63f712a000-7f63f712b000 r--p 00002000 08:12 1986836                    /usr/lib64/gconv/UTF-16.so
+7f63f712b000-7f63f712c000 rw-p 00003000 08:12 1986836                    /usr/lib64/gconv/UTF-16.so
+7f63f712c000-7f63f7133000 r--s 00000000 08:12 1986852                    /usr/lib64/gconv/gconv-modules.cache
+7f63f7133000-7f63f7136000 ---p 00000000 00:00 0 
+7f63f7136000-7f63f7234000 rwxp 00000000 00:00 0 
+7f63f7234000-7f63f7235000 ---p 00000000 00:00 0 
+7f63f7235000-7f63f7a35000 rwxp 00000000 00:00 0 
+7f63f7a35000-7f63f7a36000 ---p 00000000 00:00 0 
+7f63f7a36000-7f63f8236000 rwxp 00000000 00:00 0 
+7f63f8236000-7f63f8238000 rw-p 00000000 00:00 0 
+7f63f8238000-7f63f824b000 r-xp 00000000 08:14 14840908                   /home/tools/jasper_2019.06p001/Linux64/jre/lib/amd64/libnet.so
+7f63f824b000-7f63f834c000 ---p 00013000 08:14 14840908                   /home/tools/jasper_2019.06p001/Linux64/jre/lib/amd64/libnet.so
+7f63f834c000-7f63f834f000 rw-p 00014000 08:14 14840908                   /home/tools/jasper_2019.06p001/Linux64/jre/lib/amd64/libnet.so
+7f63f834f000-7f63f8350000 r--p 00000000 00:00 0 
+7f63f8350000-7f63f8353000 ---p 00000000 00:00 0 
+7f63f8353000-7f63f8451000 rwxp 00000000 00:00 0 
+7f63f8451000-7f63f847a000 r--s 004f2000 08:14 13765069                   /home/tools/jasper_2019.06p001/lib/Linux64/jar/jtcl-2.6.0.jar
+7f63f847a000-7f63f84c7000 r--s 0037f000 08:14 13765070                   /home/tools/jasper_2019.06p001/lib/Linux64/jar/quest.jar
+7f63f84c7000-7f63f84cb000 ---p 00000000 00:00 0 
+7f63f84cb000-7f63f8cc8000 rwxp 00000000 00:00 0 
+7f63f8cc8000-7f63f8cc9000 ---p 00000000 00:00 0 
+7f63f8cc9000-7f63f94c9000 rwxp 00000000 00:00 0 
+7f63f94c9000-7f63f94ca000 ---p 00000000 00:00 0 
+7f63f94ca000-7f63f95ca000 rwxp 00000000 00:00 0 
+7f63f95ca000-7f63f95cd000 ---p 00000000 00:00 0 
+7f63f95cd000-7f63f96cb000 rwxp 00000000 00:00 0 
+7f63f96cb000-7f63f96cf000 ---p 00000000 00:00 0 
+7f63f96cf000-7f63f97cc000 rwxp 00000000 00:00 0 
+7f63f97cc000-7f63f97d0000 ---p 00000000 00:00 0 
+7f63f97d0000-7f63f98cd000 rwxp 00000000 00:00 0 
+7f63f98cd000-7f63f98d0000 ---p 00000000 00:00 0 
+7f63f98d0000-7f63f99ce000 rwxp 00000000 00:00 0 
+7f63f99ce000-7f63f99da000 r-xp 00000000 08:12 2027010                    /usr/lib64/libnss_files-2.17.so
+7f63f99da000-7f63f9bd9000 ---p 0000c000 08:12 2027010                    /usr/lib64/libnss_files-2.17.so
+7f63f9bd9000-7f63f9bda000 r--p 0000b000 08:12 2027010                    /usr/lib64/libnss_files-2.17.so
+7f63f9bda000-7f63f9bdb000 rw-p 0000c000 08:12 2027010                    /usr/lib64/libnss_files-2.17.so
+7f63f9bdb000-7f63f9be1000 rw-p 00000000 00:00 0 
+7f63f9be1000-7f6400124000 r--p 00000000 08:12 2111358                    /usr/lib/locale/locale-archive
+7f6400124000-7f6400127000 ---p 00000000 00:00 0 
+7f6400127000-7f6400225000 rwxp 00000000 00:00 0 
+7f6400225000-7f6400228000 ---p 00000000 00:00 0 
+7f6400228000-7f6400326000 rwxp 00000000 00:00 0 
+7f6400326000-7f6400327000 ---p 00000000 00:00 0 
+7f6400327000-7f6400427000 rwxp 00000000 00:00 0 
+7f6400427000-7f64005be000 r--s 0307a000 08:14 14684176                   /home/tools/jasper_2019.06p001/Linux64/jre/lib/rt.jar
+7f64005be000-7f64005bf000 ---p 00000000 00:00 0 
+7f64005bf000-7f64006bf000 rwxp 00000000 00:00 0 
+7f64006bf000-7f64006c0000 ---p 00000000 00:00 0 
+7f64006c0000-7f64007c0000 rwxp 00000000 00:00 0 
+7f64007c0000-7f64007c1000 ---p 00000000 00:00 0 
+7f64007c1000-7f64008c1000 rwxp 00000000 00:00 0 
+7f64008c1000-7f64008c2000 ---p 00000000 00:00 0 
+7f64008c2000-7f64009c2000 rwxp 00000000 00:00 0 
+7f64009c2000-7f64009c3000 ---p 00000000 00:00 0 
+7f64009c3000-7f6400ac3000 rwxp 00000000 00:00 0 
+7f6400ac3000-7f6400ac4000 ---p 00000000 00:00 0 
+7f6400ac4000-7f6400bc4000 rwxp 00000000 00:00 0 
+7f6400bc4000-7f6400bc5000 ---p 00000000 00:00 0 
+7f6400bc5000-7f6400cc5000 rwxp 00000000 00:00 0 
+7f6400cc5000-7f6400cc6000 ---p 00000000 00:00 0 
+7f6400cc6000-7f6400dc6000 rwxp 00000000 00:00 0 
+7f6400dc6000-7f6400dd1000 rw-p 00000000 00:00 0 
+7f6400dd1000-7f6400def000 rw-p 00000000 00:00 0 
+7f6400def000-7f6400e42000 rw-p 00000000 00:00 0 
+7f6400e42000-7f6401345000 rw-p 00000000 00:00 0 
+7f6401345000-7f6401350000 rw-p 00000000 00:00 0 
+7f6401350000-7f640136e000 rw-p 00000000 00:00 0 
+7f640136e000-7f64013c1000 rw-p 00000000 00:00 0 
+7f64013c1000-7f64018c3000 rw-p 00000000 00:00 0 
+7f64018c3000-7f64018f1000 rw-p 00000000 00:00 0 
+7f64018f1000-7f6401b6e000 rw-p 00000000 00:00 0 
+7f6401b6e000-7f6401b79000 rw-p 00000000 00:00 0 
+7f6401b79000-7f6401c2f000 rw-p 00000000 00:00 0 
+7f6401c2f000-7f6401e9f000 rwxp 00000000 00:00 0 
+7f6401e9f000-7f6404c2f000 rw-p 00000000 00:00 0 
+7f6404c2f000-7f6404c3d000 r-xp 00000000 08:14 14840889                   /home/tools/jasper_2019.06p001/Linux64/jre/lib/amd64/libzip.so
+7f6404c3d000-7f6404d3f000 ---p 0000e000 08:14 14840889                   /home/tools/jasper_2019.06p001/Linux64/jre/lib/amd64/libzip.so
+7f6404d3f000-7f6404d42000 rw-p 00010000 08:14 14840889                   /home/tools/jasper_2019.06p001/Linux64/jre/lib/amd64/libzip.so
+7f6404d42000-7f6404d44000 rw-p 00000000 00:00 0 
+7f6404d44000-7f6404d45000 ---p 00000000 00:00 0 
+7f6404d45000-7f6404d6e000 r-xp 00000000 08:14 14840902                   /home/tools/jasper_2019.06p001/Linux64/jre/lib/amd64/libjava.so
+7f6404d6e000-7f6404e6d000 ---p 00029000 08:14 14840902                   /home/tools/jasper_2019.06p001/Linux64/jre/lib/amd64/libjava.so
+7f6404e6d000-7f6404e74000 rw-p 00028000 08:14 14840902                   /home/tools/jasper_2019.06p001/Linux64/jre/lib/amd64/libjava.so
+7f6404e74000-7f6404e81000 r-xp 00000000 08:14 14840890                   /home/tools/jasper_2019.06p001/Linux64/jre/lib/amd64/libverify.so
+7f6404e81000-7f6404f80000 ---p 0000d000 08:14 14840890                   /home/tools/jasper_2019.06p001/Linux64/jre/lib/amd64/libverify.so
+7f6404f80000-7f6404f83000 rw-p 0000c000 08:14 14840890                   /home/tools/jasper_2019.06p001/Linux64/jre/lib/amd64/libverify.so
+7f6404f83000-7f6404f91000 rw-p 00000000 00:00 0 
+7f6404f91000-7f6404f93000 r-xp 00000000 08:12 1987648                    /usr/lib64/libXau.so.6.0.0
+7f6404f93000-7f6405193000 ---p 00002000 08:12 1987648                    /usr/lib64/libXau.so.6.0.0
+7f6405193000-7f6405194000 r--p 00002000 08:12 1987648                    /usr/lib64/libXau.so.6.0.0
+7f6405194000-7f6405195000 rw-p 00003000 08:12 1987648                    /usr/lib64/libXau.so.6.0.0
+7f6405195000-7f6405196000 rw-p 00000000 00:00 0 
+7f6405196000-7f64051bd000 r-xp 00000000 08:12 1987700                    /usr/lib64/libxcb.so.1.1.0
+7f64051bd000-7f64053bc000 ---p 00027000 08:12 1987700                    /usr/lib64/libxcb.so.1.1.0
+7f64053bc000-7f64053bd000 r--p 00026000 08:12 1987700                    /usr/lib64/libxcb.so.1.1.0
+7f64053bd000-7f64053be000 rw-p 00027000 08:12 1987700                    /usr/lib64/libxcb.so.1.1.0
+7f64053be000-7f64053e5000 r-xp 00000000 08:12 1987421                    /usr/lib64/libexpat.so.1.6.0
+7f64053e5000-7f64055e5000 ---p 00027000 08:12 1987421                    /usr/lib64/libexpat.so.1.6.0
+7f64055e5000-7f64055e7000 r--p 00027000 08:12 1987421                    /usr/lib64/libexpat.so.1.6.0
+7f64055e7000-7f64055e8000 rw-p 00029000 08:12 1987421                    /usr/lib64/libexpat.so.1.6.0
+7f64055e8000-7f64055e9000 rw-p 00000000 00:00 0 
+7f64055e9000-7f64055ed000 r-xp 00000000 08:12 2027027                    /usr/lib64/libuuid.so.1.3.0
+7f64055ed000-7f64057ec000 ---p 00004000 08:12 2027027                    /usr/lib64/libuuid.so.1.3.0
+7f64057ec000-7f64057ed000 r--p 00003000 08:12 2027027                    /usr/lib64/libuuid.so.1.3.0
+7f64057ed000-7f64057ee000 rw-p 00004000 08:12 2027027                    /usr/lib64/libuuid.so.1.3.0
+7f64057ee000-7f64057f5000 r-xp 00000000 08:12 1986998                    /usr/lib64/libffi.so.6.0.1
+7f64057f5000-7f64059f4000 ---p 00007000 08:12 1986998                    /usr/lib64/libffi.so.6.0.1
+7f64059f4000-7f64059f5000 r--p 00006000 08:12 1986998                    /usr/lib64/libffi.so.6.0.1
+7f64059f5000-7f64059f6000 rw-p 00007000 08:12 1986998                    /usr/lib64/libffi.so.6.0.1
+7f64059f6000-7f6405a1f000 r-xp 00000000 08:12 1987386                    /usr/lib64/libpng15.so.15.13.0
+7f6405a1f000-7f6405c1f000 ---p 00029000 08:12 1987386                    /usr/lib64/libpng15.so.15.13.0
+7f6405c1f000-7f6405c20000 r--p 00029000 08:12 1987386                    /usr/lib64/libpng15.so.15.13.0
+7f6405c20000-7f6405c21000 rw-p 0002a000 08:12 1987386                    /usr/lib64/libpng15.so.15.13.0
+7f6405c21000-7f6405c22000 rw-p 00000000 00:00 0 
+7f6405c22000-7f6405c31000 r-xp 00000000 08:12 1987389                    /usr/lib64/libbz2.so.1.0.6
+7f6405c31000-7f6405e30000 ---p 0000f000 08:12 1987389                    /usr/lib64/libbz2.so.1.0.6
+7f6405e30000-7f6405e31000 r--p 0000e000 08:12 1987389                    /usr/lib64/libbz2.so.1.0.6
+7f6405e31000-7f6405e32000 rw-p 0000f000 08:12 1987389                    /usr/lib64/libbz2.so.1.0.6
+7f6405e32000-7f6405e33000 rw-p 00000000 00:00 0 
+7f6405e33000-7f6405e83000 r-xp 00000000 08:14 14554393                   /home/tools/jasper_2019.06p001/Linux64/lib/libjAdaptor.so
+7f6405e83000-7f6405e87000 r--p 0004f000 08:14 14554393                   /home/tools/jasper_2019.06p001/Linux64/lib/libjAdaptor.so
+7f6405e87000-7f6405e88000 rw-p 00053000 08:14 14554393                   /home/tools/jasper_2019.06p001/Linux64/lib/libjAdaptor.so
+7f6405e88000-7f6405f14000 r-xp 00000000 08:14 14554295                   /home/tools/jasper_2019.06p001/Linux64/lib/libcudd.so
+7f6405f14000-7f6405f15000 ---p 0008c000 08:14 14554295                   /home/tools/jasper_2019.06p001/Linux64/lib/libcudd.so
+7f6405f15000-7f6405f16000 r--p 0008c000 08:14 14554295                   /home/tools/jasper_2019.06p001/Linux64/lib/libcudd.so
+7f6405f16000-7f6405f18000 rw-p 0008d000 08:14 14554295                   /home/tools/jasper_2019.06p001/Linux64/lib/libcudd.so
+7f6405f18000-7f6405f2f000 r-xp 00000000 08:12 2027008                    /usr/lib64/libnsl-2.17.so
+7f6405f2f000-7f640612e000 ---p 00017000 08:12 2027008                    /usr/lib64/libnsl-2.17.so
+7f640612e000-7f640612f000 r--p 00016000 08:12 2027008                    /usr/lib64/libnsl-2.17.so
+7f640612f000-7f6406130000 rw-p 00017000 08:12 2027008                    /usr/lib64/libnsl-2.17.so
+7f6406130000-7f6406133000 rw-p 00000000 00:00 0 
+7f6406133000-7f6406158000 r-xp 00000000 08:14 14554420                   /home/tools/jasper_2019.06p001/Linux64/lib/libboost_thread.so.1.63.0
+7f6406158000-7f6406357000 ---p 00025000 08:14 14554420                   /home/tools/jasper_2019.06p001/Linux64/lib/libboost_thread.so.1.63.0
+7f6406357000-7f6406359000 r--p 00024000 08:14 14554420                   /home/tools/jasper_2019.06p001/Linux64/lib/libboost_thread.so.1.63.0
+7f6406359000-7f640635a000 rw-p 00026000 08:14 14554420                   /home/tools/jasper_2019.06p001/Linux64/lib/libboost_thread.so.1.63.0
+7f640635a000-7f6406396000 r-xp 00000000 08:14 14554422                   /home/tools/jasper_2019.06p001/Linux64/lib/libVCDStateMapManager.so
+7f6406396000-7f6406397000 ---p 0003c000 08:14 14554422                   /home/tools/jasper_2019.06p001/Linux64/lib/libVCDStateMapManager.so
+7f6406397000-7f6406398000 r--p 0003c000 08:14 14554422                   /home/tools/jasper_2019.06p001/Linux64/lib/libVCDStateMapManager.so
+7f6406398000-7f6406399000 rw-p 0003d000 08:14 14554422                   /home/tools/jasper_2019.06p001/Linux64/lib/libVCDStateMapManager.so
+7f6406399000-7f640659a000 rw-p 00000000 00:00 0 
+7f640659a000-7f640660e000 r-xp 00000000 08:14 14554349                   /home/tools/jasper_2019.06p001/Linux64/lib/libdwapi.so
+7f640660e000-7f640680e000 ---p 00074000 08:14 14554349                   /home/tools/jasper_2019.06p001/Linux64/lib/libdwapi.so
+7f640680e000-7f6406811000 r--p 00074000 08:14 14554349                   /home/tools/jasper_2019.06p001/Linux64/lib/libdwapi.so
+7f6406811000-7f6406812000 rw-p 00077000 08:14 14554349                   /home/tools/jasper_2019.06p001/Linux64/lib/libdwapi.so
+7f6406812000-7f6406813000 rw-p 00000000 00:00 0 
+7f6406813000-7f6406a10000 r-xp 00000000 08:14 14554339                   /home/tools/jasper_2019.06p001/Linux64/lib/libdrapi.so
+7f6406a10000-7f6406c10000 ---p 001fd000 08:14 14554339                   /home/tools/jasper_2019.06p001/Linux64/lib/libdrapi.so
+7f6406c10000-7f6406c23000 r--p 001fd000 08:14 14554339                   /home/tools/jasper_2019.06p001/Linux64/lib/libdrapi.so
+7f6406c23000-7f6406c2f000 rw-p 00210000 08:14 14554339                   /home/tools/jasper_2019.06p001/Linux64/lib/libdrapi.so
+7f6406c2f000-7f6406c34000 rw-p 00000000 00:00 0 
+7f6406c34000-7f6406d81000 r-xp 00000000 08:14 14554358                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSymSim.so
+7f6406d81000-7f6406d84000 r--p 0014c000 08:14 14554358                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSymSim.so
+7f6406d84000-7f6406d87000 rw-p 0014f000 08:14 14554358                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSymSim.so
+7f6406d87000-7f6406d88000 rw-p 00000000 00:00 0 
+7f6406d88000-7f6406d8b000 r-xp 00000000 08:14 14554293                   /home/tools/jasper_2019.06p001/Linux64/lib/libboost_system.so.1.63.0
+7f6406d8b000-7f6406f8a000 ---p 00003000 08:14 14554293                   /home/tools/jasper_2019.06p001/Linux64/lib/libboost_system.so.1.63.0
+7f6406f8a000-7f6406f8b000 r--p 00002000 08:14 14554293                   /home/tools/jasper_2019.06p001/Linux64/lib/libboost_system.so.1.63.0
+7f6406f8b000-7f6406f8c000 rw-p 00003000 08:14 14554293                   /home/tools/jasper_2019.06p001/Linux64/lib/libboost_system.so.1.63.0
+7f6406f8c000-7f6406f8d000 rw-p 00000000 00:00 0 
+7f6406f8d000-7f6406fed000 r-xp 00000000 08:12 1986928                    /usr/lib64/libpcre.so.1.2.0
+7f6406fed000-7f64071ed000 ---p 00060000 08:12 1986928                    /usr/lib64/libpcre.so.1.2.0
+7f64071ed000-7f64071ee000 r--p 00060000 08:12 1986928                    /usr/lib64/libpcre.so.1.2.0
+7f64071ee000-7f64071ef000 rw-p 00061000 08:12 1986928                    /usr/lib64/libpcre.so.1.2.0
+7f64071ef000-7f64072db000 r-xp 00000000 08:14 14554288                   /home/tools/jasper_2019.06p001/Linux64/lib/libsqlite3.so.0
+7f64072db000-7f64074db000 ---p 000ec000 08:14 14554288                   /home/tools/jasper_2019.06p001/Linux64/lib/libsqlite3.so.0
+7f64074db000-7f64074dd000 r--p 000ec000 08:14 14554288                   /home/tools/jasper_2019.06p001/Linux64/lib/libsqlite3.so.0
+7f64074dd000-7f64074e0000 rw-p 000ee000 08:14 14554288                   /home/tools/jasper_2019.06p001/Linux64/lib/libsqlite3.so.0
+7f64074e0000-7f64074e1000 rw-p 00000000 00:00 0 
+7f64074e1000-7f6407619000 r-xp 00000000 08:12 1987703                    /usr/lib64/libX11.so.6.3.0
+7f6407619000-7f6407819000 ---p 00138000 08:12 1987703                    /usr/lib64/libX11.so.6.3.0
+7f6407819000-7f640781a000 r--p 00138000 08:12 1987703                    /usr/lib64/libX11.so.6.3.0
+7f640781a000-7f640781f000 rw-p 00139000 08:12 1987703                    /usr/lib64/libX11.so.6.3.0
+7f640781f000-7f6407830000 r-xp 00000000 08:12 1987706                    /usr/lib64/libXext.so.6.4.0
+7f6407830000-7f6407a2f000 ---p 00011000 08:12 1987706                    /usr/lib64/libXext.so.6.4.0
+7f6407a2f000-7f6407a30000 r--p 00010000 08:12 1987706                    /usr/lib64/libXext.so.6.4.0
+7f6407a30000-7f6407a31000 rw-p 00011000 08:12 1987706                    /usr/lib64/libXext.so.6.4.0
+7f6407a31000-7f6407a71000 r-xp 00000000 08:12 1991947                    /usr/lib64/libfontconfig.so.1.11.1
+7f6407a71000-7f6407c70000 ---p 00040000 08:12 1991947                    /usr/lib64/libfontconfig.so.1.11.1
+7f6407c70000-7f6407c72000 r--p 0003f000 08:12 1991947                    /usr/lib64/libfontconfig.so.1.11.1
+7f6407c72000-7f6407c73000 rw-p 00041000 08:12 1991947                    /usr/lib64/libfontconfig.so.1.11.1
+7f6407c73000-7f6407c74000 rw-p 00000000 00:00 0 
+7f6407c74000-7f6407c7d000 r-xp 00000000 08:12 1987714                    /usr/lib64/libXrender.so.1.3.0
+7f6407c7d000-7f6407e7d000 ---p 00009000 08:12 1987714                    /usr/lib64/libXrender.so.1.3.0
+7f6407e7d000-7f6407e7e000 r--p 00009000 08:12 1987714                    /usr/lib64/libXrender.so.1.3.0
+7f6407e7e000-7f6407e7f000 rw-p 0000a000 08:12 1987714                    /usr/lib64/libXrender.so.1.3.0
+7f6407e7f000-7f6407e96000 r-xp 00000000 08:12 1987425                    /usr/lib64/libICE.so.6.3.0
+7f6407e96000-7f6408095000 ---p 00017000 08:12 1987425                    /usr/lib64/libICE.so.6.3.0
+7f6408095000-7f6408096000 r--p 00016000 08:12 1987425                    /usr/lib64/libICE.so.6.3.0
+7f6408096000-7f6408097000 rw-p 00017000 08:12 1987425                    /usr/lib64/libICE.so.6.3.0
+7f6408097000-7f640809b000 rw-p 00000000 00:00 0 
+7f640809b000-7f64080a2000 r-xp 00000000 08:12 1987427                    /usr/lib64/libSM.so.6.0.1
+7f64080a2000-7f64082a1000 ---p 00007000 08:12 1987427                    /usr/lib64/libSM.so.6.0.1
+7f64082a1000-7f64082a2000 r--p 00006000 08:12 1987427                    /usr/lib64/libSM.so.6.0.1
+7f64082a2000-7f64082a3000 rw-p 00007000 08:12 1987427                    /usr/lib64/libSM.so.6.0.1
+7f64082a3000-7f64082a4000 rw-p 00000000 00:00 0 
+7f64082a4000-7f64082f3000 r-xp 00000000 08:12 2016996                    /usr/lib64/libgobject-2.0.so.0.5600.1
+7f64082f3000-7f64084f3000 ---p 0004f000 08:12 2016996                    /usr/lib64/libgobject-2.0.so.0.5600.1
+7f64084f3000-7f64084f4000 r--p 0004f000 08:12 2016996                    /usr/lib64/libgobject-2.0.so.0.5600.1
+7f64084f4000-7f64084f5000 rw-p 00050000 08:12 2016996                    /usr/lib64/libgobject-2.0.so.0.5600.1
+7f64084f5000-7f64085ac000 r-xp 00000000 08:12 1987945                    /usr/lib64/libfreetype.so.6.14.0
+7f64085ac000-7f64087ac000 ---p 000b7000 08:12 1987945                    /usr/lib64/libfreetype.so.6.14.0
+7f64087ac000-7f64087b3000 r--p 000b7000 08:12 1987945                    /usr/lib64/libfreetype.so.6.14.0
+7f64087b3000-7f64087b4000 rw-p 000be000 08:12 1987945                    /usr/lib64/libfreetype.so.6.14.0
+7f64087b4000-7f64087da000 r-xp 00000000 08:12 2013111                    /usr/lib64/libpng12.so.0.50.0
+7f64087da000-7f64089d9000 ---p 00026000 08:12 2013111                    /usr/lib64/libpng12.so.0.50.0
+7f64089d9000-7f64089da000 r--p 00025000 08:12 2013111                    /usr/lib64/libpng12.so.0.50.0
+7f64089da000-7f64089db000 rw-p 00026000 08:12 2013111                    /usr/lib64/libpng12.so.0.50.0
+7f64089db000-7f64089dc000 rw-p 00000000 00:00 0 
+7f64089dc000-7f6408a1e000 r-xp 00000000 08:14 14554360                   /home/tools/jasper_2019.06p001/Linux64/lib/libfmt.so.5
+7f6408a1e000-7f6408c1d000 ---p 00042000 08:14 14554360                   /home/tools/jasper_2019.06p001/Linux64/lib/libfmt.so.5
+7f6408c1d000-7f6408c1e000 r--p 00041000 08:14 14554360                   /home/tools/jasper_2019.06p001/Linux64/lib/libfmt.so.5
+7f6408c1e000-7f6408c1f000 rw-p 00042000 08:14 14554360                   /home/tools/jasper_2019.06p001/Linux64/lib/libfmt.so.5
+7f6408c1f000-7f6408daf000 r-xp 00000000 08:14 14555005                   /home/tools/jasper_2019.06p001/Linux64/lib/libsi2dr_liberty.so.0
+7f6408daf000-7f6408fae000 ---p 00190000 08:14 14555005                   /home/tools/jasper_2019.06p001/Linux64/lib/libsi2dr_liberty.so.0
+7f6408fae000-7f6408fb2000 r--p 0018f000 08:14 14555005                   /home/tools/jasper_2019.06p001/Linux64/lib/libsi2dr_liberty.so.0
+7f6408fb2000-7f6409067000 rw-p 00193000 08:14 14555005                   /home/tools/jasper_2019.06p001/Linux64/lib/libsi2dr_liberty.so.0
+7f6409067000-7f640912c000 rw-p 00000000 00:00 0 
+7f640912c000-7f64091c5000 r-xp 00000000 08:14 14554287                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperMsgControl.so
+7f64091c5000-7f64091c6000 r--p 00098000 08:14 14554287                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperMsgControl.so
+7f64091c6000-7f64091c7000 rw-p 00099000 08:14 14554287                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperMsgControl.so
+7f64091c7000-7f64091d3000 r-xp 00000000 08:14 14555015                   /home/tools/jasper_2019.06p001/Linux64/lib/libboost_iostreams.so.1.63.0
+7f64091d3000-7f64093d2000 ---p 0000c000 08:14 14555015                   /home/tools/jasper_2019.06p001/Linux64/lib/libboost_iostreams.so.1.63.0
+7f64093d2000-7f64093d3000 r--p 0000b000 08:14 14555015                   /home/tools/jasper_2019.06p001/Linux64/lib/libboost_iostreams.so.1.63.0
+7f64093d3000-7f64093d4000 rw-p 0000c000 08:14 14555015                   /home/tools/jasper_2019.06p001/Linux64/lib/libboost_iostreams.so.1.63.0
+7f64093d4000-7f64093d5000 rw-p 00000000 00:00 0 
+7f64093d5000-7f64094f9000 r-xp 00000000 08:14 14555014                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperLPVDb.so
+7f64094f9000-7f64094fc000 r--p 00123000 08:14 14555014                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperLPVDb.so
+7f64094fc000-7f64094ff000 rw-p 00126000 08:14 14555014                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperLPVDb.so
+7f64094ff000-7f64098eb000 r-xp 00000000 08:14 14554373                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtXmlPatterns.so.4
+7f64098eb000-7f6409aeb000 ---p 003ec000 08:14 14554373                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtXmlPatterns.so.4
+7f6409aeb000-7f6409b21000 r--p 003ec000 08:14 14554373                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtXmlPatterns.so.4
+7f6409b21000-7f6409b22000 rw-p 00422000 08:14 14554373                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtXmlPatterns.so.4
+7f6409b22000-7f6409b24000 rw-p 00000000 00:00 0 
+7f6409b24000-7f6409c4c000 r-xp 00000000 08:14 14554334                   /home/tools/jasper_2019.06p001/Linux64/lib/libqwt.so.6
+7f6409c4c000-7f6409e4b000 ---p 00128000 08:14 14554334                   /home/tools/jasper_2019.06p001/Linux64/lib/libqwt.so.6
+7f6409e4b000-7f6409e54000 r--p 00127000 08:14 14554334                   /home/tools/jasper_2019.06p001/Linux64/lib/libqwt.so.6
+7f6409e54000-7f6409e58000 rw-p 00130000 08:14 14554334                   /home/tools/jasper_2019.06p001/Linux64/lib/libqwt.so.6
+7f6409e58000-7f6409e59000 rw-p 00000000 00:00 0 
+7f6409e59000-7f6409ede000 r-xp 00000000 08:14 14554369                   /home/tools/jasper_2019.06p001/Linux64/lib/libjetmining.so
+7f6409ede000-7f6409edf000 ---p 00085000 08:14 14554369                   /home/tools/jasper_2019.06p001/Linux64/lib/libjetmining.so
+7f6409edf000-7f6409ee0000 r--p 00085000 08:14 14554369                   /home/tools/jasper_2019.06p001/Linux64/lib/libjetmining.so
+7f6409ee0000-7f6409ee2000 rw-p 00086000 08:14 14554369                   /home/tools/jasper_2019.06p001/Linux64/lib/libjetmining.so
+7f6409ee2000-7f6409ef5000 r-xp 00000000 08:14 14554340                   /home/tools/jasper_2019.06p001/Linux64/lib/libQjdax.so.1
+7f6409ef5000-7f640a0f5000 ---p 00013000 08:14 14554340                   /home/tools/jasper_2019.06p001/Linux64/lib/libQjdax.so.1
+7f640a0f5000-7f640a0f6000 r--p 00013000 08:14 14554340                   /home/tools/jasper_2019.06p001/Linux64/lib/libQjdax.so.1
+7f640a0f6000-7f640a0f7000 rw-p 00014000 08:14 14554340                   /home/tools/jasper_2019.06p001/Linux64/lib/libQjdax.so.1
+7f640a0f7000-7f640a115000 r-xp 00000000 08:14 14554419                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSourceInfoFlow.so
+7f640a115000-7f640a116000 ---p 0001e000 08:14 14554419                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSourceInfoFlow.so
+7f640a116000-7f640a117000 r--p 0001e000 08:14 14554419                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSourceInfoFlow.so
+7f640a117000-7f640a118000 rw-p 0001f000 08:14 14554419                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSourceInfoFlow.so
+7f640a118000-7f640a119000 rw-p 00000000 00:00 0 
+7f640a119000-7f640a136000 r-xp 00000000 08:14 14554291                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperRadixProvider.so
+7f640a136000-7f640a137000 r--p 0001c000 08:14 14554291                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperRadixProvider.so
+7f640a137000-7f640a138000 rw-p 0001d000 08:14 14554291                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperRadixProvider.so
+7f640a138000-7f640a1fc000 r-xp 00000000 08:14 14554383                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperGraphDb.so
+7f640a1fc000-7f640a1fd000 ---p 000c4000 08:14 14554383                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperGraphDb.so
+7f640a1fd000-7f640a1ff000 r--p 000c4000 08:14 14554383                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperGraphDb.so
+7f640a1ff000-7f640a202000 rw-p 000c6000 08:14 14554383                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperGraphDb.so
+7f640a202000-7f640a203000 rw-p 00000000 00:00 0 
+7f640a203000-7f640a20a000 r-xp 00000000 08:14 14555007                   /home/tools/jasper_2019.06p001/Linux64/lib/libunicovdirmgr.so
+7f640a20a000-7f640a409000 ---p 00007000 08:14 14555007                   /home/tools/jasper_2019.06p001/Linux64/lib/libunicovdirmgr.so
+7f640a409000-7f640a40a000 r--p 00006000 08:14 14555007                   /home/tools/jasper_2019.06p001/Linux64/lib/libunicovdirmgr.so
+7f640a40a000-7f640a40b000 rw-p 00007000 08:14 14555007                   /home/tools/jasper_2019.06p001/Linux64/lib/libunicovdirmgr.so
+7f640a40b000-7f640a553000 r-xp 00000000 08:14 14554391                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperOrchestration.so
+7f640a553000-7f640a55a000 r--p 00147000 08:14 14554391                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperOrchestration.so
+7f640a55a000-7f640a55e000 rw-p 0014e000 08:14 14554391                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperOrchestration.so
+7f640a55e000-7f640a55f000 rw-p 00000000 00:00 0 
+7f640a55f000-7f640a562000 r-xp 00000000 08:14 14554329                   /home/tools/jasper_2019.06p001/Linux64/lib/libcsv.so
+7f640a562000-7f640a761000 ---p 00003000 08:14 14554329                   /home/tools/jasper_2019.06p001/Linux64/lib/libcsv.so
+7f640a761000-7f640a762000 rw-p 00002000 08:14 14554329                   /home/tools/jasper_2019.06p001/Linux64/lib/libcsv.so
+7f640a762000-7f640abdd000 r-xp 00000000 08:14 14554272                   /home/tools/jasper_2019.06p001/Linux64/lib/libedg.so
+7f640abdd000-7f640abde000 ---p 0047b000 08:14 14554272                   /home/tools/jasper_2019.06p001/Linux64/lib/libedg.so
+7f640abde000-7f640abe6000 r--p 0047b000 08:14 14554272                   /home/tools/jasper_2019.06p001/Linux64/lib/libedg.so
+7f640abe6000-7f640ac25000 rw-p 00483000 08:14 14554272                   /home/tools/jasper_2019.06p001/Linux64/lib/libedg.so
+7f640ac25000-7f640ac83000 rw-p 00000000 00:00 0 
+7f640ac83000-7f640acbe000 r-xp 00000000 08:14 14554370                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperC2RTLDb.so
+7f640acbe000-7f640acbf000 ---p 0003b000 08:14 14554370                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperC2RTLDb.so
+7f640acbf000-7f640acc0000 r--p 0003b000 08:14 14554370                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperC2RTLDb.so
+7f640acc0000-7f640acc1000 rw-p 0003c000 08:14 14554370                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperC2RTLDb.so
+7f640acc1000-7f640ad5b000 r-xp 00000000 08:14 14554268                   /home/tools/jasper_2019.06p001/Linux64/lib/libjetparser.so
+7f640ad5b000-7f640ad5d000 r--p 00099000 08:14 14554268                   /home/tools/jasper_2019.06p001/Linux64/lib/libjetparser.so
+7f640ad5d000-7f640ad5e000 rw-p 0009b000 08:14 14554268                   /home/tools/jasper_2019.06p001/Linux64/lib/libjetparser.so
+7f640ad5e000-7f640cf53000 r-xp 00000000 08:14 14554356                   /home/tools/jasper_2019.06p001/Linux64/lib/librtlc.so
+7f640cf53000-7f640cf54000 ---p 021f5000 08:14 14554356                   /home/tools/jasper_2019.06p001/Linux64/lib/librtlc.so
+7f640cf54000-7f640d0f3000 r--p 021f5000 08:14 14554356                   /home/tools/jasper_2019.06p001/Linux64/lib/librtlc.so
+7f640d0f3000-7f640d179000 rw-p 02394000 08:14 14554356                   /home/tools/jasper_2019.06p001/Linux64/lib/librtlc.so
+7f640d179000-7f640d3c0000 rw-p 00000000 00:00 0 
+7f640d3c0000-7f640d5f2000 r-xp 00000000 08:14 14554289                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperInformal.so
+7f640d5f2000-7f640d5f3000 ---p 00232000 08:14 14554289                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperInformal.so
+7f640d5f3000-7f640d5f9000 r--p 00232000 08:14 14554289                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperInformal.so
+7f640d5f9000-7f640d5ff000 rw-p 00238000 08:14 14554289                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperInformal.so
+7f640d5ff000-7f640d6be000 r-xp 00000000 08:14 14554366                   /home/tools/jasper_2019.06p001/Linux64/lib/libCDSTcl8.4.so
+7f640d6be000-7f640d8be000 ---p 000bf000 08:14 14554366                   /home/tools/jasper_2019.06p001/Linux64/lib/libCDSTcl8.4.so
+7f640d8be000-7f640d8c7000 rw-p 000bf000 08:14 14554366                   /home/tools/jasper_2019.06p001/Linux64/lib/libCDSTcl8.4.so
+7f640d8c7000-7f640d8c9000 rw-p 00000000 00:00 0 
+7f640d8c9000-7f640dac7000 r-xp 00000000 08:14 14555001                   /home/tools/jasper_2019.06p001/Linux64/lib/libnsys.so
+7f640dac7000-7f640dcc6000 ---p 001fe000 08:14 14555001                   /home/tools/jasper_2019.06p001/Linux64/lib/libnsys.so
+7f640dcc6000-7f640dccf000 r--p 001fd000 08:14 14555001                   /home/tools/jasper_2019.06p001/Linux64/lib/libnsys.so
+7f640dccf000-7f640dcd3000 rw-p 00206000 08:14 14555001                   /home/tools/jasper_2019.06p001/Linux64/lib/libnsys.so
+7f640dcd3000-7f640dce5000 rw-p 00000000 00:00 0 
+7f640dce5000-7f640e426000 r-xp 00000000 08:14 14554284                   /home/tools/jasper_2019.06p001/Linux64/lib/libnffr.so
+7f640e426000-7f640e625000 ---p 00741000 08:14 14554284                   /home/tools/jasper_2019.06p001/Linux64/lib/libnffr.so
+7f640e625000-7f640e64c000 r--p 00740000 08:14 14554284                   /home/tools/jasper_2019.06p001/Linux64/lib/libnffr.so
+7f640e64c000-7f640e666000 rw-p 00767000 08:14 14554284                   /home/tools/jasper_2019.06p001/Linux64/lib/libnffr.so
+7f640e666000-7f640f0f8000 rw-p 00000000 00:00 0 
+7f640f0f8000-7f640f33f000 r-xp 00000000 08:14 14554397                   /home/tools/jasper_2019.06p001/Linux64/lib/libJDAC.so
+7f640f33f000-7f640f53e000 ---p 00247000 08:14 14554397                   /home/tools/jasper_2019.06p001/Linux64/lib/libJDAC.so
+7f640f53e000-7f640f56b000 rw-p 00246000 08:14 14554397                   /home/tools/jasper_2019.06p001/Linux64/lib/libJDAC.so
+7f640f56b000-7f640f571000 rw-p 00000000 00:00 0 
+7f640f571000-7f640f64d000 r-xp 00000000 08:14 14554400                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperApDb.so
+7f640f64d000-7f640f64e000 ---p 000dc000 08:14 14554400                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperApDb.so
+7f640f64e000-7f640f64f000 r--p 000dc000 08:14 14554400                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperApDb.so
+7f640f64f000-7f640f651000 rw-p 000dd000 08:14 14554400                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperApDb.so
+7f640f651000-7f640f653000 rw-p 00000000 00:00 0 
+7f640f653000-7f640f65c000 r-xp 00000000 08:14 14554346                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperRTLDSUtil.so
+7f640f65c000-7f640f65d000 r--p 00008000 08:14 14554346                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperRTLDSUtil.so
+7f640f65d000-7f640f65e000 rw-p 00009000 08:14 14554346                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperRTLDSUtil.so
+7f640f65e000-7f640f65f000 rw-p 00000000 00:00 0 
+7f640f65f000-7f640f66d000 r-xp 00000000 08:14 14555017                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperAflRulesUtil.so
+7f640f66d000-7f640f66e000 r--p 0000d000 08:14 14555017                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperAflRulesUtil.so
+7f640f66e000-7f640f66f000 rw-p 0000e000 08:14 14555017                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperAflRulesUtil.so
+7f640f66f000-7f640f6b3000 r-xp 00000000 08:14 14554364                   /home/tools/jasper_2019.06p001/Linux64/lib/libhaldefGUIAPI.so
+7f640f6b3000-7f640f8b3000 ---p 00044000 08:14 14554364                   /home/tools/jasper_2019.06p001/Linux64/lib/libhaldefGUIAPI.so
+7f640f8b3000-7f640f8bf000 rw-p 00044000 08:14 14554364                   /home/tools/jasper_2019.06p001/Linux64/lib/libhaldefGUIAPI.so
+7f640f8bf000-7f640f8e2000 rw-p 00000000 00:00 0 
+7f640f8e2000-7f640f90b000 r-xp 00000000 08:14 14554380                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperMixMatch.so
+7f640f90b000-7f640f90c000 ---p 00029000 08:14 14554380                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperMixMatch.so
+7f640f90c000-7f640f90d000 r--p 00029000 08:14 14554380                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperMixMatch.so
+7f640f90d000-7f640f90e000 rw-p 0002a000 08:14 14554380                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperMixMatch.so
+7f640f90e000-7f640f94d000 r-xp 00000000 08:14 14555018                   /home/tools/jasper_2019.06p001/Linux64/lib/libgmp.so.3
+7f640f94d000-7f640fb4d000 ---p 0003f000 08:14 14555018                   /home/tools/jasper_2019.06p001/Linux64/lib/libgmp.so.3
+7f640fb4d000-7f640fb4e000 rw-p 0003f000 08:14 14555018                   /home/tools/jasper_2019.06p001/Linux64/lib/libgmp.so.3
+7f640fb4e000-7f640ff13000 r-xp 00000000 08:14 14554414                   /home/tools/jasper_2019.06p001/Linux64/lib/libwifCS.so
+7f640ff13000-7f640ff24000 r--p 003c4000 08:14 14554414                   /home/tools/jasper_2019.06p001/Linux64/lib/libwifCS.so
+7f640ff24000-7f640ff29000 rw-p 003d5000 08:14 14554414                   /home/tools/jasper_2019.06p001/Linux64/lib/libwifCS.so
+7f640ff29000-7f640ff2b000 rw-p 00000000 00:00 0 
+7f640ff2b000-7f640ff30000 r-xp 00000000 08:14 14554294                   /home/tools/jasper_2019.06p001/Linux64/lib/libmd5.so
+7f640ff30000-7f641012f000 ---p 00005000 08:14 14554294                   /home/tools/jasper_2019.06p001/Linux64/lib/libmd5.so
+7f641012f000-7f6410130000 r--p 00004000 08:14 14554294                   /home/tools/jasper_2019.06p001/Linux64/lib/libmd5.so
+7f6410130000-7f6410131000 rw-p 00005000 08:14 14554294                   /home/tools/jasper_2019.06p001/Linux64/lib/libmd5.so
+7f6410131000-7f6410165000 r-xp 00000000 08:14 14554371                   /home/tools/jasper_2019.06p001/Linux64/lib/libutilradix.so
+7f6410165000-7f6410167000 r--p 00033000 08:14 14554371                   /home/tools/jasper_2019.06p001/Linux64/lib/libutilradix.so
+7f6410167000-7f6410168000 rw-p 00035000 08:14 14554371                   /home/tools/jasper_2019.06p001/Linux64/lib/libutilradix.so
+7f6410168000-7f6410169000 rw-p 00000000 00:00 0 
+7f6410169000-7f641028b000 r-xp 00000000 08:14 14555019                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperNetlistDb.so
+7f641028b000-7f641028c000 ---p 00122000 08:14 14555019                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperNetlistDb.so
+7f641028c000-7f641028f000 r--p 00122000 08:14 14555019                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperNetlistDb.so
+7f641028f000-7f6410292000 rw-p 00125000 08:14 14555019                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperNetlistDb.so
+7f6410292000-7f6410293000 rw-p 00000000 00:00 0 
+7f6410293000-7f6410ff2000 r-xp 00000000 08:14 14554376                   /home/tools/jasper_2019.06p001/Linux64/lib/libflatten.so
+7f6410ff2000-7f6410ff3000 ---p 00d5f000 08:14 14554376                   /home/tools/jasper_2019.06p001/Linux64/lib/libflatten.so
+7f6410ff3000-7f6411042000 r--p 00d5f000 08:14 14554376                   /home/tools/jasper_2019.06p001/Linux64/lib/libflatten.so
+7f6411042000-7f641105b000 rw-p 00dae000 08:14 14554376                   /home/tools/jasper_2019.06p001/Linux64/lib/libflatten.so
+7f641105b000-7f641105e000 rw-p 00000000 00:00 0 
+7f641105e000-7f64111f8000 r-xp 00000000 08:14 14554278                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasper4.so
+7f64111f8000-7f64111f9000 ---p 0019a000 08:14 14554278                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasper4.so
+7f64111f9000-7f64111fd000 r--p 0019a000 08:14 14554278                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasper4.so
+7f64111fd000-7f6411202000 rw-p 0019e000 08:14 14554278                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasper4.so
+7f6411202000-7f6411203000 rw-p 00000000 00:00 0 
+7f6411203000-7f6411205000 r-xp 00000000 08:14 14554281                   /home/tools/jasper_2019.06p001/Linux64/lib/libDatestamp.so
+7f6411205000-7f6411206000 r--p 00001000 08:14 14554281                   /home/tools/jasper_2019.06p001/Linux64/lib/libDatestamp.so
+7f6411206000-7f6411207000 rw-p 00002000 08:14 14554281                   /home/tools/jasper_2019.06p001/Linux64/lib/libDatestamp.so
+7f6411207000-7f6411225000 r-xp 00000000 08:14 14555012                   /home/tools/jasper_2019.06p001/Linux64/lib/libcdsCommon_sh.so
+7f6411225000-7f6411425000 ---p 0001e000 08:14 14555012                   /home/tools/jasper_2019.06p001/Linux64/lib/libcdsCommon_sh.so
+7f6411425000-7f6411426000 r--p 0001e000 08:14 14555012                   /home/tools/jasper_2019.06p001/Linux64/lib/libcdsCommon_sh.so
+7f6411426000-7f6411427000 rw-p 0001f000 08:14 14555012                   /home/tools/jasper_2019.06p001/Linux64/lib/libcdsCommon_sh.so
+7f6411427000-7f641142c000 rw-p 00000000 00:00 0 
+7f641142c000-7f6411540000 r-xp 00000000 08:12 2016994                    /usr/lib64/libglib-2.0.so.0.5600.1
+7f6411540000-7f641173f000 ---p 00114000 08:12 2016994                    /usr/lib64/libglib-2.0.so.0.5600.1
+7f641173f000-7f6411740000 r--p 00113000 08:12 2016994                    /usr/lib64/libglib-2.0.so.0.5600.1
+7f6411740000-7f6411741000 rw-p 00114000 08:12 2016994                    /usr/lib64/libglib-2.0.so.0.5600.1
+7f6411741000-7f6411742000 rw-p 00000000 00:00 0 
+7f6411742000-7f6411749000 r-xp 00000000 08:12 2027013                    /usr/lib64/librt-2.17.so
+7f6411749000-7f6411948000 ---p 00007000 08:12 2027013                    /usr/lib64/librt-2.17.so
+7f6411948000-7f6411949000 r--p 00006000 08:12 2027013                    /usr/lib64/librt-2.17.so
+7f6411949000-7f641194a000 rw-p 00007000 08:12 2027013                    /usr/lib64/librt-2.17.so
+7f641194a000-7f641194b000 r-xp 00000000 08:12 2016997                    /usr/lib64/libgthread-2.0.so.0.5600.1
+7f641194b000-7f6411b4a000 ---p 00001000 08:12 2016997                    /usr/lib64/libgthread-2.0.so.0.5600.1
+7f6411b4a000-7f6411b4b000 r--p 00000000 08:12 2016997                    /usr/lib64/libgthread-2.0.so.0.5600.1
+7f6411b4b000-7f6411b4c000 rw-p 00001000 08:12 2016997                    /usr/lib64/libgthread-2.0.so.0.5600.1
+7f6411b4c000-7f6411b4d000 rw-p 00000000 00:00 0 
+7f6411b4d000-7f6411b62000 r-xp 00000000 08:12 1986856                    /usr/lib64/libz.so.1.2.7
+7f6411b62000-7f6411d61000 ---p 00015000 08:12 1986856                    /usr/lib64/libz.so.1.2.7
+7f6411d61000-7f6411d62000 r--p 00014000 08:12 1986856                    /usr/lib64/libz.so.1.2.7
+7f6411d62000-7f6411d63000 rw-p 00015000 08:12 1986856                    /usr/lib64/libz.so.1.2.7
+7f6411d63000-7f6411da3000 r-xp 00000000 08:14 14554282                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtXml.so.4
+7f6411da3000-7f6411fa3000 ---p 00040000 08:14 14554282                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtXml.so.4
+7f6411fa3000-7f6411fa5000 r--p 00040000 08:14 14554282                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtXml.so.4
+7f6411fa5000-7f6411fa6000 rw-p 00042000 08:14 14554282                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtXml.so.4
+7f6411fa6000-7f6411fa7000 rw-p 00000000 00:00 0 
+7f6411fa7000-7f6411ff7000 r-xp 00000000 08:14 14555006                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtSvg.so.4
+7f6411ff7000-7f64121f7000 ---p 00050000 08:14 14555006                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtSvg.so.4
+7f64121f7000-7f64121f9000 r--p 00050000 08:14 14555006                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtSvg.so.4
+7f64121f9000-7f64121fa000 rw-p 00052000 08:14 14555006                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtSvg.so.4
+7f64121fa000-7f641223d000 r-xp 00000000 08:14 14554351                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtSql.so.4
+7f641223d000-7f641243c000 ---p 00043000 08:14 14554351                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtSql.so.4
+7f641243c000-7f641243e000 r--p 00042000 08:14 14554351                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtSql.so.4
+7f641243e000-7f641243f000 rw-p 00044000 08:14 14554351                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtSql.so.4
+7f641243f000-7f641250e000 r-xp 00000000 08:14 14554337                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtNetwork.so.4
+7f641250e000-7f641270e000 ---p 000cf000 08:14 14554337                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtNetwork.so.4
+7f641270e000-7f6412712000 r--p 000cf000 08:14 14554337                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtNetwork.so.4
+7f6412712000-7f6412714000 rw-p 000d3000 08:14 14554337                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtNetwork.so.4
+7f6412714000-7f6412715000 rw-p 00000000 00:00 0 
+7f6412715000-7f64130f1000 r-xp 00000000 08:14 14554406                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtGui.so.4
+7f64130f1000-7f64132f0000 ---p 009dc000 08:14 14554406                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtGui.so.4
+7f64132f0000-7f641332b000 r--p 009db000 08:14 14554406                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtGui.so.4
+7f641332b000-7f641333d000 rw-p 00a16000 08:14 14554406                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtGui.so.4
+7f641333d000-7f6413340000 rw-p 00000000 00:00 0 
+7f6413340000-7f64134e1000 r-xp 00000000 08:14 14554398                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperTcl8.6.so
+7f64134e1000-7f64136e1000 ---p 001a1000 08:14 14554398                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperTcl8.6.so
+7f64136e1000-7f64136ef000 r--p 001a1000 08:14 14554398                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperTcl8.6.so
+7f64136ef000-7f64136f1000 rw-p 001af000 08:14 14554398                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperTcl8.6.so
+7f64136f1000-7f64136f2000 rw-p 00000000 00:00 0 
+7f64136f2000-7f64138ba000 r-xp 00000000 08:14 14554362                   /home/tools/jasper_2019.06p001/Linux64/lib/libnffw.so
+7f64138ba000-7f6413ab9000 ---p 001c8000 08:14 14554362                   /home/tools/jasper_2019.06p001/Linux64/lib/libnffw.so
+7f6413ab9000-7f6413abb000 r--p 001c7000 08:14 14554362                   /home/tools/jasper_2019.06p001/Linux64/lib/libnffw.so
+7f6413abb000-7f6413abf000 rw-p 001c9000 08:14 14554362                   /home/tools/jasper_2019.06p001/Linux64/lib/libnffw.so
+7f6413abf000-7f6413ac1000 rw-p 00000000 00:00 0 
+7f6413ac1000-7f6413b3e000 r-xp 00000000 08:14 14555003                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasper0.so
+7f6413b3e000-7f6413b3f000 ---p 0007d000 08:14 14555003                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasper0.so
+7f6413b3f000-7f6413b40000 r--p 0007d000 08:14 14555003                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasper0.so
+7f6413b40000-7f6413b41000 rw-p 0007e000 08:14 14555003                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasper0.so
+7f6413b41000-7f6413b55000 rw-p 00000000 00:00 0 
+7f6413b55000-7f6413cb0000 r-xp 00000000 08:14 14554341                   /home/tools/jasper_2019.06p001/Linux64/lib/libliberty.so
+7f6413cb0000-7f6413cb4000 r--p 0015a000 08:14 14554341                   /home/tools/jasper_2019.06p001/Linux64/lib/libliberty.so
+7f6413cb4000-7f6413cb8000 rw-p 0015e000 08:14 14554341                   /home/tools/jasper_2019.06p001/Linux64/lib/libliberty.so
+7f6413cb8000-7f6413cb9000 rw-p 00000000 00:00 0 
+7f6413cb9000-7f6413ec8000 r-xp 00000000 08:14 14554292                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperXProp.so
+7f6413ec8000-7f6413ece000 r--p 0020e000 08:14 14554292                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperXProp.so
+7f6413ece000-7f6413ed4000 rw-p 00214000 08:14 14554292                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperXProp.so
+7f6413ed4000-7f6413ed6000 rw-p 00000000 00:00 0 
+7f6413ed6000-7f6413f88000 r-xp 00000000 08:14 14554387                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperVisualizeFlow.so
+7f6413f88000-7f6413f89000 ---p 000b2000 08:14 14554387                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperVisualizeFlow.so
+7f6413f89000-7f6413f8b000 r--p 000b2000 08:14 14554387                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperVisualizeFlow.so
+7f6413f8b000-7f6413f8e000 rw-p 000b4000 08:14 14554387                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperVisualizeFlow.so
+7f6413f8e000-7f64140dc000 r-xp 00000000 08:14 14554359                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperUtil.so
+7f64140dc000-7f64140dd000 ---p 0014e000 08:14 14554359                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperUtil.so
+7f64140dd000-7f64140ea000 r--p 0014e000 08:14 14554359                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperUtil.so
+7f64140ea000-7f64140ee000 rw-p 0015b000 08:14 14554359                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperUtil.so
+7f64140ee000-7f64140ef000 rw-p 00000000 00:00 0 
+7f64140ef000-7f641428f000 r-xp 00000000 08:14 14554348                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperUnr.so
+7f641428f000-7f6414290000 ---p 001a0000 08:14 14554348                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperUnr.so
+7f6414290000-7f6414295000 r--p 001a0000 08:14 14554348                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperUnr.so
+7f6414295000-7f641429a000 rw-p 001a5000 08:14 14554348                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperUnr.so
+7f641429a000-7f641429b000 rw-p 00000000 00:00 0 
+7f641429b000-7f6414339000 r-xp 00000000 08:14 14554375                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperTclNative.so
+7f6414339000-7f641433c000 r--p 0009d000 08:14 14554375                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperTclNative.so
+7f641433c000-7f641433e000 rw-p 000a0000 08:14 14554375                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperTclNative.so
+7f641433e000-7f641433f000 rw-p 00000000 00:00 0 
+7f641433f000-7f641435a000 r-xp 00000000 08:14 14554331                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSystemC.so
+7f641435a000-7f641435b000 r--p 0001a000 08:14 14554331                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSystemC.so
+7f641435b000-7f641435c000 rw-p 0001b000 08:14 14554331                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSystemC.so
+7f641435c000-7f64144ee000 r-xp 00000000 08:14 14554425                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperRTLDS.so
+7f64144ee000-7f64144f2000 r--p 00191000 08:14 14554425                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperRTLDS.so
+7f64144f2000-7f64144f7000 rw-p 00195000 08:14 14554425                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperRTLDS.so
+7f64144f7000-7f64144f9000 rw-p 00000000 00:00 0 
+7f64144f9000-7f6414520000 r-xp 00000000 08:14 14554404                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperStructExplorer.so
+7f6414520000-7f6414521000 ---p 00027000 08:14 14554404                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperStructExplorer.so
+7f6414521000-7f6414522000 r--p 00027000 08:14 14554404                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperStructExplorer.so
+7f6414522000-7f6414523000 rw-p 00028000 08:14 14554404                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperStructExplorer.so
+7f6414523000-7f64145ff000 r-xp 00000000 08:14 14554350                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSPV.so
+7f64145ff000-7f6414602000 r--p 000db000 08:14 14554350                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSPV.so
+7f6414602000-7f6414605000 rw-p 000de000 08:14 14554350                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSPV.so
+7f6414605000-7f6414634000 r-xp 00000000 08:14 14554382                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSimExport.so
+7f6414634000-7f6414635000 r--p 0002e000 08:14 14554382                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSimExport.so
+7f6414635000-7f6414636000 rw-p 0002f000 08:14 14554382                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSimExport.so
+7f6414636000-7f6414672000 r-xp 00000000 08:14 14554273                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSignalBrowser.so
+7f6414672000-7f6414673000 r--p 0003b000 08:14 14554273                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSignalBrowser.so
+7f6414673000-7f6414674000 rw-p 0003c000 08:14 14554273                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSignalBrowser.so
+7f6414674000-7f6414675000 rw-p 00000000 00:00 0 
+7f6414675000-7f6414f5d000 r-xp 00000000 08:14 14554275                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSecEquiv.so
+7f6414f5d000-7f6414f5e000 ---p 008e8000 08:14 14554275                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSecEquiv.so
+7f6414f5e000-7f6414f83000 r--p 008e8000 08:14 14554275                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSecEquiv.so
+7f6414f83000-7f6414f93000 rw-p 0090d000 08:14 14554275                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSecEquiv.so
+7f6414f93000-7f6414fc2000 rw-p 00000000 00:00 0 
+7f6414fc2000-7f6414fe3000 r-xp 00000000 08:14 14554399                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSchematic.so
+7f6414fe3000-7f6414fe5000 r--p 00020000 08:14 14554399                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSchematic.so
+7f6414fe5000-7f6414fe6000 rw-p 00022000 08:14 14554399                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSchematic.so
+7f6414fe6000-7f641507c000 r-xp 00000000 08:14 14554374                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperResetInfo.so
+7f641507c000-7f641507d000 ---p 00096000 08:14 14554374                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperResetInfo.so
+7f641507d000-7f6415080000 r--p 00096000 08:14 14554374                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperResetInfo.so
+7f6415080000-7f6415083000 rw-p 00099000 08:14 14554374                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperResetInfo.so
+7f6415083000-7f64150b7000 r-xp 00000000 08:14 14554271                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperIrun.so
+7f64150b7000-7f64150b8000 ---p 00034000 08:14 14554271                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperIrun.so
+7f64150b8000-7f64150b9000 r--p 00034000 08:14 14554271                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperIrun.so
+7f64150b9000-7f64150ba000 rw-p 00035000 08:14 14554271                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperIrun.so
+7f64150ba000-7f641514c000 r-xp 00000000 08:14 14554396                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperPartition.so
+7f641514c000-7f641514e000 r--p 00091000 08:14 14554396                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperPartition.so
+7f641514e000-7f6415150000 rw-p 00093000 08:14 14554396                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperPartition.so
+7f6415150000-7f64151d2000 r-xp 00000000 08:14 14554345                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperOckham.so
+7f64151d2000-7f64151d3000 ---p 00082000 08:14 14554345                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperOckham.so
+7f64151d3000-7f64151d5000 r--p 00082000 08:14 14554345                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperOckham.so
+7f64151d5000-7f64151d7000 rw-p 00084000 08:14 14554345                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperOckham.so
+7f64151d7000-7f64151df000 r-xp 00000000 08:14 14555004                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperMsgHelp.so
+7f64151df000-7f64151e0000 ---p 00008000 08:14 14555004                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperMsgHelp.so
+7f64151e0000-7f64151e1000 r--p 00008000 08:14 14555004                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperMsgHelp.so
+7f64151e1000-7f64151e2000 rw-p 00009000 08:14 14555004                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperMsgHelp.so
+7f64151e2000-7f641522c000 r-xp 00000000 08:14 14555009                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCaseSplit.so
+7f641522c000-7f641522e000 r--p 00049000 08:14 14555009                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCaseSplit.so
+7f641522e000-7f641522f000 rw-p 0004b000 08:14 14555009                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCaseSplit.so
+7f641522f000-7f6415292000 r-xp 00000000 08:14 14554286                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperMemory.so
+7f6415292000-7f6415294000 r--p 00062000 08:14 14554286                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperMemory.so
+7f6415294000-7f6415296000 rw-p 00064000 08:14 14554286                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperMemory.so
+7f6415296000-7f64154d0000 r-xp 00000000 08:14 14554417                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperLPV.so
+7f64154d0000-7f64154d1000 ---p 0023a000 08:14 14554417                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperLPV.so
+7f64154d1000-7f64154d9000 r--p 0023a000 08:14 14554417                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperLPV.so
+7f64154d9000-7f64154de000 rw-p 00242000 08:14 14554417                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperLPV.so
+7f64154de000-7f64154e0000 rw-p 00000000 00:00 0 
+7f64154e0000-7f6415513000 r-xp 00000000 08:14 14554342                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperJNI.so
+7f6415513000-7f6415514000 r--p 00032000 08:14 14554342                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperJNI.so
+7f6415514000-7f6415515000 rw-p 00033000 08:14 14554342                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperJNI.so
+7f6415515000-7f64155e4000 r-xp 00000000 08:14 14554274                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperJJS.so
+7f64155e4000-7f64155e7000 r--p 000ce000 08:14 14554274                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperJJS.so
+7f64155e7000-7f64155ea000 rw-p 000d1000 08:14 14554274                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperJJS.so
+7f64155ea000-7f641560a000 r-xp 00000000 08:14 14554378                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperJGConfig.so
+7f641560a000-7f641560b000 r--p 0001f000 08:14 14554378                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperJGConfig.so
+7f641560b000-7f641560c000 rw-p 00020000 08:14 14554378                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperJGConfig.so
+7f641560c000-7f6415781000 r-xp 00000000 08:14 14555016                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperIPXACT.so
+7f6415781000-7f6415783000 r--p 00174000 08:14 14555016                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperIPXACT.so
+7f6415783000-7f6415785000 rw-p 00176000 08:14 14555016                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperIPXACT.so
+7f6415785000-7f641578a000 rw-p 00000000 00:00 0 
+7f641578a000-7f64157b8000 r-xp 00000000 08:14 14554283                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperIPK.so
+7f64157b8000-7f64157b9000 r--p 0002d000 08:14 14554283                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperIPK.so
+7f64157b9000-7f64157ba000 rw-p 0002e000 08:14 14554283                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperIPK.so
+7f64157ba000-7f64157c1000 r-xp 00000000 08:14 14554280                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperISUtil.so
+7f64157c1000-7f64157c2000 r--p 00006000 08:14 14554280                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperISUtil.so
+7f64157c2000-7f64157c3000 rw-p 00007000 08:14 14554280                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperISUtil.so
+7f64157c3000-7f64157db000 r-xp 00000000 08:14 14555010                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperInfoQueryAPI.so
+7f64157db000-7f64157dc000 ---p 00018000 08:14 14555010                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperInfoQueryAPI.so
+7f64157dc000-7f64157dd000 r--p 00018000 08:14 14555010                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperInfoQueryAPI.so
+7f64157dd000-7f64157de000 rw-p 00019000 08:14 14555010                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperInfoQueryAPI.so
+7f64157de000-7f64157ff000 r-xp 00000000 08:14 14554347                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperProofMaster.so
+7f64157ff000-7f6415800000 ---p 00021000 08:14 14554347                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperProofMaster.so
+7f6415800000-7f6415801000 r--p 00021000 08:14 14554347                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperProofMaster.so
+7f6415801000-7f6415802000 rw-p 00022000 08:14 14554347                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperProofMaster.so
+7f6415802000-7f6415833000 r-xp 00000000 08:14 14554276                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperProofLemma.so
+7f6415833000-7f6415835000 r--p 00030000 08:14 14554276                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperProofLemma.so
+7f6415835000-7f6415836000 rw-p 00032000 08:14 14554276                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperProofLemma.so
+7f6415836000-7f6415837000 rw-p 00000000 00:00 0 
+7f6415837000-7f641598b000 r-xp 00000000 08:14 14554385                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperProofControl.so
+7f641598b000-7f641598f000 r--p 00153000 08:14 14554385                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperProofControl.so
+7f641598f000-7f6415993000 rw-p 00157000 08:14 14554385                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperProofControl.so
+7f6415993000-7f64159bc000 r-xp 00000000 08:14 14554430                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperMachineLearning.so
+7f64159bc000-7f64159bd000 r--p 00028000 08:14 14554430                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperMachineLearning.so
+7f64159bd000-7f64159be000 rw-p 00029000 08:14 14554430                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperMachineLearning.so
+7f64159be000-7f6415aea000 r-xp 00000000 08:14 14554418                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperHunt.so
+7f6415aea000-7f6415aed000 r--p 0012b000 08:14 14554418                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperHunt.so
+7f6415aed000-7f6415af1000 rw-p 0012e000 08:14 14554418                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperHunt.so
+7f6415af1000-7f6415b0e000 r-xp 00000000 08:14 14554365                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperHashTarget.so
+7f6415b0e000-7f6415b0f000 r--p 0001c000 08:14 14554365                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperHashTarget.so
+7f6415b0f000-7f6415b10000 rw-p 0001d000 08:14 14554365                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperHashTarget.so
+7f6415b10000-7f6415b3f000 r-xp 00000000 08:14 14554269                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperFpvOrchestration.so
+7f6415b3f000-7f6415b40000 r--p 0002e000 08:14 14554269                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperFpvOrchestration.so
+7f6415b40000-7f6415b41000 rw-p 0002f000 08:14 14554269                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperFpvOrchestration.so
+7f6415b41000-7f64170b8000 r-xp 00000000 08:14 14554326                   /home/tools/jasper_2019.06p001/Linux64/lib/libjaspergui.so
+7f64170b8000-7f64170b9000 ---p 01577000 08:14 14554326                   /home/tools/jasper_2019.06p001/Linux64/lib/libjaspergui.so
+7f64170b9000-7f6417128000 r--p 01577000 08:14 14554326                   /home/tools/jasper_2019.06p001/Linux64/lib/libjaspergui.so
+7f6417128000-7f641715e000 rw-p 015e6000 08:14 14554326                   /home/tools/jasper_2019.06p001/Linux64/lib/libjaspergui.so
+7f641715e000-7f6417170000 rw-p 00000000 00:00 0 
+7f6417170000-7f641720d000 r-xp 00000000 08:14 14554352                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperGraph.so
+7f641720d000-7f6417210000 r--p 0009c000 08:14 14554352                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperGraph.so
+7f6417210000-7f6417213000 rw-p 0009f000 08:14 14554352                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperGraph.so
+7f6417213000-7f6417514000 r-xp 00000000 08:14 14554401                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperFsv.so
+7f6417514000-7f6417521000 r--p 00300000 08:14 14554401                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperFsv.so
+7f6417521000-7f6417528000 rw-p 0030d000 08:14 14554401                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperFsv.so
+7f6417528000-7f6417537000 rw-p 00000000 00:00 0 
+7f6417537000-7f6417577000 r-xp 00000000 08:14 14554424                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperDST.so
+7f6417577000-7f6417579000 r--p 0003f000 08:14 14554424                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperDST.so
+7f6417579000-7f641757a000 rw-p 00041000 08:14 14554424                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperDST.so
+7f641757a000-7f6417683000 r-xp 00000000 08:14 14554409                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperDLD.so
+7f6417683000-7f6417686000 r--p 00108000 08:14 14554409                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperDLD.so
+7f6417686000-7f641768a000 rw-p 0010b000 08:14 14554409                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperDLD.so
+7f641768a000-7f64176f1000 r-xp 00000000 08:14 14554354                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperDFV.so
+7f64176f1000-7f64176f3000 r--p 00066000 08:14 14554354                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperDFV.so
+7f64176f3000-7f64176f5000 rw-p 00068000 08:14 14554354                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperDFV.so
+7f64176f5000-7f641770c000 r-xp 00000000 08:14 14554427                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperExpertSystemAPI.so
+7f641770c000-7f641770d000 ---p 00017000 08:14 14554427                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperExpertSystemAPI.so
+7f641770d000-7f641770e000 r--p 00017000 08:14 14554427                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperExpertSystemAPI.so
+7f641770e000-7f641770f000 rw-p 00018000 08:14 14554427                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperExpertSystemAPI.so
+7f641770f000-7f641778d000 r-xp 00000000 08:14 14554415                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperDebugHandoffFlow.so
+7f641778d000-7f6417790000 r--p 0007d000 08:14 14554415                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperDebugHandoffFlow.so
+7f6417790000-7f6417792000 rw-p 00080000 08:14 14554415                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperDebugHandoffFlow.so
+7f6417792000-7f6417793000 rw-p 00000000 00:00 0 
+7f6417793000-7f64177af000 r-xp 00000000 08:14 14554386                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCustomEngines.so
+7f64177af000-7f64177b0000 ---p 0001c000 08:14 14554386                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCustomEngines.so
+7f64177b0000-7f64177b1000 r--p 0001c000 08:14 14554386                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCustomEngines.so
+7f64177b1000-7f64177b2000 rw-p 0001d000 08:14 14554386                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCustomEngines.so
+7f64177b2000-7f6417e0a000 r-xp 00000000 08:14 14554338                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCoverage.so
+7f6417e0a000-7f6417e0b000 ---p 00658000 08:14 14554338                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCoverage.so
+7f6417e0b000-7f6417e1d000 r--p 00658000 08:14 14554338                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCoverage.so
+7f6417e1d000-7f6417e27000 rw-p 0066a000 08:14 14554338                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCoverage.so
+7f6417e27000-7f6417e7c000 rw-p 00000000 00:00 0 
+7f6417e7c000-7f6417ece000 r-xp 00000000 08:14 14554367                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCoverGen.so
+7f6417ece000-7f6417ecf000 ---p 00052000 08:14 14554367                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCoverGen.so
+7f6417ecf000-7f6417ed0000 r--p 00052000 08:14 14554367                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCoverGen.so
+7f6417ed0000-7f6417ed2000 rw-p 00053000 08:14 14554367                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCoverGen.so
+7f6417ed2000-7f6418148000 r-xp 00000000 08:14 14554353                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperConnectivity.so
+7f6418148000-7f6418149000 ---p 00276000 08:14 14554353                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperConnectivity.so
+7f6418149000-7f641814f000 r--p 00276000 08:14 14554353                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperConnectivity.so
+7f641814f000-7f6418154000 rw-p 0027c000 08:14 14554353                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperConnectivity.so
+7f6418154000-7f6418155000 rw-p 00000000 00:00 0 
+7f6418155000-7f6418304000 r-xp 00000000 08:14 14555002                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCoverGroupSynth.so
+7f6418304000-7f6418305000 ---p 001af000 08:14 14555002                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCoverGroupSynth.so
+7f6418305000-7f6418309000 r--p 001af000 08:14 14555002                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCoverGroupSynth.so
+7f6418309000-7f641830e000 rw-p 001b3000 08:14 14555002                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCoverGroupSynth.so
+7f641830e000-7f641830f000 rw-p 00000000 00:00 0 
+7f641830f000-7f6418469000 r-xp 00000000 08:14 14554394                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperComplexityManager.so
+7f6418469000-7f641846a000 ---p 0015a000 08:14 14554394                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperComplexityManager.so
+7f641846a000-7f641846f000 r--p 0015a000 08:14 14554394                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperComplexityManager.so
+7f641846f000-7f6418473000 rw-p 0015f000 08:14 14554394                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperComplexityManager.so
+7f6418473000-7f6418474000 rw-p 00000000 00:00 0 
+7f6418474000-7f64185bd000 r-xp 00000000 08:14 14554330                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperComboLoop.so
+7f64185bd000-7f64185be000 ---p 00149000 08:14 14554330                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperComboLoop.so
+7f64185be000-7f64185c6000 r--p 00149000 08:14 14554330                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperComboLoop.so
+7f64185c6000-7f64185ca000 rw-p 00151000 08:14 14554330                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperComboLoop.so
+7f64185ca000-7f64185cb000 rw-p 00000000 00:00 0 
+7f64185cb000-7f641873e000 r-xp 00000000 08:14 14554412                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperClockInfo.so
+7f641873e000-7f6418744000 r--p 00172000 08:14 14554412                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperClockInfo.so
+7f6418744000-7f6418748000 rw-p 00178000 08:14 14554412                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperClockInfo.so
+7f6418748000-7f6418749000 rw-p 00000000 00:00 0 
+7f6418749000-7f6418870000 r-xp 00000000 08:14 14554428                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCSR.so
+7f6418870000-7f6418871000 ---p 00127000 08:14 14554428                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCSR.so
+7f6418871000-7f6418874000 r--p 00127000 08:14 14554428                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCSR.so
+7f6418874000-7f6418878000 rw-p 0012a000 08:14 14554428                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCSR.so
+7f6418878000-7f6419507000 r-xp 00000000 08:14 14554381                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCDC.so
+7f6419507000-7f6419523000 r--p 00c8e000 08:14 14554381                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCDC.so
+7f6419523000-7f6419539000 rw-p 00caa000 08:14 14554381                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCDC.so
+7f6419539000-7f6419565000 rw-p 00000000 00:00 0 
+7f6419565000-7f6419636000 r-xp 00000000 08:14 14554344                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCaptureTestcase.so
+7f6419636000-7f6419637000 ---p 000d1000 08:14 14554344                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCaptureTestcase.so
+7f6419637000-7f6419639000 r--p 000d1000 08:14 14554344                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCaptureTestcase.so
+7f6419639000-7f641963c000 rw-p 000d3000 08:14 14554344                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCaptureTestcase.so
+7f641963c000-7f6419671000 r-xp 00000000 08:14 14554392                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperC2Rtl.so
+7f6419671000-7f6419672000 ---p 00035000 08:14 14554392                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperC2Rtl.so
+7f6419672000-7f6419673000 r--p 00035000 08:14 14554392                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperC2Rtl.so
+7f6419673000-7f6419674000 rw-p 00036000 08:14 14554392                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperC2Rtl.so
+7f6419674000-7f641986f000 r-xp 00000000 08:14 14554377                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperAutoProve.so
+7f641986f000-7f641987a000 r--p 001fa000 08:14 14554377                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperAutoProve.so
+7f641987a000-7f6419880000 rw-p 00205000 08:14 14554377                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperAutoProve.so
+7f6419880000-7f6419881000 rw-p 00000000 00:00 0 
+7f6419881000-7f6419df1000 r-xp 00000000 08:14 14554423                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperAp.so
+7f6419df1000-7f6419dfb000 r--p 0056f000 08:14 14554423                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperAp.so
+7f6419dfb000-7f6419e02000 rw-p 00579000 08:14 14554423                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperAp.so
+7f6419e02000-7f6419e32000 rw-p 00000000 00:00 0 
+7f6419e32000-7f641a524000 r-xp 00000000 08:14 14554405                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperAfl.so
+7f641a524000-7f641a525000 ---p 006f2000 08:14 14554405                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperAfl.so
+7f641a525000-7f641a53e000 r--p 006f2000 08:14 14554405                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperAfl.so
+7f641a53e000-7f641a549000 rw-p 0070b000 08:14 14554405                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperAfl.so
+7f641a549000-7f641a575000 rw-p 00000000 00:00 0 
+7f641a575000-7f641b92f000 r-xp 00000000 08:14 14554285                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperAg.so
+7f641b92f000-7f641b97b000 r--p 013b9000 08:14 14554285                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperAg.so
+7f641b97b000-7f641ba2b000 rw-p 01405000 08:14 14554285                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperAg.so
+7f641ba2b000-7f641c447000 rw-p 00000000 00:00 0 
+7f641c447000-7f641c538000 r-xp 00000000 08:14 14554372                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasper7.so
+7f641c538000-7f641c53d000 r--p 000f0000 08:14 14554372                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasper7.so
+7f641c53d000-7f641c540000 rw-p 000f5000 08:14 14554372                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasper7.so
+7f641c540000-7f641c541000 rw-p 00000000 00:00 0 
+7f641c541000-7f641c763000 r-xp 00000000 08:14 14554355                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasper1.so
+7f641c763000-7f641c764000 ---p 00222000 08:14 14554355                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasper1.so
+7f641c764000-7f641c76b000 r--p 00222000 08:14 14554355                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasper1.so
+7f641c76b000-7f641c76f000 rw-p 00229000 08:14 14554355                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasper1.so
+7f641c76f000-7f641c78e000 rw-p 00000000 00:00 0 
+7f641c78e000-7f641c790000 r-xp 00000000 08:12 2021022                    /usr/lib64/libdl-2.17.so
+7f641c790000-7f641c990000 ---p 00002000 08:12 2021022                    /usr/lib64/libdl-2.17.so
+7f641c990000-7f641c991000 r--p 00002000 08:12 2021022                    /usr/lib64/libdl-2.17.so
+7f641c991000-7f641c992000 rw-p 00003000 08:12 2021022                    /usr/lib64/libdl-2.17.so
+7f641c992000-7f641cb55000 r-xp 00000000 08:12 1986550                    /usr/lib64/libc-2.17.so
+7f641cb55000-7f641cd55000 ---p 001c3000 08:12 1986550                    /usr/lib64/libc-2.17.so
+7f641cd55000-7f641cd59000 r--p 001c3000 08:12 1986550                    /usr/lib64/libc-2.17.so
+7f641cd59000-7f641cd5b000 rw-p 001c7000 08:12 1986550                    /usr/lib64/libc-2.17.so
+7f641cd5b000-7f641cd60000 rw-p 00000000 00:00 0 
+7f641cd60000-7f641cd76000 r-xp 00000000 08:14 14554384                   /home/tools/jasper_2019.06p001/Linux64/lib/libgcc_s.so.1
+7f641cd76000-7f641cf75000 ---p 00016000 08:14 14554384                   /home/tools/jasper_2019.06p001/Linux64/lib/libgcc_s.so.1
+7f641cf75000-7f641cf76000 r--p 00015000 08:14 14554384                   /home/tools/jasper_2019.06p001/Linux64/lib/libgcc_s.so.1
+7f641cf76000-7f641cf77000 rw-p 00016000 08:14 14554384                   /home/tools/jasper_2019.06p001/Linux64/lib/libgcc_s.so.1
+7f641cf77000-7f641d078000 r-xp 00000000 08:12 2027007                    /usr/lib64/libm-2.17.so
+7f641d078000-7f641d277000 ---p 00101000 08:12 2027007                    /usr/lib64/libm-2.17.so
+7f641d277000-7f641d278000 r--p 00100000 08:12 2027007                    /usr/lib64/libm-2.17.so
+7f641d278000-7f641d279000 rw-p 00101000 08:12 2027007                    /usr/lib64/libm-2.17.so
+7f641d279000-7f641d3ea000 r-xp 00000000 08:14 14554413                   /home/tools/jasper_2019.06p001/Linux64/lib/libstdc++.so.6
+7f641d3ea000-7f641d5ea000 ---p 00171000 08:14 14554413                   /home/tools/jasper_2019.06p001/Linux64/lib/libstdc++.so.6
+7f641d5ea000-7f641d5f4000 r--p 00171000 08:14 14554413                   /home/tools/jasper_2019.06p001/Linux64/lib/libstdc++.so.6
+7f641d5f4000-7f641d5f6000 rw-p 0017b000 08:14 14554413                   /home/tools/jasper_2019.06p001/Linux64/lib/libstdc++.so.6
+7f641d5f6000-7f641d5fa000 rw-p 00000000 00:00 0 
+7f641d5fa000-7f641d863000 r-xp 00000000 08:14 14554411                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtCore.so.4
+7f641d863000-7f641da62000 ---p 00269000 08:14 14554411                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtCore.so.4
+7f641da62000-7f641da6c000 r--p 00268000 08:14 14554411                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtCore.so.4
+7f641da6c000-7f641da70000 rw-p 00272000 08:14 14554411                   /home/tools/jasper_2019.06p001/Linux64/lib/libQtCore.so.4
+7f641da70000-7f641da71000 rw-p 00000000 00:00 0 
+7f641da71000-7f641da95000 r-xp 00000000 08:14 14554328                   /home/tools/jasper_2019.06p001/Linux64/lib/libtcmalloc_minimal.so.4
+7f641da95000-7f641dc94000 ---p 00024000 08:14 14554328                   /home/tools/jasper_2019.06p001/Linux64/lib/libtcmalloc_minimal.so.4
+7f641dc94000-7f641dc95000 r--p 00023000 08:14 14554328                   /home/tools/jasper_2019.06p001/Linux64/lib/libtcmalloc_minimal.so.4
+7f641dc95000-7f641dc96000 rw-p 00024000 08:14 14554328                   /home/tools/jasper_2019.06p001/Linux64/lib/libtcmalloc_minimal.so.4
+7f641dc96000-7f641de3f000 rw-p 00000000 00:00 0 
+7f641de3f000-7f641ecf1000 r-xp 00000000 08:14 14554270                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSession.so
+7f641ecf1000-7f641ed30000 r--p 00eb1000 08:14 14554270                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSession.so
+7f641ed30000-7f641ed49000 rw-p 00ef0000 08:14 14554270                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperSession.so
+7f641ed49000-7f641ed60000 rw-p 00000000 00:00 0 
+7f641ed60000-7f641ed77000 r-xp 00000000 08:12 1986576                    /usr/lib64/libpthread-2.17.so
+7f641ed77000-7f641ef76000 ---p 00017000 08:12 1986576                    /usr/lib64/libpthread-2.17.so
+7f641ef76000-7f641ef77000 r--p 00016000 08:12 1986576                    /usr/lib64/libpthread-2.17.so
+7f641ef77000-7f641ef78000 rw-p 00017000 08:12 1986576                    /usr/lib64/libpthread-2.17.so
+7f641ef78000-7f641ef7c000 rw-p 00000000 00:00 0 
+7f641ef7c000-7f641f897000 r-xp 00000000 08:14 14840919                   /home/tools/jasper_2019.06p001/Linux64/jre/lib/amd64/server/libjvm.so
+7f641f897000-7f641f998000 ---p 0091b000 08:14 14840919                   /home/tools/jasper_2019.06p001/Linux64/jre/lib/amd64/server/libjvm.so
+7f641f998000-7f641fb4d000 rw-p 0091c000 08:14 14840919                   /home/tools/jasper_2019.06p001/Linux64/jre/lib/amd64/server/libjvm.so
+7f641fb4d000-7f641fb87000 rw-p 00000000 00:00 0 
+7f641fb87000-7f641fba9000 r-xp 00000000 08:12 1986369                    /usr/lib64/ld-2.17.so
+7f641fba9000-7f641fbaf000 rw-p 00000000 00:00 0 
+7f641fbaf000-7f641fbb5000 r-xp 00000000 08:14 14554402                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperISMLInterface.so
+7f641fbb5000-7f641fbb6000 ---p 00006000 08:14 14554402                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperISMLInterface.so
+7f641fbb6000-7f641fbb7000 r--p 00006000 08:14 14554402                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperISMLInterface.so
+7f641fbb7000-7f641fbb8000 rw-p 00007000 08:14 14554402                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperISMLInterface.so
+7f641fbb8000-7f641fbbd000 rw-p 00000000 00:00 0 
+7f641fbbd000-7f641fbbe000 r-xp 00000000 08:14 14555013                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperDataComm.so
+7f641fbbe000-7f641fbbf000 ---p 00001000 08:14 14555013                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperDataComm.so
+7f641fbbf000-7f641fbc0000 r--p 00001000 08:14 14555013                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperDataComm.so
+7f641fbc0000-7f641fbc1000 rw-p 00002000 08:14 14555013                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperDataComm.so
+7f641fbc1000-7f641fbc7000 rw-p 00000000 00:00 0 
+7f641fbc7000-7f641fc34000 r-xp 00000000 08:14 14554368                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperAtg.so
+7f641fc34000-7f641fc35000 ---p 0006d000 08:14 14554368                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperAtg.so
+7f641fc35000-7f641fc37000 r--p 0006d000 08:14 14554368                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperAtg.so
+7f641fc37000-7f641fc39000 rw-p 0006f000 08:14 14554368                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperAtg.so
+7f641fc39000-7f641fc3a000 rw-p 00000000 00:00 0 
+7f641fc3a000-7f641fc7b000 r-xp 00000000 08:14 14554357                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperAdaptiveRegression.so
+7f641fc7b000-7f641fc7c000 ---p 00041000 08:14 14554357                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperAdaptiveRegression.so
+7f641fc7c000-7f641fc7d000 r--p 00041000 08:14 14554357                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperAdaptiveRegression.so
+7f641fc7d000-7f641fc7e000 rw-p 00042000 08:14 14554357                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperAdaptiveRegression.so
+7f641fc7e000-7f641fc81000 rw-p 00000000 00:00 0 
+7f641fc81000-7f641fc9f000 r-xp 00000000 08:14 14554403                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCrashHandler.so
+7f641fc9f000-7f641fca0000 r--p 0001d000 08:14 14554403                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCrashHandler.so
+7f641fca0000-7f641fca1000 rw-p 0001e000 08:14 14554403                   /home/tools/jasper_2019.06p001/Linux64/lib/libJasperCrashHandler.so
+7f641fca1000-7f641fca3000 rw-p 00000000 00:00 0 
+7f641fca3000-7f641fca5000 r-xp 00000000 08:14 14840917                   /home/tools/jasper_2019.06p001/Linux64/jre/lib/amd64/server/libjsig.so
+7f641fca5000-7f641fda4000 ---p 00002000 08:14 14840917                   /home/tools/jasper_2019.06p001/Linux64/jre/lib/amd64/server/libjsig.so
+7f641fda4000-7f641fda5000 rw-p 00001000 08:14 14840917                   /home/tools/jasper_2019.06p001/Linux64/jre/lib/amd64/server/libjsig.so
+7f641fda5000-7f641fda8000 rw-p 00000000 00:00 0 
+7f641fda8000-7f641fda9000 r--p 00021000 08:12 1986369                    /usr/lib64/ld-2.17.so
+7f641fda9000-7f641fdaa000 rw-p 00022000 08:12 1986369                    /usr/lib64/ld-2.17.so
+7f641fdaa000-7f641fdab000 rw-p 00000000 00:00 0 
+7fff81c53000-7fff81c56000 ---p 00000000 00:00 0 
+7fff81c56000-7fff81d53000 rwxp 00000000 00:00 0                          [stack]
+7fff81d53000-7fff81d56000 rw-p 00000000 00:00 0 
+7fff81d74000-7fff81d76000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
+
+VM Arguments:
+jvm_args: -Xmx4096m -Xbatch -XX:-UsePerfData -Djg.install=/home/tools/jasper_2019.06p001 -Djava.util.prefs.PreferencesFactory=COM.tfi.util.PreferencesFactory 
+java_command: <unknown>
+Launcher Type: generic
+
+Environment Variables:
+PATH=/home/tools/jasper_2019.06p001/Linux64/bin:/home/tools/jasper_2019.06p001/Linux64/bin:/home/tools/jasper_2019.06p001/lib/tti/bin:/home/tools/jasper_2019.06p001/Linux64/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/usr/bin:/home/tools//IC/tools/dfII/bin/:/home/tools//IC/tools/bin:/home/tools//ASSURA/tools/bin:/home/tools//MMSIM/tools/bin:/home/tools//RC/tools/bin:/home/tools//PVE/tools/bin:/home/tools//OA/bin:/home/tools//JASPER/bin:/home/tools//GENUS/bin:/home/tools//GENUS/tools/bin:/home/tools//GENUS/tools/dfII/bin:/home/tools//XC/tools/bin:/home/tools//XC/tools/dfII/bin:/usr/local/sbin:/usr/sbin:/home/tools//IC/tools/dfII/bin/:/home/tools//IC/tools/bin:/home/tools//ASSURA/tools/bin:/home/tools//MMSIM/tools/bin:/home/tools//RC/tools/bin:/home/tools//PVE/tools/bin:/home/tools//OA/bin:/home/tools//JASPER/bin:/home/tools//GENUS/bin:/home/tools//GENUS/tools/bin:/home/tools//GENUS/tools/dfII/bin:/home/tools//XC/tools/bin:/home/tools//XC/tools/dfII/bin:/home/Mateus/.local/bin:/home/Mateus/bin:/home/tools//IC/tools/dfII/bin/:/home/tools//IC/tools/bin:/home/tools//ASSURA/tools/bin:/home/tools//MMSIM/tools/bin:/home/tools//RC/tools/bin:/home/tools//PVE/tools/bin:/home/tools//OA/bin:/home/tools//JASPER/bin:/home/tools//GENUS/bin:/home/tools//GENUS/tools/bin:/home/tools//GENUS/tools/dfII/bin:/home/tools//XC/tools/bin:/home/tools//XC/tools/dfII/bin:/home/Mateus/.local/bin:/home/Mateus/bin:/home/tools//IC/tools/dfII/bin/:/home/tools//IC/tools/bin:/home/tools//ASSURA/tools/bin:/home/tools//MMSIM/tools/bin:/home/tools//RC/tools/bin:/home/tools//PVE/tools/bin:/home/tools//OA/bin:/home/tools//JASPER/bin:/home/tools//GENUS/bin:/home/tools//GENUS/tools/bin:/home/tools//GENUS/tools/dfII/bin:/home/tools//XC/tools/bin:/home/tools//XC/tools/dfII/bin
+LD_LIBRARY_PATH=/home/tools/jasper_2019.06p001/Linux64/lib:/home/tools/jasper_2019.06p001/Linux64/lib:/lib64:/home/tools/jasper_2019.06p001/Linux64/lib:
+SHELL=/bin/bash
+DISPLAY=:51.0
+
+Signal Handlers:
+SIGSEGV: [libjvm.so+0x860350], sa_mask[0]=0x7fffffff, sa_flags=0x10000004
+SIGBUS: [libjvm.so+0x860350], sa_mask[0]=0x7fffffff, sa_flags=0x08000004
+SIGFPE: [libJasperCrashHandler.so+0x8f30], sa_mask[0]=0x000004f8, sa_flags=0x08000004
+SIGPIPE: SIG_IGN, sa_mask[0]=0x00000000, sa_flags=0x00000000
+SIGXFSZ: SIG_DFL, sa_mask[0]=0x00000000, sa_flags=0x00000000
+SIGILL: [libJasperCrashHandler.so+0x8f30], sa_mask[0]=0x000004f8, sa_flags=0x08000004
+SIGUSR1: SIG_DFL, sa_mask[0]=0x00000000, sa_flags=0x00000000
+SIGUSR2: [libjvm.so+0x711de0], sa_mask[0]=0x00000000, sa_flags=0x10000004
+SIGHUP: [java+0x33b0], sa_mask[0]=0x00000000, sa_flags=0x10000000
+SIGINT: [java+0x33b0], sa_mask[0]=0x00000000, sa_flags=0x10000000
+SIGTERM: [java+0x33b0], sa_mask[0]=0x00000000, sa_flags=0x10000000
+SIGQUIT: [libjvm.so+0x7119e0], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+
+
+---------------  S Y S T E M  ---------------
+
+OS:CentOS Linux release 7.8.2003 (Core)
+
+uname:Linux 3.10.0-1127.13.1.el7.x86_64 #1 SMP Tue Jun 23 15:46:38 UTC 2020 x86_64
+libc:glibc 2.17 NPTL 2.17 
+rlimit: STACK 8192k, CORE 0k, NPROC 4096, NOFILE 4096, AS infinity
+load average:49,22 47,51 44,19
+
+/proc/meminfo:
+MemTotal:       16151344 kB
+MemFree:         3686184 kB
+MemAvailable:    6387916 kB
+Buffers:           97924 kB
+Cached:          2793632 kB
+SwapCached:        16588 kB
+Active:          8764956 kB
+Inactive:        2715192 kB
+Active(anon):    7492352 kB
+Inactive(anon):  1406452 kB
+Active(file):    1272604 kB
+Inactive(file):  1308740 kB
+Unevictable:         516 kB
+Mlocked:               0 kB
+SwapTotal:       8388604 kB
+SwapFree:        7929596 kB
+Dirty:              1192 kB
+Writeback:             0 kB
+AnonPages:       8598856 kB
+Mapped:           546992 kB
+Shmem:            309840 kB
+Slab:             589884 kB
+SReclaimable:     457608 kB
+SUnreclaim:       132276 kB
+KernelStack:       29904 kB
+PageTables:       210104 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:    16464276 kB
+Committed_AS:   25339052 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:      376096 kB
+VmallocChunk:   34358947836 kB
+Percpu:             2752 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:    786432 kB
+CmaTotal:              0 kB
+CmaFree:               0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+DirectMap4k:      133272 kB
+DirectMap2M:     3946496 kB
+DirectMap1G:    12582912 kB
+
+
+CPU:total 8 (4 cores per cpu, 2 threads per core) family 6 model 158 stepping 9, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, ht
+
+/proc/cpuinfo:
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 158
+model name	: Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz
+stepping	: 9
+microcode	: 0xd6
+cpu MHz		: 3999.902
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 22
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch invpcid_single intel_pt ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt xsaveopt xsavec xgetbv1 dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp md_clear spec_ctrl intel_stibp flush_l1d
+bogomips	: 7200.00
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 158
+model name	: Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz
+stepping	: 9
+microcode	: 0xd6
+cpu MHz		: 3999.902
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 2
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 22
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch invpcid_single intel_pt ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt xsaveopt xsavec xgetbv1 dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp md_clear spec_ctrl intel_stibp flush_l1d
+bogomips	: 7200.00
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 2
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 158
+model name	: Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz
+stepping	: 9
+microcode	: 0xd6
+cpu MHz		: 3999.902
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 4
+initial apicid	: 4
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 22
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch invpcid_single intel_pt ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt xsaveopt xsavec xgetbv1 dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp md_clear spec_ctrl intel_stibp flush_l1d
+bogomips	: 7200.00
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 3
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 158
+model name	: Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz
+stepping	: 9
+microcode	: 0xd6
+cpu MHz		: 3999.902
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 6
+initial apicid	: 6
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 22
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch invpcid_single intel_pt ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt xsaveopt xsavec xgetbv1 dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp md_clear spec_ctrl intel_stibp flush_l1d
+bogomips	: 7200.00
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 4
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 158
+model name	: Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz
+stepping	: 9
+microcode	: 0xd6
+cpu MHz		: 3999.902
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 22
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch invpcid_single intel_pt ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt xsaveopt xsavec xgetbv1 dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp md_clear spec_ctrl intel_stibp flush_l1d
+bogomips	: 7200.00
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 5
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 158
+model name	: Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz
+stepping	: 9
+microcode	: 0xd6
+cpu MHz		: 3999.902
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 3
+initial apicid	: 3
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 22
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch invpcid_single intel_pt ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt xsaveopt xsavec xgetbv1 dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp md_clear spec_ctrl intel_stibp flush_l1d
+bogomips	: 7200.00
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 6
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 158
+model name	: Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz
+stepping	: 9
+microcode	: 0xd6
+cpu MHz		: 3999.902
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 5
+initial apicid	: 5
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 22
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch invpcid_single intel_pt ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt xsaveopt xsavec xgetbv1 dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp md_clear spec_ctrl intel_stibp flush_l1d
+bogomips	: 7200.00
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 7
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 158
+model name	: Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz
+stepping	: 9
+microcode	: 0xd6
+cpu MHz		: 3999.902
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 7
+initial apicid	: 7
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 22
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch invpcid_single intel_pt ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt xsaveopt xsavec xgetbv1 dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp md_clear spec_ctrl intel_stibp flush_l1d
+bogomips	: 7200.00
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+
+
+Memory: 4k page, physical 16151344k(3686184k free), swap 8388604k(7929596k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (20.8-b03) for linux-amd64 JRE (1.6.0_33-b04), built on Jun 21 2012 16:28:12 by "java_re" with gcc 3.2.2 (SuSE Linux)
+
+time: Sat Aug  8 17:07:19 2020
+elapsed time: 61133 seconds
+

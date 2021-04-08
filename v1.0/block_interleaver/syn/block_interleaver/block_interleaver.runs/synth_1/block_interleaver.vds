@@ -1,0 +1,367 @@
+#-----------------------------------------------------------
+# Vivado v2020.1 (64-bit)
+# SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
+# IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+# Start of session at: Mon Aug 17 16:51:50 2020
+# Process ID: 14848
+# Current directory: C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/syn/block_interleaver/block_interleaver.runs/synth_1
+# Command line: vivado.exe -log block_interleaver.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source block_interleaver.tcl
+# Log file: C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/syn/block_interleaver/block_interleaver.runs/synth_1/block_interleaver.vds
+# Journal file: C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/syn/block_interleaver/block_interleaver.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source block_interleaver.tcl -notrace
+Command: synth_design -top block_interleaver -part xc7k480tffg901-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7k480t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7k480t'
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 200
+---------------------------------------------------------------------------------
+Starting Synthesize : Time (s): cpu = 00:00:04 ; elapsed = 00:00:06 . Memory (MB): peak = 1036.949 ; gain = 0.000
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'block_interleaver' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver.vhd:31]
+	Parameter NUMBER_OF_ELEMENTS bound to: 12 - type: integer 
+	Parameter NUMBER_OF_LINES bound to: 3 - type: integer 
+	Parameter WORD_LENGTH bound to: 3 - type: integer 
+	Parameter MODE bound to: 0 - type: bool 
+	Parameter NUMBER_OF_ELEMENTS bound to: 12 - type: integer 
+	Parameter NUMBER_OF_LINES bound to: 3 - type: integer 
+	Parameter WORD_LENGTH bound to: 3 - type: integer 
+INFO: [Synth 8-3491] module 'rectangular_interleaver' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/rectangular_interleaver.vhd:8' bound to instance 'INTERLEAVER_INST' of component 'rectangular_interleaver' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver.vhd:34]
+INFO: [Synth 8-638] synthesizing module 'rectangular_interleaver' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/rectangular_interleaver.vhd:31]
+	Parameter NUMBER_OF_ELEMENTS bound to: 12 - type: integer 
+	Parameter NUMBER_OF_LINES bound to: 3 - type: integer 
+	Parameter WORD_LENGTH bound to: 3 - type: integer 
+INFO: [Synth 8-3491] module 'interleaver_controller' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/interleaver_controller.vhd:5' bound to instance 'IC' of component 'interleaver_controller' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/rectangular_interleaver.vhd:44]
+INFO: [Synth 8-638] synthesizing module 'interleaver_controller' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/interleaver_controller.vhd:28]
+INFO: [Synth 8-256] done synthesizing module 'interleaver_controller' (1#1) [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/interleaver_controller.vhd:28]
+	Parameter NUMBER_OF_ELEMENTS bound to: 12 - type: integer 
+	Parameter NUMBER_OF_LINES bound to: 3 - type: integer 
+	Parameter WORD_LENGTH bound to: 3 - type: integer 
+INFO: [Synth 8-3491] module 'interleaver_data_path' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/interleaver_data_path.vhd:19' bound to instance 'IDP' of component 'interleaver_data_path' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/rectangular_interleaver.vhd:65]
+INFO: [Synth 8-638] synthesizing module 'interleaver_data_path' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/interleaver_data_path.vhd:39]
+	Parameter NUMBER_OF_ELEMENTS bound to: 12 - type: integer 
+	Parameter NUMBER_OF_LINES bound to: 3 - type: integer 
+	Parameter WORD_LENGTH bound to: 3 - type: integer 
+	Parameter WORD_LENGTH bound to: 2 - type: integer 
+INFO: [Synth 8-3491] module 'comparator' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/comparator.vhd:5' bound to instance 'COMP2' of component 'comparator' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/interleaver_data_path.vhd:64]
+INFO: [Synth 8-638] synthesizing module 'comparator' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/comparator.vhd:16]
+	Parameter WORD_LENGTH bound to: 2 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'comparator' (2#1) [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/comparator.vhd:16]
+	Parameter WORD_LENGTH bound to: 2 - type: integer 
+INFO: [Synth 8-3491] module 'decrementer' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/decrementer.vhd:4' bound to instance 'DEC0' of component 'decrementer' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/interleaver_data_path.vhd:77]
+INFO: [Synth 8-638] synthesizing module 'decrementer' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/decrementer.vhd:15]
+	Parameter WORD_LENGTH bound to: 2 - type: integer 
+INFO: [Synth 8-3491] module 'half_subtractor_unit' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/half_subtractor_unit.vhd:4' bound to instance 'HSUX' of component 'half_subtractor_unit' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/decrementer.vhd:31]
+INFO: [Synth 8-638] synthesizing module 'half_subtractor_unit' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/half_subtractor_unit.vhd:15]
+INFO: [Synth 8-256] done synthesizing module 'half_subtractor_unit' (3#1) [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/half_subtractor_unit.vhd:15]
+INFO: [Synth 8-3491] module 'half_subtractor_unit' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/half_subtractor_unit.vhd:4' bound to instance 'HSUX' of component 'half_subtractor_unit' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/decrementer.vhd:31]
+INFO: [Synth 8-256] done synthesizing module 'decrementer' (4#1) [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/decrementer.vhd:15]
+	Parameter NUMBER_OF_ELEMENTS bound to: 12 - type: integer 
+	Parameter WORD_LENGTH bound to: 4 - type: integer 
+INFO: [Synth 8-3491] module 'flag_signals_generator' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver_components/flag_signals_generator.vhd:14' bound to instance 'FSG0' of component 'flag_signals_generator' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/interleaver_data_path.vhd:85]
+INFO: [Synth 8-638] synthesizing module 'flag_signals_generator' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver_components/flag_signals_generator.vhd:34]
+	Parameter NUMBER_OF_ELEMENTS bound to: 12 - type: integer 
+	Parameter WORD_LENGTH bound to: 4 - type: integer 
+	Parameter WORD_LENGTH bound to: 4 - type: integer 
+INFO: [Synth 8-3491] module 'comparator' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/comparator.vhd:5' bound to instance 'COMP4' of component 'comparator' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver_components/flag_signals_generator.vhd:41]
+INFO: [Synth 8-638] synthesizing module 'comparator__parameterized1' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/comparator.vhd:16]
+	Parameter WORD_LENGTH bound to: 4 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'comparator__parameterized1' (4#1) [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/comparator.vhd:16]
+	Parameter WORD_LENGTH bound to: 4 - type: integer 
+INFO: [Synth 8-3491] module 'comparator' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/comparator.vhd:5' bound to instance 'COMP5' of component 'comparator' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver_components/flag_signals_generator.vhd:48]
+	Parameter WORD_LENGTH bound to: 4 - type: integer 
+INFO: [Synth 8-3491] module 'comparator' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/comparator.vhd:5' bound to instance 'COMP6' of component 'comparator' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver_components/flag_signals_generator.vhd:55]
+	Parameter WORD_LENGTH bound to: 4 - type: integer 
+INFO: [Synth 8-3491] module 'sync_ld_dff' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/sync_ld_dff.vhd:5' bound to instance 'REG6' of component 'sync_ld_dff' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver_components/flag_signals_generator.vhd:62]
+INFO: [Synth 8-638] synthesizing module 'sync_ld_dff' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/sync_ld_dff.vhd:16]
+	Parameter WORD_LENGTH bound to: 4 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'sync_ld_dff' (5#1) [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/sync_ld_dff.vhd:16]
+	Parameter WORD_LENGTH bound to: 4 - type: integer 
+INFO: [Synth 8-3491] module 'up_down_counter' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/up_down_counter.vhd:12' bound to instance 'UDC0' of component 'up_down_counter' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver_components/flag_signals_generator.vhd:72]
+INFO: [Synth 8-638] synthesizing module 'up_down_counter' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/up_down_counter.vhd:22]
+	Parameter WORD_LENGTH bound to: 4 - type: integer 
+	Parameter WORD_LENGTH bound to: 4 - type: integer 
+INFO: [Synth 8-3491] module 'sync_ld_dff' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/sync_ld_dff.vhd:5' bound to instance 'reg' of component 'sync_ld_dff' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/up_down_counter.vhd:31]
+	Parameter WORD_LENGTH bound to: 4 - type: integer 
+INFO: [Synth 8-3491] module 'incrementer' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/incrementer.vhd:4' bound to instance 'incrementer0' of component 'incrementer' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/up_down_counter.vhd:39]
+INFO: [Synth 8-638] synthesizing module 'incrementer' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/incrementer.vhd:15]
+	Parameter WORD_LENGTH bound to: 4 - type: integer 
+INFO: [Synth 8-3491] module 'half_adder_unit' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/half_adder_unit.vhd:4' bound to instance 'HAUX' of component 'half_adder_unit' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/incrementer.vhd:31]
+INFO: [Synth 8-638] synthesizing module 'half_adder_unit' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/half_adder_unit.vhd:15]
+INFO: [Synth 8-256] done synthesizing module 'half_adder_unit' (6#1) [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/half_adder_unit.vhd:15]
+INFO: [Synth 8-3491] module 'half_adder_unit' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/half_adder_unit.vhd:4' bound to instance 'HAUX' of component 'half_adder_unit' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/incrementer.vhd:31]
+INFO: [Synth 8-3491] module 'half_adder_unit' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/half_adder_unit.vhd:4' bound to instance 'HAUX' of component 'half_adder_unit' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/incrementer.vhd:31]
+INFO: [Synth 8-3491] module 'half_adder_unit' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/half_adder_unit.vhd:4' bound to instance 'HAUX' of component 'half_adder_unit' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/incrementer.vhd:31]
+INFO: [Synth 8-256] done synthesizing module 'incrementer' (7#1) [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/incrementer.vhd:15]
+	Parameter WORD_LENGTH bound to: 4 - type: integer 
+INFO: [Synth 8-3491] module 'decrementer' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/decrementer.vhd:4' bound to instance 'DEC0' of component 'decrementer' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/up_down_counter.vhd:44]
+INFO: [Synth 8-638] synthesizing module 'decrementer__parameterized1' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/decrementer.vhd:15]
+	Parameter WORD_LENGTH bound to: 4 - type: integer 
+INFO: [Synth 8-3491] module 'half_subtractor_unit' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/half_subtractor_unit.vhd:4' bound to instance 'HSUX' of component 'half_subtractor_unit' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/decrementer.vhd:31]
+INFO: [Synth 8-3491] module 'half_subtractor_unit' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/half_subtractor_unit.vhd:4' bound to instance 'HSUX' of component 'half_subtractor_unit' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/decrementer.vhd:31]
+INFO: [Synth 8-3491] module 'half_subtractor_unit' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/half_subtractor_unit.vhd:4' bound to instance 'HSUX' of component 'half_subtractor_unit' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/decrementer.vhd:31]
+INFO: [Synth 8-3491] module 'half_subtractor_unit' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/half_subtractor_unit.vhd:4' bound to instance 'HSUX' of component 'half_subtractor_unit' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/decrementer.vhd:31]
+INFO: [Synth 8-256] done synthesizing module 'decrementer__parameterized1' (7#1) [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/decrementer.vhd:15]
+INFO: [Synth 8-256] done synthesizing module 'up_down_counter' (8#1) [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/up_down_counter.vhd:22]
+INFO: [Synth 8-256] done synthesizing module 'flag_signals_generator' (9#1) [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver_components/flag_signals_generator.vhd:34]
+	Parameter WORD_LENGTH bound to: 2 - type: integer 
+INFO: [Synth 8-3491] module 'sync_ld_dff' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/sync_ld_dff.vhd:5' bound to instance 'REG3' of component 'sync_ld_dff' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/interleaver_data_path.vhd:100]
+INFO: [Synth 8-638] synthesizing module 'sync_ld_dff__parameterized2' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/sync_ld_dff.vhd:16]
+	Parameter WORD_LENGTH bound to: 2 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'sync_ld_dff__parameterized2' (9#1) [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/sync_ld_dff.vhd:16]
+	Parameter WORD_LENGTH bound to: 2 - type: integer 
+INFO: [Synth 8-3491] module 'sync_ld_dff' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/sync_ld_dff.vhd:5' bound to instance 'REG4' of component 'sync_ld_dff' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/interleaver_data_path.vhd:110]
+	Parameter WORD_LENGTH bound to: 3 - type: integer 
+INFO: [Synth 8-3491] module 'sync_ld_dff' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/sync_ld_dff.vhd:5' bound to instance 'REG5' of component 'sync_ld_dff' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/interleaver_data_path.vhd:120]
+INFO: [Synth 8-638] synthesizing module 'sync_ld_dff__parameterized4' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/sync_ld_dff.vhd:16]
+	Parameter WORD_LENGTH bound to: 3 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'sync_ld_dff__parameterized4' (9#1) [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/sync_ld_dff.vhd:16]
+	Parameter NUMBER_OF_ELEMENTS bound to: 12 - type: integer 
+	Parameter NUMBER_OF_LINES bound to: 3 - type: integer 
+INFO: [Synth 8-3491] module 'm2D_index_counter' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver_components/m2D_index_counter.vhd:12' bound to instance 'M2D0' of component 'm2D_index_counter' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/interleaver_data_path.vhd:132]
+INFO: [Synth 8-638] synthesizing module 'm2D_index_counter' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver_components/m2D_index_counter.vhd:29]
+	Parameter NUMBER_OF_ELEMENTS bound to: 12 - type: integer 
+	Parameter NUMBER_OF_LINES bound to: 3 - type: integer 
+	Parameter WORD_LENGTH bound to: 2 - type: integer 
+INFO: [Synth 8-3491] module 'comparator' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/comparator.vhd:5' bound to instance 'LIN_COMP' of component 'comparator' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver_components/m2D_index_counter.vhd:49]
+	Parameter WORD_LENGTH bound to: 2 - type: integer 
+INFO: [Synth 8-3491] module 'comparator' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/comparator.vhd:5' bound to instance 'COL_COMP' of component 'comparator' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver_components/m2D_index_counter.vhd:56]
+	Parameter WORD_LENGTH bound to: 2 - type: integer 
+INFO: [Synth 8-3491] module 'm2D_index_counter_core' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver_components/m2D_index_counter_core.vhd:11' bound to instance 'MIIC' of component 'm2D_index_counter_core' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver_components/m2D_index_counter.vhd:75]
+INFO: [Synth 8-638] synthesizing module 'm2D_index_counter_core' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver_components/m2D_index_counter_core.vhd:26]
+	Parameter WORD_LENGTH bound to: 2 - type: integer 
+	Parameter WORD_LENGTH bound to: 2 - type: integer 
+INFO: [Synth 8-3491] module 'incrementer' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/incrementer.vhd:4' bound to instance 'incrementer0' of component 'incrementer' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver_components/m2D_index_counter_core.vhd:56]
+INFO: [Synth 8-638] synthesizing module 'incrementer__parameterized1' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/incrementer.vhd:15]
+	Parameter WORD_LENGTH bound to: 2 - type: integer 
+INFO: [Synth 8-3491] module 'half_adder_unit' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/half_adder_unit.vhd:4' bound to instance 'HAUX' of component 'half_adder_unit' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/incrementer.vhd:31]
+INFO: [Synth 8-3491] module 'half_adder_unit' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/half_adder_unit.vhd:4' bound to instance 'HAUX' of component 'half_adder_unit' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/incrementer.vhd:31]
+INFO: [Synth 8-256] done synthesizing module 'incrementer__parameterized1' (9#1) [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/incrementer.vhd:15]
+	Parameter WORD_LENGTH bound to: 2 - type: integer 
+INFO: [Synth 8-3491] module 'sync_ld_dff' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/sync_ld_dff.vhd:5' bound to instance 'reg_lin' of component 'sync_ld_dff' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver_components/m2D_index_counter_core.vhd:67]
+	Parameter WORD_LENGTH bound to: 2 - type: integer 
+INFO: [Synth 8-3491] module 'sync_ld_dff' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/sync_ld_dff.vhd:5' bound to instance 'reg_column' of component 'sync_ld_dff' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver_components/m2D_index_counter_core.vhd:83]
+INFO: [Synth 8-256] done synthesizing module 'm2D_index_counter_core' (10#1) [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver_components/m2D_index_counter_core.vhd:26]
+INFO: [Synth 8-256] done synthesizing module 'm2D_index_counter' (11#1) [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver_components/m2D_index_counter.vhd:29]
+	Parameter NUMBER_OF_ELEMENTS bound to: 12 - type: integer 
+	Parameter NUMBER_OF_LINES bound to: 3 - type: integer 
+	Parameter WORD_LENGTH bound to: 3 - type: integer 
+INFO: [Synth 8-3491] module 'single_port_2D_ram' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/single_port_2D_ram.vhd:7' bound to instance 'SPR0' of component 'single_port_2D_ram' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/interleaver_data_path.vhd:145]
+INFO: [Synth 8-638] synthesizing module 'single_port_2D_ram' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/single_port_2D_ram.vhd:23]
+	Parameter NUMBER_OF_ELEMENTS bound to: 12 - type: integer 
+	Parameter NUMBER_OF_LINES bound to: 3 - type: integer 
+	Parameter WORD_LENGTH bound to: 3 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'single_port_2D_ram' (12#1) [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/single_port_2D_ram.vhd:23]
+INFO: [Synth 8-3491] module 'wr_rd_status_selector' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver_components/wr_rd_status_selector.vhd:11' bound to instance 'WRSS0' of component 'wr_rd_status_selector' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/interleaver_data_path.vhd:158]
+INFO: [Synth 8-638] synthesizing module 'wr_rd_status_selector' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver_components/wr_rd_status_selector.vhd:23]
+	Parameter WORD_LENGTH bound to: 1 - type: integer 
+INFO: [Synth 8-3491] module 'sync_ld_dff' declared at 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/sync_ld_dff.vhd:5' bound to instance 'REG0' of component 'sync_ld_dff' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver_components/wr_rd_status_selector.vhd:29]
+INFO: [Synth 8-638] synthesizing module 'sync_ld_dff__parameterized6' [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/sync_ld_dff.vhd:16]
+	Parameter WORD_LENGTH bound to: 1 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'sync_ld_dff__parameterized6' (12#1) [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/generic_components/rtl/sync_ld_dff.vhd:16]
+INFO: [Synth 8-256] done synthesizing module 'wr_rd_status_selector' (13#1) [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver_components/wr_rd_status_selector.vhd:23]
+INFO: [Synth 8-256] done synthesizing module 'interleaver_data_path' (14#1) [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/interleaver_data_path.vhd:39]
+INFO: [Synth 8-256] done synthesizing module 'rectangular_interleaver' (15#1) [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/rectangular_interleaver.vhd:31]
+INFO: [Synth 8-256] done synthesizing module 'block_interleaver' (16#1) [C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/rtl/block_interleaver.vhd:31]
+---------------------------------------------------------------------------------
+Finished Synthesize : Time (s): cpu = 00:00:05 ; elapsed = 00:00:08 . Memory (MB): peak = 1036.949 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:06 ; elapsed = 00:00:09 . Memory (MB): peak = 1036.949 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7k480tffg901-1
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xc7k480tffg901-1
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:06 ; elapsed = 00:00:09 . Memory (MB): peak = 1036.949 ; gain = 0.000
+---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'w_current_state_reg' in module 'interleaver_controller'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                   start |                              000 |                              000
+                 receive |                              001 |                              001
+                   stall |                              010 |                              010
+              last_input |                              011 |                              100
+               consuming |                              100 |                              101
+             last_output |                              101 |                              110
+                   error |                              110 |                              011
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'w_current_state_reg' using encoding 'sequential' in module 'interleaver_controller'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:06 ; elapsed = 00:00:09 . Memory (MB): peak = 1036.949 ; gain = 0.000
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---XORs : 
+	   2 Input      1 Bit         XORs := 12    
++---Registers : 
+	                4 Bit    Registers := 2     
+	                3 Bit    Registers := 13    
+	                2 Bit    Registers := 4     
+	                1 Bit    Registers := 1     
++---Muxes : 
+	   2 Input    4 Bit        Muxes := 1     
+	  23 Input    3 Bit        Muxes := 1     
+	   3 Input    3 Bit        Muxes := 4     
+	   4 Input    3 Bit        Muxes := 1     
+	   2 Input    2 Bit        Muxes := 2     
+	   7 Input    1 Bit        Muxes := 8     
+	   2 Input    1 Bit        Muxes := 17    
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 1920 (col length:160)
+BRAMs: 1910 (col length: RAMB18 160 RAMB36 80)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:12 ; elapsed = 00:00:27 . Memory (MB): peak = 1036.949 ; gain = 0.000
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:12 ; elapsed = 00:00:27 . Memory (MB): peak = 1038.531 ; gain = 1.582
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:12 ; elapsed = 00:00:27 . Memory (MB): peak = 1038.719 ; gain = 1.770
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:16 ; elapsed = 00:00:32 . Memory (MB): peak = 1038.719 ; gain = 1.770
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:16 ; elapsed = 00:00:32 . Memory (MB): peak = 1038.719 ; gain = 1.770
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:16 ; elapsed = 00:00:32 . Memory (MB): peak = 1038.719 ; gain = 1.770
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:16 ; elapsed = 00:00:32 . Memory (MB): peak = 1038.719 ; gain = 1.770
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:17 ; elapsed = 00:00:32 . Memory (MB): peak = 1038.719 ; gain = 1.770
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:17 ; elapsed = 00:00:32 . Memory (MB): peak = 1038.719 ; gain = 1.770
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+-----+------+
+|      |Cell |Count |
++------+-----+------+
+|1     |BUFG |     1|
+|2     |LUT1 |     1|
+|3     |LUT2 |     6|
+|4     |LUT3 |    18|
+|5     |LUT4 |     6|
+|6     |LUT5 |    20|
+|7     |LUT6 |    50|
+|8     |FDRE |    59|
+|9     |IBUF |     9|
+|10    |OBUF |     8|
++------+-----+------+
+
+Report Instance Areas: 
++------+-----------------------------+------------------------------+------+
+|      |Instance                     |Module                        |Cells |
++------+-----------------------------+------------------------------+------+
+|1     |top                          |                              |   178|
+|2     |  \GEN_INT.INTERLEAVER_INST  |rectangular_interleaver       |   160|
+|3     |    IC                       |interleaver_controller        |    26|
+|4     |    IDP                      |interleaver_data_path         |   134|
+|5     |      FSG0                   |flag_signals_generator        |    16|
+|6     |        REG6                 |sync_ld_dff                   |     4|
+|7     |        UDC0                 |up_down_counter               |    12|
+|8     |          \reg               |sync_ld_dff_3                 |    12|
+|9     |      M2D0                   |m2D_index_counter             |    22|
+|10    |        MIIC                 |m2D_index_counter_core        |    22|
+|11    |          reg_column         |sync_ld_dff__parameterized2_1 |     7|
+|12    |          reg_lin            |sync_ld_dff__parameterized2_2 |    15|
+|13    |      REG3                   |sync_ld_dff__parameterized2   |     2|
+|14    |      REG4                   |sync_ld_dff__parameterized2_0 |     3|
+|15    |      REG5                   |sync_ld_dff__parameterized4   |     3|
+|16    |      SPR0                   |single_port_2D_ram            |    87|
+|17    |      WRSS0                  |wr_rd_status_selector         |     1|
+|18    |        REG0                 |sync_ld_dff__parameterized6   |     1|
++------+-----------------------------+------------------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:17 ; elapsed = 00:00:32 . Memory (MB): peak = 1038.719 ; gain = 1.770
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:17 ; elapsed = 00:00:32 . Memory (MB): peak = 1038.719 ; gain = 1.770
+Synthesis Optimization Complete : Time (s): cpu = 00:00:17 ; elapsed = 00:00:32 . Memory (MB): peak = 1038.719 ; gain = 1.770
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1050.598 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1161.906 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Common 17-83] Releasing license: Synthesis
+95 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:20 ; elapsed = 00:00:37 . Memory (MB): peak = 1161.906 ; gain = 124.957
+INFO: [Common 17-1381] The checkpoint 'C:/Users/RosanaVillela/Documents/ELISA_UFMG/UFMG_digital_design-master/block_interleaver/syn/block_interleaver/block_interleaver.runs/synth_1/block_interleaver.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file block_interleaver_utilization_synth.rpt -pb block_interleaver_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Mon Aug 17 16:52:35 2020...

@@ -1,0 +1,41 @@
+create_supply_port vdd
+create_supply_net vdd
+connect_supply_net vdd -ports vdd
+
+create_supply_port gnd
+create_supply_net gnd
+connect_supply_net gnd -ports gnd
+
+create_supply_net vdd_ps_fec_rs_decoder
+create_supply_set SS_RS_DECODER -function {power vdd_ps_fec_rs_decoder}\
+				-function {ground gnd}
+
+create_power_domain PD_RS_DECODER -supply {primary SS_RS_DECODER} -include_scope
+
+add_power_state PD_RS_DECODER.primary -supply\
+	-state {ON -simstate NORMAL -supply_expr { power == {FULL_ON, 0.8} && ground == {FULL_ON, 0.0}}}\
+	-state {OFF -simstate CORRUPT -supply_expr { power == OFF || ground == OFF}}
+	
+connect_supply_net vdd -ports RS_15_11/vdd
+connect_supply_net gnd -ports RS_15_11/gnd
+load_upf vlc_phy_fec_rs_decoder_15_11.upf -scope RS_15_11
+
+connect_supply_net vdd -ports RS_15_7/vdd
+connect_supply_net gnd -ports RS_15_7/gnd
+load_upf vlc_phy_fec_rs_decoder_15_7.upf -scope RS_15_7
+
+connect_supply_net vdd -ports RS_15_4/vdd
+connect_supply_net gnd -ports RS_15_4/gnd
+load_upf vlc_phy_fec_rs_decoder_15_4.upf -scope RS_15_4
+
+connect_supply_net vdd -ports RS_15_2/vdd
+connect_supply_net gnd -ports RS_15_2/gnd
+load_upf vlc_phy_fec_rs_decoder_15_2.upf -scope RS_15_2
+
+connect_supply_net vdd -ports RS_64_32/vdd
+connect_supply_net gnd -ports RS_64_32/gnd
+load_upf vlc_phy_fec_rs_decoder_64_32.upf -scope RS_64_32
+
+connect_supply_net vdd -ports RS_160_128/vdd
+connect_supply_net gnd -ports RS_160_128/gnd
+load_upf vlc_phy_fec_rs_decoder_160_128.upf -scope RS_160_128

@@ -1,0 +1,1795 @@
+#----------------------------------------
+# JasperGold Version Info
+# tool      : JasperGold 2019.06
+# platform  : Linux 3.10.0-1062.4.3.el7.x86_64
+# version   : 2019.06p001 64 bits
+# build date: 2019.08.01 18:19:57 PDT
+#----------------------------------------
+# started Tue Apr 21 22:50:34 BRT 2020
+# hostname  : optmaS1
+# pid       : 5212
+# arguments : '-label' 'session_0' '-console' 'optmaS1:36920' '-style' 'windows' '-data' 'AQAAADx/////AAAAAAAAA3oBAAAAEABMAE0AUgBFAE0ATwBWAEU=' '-proj' '/home/Mateus/Área de trabalho/UFMG_digital_design/block_interleaver/formal/mem_size_438_2/sessionLogs/session_0' '-init' '-hidden' '/home/Mateus/Área de trabalho/UFMG_digital_design/block_interleaver/formal/mem_size_438_2/.tmp/.initCmds.tcl' 't.tcl'
+
+Any disclosure about the Cadence Design Systems software or its use
+model to any third party violates the written Non-Disclosure Agreement
+between Cadence Design Systems, Inc. and the customer.
+
+THIS SOFTWARE CONTAINS CONFIDENTIAL INFORMATION AND TRADE SECRETS OF
+CADENCE DESIGN SYSTEMS, INC. USE, DISCLOSURE, OR REPRODUCTION IS
+PROHIBITED WITHOUT THE PRIOR EXPRESS WRITTEN PERMISSION OF CADENCE
+DESIGN SYSTEMS, INC.
+
+Copyright (C) 2000-2019 Cadence Design Systems, Inc. All Rights
+Reserved.  Unpublished -- rights reserved under the copyright laws of
+the United States.
+
+This product includes software developed by others and redistributed
+according to license agreement. See doc/third_party_readme.txt for
+further details.
+
+RESTRICTED RIGHTS LEGEND
+
+Use, duplication, or disclosure by the Government is subject to
+restrictions as set forth in subparagraph (c) (1) (ii) of the Rights in
+Technical Data and Computer Software clause at DFARS 252.227-7013 or
+subparagraphs (c) (1) and (2) of Commercial Computer Software -- Restricted
+Rights at 48 CFR 52.227-19, as applicable.
+
+
+                          Cadence Design Systems, Inc. 
+                          2655 Seely Avenue
+                          San Jose, CA 95134
+                          Phone: 408.943.1234
+
+For technical assistance visit http://support.cadence.com.
+
+JasperGold Apps Analysis Session - /home/Mateus/Área de trabalho/UFMG_digital_design/block_interleaver/formal/mem_size_438_2/sessionLogs/session_0
+
+/home/Mateus/Área de trabalho/UFMG_digital_design/block_interleaver/formal/mem_size_438_2/jg.log
+INFO: successfully checked out licenses "jasper_interactive" and "jasper_fpv".
+INFO: reading configuration file "/home/Mateus/.config/jasper/jaspergold.conf".
+% clear -all
+INFO (IPF121): Cleared environment completely for new design analysis.
+% set_elaborate_single_run_mode off
+% 
+% proc dut_compilation {MEM_SIZE ROW_NUM WIDTH MODE FUNC_REQ} {
+analyze -vhdl08 -L GENERIC_TYPES ../../generic_components/generic_types.vhd
+analyze -vhdl08 -L GENERIC_FUNCTIONS ../../generic_components/generic_functions.vhd
+analyze -vhdl08 -L GENERIC_COMPONENTS ../../generic_components/generic_components.vhd
+analyze -vhdl08 -L BLOCK_INTERLEAVER_COMPONENTS ../rtl/block_interleaver_components.vhd
+analyze -vhdl08 ../rtl/block_interleaver.vhd\
+		../rtl/rectangular_interleaver.vhd\
+		../rtl/interleaver_controller.vhd\
+		../rtl/interleaver_data_path.vhd\
+		../rtl/block_interleaver_components/flag_signals_generator.vhd\
+		../rtl/block_interleaver_components/m2D_index_counter.vhd\
+		../rtl/block_interleaver_components/wr_rd_status_selector.vhd\
+		../rtl/rectangular_deinterleaver.vhd\
+		../rtl/deinterleaver_data_path.vhd\
+		../rtl/block_interleaver_components/simplified_m2D_index_counter.vhd\
+		../rtl/block_interleaver_components/m2D_index_counter_core.vhd\
+		../rtl/block_interleaver_components/wr_rd_status_selector.vhd\
+		../../generic_components/adder/adder.vhd\
+		../../generic_components/single_port_2D_ram/single_port_2D_ram.vhd\
+		../../generic_components/single_port_linear_ram/single_port_linear_ram.vhd\
+		../../generic_components/decrementer/half_subtractor_unit.vhd\
+		../../generic_components/decrementer/decrementer.vhd\
+		../../generic_components/incrementer/half_adder_unit.vhd\
+		../../generic_components/incrementer/incrementer.vhd\
+		../../generic_components/up_down_counter/up_down_counter.vhd\
+		../../generic_components/sync_ld_dff/sync_ld_dff.vhd\
+		../../generic_components/comparator/comparator.vhd
+if {$FUNC_REQ} {
+	analyze -vhdl08 rtl/block_interleaver_func_verification_model.vhd
+	elaborate -vhdl -top block_interleaver_func_verification_model -parameter NUMBER_OF_ELEMENTS $MEM_SIZE -parameter NUMBER_OF_LINES $ROW_NUM -parameter WORD_LENGTH $WIDTH -bbox_a 900000
+
+} else {
+	analyze -sv09 block_interleaver_fv.sv
+	elaborate -vhdl -top block_interleaver -parameter NUMBER_OF_ELEMENTS $MEM_SIZE -parameter NUMBER_OF_LINES $ROW_NUM -parameter WORD_LENGTH $WIDTH -parameter MODE $MODE -bbox_a 900000
+}
+}
+% 
+% proc formal_setup {} {
+	clock clk
+	reset rst
+}
+% 
+% proc func_req_constraints {MEM_SIZE ROW_NUM WIDTH } {
+clear -all
+dut_compilation $MEM_SIZE $ROW_NUM $WIDTH false 1
+set_property_compile_time_limit 30s
+
+task -create func -set
+#Forcing i_start_cw to 1 for the first cycle
+assume -bound 1 i_start_cw
+assume {i_start_cw |=> not i_start_cw} 
+assume {not i_start_cw |=> not i_start_cw} 
+
+set bound [expr {$MEM_SIZE - 1}]
+set CMD "assume \{i_start_cw |-> not i_end_cw and i_valid \[*1:$bound\] ##1 i_end_cw and i_valid\}"
+eval $CMD
+assume {i_end_cw |=> not i_valid}
+assume {not i_valid |=> not i_valid}
+#Not required anymore
+#assume {not i_valid |-> not i_end_cw}
+
+#External blocks always ready to consume info.
+assume {i_consume_int}
+assume {i_consume_deint}
+
+
+#assume  {DEINTERLEAVER_INST.i_consume = INTERLEAVER_INST.o_valid}
+assume {not INTERLEAVER_INST.GEN_INT.INTERLEAVER_INST.IDP.w_wr_rd_status |-> not w_valid}
+assume {not DEINTERLEAVER_INST.GEN_INT.DEINTERLEAVER_INST.IDP.w_wr_rd_status |-> not o_valid}
+assert {o_valid and o_cnt = 1 |-> o_saved_data = o_data}
+cover {o_valid and o_cnt = 1 |-> o_saved_data = o_data}
+cover {o_end_cw}
+
+clock clk
+reset rst
+set proof_bound [expr {$MEM_SIZE*2 + 2}]
+set_prove_target_bound $proof_bound
+set_max_trace_length $proof_bound
+set_prove_time_limit 80h
+set_engine_mode {Tri Ht}
+prove -task func
+check_return {get_property_list -include {status {cex unreachable}} -task func} {}
+set_prove_target_bound 0
+set_max_trace_length 0
+}
+% 
+% 
+% proc interface_control_and_reset_req {MEM_SIZE ROW_NUM WIDTH is_interleaver} {
+clear -all
+dut_compilation $MEM_SIZE $ROW_NUM $WIDTH $is_interleaver 0
+connect -bind -auto block_interleaver_fv block_interleaver_top -auto -elaborate -parameter NUMBER_OF_ELEMENTS $MEM_SIZE -parameter NUMBER_OF_LINES $ROW_NUM -parameter WORD_LENGTH $WIDTH
+formal_setup
+task -create reset -set -source_task <embedded> -copy_stopats -copy_abstractions all -copy_assumes -copy <embedded>::block_interleaver.block_interleaver_top.REQ_INTER_001_CHECK_01
+task -set reset
+reset -none
+check_return {prove -task reset} "proven"
+reset rst
+task -set <embedded>
+assert -disable <embedded>::block_interleaver.block_interleaver_top.REQ_INTER_001_CHECK_01
+prove -all
+check_return {get_property_list -include {status {cex unreachable}}} {}
+task -create stall -set
+if {$is_interleaver == false} {
+assert {GEN_INT.INTERLEAVER_INST.IC.w_current_state = 1 and not i_valid and not GEN_INT.INTERLEAVER_INST.IC.i_full_ram |=> ##1 $past(GEN_INT.INTERLEAVER_INST.IDP.r_col_cnt) = GEN_INT.INTERLEAVER_INST.IDP.r_col_cnt and\
+					     $past(GEN_INT.INTERLEAVER_INST.IDP.w_ram_wr_en = 0) and\
+				             $past(GEN_INT.INTERLEAVER_INST.IDP.r_lin_cnt) = GEN_INT.INTERLEAVER_INST.IDP.r_lin_cnt}
+check_code "proven" [prove -task stall]
+} else {
+#assert {GEN_INT.DEINTERLEAVER_INST.IC.w_current_state = 1 and not i_valid and not GEN_INT.DEINTERLEAVER_INST.IC.i_full_ram ##1 i_end_cw = 0 |=> $past(GEN_INT.DEINTERLEAVER_INST.IDP.w_ram_wr_en) = 0 and\
+						       $past(GEN_INT.DEINTERLEAVER_INST.IDP.w_ram_addr) = GEN_INT.DEINTERLEAVER_INST.IDP.w_ram_addr}
+}
+
+
+}
+% 
+% set MEM_SIZE 438
+438
+% set ROW_NUM 15
+15
+% set WIDTH 4
+4
+% #time [interface_control_and_reset_req $MEM_SIZE $ROW_NUM $WIDTH false]
+% #time [interface_control_and_reset_req $MEM_SIZE $ROW_NUM $WIDTH true]
+% time [func_req_constraints $MEM_SIZE $ROW_NUM $WIDTH]
+INFO (IPF121): Cleared environment completely for new design analysis.
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/standard_2008.vhd' into library 'std'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/standard_2008.vhd(9): analyzing package 'standard'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/textio_2008.vhd' into library 'std'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/textio_2008.vhd(13): analyzing package 'textio'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/textio_2008.vhd(159): analyzing package body 'textio'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/env_2008.vhd' into library 'std'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/env_2008.vhd(8): analyzing package 'env'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/env_2008.vhd(16): analyzing package body 'env'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/vl/mixed_lang_vltype.vhd' into library 'vl'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/vl/mixed_lang_vltype.vhd(9): analyzing package 'vl_types'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/vl/mixed_lang_vltype.vhd(88): analyzing package body 'vl_types'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/synopsys/syn_attr.vhd' into library 'synopsys'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/synopsys/syn_attr.vhd(39): analyzing package 'attributes'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164.vhdl(50): analyzing package 'std_logic_1164'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164-body.vhdl(48): analyzing package body 'std_logic_1164'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std.vhdl(63): analyzing package 'numeric_std'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std-body.vhdl(59): analyzing package body 'numeric_std'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned.vhdl(49): analyzing package 'numeric_std_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned-body.vhdl(59): analyzing package body 'numeric_std_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit.vhdl(53): analyzing package 'numeric_bit'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit-body.vhdl(51): analyzing package body 'numeric_bit'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned.vhdl(47): analyzing package 'numeric_bit_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned-body.vhdl(50): analyzing package body 'numeric_bit_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_p.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_p.vhd(68): analyzing package 'vital_timing'
+[WARN (VHDL-1721)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_p.vhd(150): return type of pure function cannot be of access type
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_b.vhd' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_b.vhd(54): analyzing package body 'vital_timing'
+[WARN (VHDL-1721)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_b.vhd(1132): return type of pure function cannot be of access type
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_p.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_p.vhd(50): analyzing package 'vital_primitives'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_b.vhd' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_b.vhd(38): analyzing package body 'vital_primitives'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_arit.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_arit.vhd(25): analyzing package 'std_logic_arith'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_arit.vhd(206): analyzing package body 'std_logic_arith'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_unsi.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_unsi.vhd(35): analyzing package 'std_logic_unsigned'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_unsi.vhd(94): analyzing package body 'std_logic_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_sign.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_sign.vhd(35): analyzing package 'std_logic_signed'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_sign.vhd(96): analyzing package body 'std_logic_signed'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_misc_2008.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_misc_2008.vhd(25): analyzing package 'std_logic_misc'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_misc_2008.vhd(112): analyzing package body 'std_logic_misc'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_textio.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_textio.vhdl(38): analyzing package 'std_logic_textio'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/ieee_bit_context.vhd' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/ieee_std_context.vhd' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real.vhdl(45): analyzing package 'math_real'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real-body.vhdl(45): analyzing package body 'math_real'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex.vhdl(46): analyzing package 'math_complex'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex-body.vhdl(47): analyzing package body 'math_complex'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_float_types.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_float_types.vhdl(37): analyzing package 'fixed_float_types'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg.vhdl(43): analyzing package 'fixed_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg-body.vhdl(40): analyzing package body 'fixed_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg.vhdl(43): analyzing package 'float_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg-body.vhdl(37): analyzing package body 'float_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_pkg.vhdl' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_pkg.vhdl' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/arithmetic/mgc_arit_2008.vhd' into library 'arithmetic'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/arithmetic/mgc_arit_2008.vhd(22): analyzing package 'std_logic_arith'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/arithmetic/mgc_arit_2008.vhd(274): analyzing package body 'std_logic_arith'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/qsim_logic/mgc_qsim.vhd' into library 'qsim_logic'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/qsim_logic/mgc_qsim.vhd(18): analyzing package 'qsim_logic'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/qsim_logic/mgc_qsim.vhd(753): analyzing package body 'qsim_logic'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/jasper_package/jasper_package.vhd' into library 'jasper_package'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/jasper_package/jasper_package.vhd(8): analyzing package 'jasper_package'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/generic_types.vhd'
+[INFO (VHDL-1014)] ../../generic_components/generic_types.vhd(11): analyzing package 'generic_types'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/generic_functions.vhd'
+[INFO (VHDL-1014)] ../../generic_components/generic_functions.vhd(10): analyzing package 'generic_functions'
+[INFO (VHDL-1013)] ../../generic_components/generic_functions.vhd(22): analyzing package body 'generic_functions'
+[WARN (VHDL-1087)] ../../generic_components/generic_functions.vhd(108): function 'xor_reducer_from_select_bits' does not always return a value
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/generic_components.vhd'
+[INFO (VHDL-1014)] ../../generic_components/generic_components.vhd(12): analyzing package 'generic_components'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components.vhd'
+[INFO (VHDL-1014)] ../rtl/block_interleaver_components.vhd(6): analyzing package 'block_interleaver_components'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver.vhd(7): analyzing entity 'block_interleaver'
+[INFO (VHDL-1010)] ../rtl/block_interleaver.vhd(31): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/rectangular_interleaver.vhd'
+[INFO (VHDL-1012)] ../rtl/rectangular_interleaver.vhd(8): analyzing entity 'rectangular_interleaver'
+[INFO (VHDL-1010)] ../rtl/rectangular_interleaver.vhd(31): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/interleaver_controller.vhd'
+[INFO (VHDL-1012)] ../rtl/interleaver_controller.vhd(5): analyzing entity 'interleaver_controller'
+[INFO (VHDL-1010)] ../rtl/interleaver_controller.vhd(28): analyzing architecture 'behaviour_ict'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/interleaver_data_path.vhd'
+[INFO (VHDL-1012)] ../rtl/interleaver_data_path.vhd(19): analyzing entity 'interleaver_data_path'
+[INFO (VHDL-1010)] ../rtl/interleaver_data_path.vhd(39): analyzing architecture 'structure_idp'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/flag_signals_generator.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/flag_signals_generator.vhd(14): analyzing entity 'flag_signals_generator'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/flag_signals_generator.vhd(34): analyzing architecture 'structure_fsg1'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/m2D_index_counter.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/m2D_index_counter.vhd(12): analyzing entity 'm2d_index_counter'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/m2D_index_counter.vhd(29): analyzing architecture 'dataflow'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/wr_rd_status_selector.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(11): analyzing entity 'wr_rd_status_selector'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(23): analyzing architecture 'structure_wrss'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/rectangular_deinterleaver.vhd'
+[INFO (VHDL-1012)] ../rtl/rectangular_deinterleaver.vhd(9): analyzing entity 'rectangular_deinterleaver'
+[INFO (VHDL-1010)] ../rtl/rectangular_deinterleaver.vhd(32): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/deinterleaver_data_path.vhd'
+[INFO (VHDL-1012)] ../rtl/deinterleaver_data_path.vhd(20): analyzing entity 'deinterleaver_data_path'
+[INFO (VHDL-1010)] ../rtl/deinterleaver_data_path.vhd(56): analyzing architecture 'structure_ddp'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/simplified_m2D_index_counter.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/simplified_m2D_index_counter.vhd(15): analyzing entity 'simplified_m2d_index_counter'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/simplified_m2D_index_counter.vhd(42): analyzing architecture 'dataflow'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/m2D_index_counter_core.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/m2D_index_counter_core.vhd(11): analyzing entity 'm2d_index_counter_core'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/m2D_index_counter_core.vhd(26): analyzing architecture 'dataflow'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/wr_rd_status_selector.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(11): analyzing entity 'wr_rd_status_selector'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(23): analyzing architecture 'structure_wrss'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/adder/adder.vhd'
+[INFO (VHDL-1012)] ../../generic_components/adder/adder.vhd(5): analyzing entity 'adder'
+[INFO (VHDL-1010)] ../../generic_components/adder/adder.vhd(15): analyzing architecture 'bh_add'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/single_port_2D_ram/single_port_2D_ram.vhd'
+[INFO (VHDL-1012)] ../../generic_components/single_port_2D_ram/single_port_2D_ram.vhd(7): analyzing entity 'single_port_2d_ram'
+[INFO (VHDL-1010)] ../../generic_components/single_port_2D_ram/single_port_2D_ram.vhd(23): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/single_port_linear_ram/single_port_linear_ram.vhd'
+[INFO (VHDL-1012)] ../../generic_components/single_port_linear_ram/single_port_linear_ram.vhd(7): analyzing entity 'single_port_linear_ram'
+[INFO (VHDL-1010)] ../../generic_components/single_port_linear_ram/single_port_linear_ram.vhd(21): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/decrementer/half_subtractor_unit.vhd'
+[INFO (VHDL-1012)] ../../generic_components/decrementer/half_subtractor_unit.vhd(4): analyzing entity 'half_subtractor_unit'
+[INFO (VHDL-1010)] ../../generic_components/decrementer/half_subtractor_unit.vhd(15): analyzing architecture 'dataflow_hsu'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/decrementer/decrementer.vhd'
+[INFO (VHDL-1012)] ../../generic_components/decrementer/decrementer.vhd(4): analyzing entity 'decrementer'
+[INFO (VHDL-1010)] ../../generic_components/decrementer/decrementer.vhd(15): analyzing architecture 'dataflow_dec'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/incrementer/half_adder_unit.vhd'
+[INFO (VHDL-1012)] ../../generic_components/incrementer/half_adder_unit.vhd(4): analyzing entity 'half_adder_unit'
+[INFO (VHDL-1010)] ../../generic_components/incrementer/half_adder_unit.vhd(15): analyzing architecture 'dataflow_hau'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/incrementer/incrementer.vhd'
+[INFO (VHDL-1012)] ../../generic_components/incrementer/incrementer.vhd(4): analyzing entity 'incrementer'
+[INFO (VHDL-1010)] ../../generic_components/incrementer/incrementer.vhd(15): analyzing architecture 'dataflow_inc'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/up_down_counter/up_down_counter.vhd'
+[INFO (VHDL-1012)] ../../generic_components/up_down_counter/up_down_counter.vhd(12): analyzing entity 'up_down_counter'
+[INFO (VHDL-1010)] ../../generic_components/up_down_counter/up_down_counter.vhd(22): analyzing architecture 'arch'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/sync_ld_dff/sync_ld_dff.vhd'
+[INFO (VHDL-1012)] ../../generic_components/sync_ld_dff/sync_ld_dff.vhd(5): analyzing entity 'sync_ld_dff'
+[INFO (VHDL-1010)] ../../generic_components/sync_ld_dff/sync_ld_dff.vhd(16): analyzing architecture 'bh_reg'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/comparator/comparator.vhd'
+[INFO (VHDL-1012)] ../../generic_components/comparator/comparator.vhd(5): analyzing entity 'comparator'
+[INFO (VHDL-1010)] ../../generic_components/comparator/comparator.vhd(16): analyzing architecture 'bh_comp'
+[-- (VHDL-1481)] Analyzing VHDL file 'rtl/block_interleaver_func_verification_model.vhd'
+[INFO (VHDL-1012)] rtl/block_interleaver_func_verification_model.vhd(9): analyzing entity 'block_interleaver_func_verification_model'
+[INFO (VHDL-1010)] rtl/block_interleaver_func_verification_model.vhd(37): analyzing architecture 'behavioral'
+INFO (ISW003): Top module name is "block_interleaver_func_verification_model".
+[INFO (VHDL-1067)] rtl/block_interleaver_func_verification_model.vhd(9): executing 'block_interleaver_func_verification_model(number_of_elements=438,number_of_lines=15,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver.vhd(7): executing 'block_interleaver(number_of_elements=438,number_of_lines=15,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/rectangular_interleaver.vhd(8): executing 'rectangular_interleaver(number_of_elements=438,number_of_lines=15,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/interleaver_controller.vhd(5): executing 'interleaver_controller(behaviour_ict)'
+[INFO (VHDL-9046)] ../rtl/interleaver_controller.vhd(31): creating type property for signal 'w_current_state'
+[INFO (VHDL-9046)] ../rtl/interleaver_controller.vhd(31): creating type property for signal 'w_next_state'
+[INFO (VHDL-1172)] ../rtl/interleaver_controller.vhd(183): others clause is never selected
+[INFO (VHDL-1067)] ../rtl/interleaver_data_path.vhd(19): executing 'interleaver_data_path(number_of_elements=438,number_of_lines=15,word_length=4)(structure_idp)'
+[INFO (VHDL-1067)] ../../generic_components/comparator/comparator.vhd(5): executing 'comparator(word_length=4)(bh_comp)'
+[INFO (VHDL-1067)] ../../generic_components/decrementer/decrementer.vhd(4): executing 'decrementer(word_length=5)(dataflow_dec)'
+[INFO (VHDL-1067)] ../../generic_components/decrementer/half_subtractor_unit.vhd(4): executing 'half_subtractor_unit(dataflow_hsu)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/flag_signals_generator.vhd(14): executing 'flag_signals_generator(number_of_elements=438,word_length=9)(structure_fsg1)'
+[INFO (VHDL-1067)] ../../generic_components/comparator/comparator.vhd(5): executing 'comparator(word_length=9)(bh_comp)'
+[INFO (VHDL-1067)] ../../generic_components/sync_ld_dff/sync_ld_dff.vhd(5): executing 'sync_ld_dff(word_length=9)(bh_reg)'
+[INFO (VHDL-1067)] ../../generic_components/up_down_counter/up_down_counter.vhd(12): executing 'up_down_counter(word_length=9)(arch)'
+[INFO (VHDL-1067)] ../../generic_components/incrementer/incrementer.vhd(4): executing 'incrementer(word_length=9)(dataflow_inc)'
+[INFO (VHDL-1067)] ../../generic_components/incrementer/half_adder_unit.vhd(4): executing 'half_adder_unit(dataflow_hau)'
+[INFO (VHDL-1067)] ../../generic_components/decrementer/decrementer.vhd(4): executing 'decrementer(word_length=9)(dataflow_dec)'
+[INFO (VHDL-1067)] ../../generic_components/sync_ld_dff/sync_ld_dff.vhd(5): executing 'sync_ld_dff(word_length=4)(bh_reg)'
+[INFO (VHDL-1067)] ../../generic_components/sync_ld_dff/sync_ld_dff.vhd(5): executing 'sync_ld_dff(word_length=5)(bh_reg)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/m2D_index_counter.vhd(12): executing 'm2D_index_counter(number_of_elements=438,number_of_lines=15)(dataflow)'
+[INFO (VHDL-1067)] ../../generic_components/comparator/comparator.vhd(5): executing 'comparator(word_length=5)(bh_comp)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/m2D_index_counter_core.vhd(11): executing 'm2D_index_counter_core(word_length=5)(dataflow)'
+[INFO (VHDL-1067)] ../../generic_components/incrementer/incrementer.vhd(4): executing 'incrementer(word_length=5)(dataflow_inc)'
+[INFO (VHDL-1067)] ../../generic_components/single_port_2D_ram/single_port_2D_ram.vhd(7): executing 'single_port_2D_ram(number_of_elements=438,number_of_lines=15,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(11): executing 'wr_rd_status_selector(structure_wrss)'
+[INFO (VHDL-1067)] ../../generic_components/sync_ld_dff/sync_ld_dff.vhd(5): executing 'sync_ld_dff(word_length=1)(bh_reg)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver.vhd(7): executing 'block_interleaver(number_of_elements=438,number_of_lines=15,word_length=4,mode=true)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/rectangular_deinterleaver.vhd(9): executing 'rectangular_deinterleaver(number_of_elements=438,number_of_lines=15,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/deinterleaver_data_path.vhd(20): executing 'deinterleaver_data_path(number_of_elements=438,number_of_lines=15,word_length=4)(structure_ddp)'
+[INFO (VHDL-1067)] ../../generic_components/adder/adder.vhd(5): executing 'adder(word_length=9)(bh_add)'
+[INFO (VHDL-1067)] ../../generic_components/incrementer/incrementer.vhd(4): executing 'incrementer(word_length=6)(dataflow_inc)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/simplified_m2D_index_counter.vhd(15): executing 'simplified_m2D_index_counter(number_of_elements=438,number_of_lines=15)(dataflow)'
+[INFO (VHDL-1067)] ../../generic_components/single_port_linear_ram/single_port_linear_ram.vhd(7): executing 'single_port_linear_ram(number_of_elements=438)(behavioral)'
+INFO (IPM005): The name "func::assume:0" is assigned to assumption "i_start_cw".
+INFO (IPM005): The name "func::assume:1" is assigned to assumption "i_start_cw |=> not i_start_cw".
+INFO (IPM005): The name "func::assume:2" is assigned to assumption "not i_start_cw |=> not i_start_cw".
+INFO (IPM005): The name "func::assume:3" is assigned to assumption "i_start_cw |-> not i_end_cw and i_valid [*1:437] ##1 i_end_cw and i_valid".
+INFO (IPM005): The name "func::assume:4" is assigned to assumption "i_end_cw |=> not i_valid".
+INFO (IPM005): The name "func::assume:5" is assigned to assumption "not i_valid |=> not i_valid".
+INFO (IPM005): The name "func::assume:6" is assigned to assumption "i_consume_int".
+INFO (IPM005): The name "func::assume:7" is assigned to assumption "i_consume_deint".
+INFO (IPM005): The name "func::assume:8" is assigned to assumption "not INTERLEAVER_INST.GEN_INT.INTERLEAVER_INST.IDP.w_wr_rd_status |-> not w_valid".
+INFO (IPM005): The name "func::assume:9" is assigned to assumption "not DEINTERLEAVER_INST.GEN_INT.DEINTERLEAVER_INST.IDP.w_wr_rd_status |-> not o_valid".
+INFO (IPM004): The name "property:0" is assigned to assertion "o_valid and o_cnt = 1 |-> o_saved_data = o_data".
+WARNING (WOBS004): Non-sequence cover property can have non-LRM-compliant semantics. For LRM semantics, use the "elaborate" flag "-lrm_cover_property".
+INFO (IPM033): The name "cover:0" is assigned to cover "o_valid and o_cnt = 1 |-> o_saved_data = o_data".
+INFO (IPM033): The name "cover:1" is assigned to cover "o_end_cw".
+INFO (IPM031): Clearing proof results of all properties.
+INFO (IRS006): Current reset condition is "rst".
+INFO (IPF036): Starting proof on task: "func", 3 properties to prove with 0 already proven/unreachable
+INFO (IRS029): Starting reset analysis: phase 1 of 4.
+INFO (IRS030): Running reset analysis: phase 2 of 4.
+INFO (IRS031): Running reset analysis: phase 3 of 4.
+INFO (IRS020): Starting the reset analysis simulation with a limit of 100 iterations (phase 4 of 4).
+INFO (IRS024): Reset iterations 0 to 4 analyzed.
+INFO (IRS018): Reset analysis simulation executed for 3 iterations. Assigned values for 105 of 3665 design flops, 0 of 0 design latches, 443 of 443 internal elements.
+INFO (IRS039): Reset analysis complete.
+INFO (IPF031): Settings used for proof thread 0:
+    orchestration                 = off (auto)
+    time_limit                    = 288000s
+    per_property_time_limit       = 1s * 10 ^ scan
+    max_trace_length              = 878
+    engine_mode                   = Tri Ht 
+    proofgrid_per_engine_max_jobs = 1
+    max engine jobs               = Tri Ht, total 2
+    proofgrid_mode                = local
+    proofgrid_restarts            = 10
+0: Using multistage preprocessing
+0: Starting reduce
+0: Finished reduce in 0.068s
+0.0.PRE: Performing Proof Simplification...
+0.0.Tri: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Tri: Proof Simplification Iteration 1	[0.00 s]
+0.0.Tri: Proof Simplification Iteration 2	[0.01 s]
+0.0.Tri: Proof Simplification Iteration 3	[0.02 s]
+0.0.Tri: Proof Simplification Iteration 4	[0.03 s]
+0.0.PRE: Proof Simplification completed in 0,05 s
+0: About to start ProofGrid in its own thread with a limit of 10000 pending notifications and a limit of 10 traces.
+0: =============================== ProofGrid start ===============================
+0: ProofGrid usable level: 3
+0: ProofGrid is starting event handling
+0.0.Ht: Proofgrid shell started at 5581@optmaS1(local) jg_5212_optmaS1_1
+0.0.Tri: Proofgrid shell started at 5579@optmaS1(local) jg_5212_optmaS1_1
+0: Running jobs with 9 threads on optmaS1 with 8 cores.
+0.0.Ht: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Tri: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Ht: Trace Attempt  1	[0,02 s]
+0.0.Ht: A trace with 1 cycles was found. [0,02 s]
+INFO (IPF047): 0.0.Ht: The cover property "cover:1" was covered in 1 cycles in 0.15 s.
+0.0.Ht: Trace Attempt  2	[0,03 s]
+0.0.Ht: Trace Attempt  3	[0,03 s]
+0.0.Ht: Trace Attempt  4	[0,03 s]
+0.0.Ht: Trace Attempt  5	[0,04 s]
+0.0.Ht: Trace Attempt  7	[0,05 s]
+0.0.Ht: A trace with 7 cycles was found. [0,05 s]
+INFO (IPF047): 0.0.Ht: The cover property "cover:0" was covered in 7 cycles in 0.15 s.
+0.0.Ht: Trace Attempt  8	[0,06 s]
+0.0.Tri: Next scan (0) will use per property time limit: 1s * 10 ^ 0 = 1s
+0.0.Tri: Starting proof for property "property:0"	[0,00 s].
+0.0.Tri: Trace Attempt  1	[0,00 s]
+0.0.Tri:    0.01" ---- Launching main thread ----
+0.0.Tri:    0.10" ---- Launching abstraction thread ----
+0.0.Tri:    0.10" ---- Launching multi-phase simplification thread ----
+0.0.Tri: Trace Attempt  2	[0,46 s]
+0.0.Tri: Trace Attempt  3	[0,49 s]
+0.0.Tri: Trace Attempt  4	[0,55 s]
+0: ProofGrid usable level: 1
+0.0.Tri: Trace Attempt  5	[0,68 s]
+0.0.Tri: Trace Attempt 13	[1,00 s]
+0.0.Tri: Per property time limit expired (1,00 s) [1,00 s]
+0.0.Tri: Stopped processing property "property:0"	[1,00 s].
+0.0.Tri: Last scan. Per property time limit: 0s
+0.0.Tri: Starting proof for property "property:0"	[0,00 s].
+0.0.Tri: Trace Attempt  1	[0,00 s]
+0.0.Tri:    0.85" ---- Launching main thread ----
+0.0.Tri:    0.89" ---- Launching abstraction thread ----
+0.0.Tri:    0.89" ---- Launching multi-phase simplification thread ----
+0.0.Tri:    3.87" Simplification phase 1 complete
+0.0.Ht: Trace Attempt 30	[4,35 s]
+0.0.Tri: Trace Attempt 30	[4,32 s]
+0.0.Ht: Trace Attempt 36	[8,65 s]
+0.0.Tri: Trace Attempt 40	[8,81 s]
+0.0.Tri:   10.10" Simplification phase 2 complete
+0.0.Tri: Trace Attempt 46	[12,89 s]
+0.0.Ht: Trace Attempt 43	[14,47 s]
+0.0.Tri: Trace Attempt 51	[17,46 s]
+0.0.Ht: Trace Attempt 50	[20,92 s]
+0.0.Tri: Trace Attempt 55	[22,43 s]
+0.0.Ht: Trace Attempt 56	[27,41 s]
+0.0.Tri: Trace Attempt 58	[26,67 s]
+0.0.Ht: Trace Attempt 58	[32,04 s]
+0.0.Tri: Trace Attempt 61	[31,45 s]
+0.0.Ht: Trace Attempt 61	[36,96 s]
+0.0.Tri: Trace Attempt 64	[36,87 s]
+0.0.Ht: Trace Attempt 64	[42,71 s]
+0.0.Tri: Trace Attempt 68	[42,30 s]
+0.0.Tri: Trace Attempt 71	[47,63 s]
+0.0.Ht: Trace Attempt 68	[49,92 s]
+0.0.Tri: Trace Attempt 74	[53,79 s]
+0.0.Ht: Trace Attempt 72	[58,24 s]
+0.0.Tri: Trace Attempt 77	[58,95 s]
+0.0.Tri: Trace Attempt 79	[63,65 s]
+0.0.Ht: Trace Attempt 76	[66,51 s]
+0.0.Tri: Trace Attempt 81	[69,31 s]
+0.0.Tri: Trace Attempt 83	[74,01 s]
+0.0.Ht: Trace Attempt 80	[77,31 s]
+0.0.Tri: Trace Attempt 85	[79,22 s]
+0.0.Tri: Trace Attempt 87	[85,84 s]
+0.0.Ht: Trace Attempt 84	[87,58 s]
+0.0.Tri:   90.65" Simplification phase 3 complete
+  90.65" ---- Completed simplification thread ----
+0.0.Tri:   90.65" ---- Restarting main thread on simplified netlist ----
+0.0.Tri:   90.70" ---- Restarting abstraction thread on simplified netlist ----
+0.0.Ht: Trace Attempt 88	[99,49 s]
+0.0.Ht: Trace Attempt 89	[109,15 s]
+0.0.Ht: Trace Attempt 90	[120,17 s]
+0.0.Ht: Trace Attempt 91	[132,24 s]
+0.0.Ht: Trace Attempt 92	[143,25 s]
+0.0.Ht: Trace Attempt 93	[153,41 s]
+0.0.Ht: Trace Attempt 94	[161,49 s]
+0.0.Ht: Trace Attempt 95	[170,02 s]
+0.0.Tri: Trace Attempt 89	[171,95 s]
+0.0.Ht: Trace Attempt 96	[177,15 s]
+0.0.Tri: Trace Attempt 90	[175,97 s]
+0.0.Tri: Trace Attempt 92	[180,81 s]
+0.0.Ht: Trace Attempt 97	[184,69 s]
+0.0.Tri: Trace Attempt 94	[185,94 s]
+0.0.Tri: Trace Attempt 96	[191,42 s]
+0.0.Ht: Trace Attempt 98	[195,47 s]
+0.0.Tri: Trace Attempt 98	[198,06 s]
+0.0.Ht: Trace Attempt 99	[201,54 s]
+0.0.Tri: Trace Attempt 100	[205,71 s]
+0.0.Ht: Trace Attempt 100	[209,28 s]
+0.0.Tri: Trace Attempt 102	[212,54 s]
+0.0.Ht: Trace Attempt 101	[215,09 s]
+0.0.Tri: Trace Attempt 104	[219,43 s]
+0.0.Tri: Trace Attempt 105	[223,58 s]
+0.0.Ht: Trace Attempt 103	[226,04 s]
+0.0.Tri: Trace Attempt 107	[229,99 s]
+0.0.Tri: Trace Attempt 108	[235,45 s]
+0.0.Tri: Trace Attempt 109	[242,19 s]
+0.0.Ht: Trace Attempt 106	[243,93 s]
+0.0.Tri: Trace Attempt 111	[250,27 s]
+0.0.Tri: Trace Attempt 112	[254,38 s]
+0.0.Tri: Trace Attempt 113	[258,66 s]
+0.0.Ht: Trace Attempt 110	[261,99 s]
+0.0.Tri: Trace Attempt 114	[265,19 s]
+0.0.Tri: Trace Attempt 115	[269,55 s]
+0.0.Tri: Trace Attempt 116	[276,99 s]
+0.0.Ht: Trace Attempt 114	[279,93 s]
+0.0.Tri: Trace Attempt 117	[284,02 s]
+0.0.Tri: Trace Attempt 119	[292,83 s]
+0.0.Tri: Trace Attempt 120	[297,33 s]
+0.0.Ht: Trace Attempt 117	[300,55 s]
+0.0.Tri: Trace Attempt 121	[301,67 s]
+0.0.Tri: Trace Attempt 122	[308,26 s]
+0.0.Tri: Trace Attempt 123	[314,71 s]
+0.0.Ht: Trace Attempt 121	[317,48 s]
+0.0.Tri: Trace Attempt 125	[322,46 s]
+0.0.Tri: Trace Attempt 126	[327,03 s]
+0.0.Tri: Trace Attempt 127	[334,59 s]
+0.0.Tri: Trace Attempt 128	[340,81 s]
+0.0.Ht: Trace Attempt 124	[350,45 s]
+0.0.Tri: Trace Attempt 130	[350,63 s]
+0.0.Tri: Trace Attempt 131	[356,09 s]
+0.0.Tri: Trace Attempt 132	[361,80 s]
+0.0.Tri: Trace Attempt 133	[370,44 s]
+0.0.Ht: Trace Attempt 130	[372,12 s]
+0.0.Tri: Trace Attempt 134	[378,14 s]
+0.0.Tri: Trace Attempt 135	[384,99 s]
+0.0.Ht: Trace Attempt 134	[392,54 s]
+0.0.Tri: Trace Attempt 136	[393,98 s]
+0.0.Tri: Trace Attempt 137	[398,78 s]
+0.0.Tri: Trace Attempt 138	[407,45 s]
+0.0.Ht: Trace Attempt 136	[410,08 s]
+0.0.Tri: Trace Attempt 139	[413,32 s]
+0.0.Tri: Trace Attempt 140	[418,66 s]
+0.0.Tri: Trace Attempt 141	[428,47 s]
+0.0.Ht: Trace Attempt 139	[432,24 s]
+0.0.Tri: Trace Attempt 142	[437,75 s]
+0.0.Tri: Trace Attempt 143	[445,53 s]
+0.0.Tri: Trace Attempt 144	[455,08 s]
+0.0.Ht: Trace Attempt 142	[458,28 s]
+0.0.Tri: Trace Attempt 145	[461,03 s]
+0.0.Tri: Trace Attempt 146	[469,72 s]
+0.0.Tri: Trace Attempt 147	[479,44 s]
+0.0.Ht: Trace Attempt 145	[484,79 s]
+0.0.Tri: Trace Attempt 148	[488,55 s]
+0.0.Tri: Trace Attempt 149	[497,71 s]
+0.0.Ht: Trace Attempt 148	[501,39 s]
+0.0.Tri: Trace Attempt 150	[508,01 s]
+0.0.Tri: Trace Attempt 151	[514,22 s]
+0.0.Tri: Trace Attempt 152	[522,11 s]
+0.0.Ht: Trace Attempt 150	[523,95 s]
+0.0.Tri: Trace Attempt 153	[533,74 s]
+0.0.Tri: Trace Attempt 154	[547,00 s]
+0.0.Ht: Trace Attempt 153	[555,18 s]
+0.0.Tri: Trace Attempt 155	[557,50 s]
+0.0.Tri: Trace Attempt 156	[565,21 s]
+0.0.Tri: Trace Attempt 157	[576,49 s]
+0.0.Ht: Trace Attempt 155	[584,12 s]
+0.0.Tri: Trace Attempt 158	[585,90 s]
+0.0.Tri: Trace Attempt 159	[601,78 s]
+0.0.Ht: Trace Attempt 158	[613,72 s]
+0.0.Tri: Trace Attempt 160	[613,30 s]
+0.0.Tri: Trace Attempt 161	[623,96 s]
+0.0.Tri: Trace Attempt 162	[631,65 s]
+0.0.Ht: Trace Attempt 160	[645,09 s]
+0.0.Tri: Trace Attempt 163	[647,50 s]
+0.0.Tri: Trace Attempt 164	[657,72 s]
+0.0.Tri: Trace Attempt 165	[668,15 s]
+0.0.Ht: Trace Attempt 163	[673,09 s]
+0.0.Tri: Trace Attempt 166	[679,66 s]
+0.0.Tri: Trace Attempt 167	[686,57 s]
+0.0.Ht: Trace Attempt 166	[698,73 s]
+0.0.Tri: Trace Attempt 168	[701,88 s]
+0.0.Tri: Trace Attempt 169	[709,60 s]
+0.0.Tri: Trace Attempt 170	[721,26 s]
+0.0.Ht: Trace Attempt 168	[727,36 s]
+0.0.Tri: Trace Attempt 171	[737,64 s]
+0.0.Tri: Trace Attempt 172	[748,46 s]
+0.0.Tri: Trace Attempt 173	[758,15 s]
+0.0.Ht: Trace Attempt 171	[760,38 s]
+0.0.Tri: Trace Attempt 174	[768,74 s]
+0.0.Tri: Trace Attempt 175	[778,81 s]
+0.0.Ht: Trace Attempt 174	[782,92 s]
+0.0.Tri: Trace Attempt 176	[789,66 s]
+0.0.Tri: Trace Attempt 177	[805,80 s]
+0.0.Ht: Trace Attempt 176	[821,38 s]
+0.0.Tri: Trace Attempt 178	[821,07 s]
+0.0.Tri: Trace Attempt 179	[837,16 s]
+0.0.Tri: Trace Attempt 180	[849,45 s]
+0.0.Tri: Trace Attempt 181	[859,87 s]
+0.0.Ht: Trace Attempt 178	[869,56 s]
+0.0.Tri: Trace Attempt 182	[870,62 s]
+0.0.Tri: Trace Attempt 183	[884,26 s]
+0.0.Tri: Trace Attempt 184	[893,29 s]
+0.0.Tri: Trace Attempt 185	[912,39 s]
+0.0.Ht: Trace Attempt 182	[915,73 s]
+0.0.Tri: Trace Attempt 186	[923,70 s]
+0.0.Tri: Trace Attempt 187	[936,32 s]
+0.0.Tri: Trace Attempt 188	[957,74 s]
+0.0.Ht: Trace Attempt 186	[968,03 s]
+0.0.Tri: Trace Attempt 189	[972,37 s]
+0.0.Tri: Trace Attempt 190	[987,48 s]
+0.0.Tri: Trace Attempt 191	[998,08 s]
+0.0.Ht: Trace Attempt 189	[1010,52 s]
+0.0.Tri: Trace Attempt 192	[1013,78 s]
+0.0.Tri: Trace Attempt 193	[1029,59 s]
+0.0.Tri: Trace Attempt 194	[1045,07 s]
+0.0.Ht: Trace Attempt 192	[1054,07 s]
+0.0.Tri: Trace Attempt 195	[1059,31 s]
+0.0.Tri: Trace Attempt 196	[1080,98 s]
+0.0.Ht: Trace Attempt 195	[1097,25 s]
+0.0.Tri: Trace Attempt 197	[1099,40 s]
+0.0.Tri: Trace Attempt 198	[1114,43 s]
+0.0.Tri: Trace Attempt 199	[1137,62 s]
+0.0.Ht: Trace Attempt 197	[1152,56 s]
+0.0.Tri: Trace Attempt 200	[1153,13 s]
+0.0.Tri: Trace Attempt 201	[1175,50 s]
+0.0.Tri: Trace Attempt 202	[1193,40 s]
+0.0.Ht: Trace Attempt 200	[1207,30 s]
+0.0.Tri: Trace Attempt 203	[1207,10 s]
+0.0.Tri: Trace Attempt 204	[1232,80 s]
+0.0.Tri: Trace Attempt 205	[1246,12 s]
+0.0.Ht: Trace Attempt 203	[1256,73 s]
+0.0.Tri: Trace Attempt 206	[1264,13 s]
+0.0.Tri: Trace Attempt 207	[1276,72 s]
+0.0.Tri: Trace Attempt 208	[1294,64 s]
+0.0.Ht: Trace Attempt 206	[1305,14 s]
+0.0.Tri: Trace Attempt 209	[1312,05 s]
+0.0.Tri: Trace Attempt 210	[1329,90 s]
+0.0.Tri: Trace Attempt 211	[1342,86 s]
+0.0.Ht: Trace Attempt 209	[1349,30 s]
+0.0.Tri: Trace Attempt 212	[1364,32 s]
+0.0.Tri: Trace Attempt 213	[1388,50 s]
+0.0.Ht: Trace Attempt 212	[1405,28 s]
+0.0.Tri: Trace Attempt 214	[1407,74 s]
+0.0.Tri: Trace Attempt 215	[1425,24 s]
+0.0.Ht: Trace Attempt 214	[1438,54 s]
+0.0.Tri: Trace Attempt 216	[1448,41 s]
+0.0.Tri: Trace Attempt 217	[1470,23 s]
+0.0.Ht: Trace Attempt 216	[1483,44 s]
+0.0.Tri: Trace Attempt 218	[1497,06 s]
+0.0.Tri: Trace Attempt 219	[1518,88 s]
+0.0.Ht: Trace Attempt 218	[1532,85 s]
+0.0.Tri: Trace Attempt 220	[1543,91 s]
+0.0.Tri: Trace Attempt 221	[1560,62 s]
+0.0.Ht: Trace Attempt 220	[1570,54 s]
+0.0.Tri: Trace Attempt 222	[1583,50 s]
+0.0.Tri: Trace Attempt 223	[1602,29 s]
+0.0.Ht: Trace Attempt 222	[1613,63 s]
+0.0.Tri: Trace Attempt 224	[1621,73 s]
+0.0.Tri: Trace Attempt 225	[1644,33 s]
+0.0.Ht: Trace Attempt 224	[1656,26 s]
+0.0.Tri: Trace Attempt 226	[1662,07 s]
+0.0.Tri: Trace Attempt 227	[1676,92 s]
+0.0.Ht: Trace Attempt 226	[1699,33 s]
+0.0.Tri: Trace Attempt 228	[1703,76 s]
+0.0.Tri: Trace Attempt 229	[1735,89 s]
+0.0.Ht: Trace Attempt 228	[1741,05 s]
+0.0.Tri: Trace Attempt 230	[1753,01 s]
+0.0.Tri: Trace Attempt 231	[1781,86 s]
+0.0.Ht: Trace Attempt 230	[1786,22 s]
+0.0.Tri: Trace Attempt 232	[1809,26 s]
+0.0.Ht: Trace Attempt 232	[1832,12 s]
+0.0.Tri: Trace Attempt 233	[1831,87 s]
+0.0.Tri: Trace Attempt 234	[1860,98 s]
+0.0.Ht: Trace Attempt 233	[1868,47 s]
+0.0.Tri: Trace Attempt 235	[1888,02 s]
+0.0.Ht: Trace Attempt 235	[1892,31 s]
+0.0.Tri: Trace Attempt 236	[1906,49 s]
+0.0.Ht: Trace Attempt 236	[1929,95 s]
+0.0.Tri: Trace Attempt 237	[1934,85 s]
+0.0.Tri: Trace Attempt 238	[1956,47 s]
+0.0.Ht: Trace Attempt 237	[1964,26 s]
+0.0.Tri: Trace Attempt 239	[1982,44 s]
+0.0.Ht: Trace Attempt 239	[1997,95 s]
+0.0.Tri: Trace Attempt 240	[2005,96 s]
+0.0.Tri: Trace Attempt 241	[2032,04 s]
+0.0.Ht: Trace Attempt 240	[2037,67 s]
+0.0.Tri: Trace Attempt 242	[2064,00 s]
+0.0.Ht: Trace Attempt 242	[2071,79 s]
+0.0.Tri: Trace Attempt 243	[2093,39 s]
+0.0.Ht: Trace Attempt 243	[2105,56 s]
+0.0.Tri: Trace Attempt 244	[2119,06 s]
+0.0.Ht: Trace Attempt 244	[2147,81 s]
+0.0.Tri: Trace Attempt 245	[2154,67 s]
+0.0.Tri: Trace Attempt 246	[2177,89 s]
+0.0.Ht: Trace Attempt 245	[2181,04 s]
+0.0.Tri: Trace Attempt 247	[2206,84 s]
+0.0.Ht: Trace Attempt 247	[2219,12 s]
+0.0.Tri: Trace Attempt 248	[2241,31 s]
+0.0.Ht: Trace Attempt 248	[2247,93 s]
+0.0.Tri: Trace Attempt 249	[2269,18 s]
+0.0.Ht: Trace Attempt 249	[2284,93 s]
+0.0.Tri: Trace Attempt 250	[2305,09 s]
+0.0.Ht: Trace Attempt 250	[2321,38 s]
+0.0.Tri: Trace Attempt 251	[2324,11 s]
+0.0.Tri: Trace Attempt 252	[2346,36 s]
+0.0.Ht: Trace Attempt 251	[2356,45 s]
+0.0.Tri: Trace Attempt 253	[2381,99 s]
+0.0.Ht: Trace Attempt 253	[2397,13 s]
+0.0.Tri: Trace Attempt 254	[2398,62 s]
+0.0.Tri: Trace Attempt 255	[2417,16 s]
+0.0.Ht: Trace Attempt 254	[2432,57 s]
+0.0.Tri: Trace Attempt 256	[2445,80 s]
+0.0.Tri: Trace Attempt 257	[2465,78 s]
+0.0.Ht: Trace Attempt 256	[2472,31 s]
+0.0.Tri: Trace Attempt 258	[2486,24 s]
+0.0.Ht: Trace Attempt 258	[2511,85 s]
+0.0.Tri: Trace Attempt 259	[2520,12 s]
+0.0.Ht: Trace Attempt 259	[2546,97 s]
+0.0.Tri: Trace Attempt 260	[2556,59 s]
+0.0.Ht: Trace Attempt 260	[2588,27 s]
+0.0.Tri: Trace Attempt 261	[2588,66 s]
+0.0.Ht: Trace Attempt 261	[2623,32 s]
+0.0.Tri: Trace Attempt 262	[2622,58 s]
+0.0.Tri: Trace Attempt 263	[2642,25 s]
+0.0.Ht: Trace Attempt 262	[2666,15 s]
+0.0.Tri: Trace Attempt 264	[2674,81 s]
+0.0.Ht: Trace Attempt 264	[2704,03 s]
+0.0.Tri: Trace Attempt 265	[2704,71 s]
+0.0.Tri: Trace Attempt 266	[2724,55 s]
+0.0.Ht: Trace Attempt 265	[2737,32 s]
+0.0.Tri: Trace Attempt 267	[2761,62 s]
+0.0.Ht: Trace Attempt 267	[2781,72 s]
+0.0.Tri: Trace Attempt 268	[2790,12 s]
+0.0.Tri: Trace Attempt 269	[2810,66 s]
+0.0.Ht: Trace Attempt 268	[2824,71 s]
+0.0.Tri: Trace Attempt 270	[2838,72 s]
+0.0.Ht: Trace Attempt 270	[2874,33 s]
+0.0.Tri: Trace Attempt 271	[2879,43 s]
+0.0.Tri: Trace Attempt 272	[2924,14 s]
+0.0.Ht: Trace Attempt 271	[2926,39 s]
+0.0.Tri: Trace Attempt 273	[2948,47 s]
+0.0.Tri: Trace Attempt 274	[2978,07 s]
+0.0.Ht: Trace Attempt 273	[3006,26 s]
+0.0.Tri: Trace Attempt 275	[3010,26 s]
+0.0.Tri: Trace Attempt 276	[3043,35 s]
+0.0.Ht: Trace Attempt 275	[3087,54 s]
+0.0.Tri: Trace Attempt 277	[3089,38 s]
+0.0.Tri: Trace Attempt 278	[3116,49 s]
+0.0.Ht: Trace Attempt 277	[3138,86 s]
+0.0.Tri: Trace Attempt 279	[3140,53 s]
+0.0.Tri: Trace Attempt 280	[3175,64 s]
+0.0.Ht: Trace Attempt 279	[3199,41 s]
+0.0.Tri: Trace Attempt 281	[3215,31 s]
+0.0.Ht: Trace Attempt 281	[3235,75 s]
+0.0.Tri: Trace Attempt 282	[3242,72 s]
+0.0.Tri: Trace Attempt 283	[3268,41 s]
+0.0.Ht: Trace Attempt 282	[3288,97 s]
+0.0.Tri: Trace Attempt 284	[3307,99 s]
+0.0.Ht: Trace Attempt 284	[3332,24 s]
+0.0.Tri: Trace Attempt 285	[3345,85 s]
+0.0.Ht: Trace Attempt 285	[3393,73 s]
+0.0.Tri: Trace Attempt 286	[3396,77 s]
+0.0.Tri: Trace Attempt 287	[3420,64 s]
+0.0.Ht: Trace Attempt 286	[3440,10 s]
+0.0.Tri: Trace Attempt 288	[3459,48 s]
+0.0.Ht: Trace Attempt 288	[3488,59 s]
+0.0.Tri: Trace Attempt 289	[3511,62 s]
+0.0.Ht: Trace Attempt 289	[3532,20 s]
+0.0.Tri: Trace Attempt 290	[3547,65 s]
+0.0.Ht: Trace Attempt 290	[3573,88 s]
+0.0.Tri: Trace Attempt 291	[3577,16 s]
+0.0.Tri: Trace Attempt 292	[3605,31 s]
+0.0.Ht: Trace Attempt 291	[3624,53 s]
+0.0.Tri: Trace Attempt 293	[3644,69 s]
+0.0.Ht: Trace Attempt 293	[3679,16 s]
+0.0.Tri: Trace Attempt 294	[3679,73 s]
+0.0.Tri: Trace Attempt 295	[3724,90 s]
+0.0.Ht: Trace Attempt 294	[3735,07 s]
+0.0.Tri: Trace Attempt 296	[3753,69 s]
+0.0.Ht: Trace Attempt 296	[3781,53 s]
+0.0.Tri: Trace Attempt 297	[3819,72 s]
+0.0.Ht: Trace Attempt 297	[3839,61 s]
+0.0.Tri: Trace Attempt 298	[3866,96 s]
+0.0.Ht: Trace Attempt 298	[3882,30 s]
+0.0.Tri: Trace Attempt 299	[3910,92 s]
+0.0.Ht: Trace Attempt 299	[3931,20 s]
+0.0.Tri: Trace Attempt 300	[3942,97 s]
+0.0.Tri: Trace Attempt 301	[3963,91 s]
+0.0.Ht: Trace Attempt 300	[3979,74 s]
+0.0.Tri: Trace Attempt 302	[4013,48 s]
+0.0.Ht: Trace Attempt 302	[4040,41 s]
+0.0.Tri: Trace Attempt 303	[4047,28 s]
+0.0.Ht: Trace Attempt 303	[4081,70 s]
+0.0.Tri: Trace Attempt 304	[4091,43 s]
+0.0.Tri: Trace Attempt 305	[4137,45 s]
+0.0.Ht: Trace Attempt 304	[4139,43 s]
+0.0.Tri: Trace Attempt 306	[4179,93 s]
+0.0.Ht: Trace Attempt 306	[4187,95 s]
+0.0.Tri: Trace Attempt 307	[4216,29 s]
+0.0.Ht: Trace Attempt 307	[4245,75 s]
+0.0.Tri: Trace Attempt 308	[4249,15 s]
+0.0.Tri: Trace Attempt 309	[4280,66 s]
+0.0.Ht: Trace Attempt 308	[4286,55 s]
+0.0.Tri: Trace Attempt 310	[4319,99 s]
+0.0.Ht: Trace Attempt 310	[4366,66 s]
+0.0.Tri: Trace Attempt 311	[4389,72 s]
+0.0.Tri: Trace Attempt 312	[4415,24 s]
+0.0.Ht: Trace Attempt 311	[4422,64 s]
+0.0.Tri: Trace Attempt 313	[4446,91 s]
+0.0.Ht: Trace Attempt 313	[4479,88 s]
+0.0.Tri: Trace Attempt 314	[4494,88 s]
+0.0.Ht: Trace Attempt 314	[4536,52 s]
+0.0.Tri: Trace Attempt 315	[4545,19 s]
+0.0.Ht: Trace Attempt 315	[4588,12 s]
+0.0.Tri: Trace Attempt 316	[4597,31 s]
+0.0.Tri: Trace Attempt 317	[4627,24 s]
+0.0.Ht: Trace Attempt 316	[4645,76 s]
+0.0.Tri: Trace Attempt 318	[4670,19 s]
+0.0.Ht: Trace Attempt 318	[4696,08 s]
+0.0.Tri: Trace Attempt 319	[4713,01 s]
+0.0.Tri: Trace Attempt 320	[4766,24 s]
+0.0.Ht: Trace Attempt 319	[4769,00 s]
+0.0.Tri: Trace Attempt 321	[4816,63 s]
+0.0.Ht: Trace Attempt 321	[4828,69 s]
+0.0.Tri: Trace Attempt 322	[4858,88 s]
+0.0.Ht: Trace Attempt 322	[4901,45 s]
+0.0.Tri: Trace Attempt 323	[4912,56 s]
+0.0.Tri: Trace Attempt 324	[4952,12 s]
+0.0.Ht: Trace Attempt 323	[4955,57 s]
+0.0.Tri: Trace Attempt 325	[4994,48 s]
+0.0.Ht: Trace Attempt 325	[5025,39 s]
+0.0.Tri: Trace Attempt 326	[5049,64 s]
+0.0.Tri: Trace Attempt 327	[5086,01 s]
+0.0.Ht: Trace Attempt 326	[5096,12 s]
+0.0.Tri: Trace Attempt 328	[5132,40 s]
+0.0.Ht: Trace Attempt 328	[5152,18 s]
+0.0.Tri: Trace Attempt 329	[5159,71 s]
+0.0.Tri: Trace Attempt 330	[5211,67 s]
+0.0.Ht: Trace Attempt 329	[5215,75 s]
+0.0.Tri: Trace Attempt 331	[5258,26 s]
+0.0.Ht: Trace Attempt 331	[5289,42 s]
+0.0.Tri: Trace Attempt 332	[5297,04 s]
+0.0.Ht: Trace Attempt 332	[5335,80 s]
+0.0.Tri: Trace Attempt 333	[5337,82 s]
+0.0.Tri: Trace Attempt 334	[5388,50 s]
+0.0.Ht: Trace Attempt 333	[5393,22 s]
+0.0.Tri: Trace Attempt 335	[5432,25 s]
+0.0.Ht: Trace Attempt 335	[5462,42 s]
+0.0.Tri: terminate called after throwing an instance of 'Minisat::OutOfMemoryException'
+0.0.Tri: **** CRASHED **** [signal 6]
+0.0.Tri: Trace Attempt 336	[5482,24 s]
+0.0.Tri: Trace Attempt 337	[5511,12 s]
+0.0.Ht: Trace Attempt 336	[5513,40 s]
+0.0.Ht: Trace Attempt 338	[5564,74 s]
+0.0.Ht: Trace Attempt 339	[5602,46 s]
+0.0.Ht: Trace Attempt 340	[5647,53 s]
+0.0.Ht: Trace Attempt 341	[5686,81 s]
+0.0.Ht: Trace Attempt 342	[5730,24 s]
+0.0.Ht: Trace Attempt 343	[5774,12 s]
+0.0.Ht: Trace Attempt 344	[5815,33 s]
+0.0.Ht: Trace Attempt 345	[5858,42 s]
+0.0.Ht: Trace Attempt 346	[5896,49 s]
+0.0.Ht: Trace Attempt 347	[5934,90 s]
+0.0.Ht: Trace Attempt 348	[5976,11 s]
+0.0.Ht: Trace Attempt 349	[6013,40 s]
+0.0.Ht: Trace Attempt 350	[6058,55 s]
+0.0.Ht: Trace Attempt 351	[6099,42 s]
+0.0.Ht: Trace Attempt 352	[6146,89 s]
+0.0.Ht: Trace Attempt 353	[6185,31 s]
+0.0.Ht: Trace Attempt 354	[6232,64 s]
+0.0.Ht: Trace Attempt 355	[6270,63 s]
+0.0.Ht: Trace Attempt 356	[6324,61 s]
+0.0.Ht: Trace Attempt 357	[6368,35 s]
+0.0.Ht: Trace Attempt 358	[6419,22 s]
+0.0.Ht: Trace Attempt 359	[6462,17 s]
+0.0.Ht: Trace Attempt 360	[6512,30 s]
+0.0.Ht: Trace Attempt 361	[6556,40 s]
+0.0.Ht: Trace Attempt 362	[6612,52 s]
+0.0.Ht: Trace Attempt 363	[6654,72 s]
+0.0.Ht: Trace Attempt 364	[6697,32 s]
+0.0.Ht: Trace Attempt 365	[6750,79 s]
+0.0.Ht: Trace Attempt 366	[6798,73 s]
+0.0.Ht: Trace Attempt 367	[6851,05 s]
+0.0.Ht: Trace Attempt 368	[6904,99 s]
+0.0.Ht: Trace Attempt 369	[6945,58 s]
+0.0.Ht: Trace Attempt 370	[6997,77 s]
+0.0.Ht: Trace Attempt 371	[7052,72 s]
+0.0.Ht: Trace Attempt 372	[7107,74 s]
+0.0.Ht: Trace Attempt 373	[7160,40 s]
+0.0.Ht: Trace Attempt 374	[7213,85 s]
+0.0.Ht: Trace Attempt 375	[7268,00 s]
+0.0.Ht: Trace Attempt 376	[7317,98 s]
+0.0.Ht: Trace Attempt 377	[7370,44 s]
+0.0.Ht: Trace Attempt 378	[7431,29 s]
+0.0.Ht: Trace Attempt 379	[7478,67 s]
+0.0.Ht: Trace Attempt 380	[7538,69 s]
+0.0.Ht: Trace Attempt 381	[7580,93 s]
+0.0.Ht: Trace Attempt 382	[7645,05 s]
+0.0.Ht: Trace Attempt 383	[7686,76 s]
+0.0.Ht: Trace Attempt 384	[7749,69 s]
+0.0.Ht: Trace Attempt 385	[7797,68 s]
+0.0.Ht: Trace Attempt 386	[7855,79 s]
+0.0.Ht: Trace Attempt 387	[7920,22 s]
+0.0.Ht: Trace Attempt 388	[7993,33 s]
+0.0.Ht: Trace Attempt 389	[8038,54 s]
+0.0.Ht: Trace Attempt 390	[8094,11 s]
+0.0.Ht: Trace Attempt 391	[8153,35 s]
+0.0.Ht: Trace Attempt 392	[8211,25 s]
+0.0.Ht: Trace Attempt 393	[8261,99 s]
+0.0.Ht: Trace Attempt 394	[8323,93 s]
+0.0.Ht: Trace Attempt 395	[8372,22 s]
+0.0.Ht: Trace Attempt 396	[8429,91 s]
+0.0.Ht: Trace Attempt 397	[8482,08 s]
+0.0.Ht: Trace Attempt 398	[8533,37 s]
+0.0.Ht: Trace Attempt 399	[8587,90 s]
+0.0.Ht: Trace Attempt 400	[8649,02 s]
+0.0.Ht: Trace Attempt 401	[8699,81 s]
+0.0.Ht: Trace Attempt 402	[8751,42 s]
+0.0.Ht: Trace Attempt 403	[8802,80 s]
+0.0.Ht: Trace Attempt 404	[8865,17 s]
+0.0.Ht: Trace Attempt 405	[8919,37 s]
+0.0.Ht: Trace Attempt 406	[8981,49 s]
+0.0.Ht: Trace Attempt 407	[9034,95 s]
+0.0.Ht: Trace Attempt 408	[9098,68 s]
+0.0.Ht: Trace Attempt 409	[9149,93 s]
+0.0.Ht: Trace Attempt 410	[9202,86 s]
+0.0.Ht: Trace Attempt 411	[9256,58 s]
+0.0.Ht: Trace Attempt 412	[9323,73 s]
+0.0.Ht: Trace Attempt 413	[9372,52 s]
+0.0.Ht: Trace Attempt 414	[9423,10 s]
+0.0.Ht: Trace Attempt 415	[9481,38 s]
+0.0.Ht: Trace Attempt 416	[9545,27 s]
+0.0.Ht: Trace Attempt 417	[9591,42 s]
+0.0.Ht: Trace Attempt 418	[9649,10 s]
+0.0.Ht: Trace Attempt 419	[9702,47 s]
+0.0.Ht: Trace Attempt 420	[9761,95 s]
+0.0.Ht: Trace Attempt 421	[9814,54 s]
+0.0.Ht: Trace Attempt 422	[9874,17 s]
+0.0.Ht: Trace Attempt 423	[9935,21 s]
+0.0.Ht: Trace Attempt 424	[10007,95 s]
+0.0.Ht: Trace Attempt 425	[10066,96 s]
+0.0.Ht: Trace Attempt 426	[10132,09 s]
+0.0.Ht: Trace Attempt 427	[10196,76 s]
+0.0.Ht: Trace Attempt 428	[10272,74 s]
+0.0.Ht: Trace Attempt 429	[10327,92 s]
+0.0.Ht: Trace Attempt 430	[10398,58 s]
+0.0.Ht: Trace Attempt 431	[10474,19 s]
+0.0.Ht: Trace Attempt 432	[10549,14 s]
+0.0.Ht: Trace Attempt 433	[10600,89 s]
+0.0.Ht: Trace Attempt 434	[10662,32 s]
+0.0.Ht: Trace Attempt 435	[10723,46 s]
+0.0.Ht: Trace Attempt 436	[10793,64 s]
+0.0.Ht: Trace Attempt 437	[10852,46 s]
+0.0.Ht: Trace Attempt 438	[10922,97 s]
+0.0.Ht: Trace Attempt 439	[10980,19 s]
+0.0.Ht: Trace Attempt 440	[11036,69 s]
+0.0.Ht: Trace Attempt 441	[11095,40 s]
+0.0.Ht: Trace Attempt 442	[11166,43 s]
+0.0.Ht: Trace Attempt 443	[11240,99 s]
+0.0.Ht: Trace Attempt 444	[11306,17 s]
+0.0.Ht: Trace Attempt 445	[11369,06 s]
+0.0.Ht: Trace Attempt 446	[11426,40 s]
+0.0.Ht: Trace Attempt 447	[11492,33 s]
+0.0.Ht: Trace Attempt 448	[11583,51 s]
+0.0.Ht: Trace Attempt 449	[11636,67 s]
+0.0.Ht: Trace Attempt 450	[11708,54 s]
+0.0.Ht: Trace Attempt 451	[11784,78 s]
+0.0.Ht: Trace Attempt 452	[11845,23 s]
+0.0.Ht: Trace Attempt 453	[11922,16 s]
+0.0.Ht: Trace Attempt 454	[11986,22 s]
+0.0.Ht: Trace Attempt 455	[12044,91 s]
+0.0.Ht: Trace Attempt 456	[12114,15 s]
+0.0.Ht: Trace Attempt 457	[12174,78 s]
+0.0.Ht: Trace Attempt 458	[12250,89 s]
+0.0.Ht: Trace Attempt 459	[12319,34 s]
+0.0.Ht: Trace Attempt 460	[12388,25 s]
+0.0.Ht: Trace Attempt 461	[12449,73 s]
+0.0.Ht: Trace Attempt 462	[12550,50 s]
+0.0.Ht: Trace Attempt 463	[12613,33 s]
+0.0.Ht: Trace Attempt 464	[12684,23 s]
+0.0.Ht: Trace Attempt 465	[12752,68 s]
+0.0.Ht: Trace Attempt 466	[12848,40 s]
+0.0.Ht: Trace Attempt 467	[12932,34 s]
+0.0.Ht: Trace Attempt 468	[13009,77 s]
+0.0.Ht: Trace Attempt 469	[13066,25 s]
+0.0.Ht: Trace Attempt 470	[13132,27 s]
+0.0.Ht: Trace Attempt 471	[13190,27 s]
+0.0.Ht: Trace Attempt 472	[13265,73 s]
+0.0.Ht: Trace Attempt 473	[13328,07 s]
+0.0.Ht: Trace Attempt 474	[13391,46 s]
+0.0.Ht: Trace Attempt 475	[13466,32 s]
+0.0.Ht: Trace Attempt 476	[13541,35 s]
+0.0.Ht: Trace Attempt 477	[13613,80 s]
+0.0.Ht: Trace Attempt 478	[13692,65 s]
+0.0.Ht: Trace Attempt 479	[13764,06 s]
+0.0.Ht: Trace Attempt 480	[13841,52 s]
+0.0.Ht: Trace Attempt 481	[13916,07 s]
+0.0.Ht: Trace Attempt 482	[13988,56 s]
+0.0.Ht: Trace Attempt 483	[14063,30 s]
+0.0.Ht: Trace Attempt 484	[14138,33 s]
+0.0.Ht: Trace Attempt 485	[14220,28 s]
+0.0.Ht: Trace Attempt 486	[14294,73 s]
+0.0.Ht: Trace Attempt 487	[14367,23 s]
+0.0.Ht: Trace Attempt 488	[14451,07 s]
+0.0.Ht: Trace Attempt 489	[14530,19 s]
+0.0.Ht: Trace Attempt 490	[14615,93 s]
+0.0.Ht: Trace Attempt 491	[14699,56 s]
+0.0.Ht: Trace Attempt 492	[14776,72 s]
+0.0.Ht: Trace Attempt 493	[14853,18 s]
+0.0.Ht: Trace Attempt 494	[14930,25 s]
+0.0.Ht: Trace Attempt 495	[15025,00 s]
+0.0.Ht: Trace Attempt 496	[15119,95 s]
+0.0.Ht: Trace Attempt 497	[15214,28 s]
+0.0.Ht: Trace Attempt 498	[15320,29 s]
+0.0.Ht: Trace Attempt 499	[15401,90 s]
+0.0.Ht: Trace Attempt 500	[15486,48 s]
+0.0.Ht: Trace Attempt 501	[15565,55 s]
+0.0.Ht: Trace Attempt 502	[15640,43 s]
+0.0.Ht: Trace Attempt 503	[15731,96 s]
+0.0.Ht: Trace Attempt 504	[15826,65 s]
+0.0.Ht: Trace Attempt 505	[15898,60 s]
+0.0.Ht: Trace Attempt 506	[15965,23 s]
+0.0.Ht: Trace Attempt 507	[16044,54 s]
+0.0.Ht: Trace Attempt 508	[16125,23 s]
+0.0.Ht: Trace Attempt 509	[16196,64 s]
+0.0.Ht: Trace Attempt 510	[16297,30 s]
+0.0.Ht: Trace Attempt 511	[16421,21 s]
+0.0.Ht: Trace Attempt 512	[16512,62 s]
+0.0.Ht: Trace Attempt 513	[16600,09 s]
+0.0.Ht: Trace Attempt 514	[16678,03 s]
+0.0.Ht: Trace Attempt 515	[16759,84 s]
+0.0.Ht: Trace Attempt 516	[16839,55 s]
+0.0.Ht: Trace Attempt 517	[16933,79 s]
+0.0.Ht: Trace Attempt 518	[17047,41 s]
+0.0.Ht: Trace Attempt 519	[17126,31 s]
+0.0.Ht: Trace Attempt 520	[17205,62 s]
+0.0.Ht: Trace Attempt 521	[17301,18 s]
+0.0.Ht: Trace Attempt 522	[17386,67 s]
+0.0.Ht: Trace Attempt 523	[17475,32 s]
+0.0.Ht: Trace Attempt 524	[17579,73 s]
+0.0.Ht: Trace Attempt 525	[17655,22 s]
+0.0.Ht: Trace Attempt 526	[17765,86 s]
+0.0.Ht: Trace Attempt 527	[17869,69 s]
+0.0.Ht: Trace Attempt 528	[17967,35 s]
+0.0.Ht: Trace Attempt 529	[18030,89 s]
+0.0.Ht: Trace Attempt 530	[18111,12 s]
+0.0.Ht: Trace Attempt 531	[18181,53 s]
+0.0.Ht: Trace Attempt 532	[18276,17 s]
+0.0.Ht: Trace Attempt 533	[18357,49 s]
+0.0.Ht: Trace Attempt 534	[18478,98 s]
+0.0.Ht: Trace Attempt 535	[18586,95 s]
+0.0.Ht: Trace Attempt 536	[18692,71 s]
+0.0.Ht: Trace Attempt 537	[18767,29 s]
+0.0.Ht: Trace Attempt 538	[18860,38 s]
+0.0.Ht: Trace Attempt 539	[18966,73 s]
+0.0.Ht: Trace Attempt 540	[19064,32 s]
+0.0.Ht: Trace Attempt 541	[19175,25 s]
+0.0.Ht: Trace Attempt 542	[19295,20 s]
+0.0.Ht: Trace Attempt 543	[19381,98 s]
+0.0.Ht: Trace Attempt 544	[19460,03 s]
+0.0.Ht: Trace Attempt 545	[19558,00 s]
+0.0.Ht: Trace Attempt 546	[19649,99 s]
+0.0.Ht: Trace Attempt 547	[19749,65 s]
+0.0.Ht: Trace Attempt 548	[19992,80 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 2306692 kiB, Free swap = 51483414 kiB
+0.0.Ht: Trace Attempt 549	[20599,40 s]
+0.0.Ht: Trace Attempt 550	[20906,61 s]
+0.0.Ht: Trace Attempt 551	[21099,28 s]
+0.0.Ht: Trace Attempt 552	[21256,00 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 100886066 kiB, Free swap = 38946632 kiB
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 86147474 kiB, Free swap = 38948868 kiB
+0.0.Ht: Trace Attempt 553	[21453,42 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 60062088 kiB, Free swap = 39138336 kiB
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 42496068 kiB, Free swap = 39139634 kiB
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 43004008 kiB, Free swap = 39146600 kiB
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 35194948 kiB, Free swap = 39281156 kiB
+0.0.Ht: Trace Attempt 554	[21786,89 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 26641810 kiB, Free swap = 39283058 kiB
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 24544612 kiB, Free swap = 39323666 kiB
+0.0.Ht: Trace Attempt 555	[22032,27 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 34743112 kiB, Free swap = 39407944 kiB
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 38049156 kiB, Free swap = 39408644 kiB
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 53625348 kiB, Free swap = 40243606 kiB
+0.0.Ht: Trace Attempt 556	[22325,54 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 54995232 kiB, Free swap = 40309120 kiB
+0.0.Ht: Trace Attempt 557	[22618,37 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 59184420 kiB, Free swap = 40343080 kiB
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 75720242 kiB, Free swap = 40374628 kiB
+0.0.Ht: Trace Attempt 558	[22930,33 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 58221856 kiB, Free swap = 40398930 kiB
+0.0.Ht: Trace Attempt 559	[23166,40 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 54990696 kiB, Free swap = 40442134 kiB
+0.0.Ht: Trace Attempt 560	[23450,59 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 84312328 kiB, Free swap = 40454536 kiB
+0.0.Ht: Trace Attempt 561	[23617,74 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 87179912 kiB, Free swap = 40464438 kiB
+0.0.Ht: Trace Attempt 562	[23765,23 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 104353942 kiB, Free swap = 40473408 kiB
+0.0.Ht: Trace Attempt 563	[23868,41 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 144020754 kiB, Free swap = 40898866 kiB
+0.0.Ht: Trace Attempt 564	[23993,44 s]
+0.0.Ht: Trace Attempt 565	[24105,51 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 140580704 kiB, Free swap = 40908434 kiB
+0.0.Ht: Trace Attempt 566	[24214,15 s]
+0.0.Ht: Trace Attempt 567	[24326,04 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 134646056 kiB, Free swap = 40920932 kiB
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 142825106 kiB, Free swap = 40923766 kiB
+0.0.Ht: Trace Attempt 568	[24445,80 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 109324306 kiB, Free swap = 40924466 kiB
+0.0.Ht: Trace Attempt 569	[24561,42 s]
+0.0.Ht: Trace Attempt 570	[24773,16 s]
+0.0.Ht: Trace Attempt 571	[25008,55 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 120673664 kiB, Free swap = 40932132 kiB
+0.0.Ht: Trace Attempt 572	[25294,28 s]
+0.0.Ht: Trace Attempt 573	[25577,93 s]
+0.0.Ht: Trace Attempt 574	[25845,19 s]
+0.0.Ht: Trace Attempt 575	[26170,07 s]
+0.0.Ht: Trace Attempt 576	[26503,40 s]
+0.0.Ht: Trace Attempt 577	[26780,50 s]
+0.0.Ht: Trace Attempt 578	[27078,89 s]
+0.0.Ht: Trace Attempt 579	[27315,53 s]
+0.0.Ht: Trace Attempt 580	[27463,95 s]
+0.0.Ht: Trace Attempt 581	[27596,34 s]
+0.0.Ht: Trace Attempt 582	[27721,15 s]
+0.0.Ht: Trace Attempt 583	[27839,05 s]
+0.0.Ht: Trace Attempt 584	[27971,13 s]
+0.0.Ht: Trace Attempt 585	[28095,53 s]
+0.0.Ht: Trace Attempt 586	[28243,39 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 123307040 kiB, Free swap = 41181576 kiB
+0.0.Ht: Trace Attempt 587	[28376,12 s]
+0.0.Ht: Trace Attempt 588	[28510,60 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 125313640 kiB, Free swap = 41182276 kiB
+0.0.Ht: Trace Attempt 589	[28605,48 s]
+0.0.Ht: Trace Attempt 590	[28715,42 s]
+0.0.Ht: Trace Attempt 591	[28853,36 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 287606660 kiB, Free swap = 41318034 kiB
+0.0.Ht: Trace Attempt 592	[28964,25 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 287465832 kiB, Free swap = 41321568 kiB
+0.0.Ht: Trace Attempt 593	[29074,31 s]
+0.0.Ht: Trace Attempt 594	[29177,61 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 287396182 kiB, Free swap = 41353810 kiB
+0.0.Ht: Trace Attempt 595	[29289,85 s]
+0.0.Ht: Trace Attempt 596	[29409,22 s]
+0.0.Ht: Trace Attempt 597	[29528,38 s]
+0.0.Ht: Trace Attempt 598	[29645,68 s]
+0.0.Ht: Trace Attempt 599	[29753,17 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 286733060 kiB, Free swap = 41361476 kiB
+0.0.Ht: Trace Attempt 600	[29868,59 s]
+0.0.Ht: Trace Attempt 601	[29988,84 s]
+0.0.Ht: Trace Attempt 602	[30105,43 s]
+0.0.Ht: Trace Attempt 603	[30215,45 s]
+0.0.Ht: Trace Attempt 604	[30313,21 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 286479488 kiB, Free swap = 41366912 kiB
+0.0.Ht: Trace Attempt 605	[30419,36 s]
+0.0.Ht: Trace Attempt 606	[30536,01 s]
+0.0.Ht: Trace Attempt 607	[30632,61 s]
+0.0.Ht: Trace Attempt 608	[30755,48 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 285640520 kiB, Free swap = 41371140 kiB
+0.0.Ht: Trace Attempt 609	[30861,35 s]
+0.0.Ht: Trace Attempt 610	[30965,82 s]
+0.0.Ht: Trace Attempt 611	[31072,99 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 285558034 kiB, Free swap = 41374578 kiB
+0.0.Ht: Trace Attempt 612	[31181,54 s]
+0.0.Ht: Trace Attempt 613	[31292,22 s]
+0.0.Ht: Trace Attempt 614	[31412,08 s]
+0.0.Ht: Trace Attempt 615	[31529,74 s]
+0.0.Ht: Trace Attempt 616	[31644,22 s]
+0.0.Ht: Trace Attempt 617	[31773,02 s]
+0.0.Ht: Trace Attempt 618	[31880,11 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 285214290 kiB, Free swap = 41382244 kiB
+0.0.Ht: Trace Attempt 619	[32014,21 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 278364456 kiB, Free swap = 41382244 kiB
+0.0.Ht: Trace Attempt 620	[32152,86 s]
+0.0.Ht: Trace Attempt 621	[32277,49 s]
+0.0.Ht: Trace Attempt 622	[32404,10 s]
+0.0.Ht: Trace Attempt 623	[32523,00 s]
+0.0.Ht: Trace Attempt 624	[32634,13 s]
+0.0.Ht: Trace Attempt 625	[32763,28 s]
+0.0.Ht: Trace Attempt 626	[32872,36 s]
+0.0.Ht: Trace Attempt 627	[33007,88 s]
+0.0.Ht: Trace Attempt 628	[33192,57 s]
+0.0.Ht: Trace Attempt 629	[33305,89 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 278102642 kiB, Free swap = 41390610 kiB
+0.0.Ht: Trace Attempt 630	[33421,40 s]
+0.0.Ht: Trace Attempt 631	[33553,39 s]
+0.0.Ht: Trace Attempt 632	[33671,83 s]
+0.0.Ht: Trace Attempt 633	[33780,03 s]
+0.0.Ht: Trace Attempt 634	[33902,18 s]
+0.0.Ht: Trace Attempt 635	[34026,57 s]
+0.0.Ht: Trace Attempt 636	[34145,45 s]
+0.0.Ht: Trace Attempt 637	[34271,37 s]
+0.0.Ht: Trace Attempt 638	[34425,85 s]
+0.0.Ht: Trace Attempt 639	[34564,86 s]
+0.0.Ht: Trace Attempt 640	[34692,00 s]
+0.0.Ht: Trace Attempt 641	[34816,51 s]
+0.0.Ht: Trace Attempt 642	[34939,92 s]
+0.0.Ht: Trace Attempt 643	[35071,80 s]
+0.0.Ht: Trace Attempt 644	[35205,23 s]
+0.0.Ht: Trace Attempt 645	[35335,77 s]
+0.0.Ht: Trace Attempt 646	[35461,17 s]
+0.0.Ht: Trace Attempt 647	[35583,43 s]
+0.0.Ht: Trace Attempt 648	[35714,24 s]
+0.0.Ht: Trace Attempt 649	[35840,50 s]
+0.0.Ht: Trace Attempt 650	[35987,79 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 276076100 kiB, Free swap = 41431122 kiB
+0.0.Ht: Trace Attempt 651	[36121,28 s]
+0.0.Ht: Trace Attempt 652	[36288,66 s]
+0.0.Ht: Trace Attempt 653	[36414,75 s]
+0.0.Ht: Trace Attempt 654	[36533,32 s]
+0.0.Ht: Trace Attempt 655	[36660,21 s]
+0.0.Ht: Trace Attempt 656	[36800,36 s]
+0.0.Ht: Trace Attempt 657	[36915,73 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 275318866 kiB, Free swap = 41436552 kiB
+0.0.Ht: Trace Attempt 658	[37043,93 s]
+0.0.Ht: Trace Attempt 659	[37174,63 s]
+0.0.Ht: Trace Attempt 660	[37334,07 s]
+0.0.Ht: Trace Attempt 661	[37472,69 s]
+0.0.Ht: Trace Attempt 662	[37632,21 s]
+0.0.Ht: Trace Attempt 663	[37776,08 s]
+0.0.Ht: Trace Attempt 664	[37935,75 s]
+0.0.Ht: Trace Attempt 665	[38156,16 s]
+0.0.Ht: Trace Attempt 666	[38306,03 s]
+0.0.Ht: Trace Attempt 667	[38463,02 s]
+0.0.Ht: Trace Attempt 668	[38598,07 s]
+0.0.Ht: Trace Attempt 669	[38718,57 s]
+0.0.Ht: Trace Attempt 670	[38875,76 s]
+0.0.Ht: Trace Attempt 671	[39027,54 s]
+0.0.Ht: Trace Attempt 672	[39187,63 s]
+0.0.Ht: Trace Attempt 673	[39329,49 s]
+0.0.Ht: Trace Attempt 674	[39481,08 s]
+0.0.Ht: Trace Attempt 675	[39637,72 s]
+0.0.Ht: Trace Attempt 676	[39780,14 s]
+0.0.Ht: Trace Attempt 677	[39925,37 s]
+0.0.Ht: Trace Attempt 678	[40079,92 s]
+0.0.Ht: Trace Attempt 679	[40269,78 s]
+0.0.Ht: Trace Attempt 680	[40427,90 s]
+0.0.Ht: Trace Attempt 681	[40577,95 s]
+0.0.Ht: Trace Attempt 682	[40723,76 s]
+0.0.Ht: Trace Attempt 683	[40856,11 s]
+0.0.Ht: Trace Attempt 684	[41011,13 s]
+0.0.Ht: Trace Attempt 685	[41151,25 s]
+0.0.Ht: Trace Attempt 686	[41312,75 s]
+0.0.Ht: Trace Attempt 687	[41451,76 s]
+0.0.Ht: Trace Attempt 688	[41603,99 s]
+0.0.Ht: Trace Attempt 689	[41756,04 s]
+0.0.Ht: Trace Attempt 690	[41892,79 s]
+0.0.Ht: Trace Attempt 691	[42060,24 s]
+0.0.Ht: Trace Attempt 692	[42224,88 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 268894340 kiB, Free swap = 42308416 kiB
+0.0.Ht: Trace Attempt 693	[42357,98 s]
+0.0.Ht: Trace Attempt 694	[42513,03 s]
+0.0.Ht: Trace Attempt 695	[42680,81 s]
+0.0.Ht: Trace Attempt 696	[42830,17 s]
+0.0.Ht: Trace Attempt 697	[42979,30 s]
+0.0.Ht: Trace Attempt 698	[43128,97 s]
+0.0.Ht: Trace Attempt 699	[43281,77 s]
+0.0.Ht: Trace Attempt 700	[43447,86 s]
+0.0.Ht: Trace Attempt 701	[43619,60 s]
+0.0.Ht: Trace Attempt 702	[43778,02 s]
+0.0.Ht: Trace Attempt 703	[43973,91 s]
+0.0.Ht: Trace Attempt 704	[44155,83 s]
+0.0.Ht: Trace Attempt 705	[44309,98 s]
+0.0.Ht: Trace Attempt 706	[44524,95 s]
+0.0.Ht: Trace Attempt 707	[44697,28 s]
+0.0.Ht: Trace Attempt 708	[44865,51 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 160469398 kiB, Free swap = 42341956 kiB
+0.0.Ht: Trace Attempt 709	[45052,76 s]
+0.0.Ht: Trace Attempt 710	[45221,07 s]
+0.0.Ht: Trace Attempt 711	[45414,30 s]
+0.0.Ht: Trace Attempt 712	[45628,22 s]
+0.0.Ht: Trace Attempt 713	[45789,19 s]
+0.0.Ht: Trace Attempt 714	[45964,45 s]
+0.0.Ht: Trace Attempt 715	[46142,27 s]
+0.0.Ht: Trace Attempt 716	[46311,83 s]
+0.0.Ht: Trace Attempt 717	[46493,28 s]
+0.0.Ht: Trace Attempt 718	[46663,07 s]
+0.0.Ht: Trace Attempt 719	[46849,12 s]
+0.0.Ht: Trace Attempt 720	[47027,76 s]
+0.0.Ht: Trace Attempt 721	[47205,54 s]
+0.0.Ht: Trace Attempt 722	[47383,43 s]
+0.0.Ht: Trace Attempt 723	[47576,63 s]
+0.0.Ht: Trace Attempt 724	[47740,32 s]
+0.0.Ht: Trace Attempt 725	[47895,20 s]
+0.0.Ht: Trace Attempt 726	[48114,46 s]
+0.0.Ht: Trace Attempt 727	[48297,13 s]
+0.0.Ht: Trace Attempt 728	[48478,65 s]
+0.0.Ht: Trace Attempt 729	[48652,88 s]
+0.0.Ht: Trace Attempt 730	[48820,59 s]
+0.0.Ht: Trace Attempt 731	[48994,84 s]
+0.0.Ht: Trace Attempt 732	[49205,01 s]
+0.0.Ht: Trace Attempt 733	[49372,58 s]
+0.0.Ht: Trace Attempt 734	[49553,81 s]
+0.0.Ht: Trace Attempt 735	[49727,27 s]
+0.0.Ht: Trace Attempt 736	[49908,52 s]
+0.0.Ht: Trace Attempt 737	[50085,97 s]
+0.0.Ht: Trace Attempt 738	[50253,11 s]
+0.0.Ht: Trace Attempt 739	[50429,94 s]
+0.0.Ht: Trace Attempt 740	[50614,69 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 157323606 kiB, Free swap = 42362120 kiB
+0.0.Ht: Trace Attempt 741	[50795,51 s]
+0.0.Ht: Trace Attempt 742	[50983,79 s]
+0.0.Ht: Trace Attempt 743	[51135,36 s]
+0.0.Ht: Trace Attempt 744	[51321,24 s]
+0.0.Ht: Trace Attempt 745	[51507,33 s]
+0.0.Ht: Trace Attempt 746	[51718,35 s]
+0.0.Ht: Trace Attempt 747	[51893,68 s]
+0.0.Ht: Trace Attempt 748	[52047,69 s]
+0.0.Ht: Trace Attempt 749	[52220,24 s]
+0.0.Ht: Trace Attempt 750	[52386,43 s]
+0.0.Ht: Trace Attempt 751	[52562,07 s]
+0.0.Ht: Trace Attempt 752	[52724,96 s]
+0.0.Ht: Trace Attempt 753	[52916,36 s]
+0.0.Ht: Trace Attempt 754	[53098,53 s]
+0.0.Ht: Trace Attempt 755	[53270,03 s]
+0.0.Ht: Trace Attempt 756	[53489,46 s]
+0.0.Ht: Trace Attempt 757	[53651,67 s]
+0.0.Ht: Trace Attempt 758	[53820,36 s]
+0.0.Ht: Trace Attempt 759	[53966,07 s]
+0.0.Ht: Trace Attempt 760	[54137,79 s]
+0.0.Ht: Trace Attempt 761	[54316,82 s]
+0.0.Ht: Trace Attempt 762	[54520,31 s]
+0.0.Ht: Trace Attempt 763	[54710,99 s]
+0.0.Ht: Trace Attempt 764	[54909,17 s]
+0.0.Ht: Trace Attempt 765	[55071,86 s]
+0.0.Ht: Trace Attempt 766	[55262,41 s]
+0.0.Ht: Trace Attempt 767	[55449,81 s]
+0.0.Ht: Trace Attempt 768	[55660,93 s]
+0.0.Ht: Trace Attempt 769	[55846,65 s]
+0.0.Ht: Trace Attempt 770	[56048,96 s]
+0.0.Ht: Trace Attempt 771	[56231,09 s]
+0.0.Ht: Trace Attempt 772	[56433,88 s]
+0.0.Ht: Trace Attempt 773	[56623,26 s]
+0.0.Ht: Trace Attempt 774	[56802,22 s]
+0.0.Ht: Trace Attempt 775	[56983,29 s]
+0.0.Ht: Trace Attempt 776	[57173,68 s]
+0.0.Ht: Trace Attempt 777	[57357,68 s]
+0.0.Ht: Trace Attempt 778	[57545,18 s]
+0.0.Ht: Trace Attempt 779	[57720,10 s]
+0.0.Ht: Trace Attempt 780	[57975,94 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 4260228 kiB, Free swap = 37778006 kiB
+WARNING (WPF031):  0.0.Tri: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 3286272 kiB, Free swap = 34145124 kiB
+0.0.Ht: Terminated by signal SIGKILL (@ 58450,33 s)
+0.0.Ht: Engine should be restarted (starts=1, unexpected_terminations=1)
+   Last recorded RSS memory usage: 3.80616 MiB
+   Last recorded free memory: 2.15726 MiB out of 353.317 MiB
+0.0.Ht: Restarting engine (local)
+0.0.Ht: Proofgrid shell started at 10686@optmaS1(local) jg_5212_optmaS1_1
+0: Running jobs with 9 threads on optmaS1 with 8 cores.
+0.0.Ht: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Ht: Trace Attempt  1	[0,14 s]
+0.0.Ht: Trace Attempt  2	[0,14 s]
+0.0.Ht: Trace Attempt  3	[0,14 s]
+0.0.Ht: Trace Attempt  4	[0,15 s]
+0.0.Ht: Trace Attempt  5	[0,15 s]
+0.0.Ht: Trace Attempt 373	[4,15 s]
+0.0.Ht: Trace Attempt 671	[8,15 s]
+0.0.Ht: Trace Attempt 780	[16,44 s]
+0.0.Ht: Trace Attempt 781	[1251,44 s]
+0.0.Ht: Trace Attempt 782	[2343,11 s]
+0.0.Ht: Trace Attempt 783	[2875,12 s]
+0.0.Ht: Trace Attempt 784	[3473,35 s]
+0.0.Ht: Trace Attempt 785	[3908,44 s]
+0.0.Ht: Trace Attempt 786	[4471,92 s]
+0.0.Ht: Trace Attempt 787	[4885,70 s]
+0.0.Ht: Trace Attempt 788	[5472,74 s]
+0.0.Ht: Trace Attempt 789	[6073,49 s]
+0.0.Ht: Trace Attempt 790	[6754,97 s]
+0.0.Ht: Trace Attempt 791	[7383,33 s]
+0.0.Ht: Trace Attempt 792	[7911,87 s]
+0.0.Ht: Trace Attempt 793	[8474,04 s]
+0.0.Ht: Trace Attempt 794	[8941,45 s]
+0.0.Ht: Trace Attempt 795	[9388,10 s]
+0.0.Ht: Trace Attempt 796	[9887,79 s]
+0.0.Ht: Trace Attempt 797	[10325,91 s]
+0.0.Ht: Trace Attempt 798	[10740,80 s]
+0.0.Ht: Trace Attempt 799	[11366,07 s]
+0.0.Ht: Trace Attempt 800	[12046,12 s]
+0.0.Ht: Trace Attempt 801	[12534,36 s]
+0.0.Ht: Trace Attempt 802	[13013,44 s]
+0.0.Ht: Trace Attempt 803	[13692,68 s]
+0.0.Ht: Trace Attempt 804	[14312,17 s]
+0.0.Ht: Trace Attempt 805	[14940,34 s]
+0.0.Ht: Trace Attempt 806	[15562,15 s]
+0.0.Ht: Trace Attempt 807	[16000,57 s]
+0.0.Ht: Trace Attempt 808	[16594,45 s]
+0.0.Ht: Trace Attempt 809	[17044,31 s]
+0.0.Ht: Trace Attempt 810	[17638,08 s]
+0.0.Ht: Trace Attempt 811	[18224,03 s]
+0.0.Ht: Trace Attempt 812	[18847,92 s]
+0.0.Ht: Trace Attempt 813	[19229,72 s]
+0.0.Ht: Trace Attempt 814	[19789,19 s]
+0.0.Ht: Trace Attempt 815	[20289,72 s]
+0.0.Ht: Trace Attempt 816	[20952,75 s]
+0.0.Ht: Trace Attempt 817	[21353,20 s]
+0.0.Ht: Trace Attempt 818	[21829,17 s]
+0.0.Ht: Trace Attempt 819	[22369,19 s]
+0.0.Ht: Trace Attempt 820	[22924,57 s]
+0.0.Ht: Trace Attempt 821	[23418,92 s]
+0.0.Ht: Trace Attempt 822	[24081,73 s]
+0.0.Ht: Trace Attempt 823	[24646,21 s]
+0.0.Ht: Trace Attempt 824	[25161,87 s]
+0.0.Ht: Trace Attempt 825	[25767,52 s]
+0.0.Ht: Trace Attempt 826	[26372,33 s]
+0.0.Ht: Trace Attempt 827	[26872,41 s]
+0.0.Ht: Trace Attempt 828	[27292,08 s]
+0.0.Ht: Trace Attempt 829	[27772,62 s]
+0.0.Ht: Trace Attempt 830	[28316,14 s]
+0.0.Ht: Trace Attempt 831	[28661,28 s]
+0.0.Ht: Trace Attempt 832	[29283,67 s]
+0.0.Ht: Trace Attempt 833	[29910,97 s]
+0.0.Ht: Trace Attempt 834	[30443,36 s]
+0.0.Ht: Trace Attempt 835	[31007,36 s]
+0.0.Ht: Trace Attempt 836	[31493,89 s]
+0.0.Ht: Trace Attempt 837	[32018,74 s]
+0.0.Ht: Trace Attempt 838	[32615,12 s]
+0.0.Ht: Trace Attempt 839	[33324,04 s]
+0.0.Ht: Trace Attempt 840	[33870,88 s]
+0.0.Ht: Trace Attempt 841	[34415,06 s]
+0.0.Ht: Trace Attempt 842	[34949,63 s]
+0.0.Ht: Trace Attempt 843	[35446,30 s]
+0.0.Ht: Trace Attempt 844	[36250,59 s]
+0.0.Ht: Trace Attempt 845	[36696,14 s]
+0.0.Ht: Trace Attempt 846	[37175,81 s]
+0.0.Ht: Trace Attempt 847	[37882,41 s]
+0.0.Ht: Trace Attempt 848	[38373,35 s]
+0.0.Ht: Trace Attempt 849	[38925,00 s]
+0.0.Ht: Trace Attempt 850	[39387,75 s]
+0.0.Ht: Trace Attempt 851	[39895,25 s]
+0.0.Ht: Trace Attempt 852	[40502,14 s]
+0.0.Ht: Trace Attempt 853	[40983,35 s]
+0.0.Ht: Trace Attempt 854	[41605,60 s]
+0.0.Ht: Trace Attempt 855	[42084,14 s]
+0.0.Ht: Trace Attempt 856	[42579,86 s]
+0.0.Ht: Trace Attempt 857	[43165,11 s]
+0.0.Ht: Trace Attempt 858	[43757,77 s]
+0.0.Ht: Trace Attempt 859	[44344,73 s]
+0.0.Ht: Trace Attempt 860	[45111,75 s]
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 24118290 kiB, Free swap = 22225778 kiB
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 55600146 kiB, Free swap = 24384104 kiB
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 39075876 kiB, Free swap = 24388936 kiB
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 67454568 kiB, Free swap = 24408406 kiB
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 51987556 kiB, Free swap = 24418070 kiB
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 6588434 kiB, Free swap = 24446784 kiB
+WARNING (WPF031):  0.0.Ht: Major page faults detected. Host "optmaS1" might be low on memory.
+    Free memory = 2384982 kiB, Free swap = 20993668 kiB
+0.0.Ht: Terminated by signal SIGKILL (@ 104915,84 s)
+0.0.Ht: Engine should be restarted (starts=2, unexpected_terminations=2)
+   Last recorded RSS memory usage: 3.05739 MiB
+   Last recorded free memory: 5.56644 MiB out of 353.317 MiB
+0.0.Ht: Restarting engine (local)
+0.0.Ht: Proofgrid shell started at 26135@optmaS1(local) jg_5212_optmaS1_1
+0: Running jobs with 9 threads on optmaS1 with 8 cores.
+0.0.Ht: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Ht: Trace Attempt  1	[0,16 s]
+0.0.Ht: Trace Attempt  2	[0,17 s]
+0.0.Ht: Trace Attempt  3	[0,18 s]
+0.0.Ht: Trace Attempt  4	[0,19 s]
+0.0.Ht: Trace Attempt  5	[0,21 s]
+0.0.Ht: Trace Attempt 90	[4,23 s]
+0.0.Ht: Trace Attempt 167	[8,41 s]
+0.0.Ht: Trace Attempt 257	[12,44 s]
+0.0.Ht: Trace Attempt 333	[17,55 s]
+0.0.Ht: Trace Attempt 395	[21,68 s]
+0.0.Ht: Trace Attempt 494	[25,70 s]
+0.0.Ht: Trace Attempt 575	[29,73 s]
+0.0.Ht: Trace Attempt 659	[33,77 s]
+0.0.Ht: Trace Attempt 692	[37,81 s]
+0.0.Ht: Trace Attempt 781	[44,67 s]
+0.0.Ht: Trace Attempt 860	[110,35 s]
+0.0.Ht: Terminated by signal SIGKILL (@ 105185,57 s)
+0.0.Ht: Engine should be restarted (starts=3, unexpected_terminations=3)
+   Last recorded RSS memory usage: 4.51822 MiB
+   Last recorded free memory: 2.21661 MiB out of 353.317 MiB
+0.0.Ht: Restarting engine (local)
+0.0.Ht: Proofgrid shell started at 31039@optmaS1(local) jg_5212_optmaS1_1
+0: Running jobs with 9 threads on optmaS1 with 8 cores.
+0.0.Ht: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Ht: Trace Attempt  1	[0,52 s]
+0.0.Ht: Trace Attempt  2	[0,53 s]
+0.0.Ht: Trace Attempt  3	[0,53 s]
+0.0.Ht: Trace Attempt  4	[0,55 s]
+0.0.Ht: Trace Attempt  5	[0,57 s]
+0.0.Ht: Trace Attempt 114	[4,59 s]
+0.0.Ht: Trace Attempt 200	[8,61 s]
+0.0.Ht: Trace Attempt 288	[12,79 s]
+0.0.Ht: Trace Attempt 344	[16,83 s]
+0.0.Ht: Trace Attempt 413	[20,86 s]
+0.0.Ht: Trace Attempt 534	[24,88 s]
+0.0.Ht: Trace Attempt 602	[28,92 s]
+0.0.Ht: Trace Attempt 665	[34,85 s]
+0.0.Ht: Trace Attempt 764	[38,89 s]
+0.0.Ht: Trace Attempt 797	[42,91 s]
+0.0.Ht: Trace Attempt 859	[44,98 s]
+0.0.Ht: Terminated by signal SIGKILL (@ 105276,61 s)
+0.0.Ht: Engine should be restarted (starts=4, unexpected_terminations=4)
+   Last recorded RSS memory usage: 1.34296 MiB
+   Last recorded free memory: 50.255 MiB out of 353.317 MiB
+0.0.Ht: Restarting engine (local)
+0.0.Ht: Proofgrid shell started at 32340@optmaS1(local) jg_5212_optmaS1_1
+0: Running jobs with 9 threads on optmaS1 with 8 cores.
+0.0.Ht: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Ht: Trace Attempt  1	[0,57 s]
+0.0.Ht: Trace Attempt  2	[0,57 s]
+0.0.Ht: Trace Attempt  3	[0,58 s]
+0.0.Ht: Trace Attempt  4	[0,61 s]
+0.0.Ht: Trace Attempt  5	[0,61 s]
+0.0.Ht: Trace Attempt 112	[4,63 s]
+0.0.Ht: Trace Attempt 198	[8,64 s]
+0.0.Ht: Trace Attempt 290	[12,69 s]
+0.0.Ht: Trace Attempt 348	[16,71 s]
+0.0.Ht: Trace Attempt 418	[20,72 s]
+0.0.Ht: Trace Attempt 517	[24,74 s]
+0.0.Ht: Trace Attempt 598	[28,78 s]
+0.0.Ht: Trace Attempt 665	[34,79 s]
+0.0.Ht: Trace Attempt 778	[38,82 s]
+0.0.Ht: Trace Attempt 802	[42,83 s]
+0.0.Ht: Trace Attempt 859	[44,80 s]
+0.0.Ht: Terminated by signal SIGKILL (@ 105369,32 s)
+0.0.Ht: Engine should be restarted (starts=5, unexpected_terminations=5)
+   Last recorded RSS memory usage: 1.6228 MiB
+   Last recorded free memory: 34.2118 MiB out of 353.317 MiB
+0.0.Ht: Restarting engine (local)
+0.0.Ht: Proofgrid shell started at 1185@optmaS1(local) jg_5212_optmaS1_1
+0: Running jobs with 9 threads on optmaS1 with 8 cores.
+0.0.Ht: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Ht: Trace Attempt  1	[0,30 s]
+0.0.Ht: Trace Attempt  2	[0,30 s]
+0.0.Ht: Trace Attempt  3	[0,31 s]
+0.0.Ht: Trace Attempt  4	[0,34 s]
+0.0.Ht: Trace Attempt  5	[0,35 s]
+0.0.Ht: Trace Attempt 103	[4,37 s]
+0.0.Ht: Trace Attempt 203	[8,67 s]
+0.0.Ht: Trace Attempt 299	[12,68 s]
+0.0.Ht: Trace Attempt 380	[16,73 s]
+0.0.Ht: Trace Attempt 446	[20,74 s]
+0.0.Ht: Trace Attempt 565	[24,76 s]
+0.0.Ht: Trace Attempt 645	[28,77 s]
+0.0.Ht: Trace Attempt 687	[32,80 s]
+0.0.Ht: Trace Attempt 781	[38,80 s]
+0.0.Ht: Trace Attempt 859	[41,04 s]
+0.0.Ht: Terminated by signal SIGKILL (@ 105460,31 s)
+0.0.Ht: Engine should be restarted (starts=6, unexpected_terminations=6)
+   Last recorded RSS memory usage: 1.6228 MiB
+   Last recorded free memory: 35.3849 MiB out of 353.317 MiB
+0.0.Ht: Restarting engine (local)
+0.0.Ht: Proofgrid shell started at 2656@optmaS1(local) jg_5212_optmaS1_1
+0: Running jobs with 9 threads on optmaS1 with 8 cores.
+0.0.Ht: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Ht: Trace Attempt  1	[0,52 s]
+0.0.Ht: Trace Attempt  2	[0,52 s]
+0.0.Ht: Trace Attempt  3	[0,53 s]
+0.0.Ht: Trace Attempt  4	[0,55 s]
+0.0.Ht: Trace Attempt  5	[0,57 s]
+0.0.Ht: Trace Attempt 99	[4,57 s]
+0.0.Ht: Trace Attempt 190	[8,59 s]
+0.0.Ht: Trace Attempt 283	[12,61 s]
+0.0.Ht: Trace Attempt 333	[16,66 s]
+0.0.Ht: Trace Attempt 416	[20,70 s]
+0.0.Ht: Trace Attempt 533	[24,70 s]
+0.0.Ht: Trace Attempt 613	[28,72 s]
+0.0.Ht: Trace Attempt 665	[33,70 s]
+0.0.Ht: Trace Attempt 761	[37,73 s]
+0.0.Ht: Trace Attempt 781	[41,88 s]
+0.0.Ht: Trace Attempt 859	[45,06 s]
+0.0.Ht: Out of memory. [20,18 s]
+0.0.Ht: Exited with Success (@ 105542,57 s)
+0.0.Ht: Engine should be restarted (starts=7, unexpected_terminations=7)
+   Last recorded RSS memory usage: 3.06221 MiB
+   Last recorded free memory: 2.26405 MiB out of 353.317 MiB
+0.0.Ht: Restarting engine (local)
+0.0.Ht: Proofgrid shell started at 3924@optmaS1(local) jg_5212_optmaS1_1
+0: Running jobs with 9 threads on optmaS1 with 8 cores.
+0.0.Ht: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Ht: Trace Attempt  1	[0,08 s]
+0.0.Ht: Trace Attempt  2	[0,08 s]
+0.0.Ht: Trace Attempt  3	[0,09 s]
+0.0.Ht: Trace Attempt  4	[0,10 s]
+0.0.Ht: Trace Attempt  5	[0,12 s]
+0.0.Ht: Trace Attempt 91	[4,15 s]
+0.0.Ht: Trace Attempt 167	[8,23 s]
+0.0.Ht: Trace Attempt 263	[12,26 s]
+0.0.Ht: Trace Attempt 333	[17,29 s]
+0.0.Ht: Trace Attempt 395	[21,34 s]
+0.0.Ht: Trace Attempt 496	[25,36 s]
+0.0.Ht: Trace Attempt 579	[29,37 s]
+0.0.Ht: Trace Attempt 663	[33,39 s]
+0.0.Ht: Trace Attempt 680	[37,40 s]
+0.0.Ht: Trace Attempt 780	[41,44 s]
+0.0.Ht: Trace Attempt 804	[45,49 s]
+0.0.Ht: Trace Attempt 859	[47,72 s]
+0.0.Ht: Terminated by signal SIGKILL (@ 105639,24 s)
+0.0.Ht: Engine should be restarted (starts=8, unexpected_terminations=8)
+   Last recorded RSS memory usage: 1.62456 MiB
+   Last recorded free memory: 37.0176 MiB out of 353.317 MiB
+0.0.Ht: Restarting engine (local)
+0.0.Ht: Proofgrid shell started at 5428@optmaS1(local) jg_5212_optmaS1_1
+0: Running jobs with 9 threads on optmaS1 with 8 cores.
+0.0.Ht: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Ht: Trace Attempt  1	[0,27 s]
+0.0.Ht: Trace Attempt  2	[0,27 s]
+0.0.Ht: Trace Attempt  3	[0,27 s]
+0.0.Ht: Trace Attempt  4	[0,29 s]
+0.0.Ht: Trace Attempt  5	[0,30 s]
+0.0.Ht: Trace Attempt 108	[4,34 s]
+0.0.Ht: Trace Attempt 191	[8,35 s]
+0.0.Ht: Trace Attempt 273	[12,35 s]
+0.0.Ht: Trace Attempt 333	[16,70 s]
+0.0.Ht: Trace Attempt 413	[20,72 s]
+0.0.Ht: Trace Attempt 522	[24,73 s]
+0.0.Ht: Trace Attempt 600	[28,75 s]
+0.0.Ht: Trace Attempt 665	[34,25 s]
+0.0.Ht: Trace Attempt 780	[38,26 s]
+0.0.Ht: Trace Attempt 823	[42,27 s]
+0.0.Ht: Trace Attempt 859	[43,58 s]
+0.0.Ht: Terminated by signal SIGKILL (@ 105730,11 s)
+0.0.Ht: Engine should be restarted (starts=9, unexpected_terminations=9)
+   Last recorded RSS memory usage: 1.35983 MiB
+   Last recorded free memory: 36.3416 MiB out of 353.317 MiB
+0.0.Ht: Restarting engine (local)
+0.0.Ht: Proofgrid shell started at 6817@optmaS1(local) jg_5212_optmaS1_1
+0: Running jobs with 9 threads on optmaS1 with 8 cores.
+0.0.Ht: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Ht: Trace Attempt  1	[0,10 s]
+0.0.Ht: Trace Attempt  2	[0,11 s]
+0.0.Ht: Trace Attempt  3	[0,11 s]
+0.0.Ht: Trace Attempt  4	[0,14 s]
+0.0.Ht: Trace Attempt  5	[0,15 s]
+0.0.Ht: Trace Attempt 102	[4,17 s]
+0.0.Ht: Trace Attempt 179	[8,18 s]
+0.0.Ht: Trace Attempt 279	[12,20 s]
+0.0.Ht: Trace Attempt 346	[16,22 s]
+0.0.Ht: Trace Attempt 427	[20,23 s]
+0.0.Ht: Trace Attempt 542	[24,23 s]
+0.0.Ht: Trace Attempt 613	[28,24 s]
+0.0.Ht: Trace Attempt 665	[33,69 s]
+0.0.Ht: Trace Attempt 774	[37,72 s]
+0.0.Ht: Trace Attempt 804	[41,74 s]
+0.0.Ht: Trace Attempt 859	[43,56 s]
+0.0.Ht: Terminated by signal SIGKILL (@ 105822,41 s)
+0.0.Ht: Engine should be restarted (starts=10, unexpected_terminations=10)
+   Last recorded RSS memory usage: 1.37235 MiB
+   Last recorded free memory: 49.2701 MiB out of 353.317 MiB
+0.0.Ht: Restarting engine (local)
+0.0.Ht: Proofgrid shell started at 8295@optmaS1(local) jg_5212_optmaS1_1
+0: Running jobs with 9 threads on optmaS1 with 8 cores.
+0.0.Ht: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Ht: Trace Attempt  1	[0,59 s]
+0.0.Ht: Trace Attempt  2	[0,59 s]
+0.0.Ht: Trace Attempt  3	[0,59 s]
+0.0.Ht: Trace Attempt  4	[0,63 s]
+0.0.Ht: Trace Attempt  5	[0,65 s]
+0.0.Ht: Trace Attempt 104	[4,67 s]
+0.0.Ht: Trace Attempt 193	[8,68 s]
+0.0.Ht: Trace Attempt 296	[12,92 s]
+0.0.Ht: Trace Attempt 379	[16,93 s]
+0.0.Ht: Trace Attempt 468	[20,93 s]
+0.0.Ht: Trace Attempt 573	[25,05 s]
+0.0.Ht: Trace Attempt 665	[31,04 s]
+0.0.Ht: Trace Attempt 781	[37,55 s]
+0.0.Ht: Trace Attempt 859	[40,63 s]
+0.0.Ht: Terminated by signal SIGKILL (@ 105929,87 s)
+0.0.Ht: ERROR (EPF089): This engine job has stopped and been automatically restarted "proofgrid_restarts"=10 times and will not be automatically restarted anymore. Investigate why it might have stopped so many times (memout, or ProofGrid setup problem maybe?).
+INFO (IIM002): *** Stopping all proof jobs ***
+INFO (IPF144): 0: Initiating shutdown of proof [120051,37]
+0.0.Tri: Stopped processing property "property:0"	[120050,26 s].
+0.0.Tri: Interrupted. [15,88 s]
+0.0.Tri: Exited with Success (@ 120052,54 s)
+0: ProofGrid usable level: 0
+0: --------------------------------------------------------------
+ProofGrid Summary
+--------------------------------------------------------------
+     engines started                               :     2
+     engine jobs started                           :     2
+     unexpected terminations                       :    11
+     times jobs ran out of memory                  :     1
+     times jobs stopped due to restart limit       :     1
+     jobs where 1 minute load exceeded core count  :     2
+     jobs where 5 minute load exceeded core count  :     2
+     jobs where 15 minute load exceeded core count :     2
+
+    Average time in state (seconds)
+    ------------------------------------------------------
+    Engine  Pending     Running        Dead    Utilization
+    ------------------------------------------------------
+    Tri        0.20   120052.30        0.00      100.00 %
+     Ht       66.98   105858.81        1.04       99.94 %
+    all       33.59   112955.56        0.52       99.97 %
+
+    Data read    : 2.40 MiB
+    Data written : 36.13 kiB
+
+0: All pending notifications were processed.
+INFO (IPM007): "prove" command stopped.
+
+==============================================================
+SUMMARY
+==============================================================
+           Properties Considered              : 3
+                 assertions                   : 1
+                  - proven                    : 0 (0%)
+                  - bounded_proven (user)     : 0 (0%)
+                  - bounded_proven (auto)     : 0 (0%)
+                  - marked_proven             : 0 (0%)
+                  - cex                       : 0 (0%)
+                  - ar_cex                    : 0 (0%)
+                  - undetermined              : 1 (100%)
+                  - unknown                   : 0 (0%)
+                  - error                     : 0 (0%)
+                 covers                       : 2
+                  - unreachable               : 0 (0%)
+                  - bounded_unreachable (user): 0 (0%)
+                  - covered                   : 2 (100%)
+                  - ar_covered                : 0 (0%)
+                  - undetermined              : 0 (0%)
+                  - unknown                   : 0 (0%)
+                  - error                     : 0 (0%)
+Evaluating 'get_property_list -include {status {cex unreachable}} -task func'. expected: ''
+0,3 seconds
+9679 microseconds per iteration
+INFO (IPL005): Received request to exit from the console.
+INFO: Waiting for proof threads to stop...
+INFO: Proof threads stopped.

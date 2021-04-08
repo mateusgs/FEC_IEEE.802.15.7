@@ -1,0 +1,11 @@
+set_isolation ISO_ENCODER -domain VPFE/PD_VPFE\
+	-elements {VPFE/o_valid VPFE/o_in_ready}\
+	-clamp_value 0\
+	-isolation_signal VPFC/PMC/o_iso_enc\
+	-isolation_supply_set SS_AON
+
+set_isolation ISO_DECODER -domain VPFD/PD_VPFD\
+	-elements {VPFD/o_valid VPFD/o_in_ready}\
+	-clamp_value 0\
+	-isolation_signal VPFC/PMC/o_iso_dec\
+	-isolation_supply_set SS_AON

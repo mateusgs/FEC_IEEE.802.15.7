@@ -1,0 +1,17 @@
+create_supply_port vdd
+create_supply_net vdd
+connect_supply_net vdd -ports vdd
+
+create_supply_port gnd
+create_supply_net gnd
+connect_supply_net gnd -ports gnd
+
+create_supply_net vdd_ps_fec_rs_15_4
+create_supply_set SS_RS_ENCODER_15_4 -function {power vdd_ps_fec_rs_15_4}\
+				      -function {ground gnd}
+
+create_power_domain PD_RS_ENCODER_15_4 -supply {primary SS_RS_ENCODER_15_4} -include_scope
+
+add_power_state PD_RS_ENCODER_15_4.primary -supply\
+	-state {ON -simstate NORMAL -supply_expr { power == {FULL_ON, 0.8} && ground == {FULL_ON, 0.0}}}\
+	-state {OFF -simstate CORRUPT -supply_expr { power == OFF || ground == OFF}}

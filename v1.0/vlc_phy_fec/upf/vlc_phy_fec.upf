@@ -1,0 +1,27 @@
+create_supply_port vdd
+create_supply_net vdd
+connect_supply_net vdd -ports vdd
+
+create_supply_port gnd
+create_supply_net gnd
+connect_supply_net gnd -ports gnd
+
+create_supply_set SS_AON -function {power vdd}\
+                         -function {ground gnd}
+
+create_power_domain PD_AON -supply {primary SS_AON} -include_scope
+
+add_power_state PD_AON.primary -supply\
+	-state {ON -simstate NORMAL -supply_expr { power == {FULL_ON, 0.8} && ground == {FULL_ON, 0.0}}}\
+	-state {OFF -simstate CORRUPT -supply_expr { power == OFF || ground == OFF}}
+	
+connect_supply_net vdd -ports VPFE/vdd
+connect_supply_net gnd -ports VPFE/gnd
+load_upf vlc_phy_fec_encoder.upf -scope VPFE
+
+connect_supply_net vdd -ports VPFD/vdd
+connect_supply_net gnd -ports VPFD/gnd
+load_upf vlc_phy_fec_decoder.upf -scope VPFD
+
+load_upf isolation_strategies.upf
+load_upf power_switches.upf

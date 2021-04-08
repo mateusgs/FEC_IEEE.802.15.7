@@ -1,0 +1,83 @@
+2020-08-07 23:54:44.245671 (26679) main____ INFO    ----------------------------------------
+2020-08-07 23:54:44.245749 (26679) main____ INFO    JasperGold version info
+2020-08-07 23:54:44.245758 (26679) main____ INFO      tool      : JasperGold 2019.06
+2020-08-07 23:54:44.245767 (26679) main____ INFO      version   : 2019.06p001 64 bits
+2020-08-07 23:54:44.245773 (26679) main____ INFO      build date: 2019.08.01 18:19:57 PDT
+2020-08-07 23:54:44.245778 (26679) main____ INFO    ----------------------------------------
+2020-08-07 23:54:44.245782 (26679) main____ INFO    Runtime info:
+2020-08-07 23:54:44.245787 (26679) main____ INFO      platform  : Linux 3.10.0-1127.13.1.el7.x86_64 x86_64
+2020-08-07 23:54:44.245794 (26679) main____ INFO      hostname  : optmaS1
+2020-08-07 23:54:44.245798 (26679) main____ INFO      pid       : 26679
+2020-08-07 23:54:44.245803 (26679) main____ INFO      arguments : '-style' 'windows' 't.tcl' '-proj' './multi'
+2020-08-07 23:54:44.245807 (26679) main____ INFO    ----------------------------------------
+2020-08-07 23:54:44.245811 (26679) main____ INFO    System resource limits info:
+2020-08-07 23:54:44.245815 (26679) main____ INFO      virtual memory: unlimited
+2020-08-07 23:54:44.245820 (26679) main____ INFO      cpu time      : unlimited
+2020-08-07 23:54:44.245835 (26679) main____ INFO      stack size    : 8388608 B
+2020-08-07 23:54:44.245841 (26679) main____ INFO      core file size: 0 B
+2020-08-07 23:54:44.245851 (26679) main____ INFO      open files    : 1024
+2020-08-07 23:54:44.245856 (26679) main____ INFO      file size     : unlimited
+2020-08-07 23:54:44.245860 (26679) main____ INFO    ----------------------------------------
+2020-08-07 23:54:44.245864 (26679) main____ INFO    Memory statistics:
+2020-08-07 23:54:44.245870 (26679) main____ INFO      total physical memory  : 16151344 kB
+2020-08-07 23:54:44.245874 (26679) main____ INFO      free physical memory   : 3306368 kB
+2020-08-07 23:54:44.245878 (26679) main____ INFO      committed address space: 14787672 kB
+2020-08-07 23:54:44.245882 (26679) main____ INFO    ----------------------------------------
+2020-08-07 23:54:44.245905 (26679) main____ INFO    Important environment variables:
+2020-08-07 23:54:44.245914 (26679) main____ INFO      CDS_LIC_FILE   : '5280@150.164.33.32'
+2020-08-07 23:54:44.245920 (26679) main____ INFO      DISPLAY        : ':51.0'
+2020-08-07 23:54:44.245926 (26679) main____ INFO      LM_LICENSE_FILE: '5280@150.164.33.32'
+2020-08-07 23:54:44.245930 (26679) main____ INFO    ----------------------------------------
+2020-08-07 23:54:44.246728 (26679) lic_core INFO    Initializing license system ...
+2020-08-07 23:54:44.247579 (26679) lic_core INFO    ... license system initialized.
+2020-08-07 23:54:44.248868 (26679) lic__man INFO    Claim 'main' for <ui>.
+2020-08-07 23:54:44.248936 (26679) lic_core INFO    (1) checking out 'jasper_interactive' ...
+2020-08-07 23:54:44.262579 (26679) lic_core INFO    ... (1) checkout succeeded
+2020-08-07 23:54:44.262699 (26679) lic__man INFO    Claim 'fpv' for <ui>.
+2020-08-07 23:54:44.262733 (26679) lic_core INFO    (2) checking out 'jasper_fpv' ...
+2020-08-07 23:54:44.270966 (26679) lic_core INFO    ... (2) checkout succeeded
+2020-08-07 23:54:45.241700 (26679) lic__man INFO    Claim 'fpv' for <ui>.
+2020-08-07 23:54:45.452162 (26679) lic__man INFO    Unclaim 'fpv' for <ui>.
+2020-08-07 23:54:45.452220 (26679) lic__man INFO    Claim 'fpv' for <ui>.
+2020-08-07 23:54:45.458134 (26679) session_ INFO    Starting analysis session with session id 'session_0' (launcher: <local>) ...
+2020-08-07 23:54:45.459818 (26679) session_ INFO    Analysis session with session id 'session_0' started (pid: 26707)
+2020-08-07 23:54:48.284176 (26679) session_ INFO    Analysis session 'session_0' connected to the console (host: 127.0.0.1:44066)
+2020-08-07 23:54:49.055089 (26679) lic__man INFO    Unclaim everything for 'session_0'.
+2020-08-07 23:54:49.090078 (26679) lic__man INFO    Unclaim everything for 'session_0'.
+2020-08-07 23:54:50.139241 (26679) lic__man INFO    Unclaim everything for 'session_0'.
+2020-08-07 23:54:50.347344 (26679) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2020-08-07 23:55:18.238315 (26679) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2020-08-07 23:55:18.656890 (26679) lic__man INFO    Unclaim everything for 'session_0'.
+2020-08-07 23:55:19.595979 (26679) lic__man INFO    Unclaim everything for 'session_0'.
+2020-08-07 23:55:19.736039 (26679) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2020-08-07 23:56:09.920949 (26679) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2020-08-07 23:56:10.209245 (26679) lic__man INFO    Unclaim everything for 'session_0'.
+2020-08-07 23:56:11.132988 (26679) lic__man INFO    Unclaim everything for 'session_0'.
+2020-08-07 23:56:11.221709 (26679) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2020-08-07 23:56:38.065139 (26679) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2020-08-07 23:56:38.303918 (26679) lic__man INFO    Unclaim everything for 'session_0'.
+2020-08-07 23:56:39.267592 (26679) lic__man INFO    Unclaim everything for 'session_0'.
+2020-08-07 23:56:39.389273 (26679) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2020-08-07 23:56:59.062550 (26679) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2020-08-07 23:56:59.379079 (26679) lic__man INFO    Unclaim everything for 'session_0'.
+2020-08-07 23:57:00.316180 (26679) lic__man INFO    Unclaim everything for 'session_0'.
+2020-08-07 23:57:00.415067 (26679) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2020-08-07 23:57:01.193853 (26679) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2020-08-07 23:57:01.453966 (26679) lic__man INFO    Unclaim everything for 'session_0'.
+2020-08-07 23:57:02.390406 (26679) lic__man INFO    Unclaim everything for 'session_0'.
+2020-08-07 23:57:02.501911 (26679) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2020-08-07 23:57:03.191162 (26679) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2020-08-07 23:57:03.420019 (26679) lic__man INFO    Unclaim everything for 'session_0'.
+2020-08-07 23:59:06.201914 (26679) lic__man INFO    Unclaim everything for 'session_0'.
+2020-08-07 23:59:06.694780 (26679) lic__man INFO    Unclaim everything for 'session_0'.
+2020-08-07 23:59:12.448540 (26679) lic__man INFO    Unclaim everything for 'session_0'.
+2020-08-07 23:59:13.854409 (26679) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2020-08-08 00:02:43.186424 (26679) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2020-08-08 00:02:45.096996 (26679) lic__man INFO    Unclaim everything for 'session_0'.
+2020-08-08 00:02:51.230007 (26679) lic__man INFO    Unclaim everything for 'session_0'.
+2020-08-08 00:02:51.951910 (26679) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2020-08-08 00:03:15.369453 (26679) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2020-08-08 00:03:16.866149 (26679) lic__man INFO    Unclaim everything for 'session_0'.
+2020-08-08 00:03:20.393205 (26679) main____ INFO    About to exit: requested from GUI
+2020-08-08 00:03:21.642195 (26679) session_ INFO    Analysis session 'session_0' disconnected.
+2020-08-08 00:03:21.770222 (26679) main____ INFO    Exiting with status 0.

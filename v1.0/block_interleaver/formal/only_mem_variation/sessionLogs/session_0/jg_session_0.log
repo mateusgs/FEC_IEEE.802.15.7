@@ -1,0 +1,1618 @@
+#----------------------------------------
+# JasperGold Version Info
+# tool      : JasperGold 2019.06
+# platform  : Linux 3.10.0-1127.13.1.el7.x86_64
+# version   : 2019.06p001 64 bits
+# build date: 2019.08.01 18:19:57 PDT
+#----------------------------------------
+# started Sat Aug 08 17:08:28 BRT 2020
+# hostname  : optmaS1
+# pid       : 23510
+# arguments : '-label' 'session_0' '-console' 'optmaS1:35898' '-style' 'windows' '-data' 'AQAAADx/////AAAAAAAAA3oBAAAAEABMAE0AUgBFAE0ATwBWAEU=' '-proj' '/home/Mateus/workspace/UFMG_digital_design/block_interleaver/formal/only_mem_variation/sessionLogs/session_0' '-init' '-hidden' '/home/Mateus/workspace/UFMG_digital_design/block_interleaver/formal/only_mem_variation/.tmp/.initCmds.tcl' 't.tcl'
+
+Any disclosure about the Cadence Design Systems software or its use
+model to any third party violates the written Non-Disclosure Agreement
+between Cadence Design Systems, Inc. and the customer.
+
+THIS SOFTWARE CONTAINS CONFIDENTIAL INFORMATION AND TRADE SECRETS OF
+CADENCE DESIGN SYSTEMS, INC. USE, DISCLOSURE, OR REPRODUCTION IS
+PROHIBITED WITHOUT THE PRIOR EXPRESS WRITTEN PERMISSION OF CADENCE
+DESIGN SYSTEMS, INC.
+
+Copyright (C) 2000-2019 Cadence Design Systems, Inc. All Rights
+Reserved.  Unpublished -- rights reserved under the copyright laws of
+the United States.
+
+This product includes software developed by others and redistributed
+according to license agreement. See doc/third_party_readme.txt for
+further details.
+
+RESTRICTED RIGHTS LEGEND
+
+Use, duplication, or disclosure by the Government is subject to
+restrictions as set forth in subparagraph (c) (1) (ii) of the Rights in
+Technical Data and Computer Software clause at DFARS 252.227-7013 or
+subparagraphs (c) (1) and (2) of Commercial Computer Software -- Restricted
+Rights at 48 CFR 52.227-19, as applicable.
+
+
+                          Cadence Design Systems, Inc. 
+                          2655 Seely Avenue
+                          San Jose, CA 95134
+                          Phone: 408.943.1234
+
+For technical assistance visit http://support.cadence.com.
+
+JasperGold Apps Analysis Session - /home/Mateus/workspace/UFMG_digital_design/block_interleaver/formal/only_mem_variation/sessionLogs/session_0
+
+/home/Mateus/workspace/UFMG_digital_design/block_interleaver/formal/only_mem_variation/jg.log
+INFO: successfully checked out licenses "jasper_interactive" and "jasper_fpv".
+INFO: reading configuration file "/home/Mateus/.config/jasper/jaspergold.conf".
+% clear -all
+INFO (IPF121): Cleared environment completely for new design analysis.
+% set_elaborate_single_run_mode off
+% 
+% proc dut_compilation {MEM_SIZE ROW_NUM WIDTH INTERLEAVER_MODE COMPILATION_MODE} {
+	analyze -vhdl08 -L GENERIC_TYPES ../../generic_components/rtl/generic_types.vhd
+	analyze -vhdl08 -L GENERIC_FUNCTIONS ../../generic_components/rtl/generic_functions.vhd
+	analyze -vhdl08 -L GENERIC_COMPONENTS ../../generic_components/rtl/generic_components.vhd
+	analyze -vhdl08 -L BLOCK_INTERLEAVER_COMPONENTS ../rtl/block_interleaver_components.vhd
+	analyze -vhdl08 ../rtl/block_interleaver.vhd\
+					../rtl/rectangular_interleaver.vhd\
+					../rtl/interleaver_controller.vhd\
+					../rtl/interleaver_data_path.vhd\
+					../rtl/block_interleaver_components/flag_signals_generator.vhd\
+					../rtl/block_interleaver_components/m2D_index_counter.vhd\
+					../rtl/block_interleaver_components/wr_rd_status_selector.vhd\
+					../rtl/rectangular_deinterleaver.vhd\
+					../rtl/deinterleaver_data_path.vhd\
+					../rtl/block_interleaver_components/simplified_m2D_index_counter.vhd\
+					../rtl/block_interleaver_components/m2D_index_counter_core.vhd\
+					../rtl/block_interleaver_components/wr_rd_status_selector.vhd\
+					../../generic_components/rtl/adder.vhd\
+					../../generic_components/rtl/single_port_2D_ram.vhd\
+					../../generic_components/rtl/single_port_linear_ram.vhd\
+					../../generic_components/rtl/half_subtractor_unit.vhd\
+					../../generic_components/rtl/decrementer.vhd\
+					../../generic_components/rtl/half_adder_unit.vhd\
+					../../generic_components/rtl/incrementer.vhd\
+					../../generic_components/rtl/up_down_counter.vhd\
+					../../generic_components/rtl/sync_ld_dff.vhd\
+					../../generic_components/rtl/comparator.vhd
+	if {$COMPILATION_MODE == "DEINTER_FUNCTIONAL"} {
+		analyze -vhdl08 rtl/block_interleaver_func_verification_model.vhd
+		elaborate -vhdl -top block_interleaver_func_verification_model\
+			-parameter NUMBER_OF_ELEMENTS $MEM_SIZE\
+			-parameter NUMBER_OF_LINES $ROW_NUM\
+			-parameter WORD_LENGTH $WIDTH\
+			-bbox_a 900000
+	} elseif {$COMPILATION_MODE == "INTER_FUNCTIONAL"} {
+		analyze -sv09 block_interleaver_func_fv.sv
+		elaborate -vhdl -top block_interleaver\
+			-parameter NUMBER_OF_ELEMENTS $MEM_SIZE\
+			-parameter NUMBER_OF_LINES $ROW_NUM\
+			-parameter WORD_LENGTH $WIDTH\
+			-parameter MODE $INTERLEAVER_MODE\
+			-bbox_a 900000
+	} elseif {$COMPILATION_MODE == "INTER_DEINTER_RESET_AND_INT_CONTROL"} {
+		analyze -sv09 block_deint_int_reset_int_ctrl_fv.sv
+		elaborate -vhdl -top block_interleaver\
+			-parameter NUMBER_OF_ELEMENTS $MEM_SIZE\
+			-parameter NUMBER_OF_LINES $ROW_NUM\
+			-parameter WORD_LENGTH $WIDTH\
+			-parameter MODE $INTERLEAVER_MODE\
+			-bbox_a 900000
+	}
+}
+% 
+% 
+% proc formal_setup {} {
+	clock clk
+	reset rst
+}
+% 
+% proc add_control_constraints {MEM_SIZE} {
+	set_property_compile_time_limit 30s
+	#Forcing i_start_cw to 1 for the first cycle
+	assume -bound 1 i_start_cw
+	assume {i_start_cw |=> not i_start_cw} 
+	assume {not i_start_cw |=> not i_start_cw} 
+
+	#Forcing i_valid to be '1' for the max number of cycles
+	set bound [expr {$MEM_SIZE - 1}]
+	set CMD "assume \{i_start_cw |-> not i_end_cw and i_valid \[*1:$bound\] ##1 i_end_cw and i_valid\}"
+	eval $CMD
+
+	#In the last cycle i_end_cw is assert and i_valid is '0' forever
+	assume {i_end_cw |=> not i_valid}
+	assume {not i_valid |=> not i_valid}
+}
+% 
+% proc deinterleaver_functional {MEM_SIZE ROW_NUM WIDTH} {
+	clear -all
+	dut_compilation $MEM_SIZE $ROW_NUM $WIDTH false DEINTER_FUNCTIONAL
+
+	task -create functional_req -set
+
+	#Not required anymore
+	#assume {not i_valid |-> not i_end_cw}
+	add_control_constraints $MEM_SIZE
+	#External blocks always ready to consume info.
+	assume {i_consume_int}
+	assume {i_consume_deint}
+
+	#Not required anymore
+	#assume  {DEINTERLEAVER_INST.i_consume = INTERLEAVER_INST.o_valid}
+	#assume {not INTERLEAVER_INST.GEN_INT.INTERLEAVER_INST.IDP.w_wr_rd_status |-> not w_valid}
+	#assume {not DEINTERLEAVER_INST.GEN_INT.DEINTERLEAVER_INST.IDP.w_wr_rd_status |-> not o_valid}
+
+	#Assertion that attest functional operation of interleaver/deinterleaver
+	assert {o_valid and o_cnt = 1 |-> o_saved_data = o_data}
+	cover {o_valid and o_cnt = 1 |-> o_saved_data = o_data}
+
+	formal_setup
+	#Prove script
+	set proof_bound [expr {$MEM_SIZE*2 + 2}]
+	set_prove_target_bound $proof_bound
+	set_max_trace_length $proof_bound
+	set_prove_time_limit 80h
+	set_engine_mode {Tri Ht}
+	prove -task functional_req
+	check_return {get_property_list -include {status {cex unreachable}} -task func} {}
+	set_prove_target_bound 0
+	set_max_trace_length 0
+}
+% 
+% proc interface_control_and_reset_req {MEM_SIZE ROW_NUM WIDTH is_interleaver} {
+	clear -all
+	dut_compilation $MEM_SIZE $ROW_NUM $WIDTH $is_interleaver INTER_DEINTER_RESET_AND_INT_CONTROL
+	connect -bind -auto block_deint_int_reset_int_ctrl_fv block_interleaver_top\
+		-auto -elaborate\
+		-parameter NUMBER_OF_ELEMENTS $MEM_SIZE\
+		-parameter NUMBER_OF_LINES $ROW_NUM\
+		-parameter WORD_LENGTH $WIDTH
+	formal_setup
+
+	#Checking reset requirements
+	task -create reset -set -source_task <embedded>\
+		-copy_stopats -copy_abstractions all\
+		-copy_assumes -copy <embedded>::block_interleaver.block_interleaver_top.REQ_INTER_001_CHECK_01
+	task -set reset
+	reset -none
+	check_return {prove -task reset} "proven"
+
+	#Setting reset expression and removing property already proven in the previous step
+	reset rst
+	task -set <embedded>
+	assert -disable <embedded>::block_interleaver.block_interleaver_top.REQ_INTER_001_CHECK_01
+
+	#Checking interface control requirements
+	prove -all	
+	check_return {get_property_list -include {status {cex unreachable}}} {}
+
+	#Checking STALL mechanism. 
+	#TODO: Needs to be moved to .sv files
+	task -create stall -set
+	if {$is_interleaver == false} {
+		assert {GEN_INT.INTERLEAVER_INST.IC.w_current_state = 1 and not i_valid and not GEN_INT.INTERLEAVER_INST.IC.i_full_ram |=> ##1 $past(GEN_INT.INTERLEAVER_INST.IDP.r_col_cnt) = GEN_INT.INTERLEAVER_INST.IDP.r_col_cnt and\
+					     $past(GEN_INT.INTERLEAVER_INST.IDP.w_ram_wr_en = 0) and\
+				             $past(GEN_INT.INTERLEAVER_INST.IDP.r_lin_cnt) = GEN_INT.INTERLEAVER_INST.IDP.r_lin_cnt}
+		check_code "proven" [prove -task stall]
+	} else {
+		#assert {GEN_INT.DEINTERLEAVER_INST.IC.w_current_state = 1 and not i_valid and not GEN_INT.DEINTERLEAVER_INST.IC.i_full_ram ##1 i_end_cw = 0 |=> $past(GEN_INT.DEINTERLEAVER_INST.IDP.w_ram_wr_en) = 0 and\
+		$past(GEN_INT.DEINTERLEAVER_INST.IDP.w_ram_addr) = GEN_INT.DEINTERLEAVER_INST.IDP.w_ram_addr}
+	}
+}
+% 
+% proc interleaver_functional {MEM_SIZE ROW_NUM WIDTH} {
+	clear -all
+	dut_compilation $MEM_SIZE $ROW_NUM $WIDTH false INTER_FUNCTIONAL
+	connect -bind -auto block_interleaver_func_fv block_interleaver_top\
+		-auto -elaborate\
+		-parameter NUMBER_OF_ELEMENTS $MEM_SIZE\
+		-parameter NUMBER_OF_LINES $ROW_NUM\
+		-parameter WORD_LENGTH $WIDTH
+	#add_control_constraints $MEM_SIZE
+	#assume {i_consume} 
+	formal_setup
+	prove -all
+	check_return {get_property_list -include {status {cex unreachable}}} {}
+}
+% 
+% # set MEM_SIZE 45
+% # set ROW_NUM 15
+% # set WIDTH 4
+% # time [interface_control_and_reset_req $MEM_SIZE $ROW_NUM $WIDTH false]
+% # time [interface_control_and_reset_req $MEM_SIZE $ROW_NUM $WIDTH true]
+% # time [interleaver_functional $MEM_SIZE $ROW_NUM $WIDTH]
+% # time [deinterleaver_functional $MEM_SIZE $ROW_NUM $WIDTH]
+% 
+% source get_parameters.tcl
+% set times [list]
+% foreach param [get_parameters] {
+    set MEM_SIZE [lindex $param 0]
+    set ROW_NUM [lindex $param 1]
+    set WIDTH [lindex $param 2]
+puts $WIDTH
+	deinterleaver_functional $MEM_SIZE $ROW_NUM $WIDTH
+	set total_time [get_property_info -list time {functional_req::property:0}]
+	puts "total time: $total_time"
+	set t [list $MEM_SIZE $ROW_NUM $WIDTH $total_time]
+    set times [linsert $times end $t]
+}
+4
+INFO (IPF121): Cleared environment completely for new design analysis.
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/standard_2008.vhd' into library 'std'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/standard_2008.vhd(9): analyzing package 'standard'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/textio_2008.vhd' into library 'std'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/textio_2008.vhd(13): analyzing package 'textio'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/textio_2008.vhd(159): analyzing package body 'textio'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/env_2008.vhd' into library 'std'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/env_2008.vhd(8): analyzing package 'env'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/env_2008.vhd(16): analyzing package body 'env'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/vl/mixed_lang_vltype.vhd' into library 'vl'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/vl/mixed_lang_vltype.vhd(9): analyzing package 'vl_types'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/vl/mixed_lang_vltype.vhd(88): analyzing package body 'vl_types'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/synopsys/syn_attr.vhd' into library 'synopsys'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/synopsys/syn_attr.vhd(39): analyzing package 'attributes'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164.vhdl(50): analyzing package 'std_logic_1164'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164-body.vhdl(48): analyzing package body 'std_logic_1164'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std.vhdl(63): analyzing package 'numeric_std'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std-body.vhdl(59): analyzing package body 'numeric_std'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned.vhdl(49): analyzing package 'numeric_std_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned-body.vhdl(59): analyzing package body 'numeric_std_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit.vhdl(53): analyzing package 'numeric_bit'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit-body.vhdl(51): analyzing package body 'numeric_bit'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned.vhdl(47): analyzing package 'numeric_bit_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned-body.vhdl(50): analyzing package body 'numeric_bit_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_p.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_p.vhd(68): analyzing package 'vital_timing'
+[WARN (VHDL-1721)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_p.vhd(150): return type of pure function cannot be of access type
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_b.vhd' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_b.vhd(54): analyzing package body 'vital_timing'
+[WARN (VHDL-1721)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_b.vhd(1132): return type of pure function cannot be of access type
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_p.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_p.vhd(50): analyzing package 'vital_primitives'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_b.vhd' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_b.vhd(38): analyzing package body 'vital_primitives'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_arit.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_arit.vhd(25): analyzing package 'std_logic_arith'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_arit.vhd(206): analyzing package body 'std_logic_arith'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_unsi.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_unsi.vhd(35): analyzing package 'std_logic_unsigned'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_unsi.vhd(94): analyzing package body 'std_logic_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_sign.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_sign.vhd(35): analyzing package 'std_logic_signed'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_sign.vhd(96): analyzing package body 'std_logic_signed'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_misc_2008.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_misc_2008.vhd(25): analyzing package 'std_logic_misc'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_misc_2008.vhd(112): analyzing package body 'std_logic_misc'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_textio.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_textio.vhdl(38): analyzing package 'std_logic_textio'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/ieee_bit_context.vhd' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/ieee_std_context.vhd' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real.vhdl(45): analyzing package 'math_real'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real-body.vhdl(45): analyzing package body 'math_real'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex.vhdl(46): analyzing package 'math_complex'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex-body.vhdl(47): analyzing package body 'math_complex'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_float_types.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_float_types.vhdl(37): analyzing package 'fixed_float_types'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg.vhdl(43): analyzing package 'fixed_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg-body.vhdl(40): analyzing package body 'fixed_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg.vhdl(43): analyzing package 'float_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg-body.vhdl(37): analyzing package body 'float_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_pkg.vhdl' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_pkg.vhdl' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/arithmetic/mgc_arit_2008.vhd' into library 'arithmetic'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/arithmetic/mgc_arit_2008.vhd(22): analyzing package 'std_logic_arith'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/arithmetic/mgc_arit_2008.vhd(274): analyzing package body 'std_logic_arith'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/qsim_logic/mgc_qsim.vhd' into library 'qsim_logic'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/qsim_logic/mgc_qsim.vhd(18): analyzing package 'qsim_logic'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/qsim_logic/mgc_qsim.vhd(753): analyzing package body 'qsim_logic'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/jasper_package/jasper_package.vhd' into library 'jasper_package'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/jasper_package/jasper_package.vhd(8): analyzing package 'jasper_package'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/generic_types.vhd'
+[INFO (VHDL-1014)] ../../generic_components/rtl/generic_types.vhd(11): analyzing package 'generic_types'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/generic_functions.vhd'
+[INFO (VHDL-1014)] ../../generic_components/rtl/generic_functions.vhd(10): analyzing package 'generic_functions'
+[INFO (VHDL-1013)] ../../generic_components/rtl/generic_functions.vhd(26): analyzing package body 'generic_functions'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/generic_components.vhd'
+[INFO (VHDL-1014)] ../../generic_components/rtl/generic_components.vhd(13): analyzing package 'generic_components'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components.vhd'
+[INFO (VHDL-1014)] ../rtl/block_interleaver_components.vhd(6): analyzing package 'block_interleaver_components'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver.vhd(7): analyzing entity 'block_interleaver'
+[INFO (VHDL-1010)] ../rtl/block_interleaver.vhd(31): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/rectangular_interleaver.vhd'
+[INFO (VHDL-1012)] ../rtl/rectangular_interleaver.vhd(8): analyzing entity 'rectangular_interleaver'
+[INFO (VHDL-1010)] ../rtl/rectangular_interleaver.vhd(31): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/interleaver_controller.vhd'
+[INFO (VHDL-1012)] ../rtl/interleaver_controller.vhd(5): analyzing entity 'interleaver_controller'
+[INFO (VHDL-1010)] ../rtl/interleaver_controller.vhd(28): analyzing architecture 'behaviour_ict'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/interleaver_data_path.vhd'
+[INFO (VHDL-1012)] ../rtl/interleaver_data_path.vhd(19): analyzing entity 'interleaver_data_path'
+[INFO (VHDL-1010)] ../rtl/interleaver_data_path.vhd(39): analyzing architecture 'structure_idp'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/flag_signals_generator.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/flag_signals_generator.vhd(14): analyzing entity 'flag_signals_generator'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/flag_signals_generator.vhd(34): analyzing architecture 'structure_fsg1'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/m2D_index_counter.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/m2D_index_counter.vhd(12): analyzing entity 'm2d_index_counter'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/m2D_index_counter.vhd(29): analyzing architecture 'dataflow'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/wr_rd_status_selector.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(11): analyzing entity 'wr_rd_status_selector'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(23): analyzing architecture 'structure_wrss'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/rectangular_deinterleaver.vhd'
+[INFO (VHDL-1012)] ../rtl/rectangular_deinterleaver.vhd(9): analyzing entity 'rectangular_deinterleaver'
+[INFO (VHDL-1010)] ../rtl/rectangular_deinterleaver.vhd(32): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/deinterleaver_data_path.vhd'
+[INFO (VHDL-1012)] ../rtl/deinterleaver_data_path.vhd(20): analyzing entity 'deinterleaver_data_path'
+[INFO (VHDL-1010)] ../rtl/deinterleaver_data_path.vhd(56): analyzing architecture 'structure_ddp'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/simplified_m2D_index_counter.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/simplified_m2D_index_counter.vhd(15): analyzing entity 'simplified_m2d_index_counter'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/simplified_m2D_index_counter.vhd(42): analyzing architecture 'dataflow'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/m2D_index_counter_core.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/m2D_index_counter_core.vhd(11): analyzing entity 'm2d_index_counter_core'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/m2D_index_counter_core.vhd(26): analyzing architecture 'dataflow'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/wr_rd_status_selector.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(11): analyzing entity 'wr_rd_status_selector'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(23): analyzing architecture 'structure_wrss'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/adder.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/adder.vhd(5): analyzing entity 'adder'
+[INFO (VHDL-1010)] ../../generic_components/rtl/adder.vhd(15): analyzing architecture 'bh_add'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/single_port_2D_ram.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/single_port_2D_ram.vhd(7): analyzing entity 'single_port_2d_ram'
+[INFO (VHDL-1010)] ../../generic_components/rtl/single_port_2D_ram.vhd(23): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/single_port_linear_ram.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/single_port_linear_ram.vhd(7): analyzing entity 'single_port_linear_ram'
+[INFO (VHDL-1010)] ../../generic_components/rtl/single_port_linear_ram.vhd(21): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/half_subtractor_unit.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/half_subtractor_unit.vhd(4): analyzing entity 'half_subtractor_unit'
+[INFO (VHDL-1010)] ../../generic_components/rtl/half_subtractor_unit.vhd(15): analyzing architecture 'dataflow_hsu'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/decrementer.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/decrementer.vhd(4): analyzing entity 'decrementer'
+[INFO (VHDL-1010)] ../../generic_components/rtl/decrementer.vhd(15): analyzing architecture 'dataflow_dec'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/half_adder_unit.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/half_adder_unit.vhd(4): analyzing entity 'half_adder_unit'
+[INFO (VHDL-1010)] ../../generic_components/rtl/half_adder_unit.vhd(15): analyzing architecture 'dataflow_hau'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/incrementer.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/incrementer.vhd(4): analyzing entity 'incrementer'
+[INFO (VHDL-1010)] ../../generic_components/rtl/incrementer.vhd(15): analyzing architecture 'dataflow_inc'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/up_down_counter.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/up_down_counter.vhd(12): analyzing entity 'up_down_counter'
+[INFO (VHDL-1010)] ../../generic_components/rtl/up_down_counter.vhd(22): analyzing architecture 'arch'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/sync_ld_dff.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/sync_ld_dff.vhd(5): analyzing entity 'sync_ld_dff'
+[INFO (VHDL-1010)] ../../generic_components/rtl/sync_ld_dff.vhd(16): analyzing architecture 'bh_reg'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/comparator.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/comparator.vhd(5): analyzing entity 'comparator'
+[INFO (VHDL-1010)] ../../generic_components/rtl/comparator.vhd(16): analyzing architecture 'bh_comp'
+[-- (VHDL-1481)] Analyzing VHDL file 'rtl/block_interleaver_func_verification_model.vhd'
+[INFO (VHDL-1012)] rtl/block_interleaver_func_verification_model.vhd(9): analyzing entity 'block_interleaver_func_verification_model'
+[INFO (VHDL-1010)] rtl/block_interleaver_func_verification_model.vhd(37): analyzing architecture 'behavioral'
+INFO (ISW003): Top module name is "block_interleaver_func_verification_model".
+[INFO (VHDL-1067)] rtl/block_interleaver_func_verification_model.vhd(9): executing 'block_interleaver_func_verification_model(number_of_elements=50,number_of_lines=15,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver.vhd(7): executing 'block_interleaver(number_of_elements=50,number_of_lines=15,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/rectangular_interleaver.vhd(8): executing 'rectangular_interleaver(number_of_elements=50,number_of_lines=15,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/interleaver_controller.vhd(5): executing 'interleaver_controller(behaviour_ict)'
+[INFO (VHDL-9046)] ../rtl/interleaver_controller.vhd(31): creating type property for signal 'w_current_state'
+[INFO (VHDL-9046)] ../rtl/interleaver_controller.vhd(31): creating type property for signal 'w_next_state'
+[INFO (VHDL-1172)] ../rtl/interleaver_controller.vhd(183): others clause is never selected
+[INFO (VHDL-1067)] ../rtl/interleaver_data_path.vhd(19): executing 'interleaver_data_path(number_of_elements=50,number_of_lines=15,word_length=4)(structure_idp)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/comparator.vhd(5): executing 'comparator(word_length=4)(bh_comp)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/decrementer.vhd(4): executing 'decrementer(word_length=2)(dataflow_dec)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/half_subtractor_unit.vhd(4): executing 'half_subtractor_unit(dataflow_hsu)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/flag_signals_generator.vhd(14): executing 'flag_signals_generator(number_of_elements=50,word_length=6)(structure_fsg1)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/comparator.vhd(5): executing 'comparator(word_length=6)(bh_comp)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/sync_ld_dff.vhd(5): executing 'sync_ld_dff(word_length=6)(bh_reg)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/up_down_counter.vhd(12): executing 'up_down_counter(word_length=6)(arch)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/incrementer.vhd(4): executing 'incrementer(word_length=6)(dataflow_inc)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/half_adder_unit.vhd(4): executing 'half_adder_unit(dataflow_hau)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/decrementer.vhd(4): executing 'decrementer(word_length=6)(dataflow_dec)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/sync_ld_dff.vhd(5): executing 'sync_ld_dff(word_length=4)(bh_reg)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/sync_ld_dff.vhd(5): executing 'sync_ld_dff(word_length=2)(bh_reg)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/m2D_index_counter.vhd(12): executing 'm2D_index_counter(number_of_elements=50,number_of_lines=15)(dataflow)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/comparator.vhd(5): executing 'comparator(word_length=2)(bh_comp)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/m2D_index_counter_core.vhd(11): executing 'm2D_index_counter_core(dataflow)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/incrementer.vhd(4): executing 'incrementer(word_length=4)(dataflow_inc)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/single_port_2D_ram.vhd(7): executing 'single_port_2D_ram(number_of_elements=50,number_of_lines=15,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(11): executing 'wr_rd_status_selector(structure_wrss)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/sync_ld_dff.vhd(5): executing 'sync_ld_dff(word_length=1)(bh_reg)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver.vhd(7): executing 'block_interleaver(number_of_elements=50,number_of_lines=15,word_length=4,mode=true)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/rectangular_deinterleaver.vhd(9): executing 'rectangular_deinterleaver(number_of_elements=50,number_of_lines=15,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/deinterleaver_data_path.vhd(20): executing 'deinterleaver_data_path(number_of_elements=50,number_of_lines=15,word_length=4)(structure_ddp)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/adder.vhd(5): executing 'adder(word_length=6)(bh_add)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/incrementer.vhd(4): executing 'incrementer(word_length=3)(dataflow_inc)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/incrementer.vhd(4): executing 'incrementer(word_length=2)(dataflow_inc)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/simplified_m2D_index_counter.vhd(15): executing 'simplified_m2D_index_counter(number_of_elements=50,number_of_lines=15)(dataflow)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/single_port_linear_ram.vhd(7): executing 'single_port_linear_ram(number_of_elements=50)(behavioral)'
+INFO (IPM005): The name "functional_req::assume:0" is assigned to assumption "i_start_cw".
+INFO (IPM005): The name "functional_req::assume:1" is assigned to assumption "i_start_cw |=> not i_start_cw".
+INFO (IPM005): The name "functional_req::assume:2" is assigned to assumption "not i_start_cw |=> not i_start_cw".
+INFO (IPM005): The name "functional_req::assume:3" is assigned to assumption "i_start_cw |-> not i_end_cw and i_valid [*1:49] ##1 i_end_cw and i_valid".
+INFO (IPM005): The name "functional_req::assume:4" is assigned to assumption "i_end_cw |=> not i_valid".
+INFO (IPM005): The name "functional_req::assume:5" is assigned to assumption "not i_valid |=> not i_valid".
+INFO (IPM005): The name "functional_req::assume:6" is assigned to assumption "i_consume_int".
+INFO (IPM005): The name "functional_req::assume:7" is assigned to assumption "i_consume_deint".
+INFO (IPM004): The name "property:0" is assigned to assertion "o_valid and o_cnt = 1 |-> o_saved_data = o_data".
+WARNING (WOBS004): Non-sequence cover property can have non-LRM-compliant semantics. For LRM semantics, use the "elaborate" flag "-lrm_cover_property".
+INFO (IPM033): The name "cover:0" is assigned to cover "o_valid and o_cnt = 1 |-> o_saved_data = o_data".
+INFO (IPM031): Clearing proof results of all properties.
+INFO (IRS006): Current reset condition is "rst".
+INFO (IPF036): Starting proof on task: "functional_req", 2 properties to prove with 0 already proven/unreachable
+INFO (IRS029): Starting reset analysis: phase 1 of 4.
+INFO (IRS030): Running reset analysis: phase 2 of 4.
+INFO (IRS031): Running reset analysis: phase 3 of 4.
+INFO (IRS020): Starting the reset analysis simulation with a limit of 100 iterations (phase 4 of 4).
+INFO (IRS024): Reset iterations 0 to 4 analyzed.
+INFO (IRS018): Reset analysis simulation executed for 3 iterations. Assigned values for 77 of 465 design flops, 0 of 0 design latches, 55 of 55 internal elements.
+INFO (IRS039): Reset analysis complete.
+INFO (IPF031): Settings used for proof thread 0:
+    orchestration                 = off (auto)
+    time_limit                    = 288000s
+    per_property_time_limit       = 1s * 10 ^ scan
+    max_trace_length              = 102
+    engine_mode                   = Tri Ht 
+    proofgrid_per_engine_max_jobs = 1
+    max engine jobs               = Tri Ht, total 2
+    proofgrid_mode                = local
+    proofgrid_restarts            = 10
+0: Using multistage preprocessing
+0: Starting reduce
+0: Finished reduce in 0.008s
+0.0.PRE: Performing Proof Simplification...
+0.0.Tri: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Tri: Proof Simplification Iteration 1	[0.00 s]
+0.0.Tri: Proof Simplification Iteration 2	[0.04 s]
+0.0.Tri: Proof Simplification Iteration 3	[0.10 s]
+0.0.Tri: Proof Simplification Iteration 4	[0.13 s]
+0.0.PRE: Proof Simplification completed in 0,04 s
+0: About to start ProofGrid in its own thread with a limit of 10000 pending notifications and a limit of 10 traces.
+0: =============================== ProofGrid start ===============================
+0: ProofGrid usable level: 2
+0: ProofGrid is starting event handling
+0.0.Tri: Proofgrid shell started at 24162@optmaS1(local) jg_23510_optmaS1_1
+0.0.Tri: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Ht: Proofgrid shell started at 24170@optmaS1(local) jg_23510_optmaS1_1
+0: Running jobs with 9 threads on optmaS1 with 8 cores.
+0.0.Ht: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Tri: Next scan (0) will use per property time limit: 1s * 10 ^ 0 = 1s
+0.0.Tri: Starting proof for property "property:0"	[0,00 s].
+0.0.Tri: Trace Attempt  1	[0,00 s]
+0.0.Ht: Trace Attempt  1	[0,03 s]
+0.0.Ht: Trace Attempt  2	[0,06 s]
+0.0.Ht: Trace Attempt  3	[0,07 s]
+0.0.Ht: Trace Attempt  4	[0,07 s]
+0.0.Ht: Trace Attempt  5	[0,07 s]
+0.0.Ht: Trace Attempt  7	[0,09 s]
+0.0.Ht: A trace with 7 cycles was found. [0,10 s]
+INFO (IPF047): 0.0.Ht: The cover property "cover:0" was covered in 7 cycles in 0.19 s.
+0.0.Ht: Trace Attempt  8	[0,12 s]
+0: ProofGrid usable level: 1
+0.0.Tri:    0.00" ---- Launching main thread ----
+0.0.Tri:    0.39" ---- Launching abstraction thread ----
+0.0.Tri: Per property time limit expired (1,00 s) [1,06 s]
+0.0.Tri: Stopped processing property "property:0"	[1,06 s].
+0.0.Tri: Last scan. Per property time limit: 0s
+0.0.Tri: Starting proof for property "property:0"	[0,00 s].
+0.0.Tri: Trace Attempt  1	[0,00 s]
+0.0.Tri:    0.51" ---- Launching multi-phase simplification thread ----
+0.0.Tri:    0.59" ---- Launching main thread ----
+0.0.Tri:    1.14" ---- Launching abstraction thread ----
+0.0.Tri:    1.26" ---- Launching multi-phase simplification thread ----
+0.0.Tri: Trace Attempt  2	[1,29 s]
+0.0.Tri: Trace Attempt  3	[1,31 s]
+0.0.Tri: Trace Attempt  4	[1,38 s]
+0.0.Tri: Trace Attempt  5	[1,60 s]
+0.0.Ht: Trace Attempt 22	[4,50 s]
+0.0.Tri:    5.88" Simplification phase 1 complete
+0.0.Tri: Trace Attempt 23	[5,81 s]
+0.0.Tri:    7.80" Simplification phase 2 complete
+0.0.Ht: Trace Attempt 28	[9,42 s]
+0.0.Tri: Trace Attempt 30	[10,06 s]
+0.0.Ht: Trace Attempt 32	[13,77 s]
+0.0.Tri: Trace Attempt 35	[14,20 s]
+0.0.Tri:   15.56" Simplification phase 3 complete
+  15.56" ---- Completed simplification thread ----
+0.0.Tri:   15.56" ---- Restarting main thread on simplified netlist ----
+0.0.Tri:   15.94" ---- Restarting abstraction thread on simplified netlist ----
+0.0.Ht: Trace Attempt 36	[19,08 s]
+0.0.Tri: Trace Attempt 36	[23,26 s]
+0.0.Ht: Trace Attempt 38	[25,57 s]
+0.0.Tri: Trace Attempt 40	[27,45 s]
+0.0.Ht: Trace Attempt 41	[31,41 s]
+0.0.Tri: Trace Attempt 44	[32,83 s]
+0.0.Ht: Trace Attempt 44	[37,78 s]
+0.0.Tri: Trace Attempt 46	[37,08 s]
+0.0.Tri: Trace Attempt 50	[43,35 s]
+0.0.Ht: Trace Attempt 49	[45,56 s]
+0.0.Tri: Trace Attempt 52	[48,45 s]
+0.0.Ht: Trace Attempt 52	[51,10 s]
+0.0.Tri: Trace Attempt 54	[52,80 s]
+0.0.Ht: Trace Attempt 53	[56,15 s]
+0.0.Tri: Trace Attempt 56	[59,01 s]
+0.0.Ht: Trace Attempt 56	[60,94 s]
+0.0.Tri: Trace Attempt 58	[64,03 s]
+0.0.Ht: Trace Attempt 57	[69,38 s]
+0.0.Tri: Trace Attempt 60	[69,25 s]
+0.0.Ht: Trace Attempt 60	[75,39 s]
+0.0.Tri: Trace Attempt 62	[74,89 s]
+0.0.Tri: Trace Attempt 64	[82,15 s]
+0.0.Ht: Trace Attempt 62	[85,20 s]
+0.0.Tri: Trace Attempt 65	[86,63 s]
+0.0.Ht: Trace Attempt 65	[92,87 s]
+0.0.Tri: Trace Attempt 67	[92,04 s]
+0.0.Tri: Trace Attempt 68	[96,73 s]
+0.0.Ht: Trace Attempt 67	[103,16 s]
+0.0.Tri: Trace Attempt 70	[104,44 s]
+0.0.Ht: Trace Attempt 70	[112,14 s]
+0.0.Tri: Trace Attempt 72	[113,05 s]
+0.0.Tri: Trace Attempt 73	[117,83 s]
+0.0.Ht: Trace Attempt 72	[119,89 s]
+0.0.Tri: Trace Attempt 74	[122,46 s]
+0.0.Ht: Trace Attempt 74	[126,90 s]
+0.0.Tri: Trace Attempt 76	[132,44 s]
+0.0.Tri: Trace Attempt 77	[138,77 s]
+0.0.Ht: Trace Attempt 75	[140,11 s]
+0.0.Tri: Trace Attempt 78	[146,69 s]
+0.0.Ht: Trace Attempt 78	[148,94 s]
+0.0.Ht: Trace Attempt 79	[155,19 s]
+0.0.Tri: Trace Attempt 79	[154,29 s]
+0.0.Tri: Trace Attempt 80	[162,35 s]
+0.0.Ht: Trace Attempt 80	[167,04 s]
+0.0.Tri: Trace Attempt 81	[167,58 s]
+0.0.Tri: Trace Attempt 82	[173,82 s]
+0.0.Ht: Trace Attempt 81	[177,10 s]
+0.0.Tri: Trace Attempt 83	[179,93 s]
+0.0.Tri: Trace Attempt 84	[186,42 s]
+0.0.Ht: Trace Attempt 83	[189,46 s]
+0.0.Tri: Trace Attempt 85	[193,69 s]
+0.0.Ht: Trace Attempt 85	[202,14 s]
+0.0.Tri: Trace Attempt 87	[204,34 s]
+0.0.Tri: Trace Attempt 88	[211,06 s]
+0.0.Tri: Trace Attempt 89	[218,61 s]
+0.0.Ht: Trace Attempt 87	[220,52 s]
+0.0.Tri: Trace Attempt 90	[223,38 s]
+0.0.Tri: Trace Attempt 91	[232,99 s]
+0.0.Ht: Trace Attempt 90	[234,52 s]
+0.0.Tri: Trace Attempt 92	[241,12 s]
+0.0.Tri: Trace Attempt 93	[249,24 s]
+0.0.Ht: Trace Attempt 92	[254,00 s]
+0.0.Tri: Trace Attempt 94	[256,53 s]
+0.0.Tri: Trace Attempt 95	[264,11 s]
+0.0.Ht: Trace Attempt 94	[269,30 s]
+0.0.Tri: Trace Attempt 96	[272,03 s]
+0.0.Ht: Trace Attempt 96	[282,17 s]
+0.0.Tri: Trace Attempt 97	[282,06 s]
+0.0.Tri: Trace Attempt 98	[291,00 s]
+0.0.Tri: Trace Attempt 99	[299,96 s]
+0.0.Ht: Trace Attempt 97	[305,04 s]
+0.0.Tri: Trace Attempt 100	[308,40 s]
+0.0.Tri: Trace Attempt 101	[317,31 s]
+0.0.Ht: Trace Attempt 100	[323,57 s]
+0.0.Tri: Trace Attempt 102	[329,99 s]
+0.0.Tri: Trace Attempt 103	[339,49 s]
+0.0.Tri: Stopped processing property "property:0"	[339,49 s].
+0.0.Tri: Requesting engine job to stop
+0.0.Ht: Requesting engine job to terminate
+INFO (IPF144): 0: Initiating shutdown of proof [340,71]
+0.0.Tri: Interrupted. [0,06 s]
+0.0.Tri: Exited with Success (@ 340,81 s)
+0: ProofGrid usable level: 0
+0.0.Ht: Interrupted (multi)
+0.0.Ht: Trace Attempt 101	[323,64 s]
+0.0.Ht: Interrupted. [30,48 s]
+0.0.Ht: Exited with Success (@ 340,91 s)
+0: --------------------------------------------------------------
+ProofGrid Summary
+--------------------------------------------------------------
+     engines started                               :     2
+     engine jobs started                           :     2
+     jobs where 1 minute load exceeded core count  :     2
+     jobs where 5 minute load exceeded core count  :     2
+     jobs where 15 minute load exceeded core count :     2
+
+    Average time in state (seconds)
+    ------------------------------------------------------
+    Engine  Pending     Running        Dead    Utilization
+    ------------------------------------------------------
+    Tri        0.77      340.66        0.00       99.77 %
+     Ht        0.81      340.57        0.00       99.76 %
+    all        0.79      340.62        0.00       99.77 %
+
+    Data read    : 19.91 kiB
+    Data written : 2.02 kiB
+
+0: All pending notifications were processed.
+No trace exists within specified max_length (102).
+INFO (IPF059): Completed proof on task: "functional_req" for proof thread 0
+
+==============================================================
+SUMMARY
+==============================================================
+           Properties Considered              : 2
+                 assertions                   : 1
+                  - proven                    : 0 (0%)
+                  - bounded_proven (user)     : 1 (100%)
+                  - bounded_proven (auto)     : 0 (0%)
+                  - marked_proven             : 0 (0%)
+                  - cex                       : 0 (0%)
+                  - ar_cex                    : 0 (0%)
+                  - undetermined              : 0 (0%)
+                  - unknown                   : 0 (0%)
+                  - error                     : 0 (0%)
+                 covers                       : 1
+                  - unreachable               : 0 (0%)
+                  - bounded_unreachable (user): 0 (0%)
+                  - covered                   : 1 (100%)
+                  - ar_covered                : 0 (0%)
+                  - undetermined              : 0 (0%)
+                  - unknown                   : 0 (0%)
+                  - error                     : 0 (0%)
+Evaluating 'get_property_list -include {status {cex unreachable}} -task func'. expected: ''
+0,0 seconds
+total time: 339,485804
+4
+INFO (IPF121): Cleared environment completely for new design analysis.
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/standard_2008.vhd' into library 'std'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/standard_2008.vhd(9): analyzing package 'standard'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/textio_2008.vhd' into library 'std'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/textio_2008.vhd(13): analyzing package 'textio'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/textio_2008.vhd(159): analyzing package body 'textio'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/env_2008.vhd' into library 'std'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/env_2008.vhd(8): analyzing package 'env'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/env_2008.vhd(16): analyzing package body 'env'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/vl/mixed_lang_vltype.vhd' into library 'vl'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/vl/mixed_lang_vltype.vhd(9): analyzing package 'vl_types'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/vl/mixed_lang_vltype.vhd(88): analyzing package body 'vl_types'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/synopsys/syn_attr.vhd' into library 'synopsys'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/synopsys/syn_attr.vhd(39): analyzing package 'attributes'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164.vhdl(50): analyzing package 'std_logic_1164'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164-body.vhdl(48): analyzing package body 'std_logic_1164'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std.vhdl(63): analyzing package 'numeric_std'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std-body.vhdl(59): analyzing package body 'numeric_std'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned.vhdl(49): analyzing package 'numeric_std_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned-body.vhdl(59): analyzing package body 'numeric_std_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit.vhdl(53): analyzing package 'numeric_bit'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit-body.vhdl(51): analyzing package body 'numeric_bit'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned.vhdl(47): analyzing package 'numeric_bit_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned-body.vhdl(50): analyzing package body 'numeric_bit_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_p.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_p.vhd(68): analyzing package 'vital_timing'
+[WARN (VHDL-1721)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_p.vhd(150): return type of pure function cannot be of access type
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_b.vhd' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_b.vhd(54): analyzing package body 'vital_timing'
+[WARN (VHDL-1721)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_b.vhd(1132): return type of pure function cannot be of access type
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_p.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_p.vhd(50): analyzing package 'vital_primitives'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_b.vhd' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_b.vhd(38): analyzing package body 'vital_primitives'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_arit.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_arit.vhd(25): analyzing package 'std_logic_arith'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_arit.vhd(206): analyzing package body 'std_logic_arith'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_unsi.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_unsi.vhd(35): analyzing package 'std_logic_unsigned'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_unsi.vhd(94): analyzing package body 'std_logic_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_sign.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_sign.vhd(35): analyzing package 'std_logic_signed'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_sign.vhd(96): analyzing package body 'std_logic_signed'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_misc_2008.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_misc_2008.vhd(25): analyzing package 'std_logic_misc'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_misc_2008.vhd(112): analyzing package body 'std_logic_misc'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_textio.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_textio.vhdl(38): analyzing package 'std_logic_textio'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/ieee_bit_context.vhd' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/ieee_std_context.vhd' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real.vhdl(45): analyzing package 'math_real'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real-body.vhdl(45): analyzing package body 'math_real'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex.vhdl(46): analyzing package 'math_complex'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex-body.vhdl(47): analyzing package body 'math_complex'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_float_types.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_float_types.vhdl(37): analyzing package 'fixed_float_types'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg.vhdl(43): analyzing package 'fixed_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg-body.vhdl(40): analyzing package body 'fixed_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg.vhdl(43): analyzing package 'float_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg-body.vhdl(37): analyzing package body 'float_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_pkg.vhdl' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_pkg.vhdl' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/arithmetic/mgc_arit_2008.vhd' into library 'arithmetic'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/arithmetic/mgc_arit_2008.vhd(22): analyzing package 'std_logic_arith'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/arithmetic/mgc_arit_2008.vhd(274): analyzing package body 'std_logic_arith'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/qsim_logic/mgc_qsim.vhd' into library 'qsim_logic'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/qsim_logic/mgc_qsim.vhd(18): analyzing package 'qsim_logic'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/qsim_logic/mgc_qsim.vhd(753): analyzing package body 'qsim_logic'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/jasper_package/jasper_package.vhd' into library 'jasper_package'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/jasper_package/jasper_package.vhd(8): analyzing package 'jasper_package'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/generic_types.vhd'
+[INFO (VHDL-1014)] ../../generic_components/rtl/generic_types.vhd(11): analyzing package 'generic_types'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/generic_functions.vhd'
+[INFO (VHDL-1014)] ../../generic_components/rtl/generic_functions.vhd(10): analyzing package 'generic_functions'
+[INFO (VHDL-1013)] ../../generic_components/rtl/generic_functions.vhd(26): analyzing package body 'generic_functions'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/generic_components.vhd'
+[INFO (VHDL-1014)] ../../generic_components/rtl/generic_components.vhd(13): analyzing package 'generic_components'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components.vhd'
+[INFO (VHDL-1014)] ../rtl/block_interleaver_components.vhd(6): analyzing package 'block_interleaver_components'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver.vhd(7): analyzing entity 'block_interleaver'
+[INFO (VHDL-1010)] ../rtl/block_interleaver.vhd(31): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/rectangular_interleaver.vhd'
+[INFO (VHDL-1012)] ../rtl/rectangular_interleaver.vhd(8): analyzing entity 'rectangular_interleaver'
+[INFO (VHDL-1010)] ../rtl/rectangular_interleaver.vhd(31): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/interleaver_controller.vhd'
+[INFO (VHDL-1012)] ../rtl/interleaver_controller.vhd(5): analyzing entity 'interleaver_controller'
+[INFO (VHDL-1010)] ../rtl/interleaver_controller.vhd(28): analyzing architecture 'behaviour_ict'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/interleaver_data_path.vhd'
+[INFO (VHDL-1012)] ../rtl/interleaver_data_path.vhd(19): analyzing entity 'interleaver_data_path'
+[INFO (VHDL-1010)] ../rtl/interleaver_data_path.vhd(39): analyzing architecture 'structure_idp'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/flag_signals_generator.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/flag_signals_generator.vhd(14): analyzing entity 'flag_signals_generator'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/flag_signals_generator.vhd(34): analyzing architecture 'structure_fsg1'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/m2D_index_counter.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/m2D_index_counter.vhd(12): analyzing entity 'm2d_index_counter'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/m2D_index_counter.vhd(29): analyzing architecture 'dataflow'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/wr_rd_status_selector.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(11): analyzing entity 'wr_rd_status_selector'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(23): analyzing architecture 'structure_wrss'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/rectangular_deinterleaver.vhd'
+[INFO (VHDL-1012)] ../rtl/rectangular_deinterleaver.vhd(9): analyzing entity 'rectangular_deinterleaver'
+[INFO (VHDL-1010)] ../rtl/rectangular_deinterleaver.vhd(32): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/deinterleaver_data_path.vhd'
+[INFO (VHDL-1012)] ../rtl/deinterleaver_data_path.vhd(20): analyzing entity 'deinterleaver_data_path'
+[INFO (VHDL-1010)] ../rtl/deinterleaver_data_path.vhd(56): analyzing architecture 'structure_ddp'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/simplified_m2D_index_counter.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/simplified_m2D_index_counter.vhd(15): analyzing entity 'simplified_m2d_index_counter'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/simplified_m2D_index_counter.vhd(42): analyzing architecture 'dataflow'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/m2D_index_counter_core.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/m2D_index_counter_core.vhd(11): analyzing entity 'm2d_index_counter_core'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/m2D_index_counter_core.vhd(26): analyzing architecture 'dataflow'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/wr_rd_status_selector.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(11): analyzing entity 'wr_rd_status_selector'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(23): analyzing architecture 'structure_wrss'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/adder.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/adder.vhd(5): analyzing entity 'adder'
+[INFO (VHDL-1010)] ../../generic_components/rtl/adder.vhd(15): analyzing architecture 'bh_add'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/single_port_2D_ram.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/single_port_2D_ram.vhd(7): analyzing entity 'single_port_2d_ram'
+[INFO (VHDL-1010)] ../../generic_components/rtl/single_port_2D_ram.vhd(23): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/single_port_linear_ram.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/single_port_linear_ram.vhd(7): analyzing entity 'single_port_linear_ram'
+[INFO (VHDL-1010)] ../../generic_components/rtl/single_port_linear_ram.vhd(21): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/half_subtractor_unit.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/half_subtractor_unit.vhd(4): analyzing entity 'half_subtractor_unit'
+[INFO (VHDL-1010)] ../../generic_components/rtl/half_subtractor_unit.vhd(15): analyzing architecture 'dataflow_hsu'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/decrementer.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/decrementer.vhd(4): analyzing entity 'decrementer'
+[INFO (VHDL-1010)] ../../generic_components/rtl/decrementer.vhd(15): analyzing architecture 'dataflow_dec'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/half_adder_unit.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/half_adder_unit.vhd(4): analyzing entity 'half_adder_unit'
+[INFO (VHDL-1010)] ../../generic_components/rtl/half_adder_unit.vhd(15): analyzing architecture 'dataflow_hau'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/incrementer.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/incrementer.vhd(4): analyzing entity 'incrementer'
+[INFO (VHDL-1010)] ../../generic_components/rtl/incrementer.vhd(15): analyzing architecture 'dataflow_inc'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/up_down_counter.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/up_down_counter.vhd(12): analyzing entity 'up_down_counter'
+[INFO (VHDL-1010)] ../../generic_components/rtl/up_down_counter.vhd(22): analyzing architecture 'arch'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/sync_ld_dff.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/sync_ld_dff.vhd(5): analyzing entity 'sync_ld_dff'
+[INFO (VHDL-1010)] ../../generic_components/rtl/sync_ld_dff.vhd(16): analyzing architecture 'bh_reg'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/comparator.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/comparator.vhd(5): analyzing entity 'comparator'
+[INFO (VHDL-1010)] ../../generic_components/rtl/comparator.vhd(16): analyzing architecture 'bh_comp'
+[-- (VHDL-1481)] Analyzing VHDL file 'rtl/block_interleaver_func_verification_model.vhd'
+[INFO (VHDL-1012)] rtl/block_interleaver_func_verification_model.vhd(9): analyzing entity 'block_interleaver_func_verification_model'
+[INFO (VHDL-1010)] rtl/block_interleaver_func_verification_model.vhd(37): analyzing architecture 'behavioral'
+INFO (ISW003): Top module name is "block_interleaver_func_verification_model".
+[INFO (VHDL-1067)] rtl/block_interleaver_func_verification_model.vhd(9): executing 'block_interleaver_func_verification_model(number_of_elements=60,number_of_lines=15,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver.vhd(7): executing 'block_interleaver(number_of_elements=60,number_of_lines=15,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/rectangular_interleaver.vhd(8): executing 'rectangular_interleaver(number_of_elements=60,number_of_lines=15,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/interleaver_controller.vhd(5): executing 'interleaver_controller(behaviour_ict)'
+[INFO (VHDL-9046)] ../rtl/interleaver_controller.vhd(31): creating type property for signal 'w_current_state'
+[INFO (VHDL-9046)] ../rtl/interleaver_controller.vhd(31): creating type property for signal 'w_next_state'
+[INFO (VHDL-1172)] ../rtl/interleaver_controller.vhd(183): others clause is never selected
+[INFO (VHDL-1067)] ../rtl/interleaver_data_path.vhd(19): executing 'interleaver_data_path(number_of_elements=60,number_of_lines=15,word_length=4)(structure_idp)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/comparator.vhd(5): executing 'comparator(word_length=4)(bh_comp)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/decrementer.vhd(4): executing 'decrementer(word_length=2)(dataflow_dec)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/half_subtractor_unit.vhd(4): executing 'half_subtractor_unit(dataflow_hsu)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/flag_signals_generator.vhd(14): executing 'flag_signals_generator(number_of_elements=60,word_length=6)(structure_fsg1)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/comparator.vhd(5): executing 'comparator(word_length=6)(bh_comp)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/sync_ld_dff.vhd(5): executing 'sync_ld_dff(word_length=6)(bh_reg)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/up_down_counter.vhd(12): executing 'up_down_counter(word_length=6)(arch)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/incrementer.vhd(4): executing 'incrementer(word_length=6)(dataflow_inc)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/half_adder_unit.vhd(4): executing 'half_adder_unit(dataflow_hau)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/decrementer.vhd(4): executing 'decrementer(word_length=6)(dataflow_dec)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/sync_ld_dff.vhd(5): executing 'sync_ld_dff(word_length=4)(bh_reg)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/sync_ld_dff.vhd(5): executing 'sync_ld_dff(word_length=2)(bh_reg)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/m2D_index_counter.vhd(12): executing 'm2D_index_counter(number_of_elements=60,number_of_lines=15)(dataflow)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/comparator.vhd(5): executing 'comparator(word_length=2)(bh_comp)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/m2D_index_counter_core.vhd(11): executing 'm2D_index_counter_core(dataflow)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/incrementer.vhd(4): executing 'incrementer(word_length=4)(dataflow_inc)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/single_port_2D_ram.vhd(7): executing 'single_port_2D_ram(number_of_elements=60,number_of_lines=15,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(11): executing 'wr_rd_status_selector(structure_wrss)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/sync_ld_dff.vhd(5): executing 'sync_ld_dff(word_length=1)(bh_reg)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver.vhd(7): executing 'block_interleaver(number_of_elements=60,number_of_lines=15,word_length=4,mode=true)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/rectangular_deinterleaver.vhd(9): executing 'rectangular_deinterleaver(number_of_elements=60,number_of_lines=15,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/deinterleaver_data_path.vhd(20): executing 'deinterleaver_data_path(number_of_elements=60,number_of_lines=15,word_length=4)(structure_ddp)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/adder.vhd(5): executing 'adder(word_length=6)(bh_add)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/incrementer.vhd(4): executing 'incrementer(word_length=3)(dataflow_inc)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/incrementer.vhd(4): executing 'incrementer(word_length=2)(dataflow_inc)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/simplified_m2D_index_counter.vhd(15): executing 'simplified_m2D_index_counter(number_of_elements=60,number_of_lines=15)(dataflow)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/single_port_linear_ram.vhd(7): executing 'single_port_linear_ram(number_of_elements=60)(behavioral)'
+INFO (INL003): Clearing all state information (assumes, stopats, and so forth).
+INFO (IPM005): The name "functional_req::assume:0" is assigned to assumption "i_start_cw".
+INFO (IPM005): The name "functional_req::assume:1" is assigned to assumption "i_start_cw |=> not i_start_cw".
+INFO (IPM005): The name "functional_req::assume:2" is assigned to assumption "not i_start_cw |=> not i_start_cw".
+INFO (IPM005): The name "functional_req::assume:3" is assigned to assumption "i_start_cw |-> not i_end_cw and i_valid [*1:59] ##1 i_end_cw and i_valid".
+INFO (IPM005): The name "functional_req::assume:4" is assigned to assumption "i_end_cw |=> not i_valid".
+INFO (IPM005): The name "functional_req::assume:5" is assigned to assumption "not i_valid |=> not i_valid".
+INFO (IPM005): The name "functional_req::assume:6" is assigned to assumption "i_consume_int".
+INFO (IPM005): The name "functional_req::assume:7" is assigned to assumption "i_consume_deint".
+INFO (IPM004): The name "property:0" is assigned to assertion "o_valid and o_cnt = 1 |-> o_saved_data = o_data".
+WARNING (WOBS004): Non-sequence cover property can have non-LRM-compliant semantics. For LRM semantics, use the "elaborate" flag "-lrm_cover_property".
+INFO (IPM033): The name "cover:0" is assigned to cover "o_valid and o_cnt = 1 |-> o_saved_data = o_data".
+INFO (IPM031): Clearing proof results of all properties.
+INFO (IRS006): Current reset condition is "rst".
+INFO (IPF036): Starting proof on task: "functional_req", 2 properties to prove with 0 already proven/unreachable
+INFO (IRS029): Starting reset analysis: phase 1 of 4.
+INFO (IRS030): Running reset analysis: phase 2 of 4.
+INFO (IRS031): Running reset analysis: phase 3 of 4.
+INFO (IRS020): Starting the reset analysis simulation with a limit of 100 iterations (phase 4 of 4).
+INFO (IRS024): Reset iterations 0 to 4 analyzed.
+INFO (IRS018): Reset analysis simulation executed for 3 iterations. Assigned values for 77 of 565 design flops, 0 of 0 design latches, 65 of 65 internal elements.
+INFO (IRS039): Reset analysis complete.
+INFO (IPF031): Settings used for proof thread 0:
+    orchestration                 = off (auto)
+    time_limit                    = 288000s
+    per_property_time_limit       = 1s * 10 ^ scan
+    max_trace_length              = 122
+    engine_mode                   = Tri Ht 
+    proofgrid_per_engine_max_jobs = 1
+    max engine jobs               = Tri Ht, total 2
+    proofgrid_mode                = local
+    proofgrid_restarts            = 10
+0: Using multistage preprocessing
+0: Starting reduce
+0: Finished reduce in 0.023s
+0.0.PRE: Performing Proof Simplification...
+0.0.Tri: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Tri: Proof Simplification Iteration 1	[0.00 s]
+0.0.Tri: Proof Simplification Iteration 2	[0.01 s]
+0.0.Tri: Proof Simplification Iteration 3	[0.01 s]
+0.0.Tri: Proof Simplification Iteration 4	[0.01 s]
+0.0.PRE: Proof Simplification completed in 0,02 s
+0: About to start ProofGrid in its own thread with a limit of 10000 pending notifications and a limit of 10 traces.
+0: =============================== ProofGrid start ===============================
+0: ProofGrid usable level: 2
+0: ProofGrid is starting event handling
+0.0.Ht: Proofgrid shell started at 28952@optmaS1(local) jg_23510_optmaS1_2
+0.0.Ht: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Ht: Trace Attempt  1	[0,06 s]
+0.0.Ht: Trace Attempt  2	[0,07 s]
+0.0.Ht: Trace Attempt  3	[0,08 s]
+0.0.Tri: Proofgrid shell started at 28951@optmaS1(local) jg_23510_optmaS1_2
+0.0.Ht: Trace Attempt  4	[0,11 s]
+0: Running jobs with 9 threads on optmaS1 with 8 cores.
+0.0.Tri: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Tri: Next scan (0) will use per property time limit: 1s * 10 ^ 0 = 1s
+0.0.Tri: Starting proof for property "property:0"	[0,00 s].
+0.0.Tri: Trace Attempt  1	[0,00 s]
+0.0.Ht: Trace Attempt  5	[0,13 s]
+0.0.Ht: Trace Attempt  7	[0,16 s]
+0.0.Ht: A trace with 7 cycles was found. [0,17 s]
+INFO (IPF047): 0.0.Ht: The cover property "cover:0" was covered in 7 cycles in 0.26 s.
+0.0.Ht: Trace Attempt  8	[0,20 s]
+0: ProofGrid usable level: 1
+0.0.Tri:    0.01" ---- Launching main thread ----
+0.0.Tri:    0.25" ---- Launching abstraction thread ----
+0.0.Tri:    0.32" ---- Launching multi-phase simplification thread ----
+0.0.Tri: Trace Attempt  2	[0,85 s]
+0.0.Tri: Trace Attempt  3	[0,90 s]
+0.0.Tri: Trace Attempt  4	[0,96 s]
+0.0.Tri: Per property time limit expired (1,00 s) [1,17 s]
+0.0.Tri: Stopped processing property "property:0"	[1,17 s].
+0.0.Tri: Last scan. Per property time limit: 0s
+0.0.Tri: Starting proof for property "property:0"	[0,00 s].
+0.0.Tri: Trace Attempt  1	[0,00 s]
+0.0.Tri: Trace Attempt  5	[0,04 s]
+0.0.Tri:    0.90" ---- Launching main thread ----
+0.0.Tri:    1.47" ---- Launching abstraction thread ----
+0.0.Tri:    1.51" ---- Launching multi-phase simplification thread ----
+0.0.Ht: Trace Attempt 24	[4,96 s]
+0.0.Tri: Trace Attempt 20	[4,68 s]
+0.0.Tri:    7.94" Simplification phase 1 complete
+0.0.Ht: Trace Attempt 28	[10,28 s]
+0.0.Tri: Trace Attempt 30	[9,05 s]
+0.0.Tri:   10.25" Simplification phase 2 complete
+0.0.Tri: Trace Attempt 35	[13,84 s]
+0.0.Ht: Trace Attempt 34	[16,13 s]
+0.0.Tri: Trace Attempt 39	[18,91 s]
+0.0.Tri:   22.41" Simplification phase 3 complete
+  22.41" ---- Completed simplification thread ----
+0.0.Tri:   22.41" ---- Restarting main thread on simplified netlist ----
+0.0.Ht: Trace Attempt 39	[23,02 s]
+0.0.Tri:   22.91" ---- Restarting abstraction thread on simplified netlist ----
+0.0.Ht: Trace Attempt 42	[29,58 s]
+0.0.Ht: Trace Attempt 44	[36,80 s]
+0.0.Tri: Trace Attempt 41	[39,80 s]
+0.0.Ht: Trace Attempt 46	[42,78 s]
+0.0.Tri: Trace Attempt 45	[44,38 s]
+0.0.Ht: Trace Attempt 48	[48,28 s]
+0.0.Tri: Trace Attempt 48	[48,97 s]
+0.0.Ht: Trace Attempt 49	[53,02 s]
+0.0.Tri: Trace Attempt 50	[53,29 s]
+0.0.Ht: Trace Attempt 50	[57,10 s]
+0.0.Tri: Trace Attempt 52	[58,18 s]
+0.0.Tri: Trace Attempt 55	[64,92 s]
+0.0.Ht: Trace Attempt 54	[66,52 s]
+0.0.Tri: Trace Attempt 57	[69,47 s]
+0.0.Ht: Trace Attempt 56	[71,75 s]
+0.0.Tri: Trace Attempt 59	[74,79 s]
+0.0.Ht: Trace Attempt 58	[77,76 s]
+0.0.Tri: Trace Attempt 61	[80,20 s]
+0.0.Ht: Trace Attempt 60	[82,82 s]
+0.0.Tri: Trace Attempt 63	[85,39 s]
+0.0.Tri: Trace Attempt 65	[92,26 s]
+0.0.Ht: Trace Attempt 62	[94,80 s]
+0.0.Tri: Trace Attempt 66	[96,36 s]
+0.0.Tri: Trace Attempt 68	[104,10 s]
+0.0.Ht: Trace Attempt 66	[106,27 s]
+0.0.Tri: Trace Attempt 70	[111,21 s]
+0.0.Ht: Trace Attempt 69	[120,62 s]
+0.0.Tri: Trace Attempt 72	[119,92 s]
+0.0.Tri: Trace Attempt 73	[125,85 s]
+0.0.Tri: Trace Attempt 74	[130,85 s]
+0.0.Ht: Trace Attempt 72	[140,86 s]
+0.0.Tri: Trace Attempt 75	[139,70 s]
+0.0.Tri: Trace Attempt 76	[144,23 s]
+0.0.Ht: Trace Attempt 75	[154,12 s]
+0.0.Tri: Trace Attempt 78	[153,68 s]
+0.0.Tri: Trace Attempt 79	[158,90 s]
+0.0.Tri: Trace Attempt 80	[163,03 s]
+0.0.Tri: Trace Attempt 81	[167,74 s]
+0.0.Ht: Trace Attempt 78	[173,45 s]
+0.0.Tri: Trace Attempt 82	[175,23 s]
+0.0.Tri: Trace Attempt 83	[179,73 s]
+0.0.Ht: Trace Attempt 82	[187,55 s]
+0.0.Tri: Trace Attempt 84	[186,44 s]
+0.0.Tri: Trace Attempt 85	[190,85 s]
+0.0.Tri: Trace Attempt 86	[196,93 s]
+0.0.Ht: Trace Attempt 84	[206,33 s]
+0.0.Tri: Trace Attempt 87	[205,21 s]
+0.0.Tri: Trace Attempt 88	[210,24 s]
+0.0.Ht: Trace Attempt 87	[219,76 s]
+0.0.Tri: Trace Attempt 89	[220,52 s]
+0.0.Tri: Trace Attempt 90	[227,94 s]
+0.0.Tri: Trace Attempt 91	[234,87 s]
+0.0.Ht: Trace Attempt 89	[237,31 s]
+0.0.Tri: Trace Attempt 92	[241,02 s]
+0.0.Tri: Trace Attempt 93	[250,84 s]
+0.0.Ht: Trace Attempt 92	[257,08 s]
+0.0.Tri: Trace Attempt 94	[259,02 s]
+0.0.Tri: Trace Attempt 95	[268,49 s]
+0.0.Ht: Trace Attempt 94	[275,79 s]
+0.0.Tri: Trace Attempt 96	[276,26 s]
+0.0.Tri: Trace Attempt 97	[284,06 s]
+0.0.Ht: Trace Attempt 96	[286,79 s]
+0.0.Tri: Trace Attempt 98	[298,24 s]
+0.0.Ht: Trace Attempt 98	[306,83 s]
+0.0.Tri: Trace Attempt 99	[306,29 s]
+0.0.Tri: Trace Attempt 100	[319,73 s]
+0.0.Ht: Trace Attempt 99	[325,54 s]
+0.0.Tri: Trace Attempt 101	[329,06 s]
+0.0.Ht: Trace Attempt 101	[338,07 s]
+0.0.Tri: Trace Attempt 102	[338,51 s]
+0.0.Tri: Trace Attempt 103	[347,41 s]
+0.0.Ht: Trace Attempt 102	[348,76 s]
+0.0.Tri: Trace Attempt 104	[354,84 s]
+0.0.Ht: Trace Attempt 104	[364,04 s]
+0.0.Tri: Trace Attempt 105	[365,34 s]
+0.0.Tri: Trace Attempt 106	[375,15 s]
+0.0.Ht: Trace Attempt 105	[378,03 s]
+0.0.Tri: Trace Attempt 107	[386,43 s]
+0.0.Ht: Trace Attempt 107	[392,71 s]
+0.0.Tri: Trace Attempt 108	[395,12 s]
+0.0.Ht: Trace Attempt 108	[401,73 s]
+0.0.Tri: Trace Attempt 109	[403,40 s]
+0.0.Tri: Trace Attempt 110	[414,19 s]
+0.0.Ht: Trace Attempt 109	[416,93 s]
+0.0.Tri: Trace Attempt 111	[428,74 s]
+0.0.Ht: Trace Attempt 111	[437,88 s]
+0.0.Tri: Trace Attempt 112	[441,91 s]
+0.0.Ht: Trace Attempt 112	[454,13 s]
+0.0.Tri: Trace Attempt 113	[455,50 s]
+0.0.Tri: Trace Attempt 114	[468,12 s]
+0.0.Ht: Trace Attempt 113	[471,24 s]
+0.0.Tri: Trace Attempt 115	[481,84 s]
+0.0.Tri: Trace Attempt 116	[491,88 s]
+0.0.Ht: Trace Attempt 115	[494,52 s]
+0.0.Ht: Trace Attempt 117	[515,43 s]
+0.0.Tri: Trace Attempt 117	[514,97 s]
+0.0.Tri: Trace Attempt 118	[526,28 s]
+0.0.Ht: Trace Attempt 118	[528,08 s]
+0.0.Tri: Trace Attempt 119	[538,17 s]
+0.0.Ht: Trace Attempt 119	[552,46 s]
+0.0.Tri: Trace Attempt 120	[551,81 s]
+0.0.Tri: Trace Attempt 121	[565,27 s]
+0.0.Ht: Trace Attempt 120	[569,75 s]
+0.0.Tri: Trace Attempt 122	[583,50 s]
+0.0.Ht: Trace Attempt 122	[591,77 s]
+0.0.Tri: Trace Attempt 123	[601,14 s]
+0.0.Tri: Stopped processing property "property:0"	[601,17 s].
+0.0.Tri: Requesting engine job to stop
+0.0.Ht: Requesting engine job to terminate
+INFO (IPF144): 0: Initiating shutdown of proof [602,47]
+0.0.Tri: Interrupted. [0,09 s]
+0.0.Tri: Exited with Success (@ 602,48 s)
+0: ProofGrid usable level: 0
+0.0.Ht: Interrupted (multi)
+0.0.Ht: Interrupted. [55,60 s]
+0.0.Ht: Exited with Success (@ 602,60 s)
+0: --------------------------------------------------------------
+ProofGrid Summary
+--------------------------------------------------------------
+     engines started                               :     2
+     engine jobs started                           :     2
+     jobs where 1 minute load exceeded core count  :     2
+     jobs where 5 minute load exceeded core count  :     2
+     jobs where 15 minute load exceeded core count :     2
+
+    Average time in state (seconds)
+    ------------------------------------------------------
+    Engine  Pending     Running        Dead    Utilization
+    ------------------------------------------------------
+    Tri        0.80      602.36        0.00       99.87 %
+     Ht        0.66      602.47        0.00       99.89 %
+    all        0.73      602.41        0.00       99.88 %
+
+    Data read    : 26.46 kiB
+    Data written : 2.19 kiB
+
+0: All pending notifications were processed.
+No trace exists within specified max_length (122).
+INFO (IPF059): Completed proof on task: "functional_req" for proof thread 0
+
+==============================================================
+SUMMARY
+==============================================================
+           Properties Considered              : 2
+                 assertions                   : 1
+                  - proven                    : 0 (0%)
+                  - bounded_proven (user)     : 1 (100%)
+                  - bounded_proven (auto)     : 0 (0%)
+                  - marked_proven             : 0 (0%)
+                  - cex                       : 0 (0%)
+                  - ar_cex                    : 0 (0%)
+                  - undetermined              : 0 (0%)
+                  - unknown                   : 0 (0%)
+                  - error                     : 0 (0%)
+                 covers                       : 1
+                  - unreachable               : 0 (0%)
+                  - bounded_unreachable (user): 0 (0%)
+                  - covered                   : 1 (100%)
+                  - ar_covered                : 0 (0%)
+                  - undetermined              : 0 (0%)
+                  - unknown                   : 0 (0%)
+                  - error                     : 0 (0%)
+Evaluating 'get_property_list -include {status {cex unreachable}} -task func'. expected: ''
+0,0 seconds
+total time: 601,138050
+4
+INFO (IPF121): Cleared environment completely for new design analysis.
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/standard_2008.vhd' into library 'std'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/standard_2008.vhd(9): analyzing package 'standard'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/textio_2008.vhd' into library 'std'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/textio_2008.vhd(13): analyzing package 'textio'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/textio_2008.vhd(159): analyzing package body 'textio'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/env_2008.vhd' into library 'std'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/env_2008.vhd(8): analyzing package 'env'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/std/env_2008.vhd(16): analyzing package body 'env'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/vl/mixed_lang_vltype.vhd' into library 'vl'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/vl/mixed_lang_vltype.vhd(9): analyzing package 'vl_types'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/vl/mixed_lang_vltype.vhd(88): analyzing package body 'vl_types'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/synopsys/syn_attr.vhd' into library 'synopsys'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/synopsys/syn_attr.vhd(39): analyzing package 'attributes'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164.vhdl(50): analyzing package 'std_logic_1164'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_1164-body.vhdl(48): analyzing package body 'std_logic_1164'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std.vhdl(63): analyzing package 'numeric_std'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std-body.vhdl(59): analyzing package body 'numeric_std'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned.vhdl(49): analyzing package 'numeric_std_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_std_unsigned-body.vhdl(59): analyzing package body 'numeric_std_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit.vhdl(53): analyzing package 'numeric_bit'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit-body.vhdl(51): analyzing package body 'numeric_bit'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned.vhdl(47): analyzing package 'numeric_bit_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/numeric_bit_unsigned-body.vhdl(50): analyzing package body 'numeric_bit_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_p.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_p.vhd(68): analyzing package 'vital_timing'
+[WARN (VHDL-1721)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_p.vhd(150): return type of pure function cannot be of access type
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_b.vhd' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_b.vhd(54): analyzing package body 'vital_timing'
+[WARN (VHDL-1721)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/timing_b.vhd(1132): return type of pure function cannot be of access type
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_p.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_p.vhd(50): analyzing package 'vital_primitives'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_b.vhd' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/prmtvs_b.vhd(38): analyzing package body 'vital_primitives'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_arit.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_arit.vhd(25): analyzing package 'std_logic_arith'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_arit.vhd(206): analyzing package body 'std_logic_arith'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_unsi.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_unsi.vhd(35): analyzing package 'std_logic_unsigned'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_unsi.vhd(94): analyzing package body 'std_logic_unsigned'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_sign.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_sign.vhd(35): analyzing package 'std_logic_signed'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_sign.vhd(96): analyzing package body 'std_logic_signed'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_misc_2008.vhd' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_misc_2008.vhd(25): analyzing package 'std_logic_misc'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/syn_misc_2008.vhd(112): analyzing package body 'std_logic_misc'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_textio.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/std_logic_textio.vhdl(38): analyzing package 'std_logic_textio'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/ieee_bit_context.vhd' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/ieee_std_context.vhd' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real.vhdl(45): analyzing package 'math_real'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_real-body.vhdl(45): analyzing package body 'math_real'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex.vhdl(46): analyzing package 'math_complex'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/math_complex-body.vhdl(47): analyzing package body 'math_complex'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_float_types.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_float_types.vhdl(37): analyzing package 'fixed_float_types'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg.vhdl(43): analyzing package 'fixed_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_generic_pkg-body.vhdl(40): analyzing package body 'fixed_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg.vhdl' into library 'ieee'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg.vhdl(43): analyzing package 'float_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg-body.vhdl' into library 'ieee'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_generic_pkg-body.vhdl(37): analyzing package body 'float_generic_pkg'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/fixed_pkg.vhdl' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/ieee/float_pkg.vhdl' into library 'ieee'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/arithmetic/mgc_arit_2008.vhd' into library 'arithmetic'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/arithmetic/mgc_arit_2008.vhd(22): analyzing package 'std_logic_arith'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/arithmetic/mgc_arit_2008.vhd(274): analyzing package body 'std_logic_arith'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/qsim_logic/mgc_qsim.vhd' into library 'qsim_logic'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/qsim_logic/mgc_qsim.vhd(18): analyzing package 'qsim_logic'
+[INFO (VHDL-1013)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/vhdl_2008/qsim_logic/mgc_qsim.vhd(753): analyzing package body 'qsim_logic'
+[-- (VHDL-1481)] Analyzing VHDL file '/home/tools/jasper_2019.06p001/lib/vhdl/packages/jasper_package/jasper_package.vhd' into library 'jasper_package'
+[INFO (VHDL-1014)] /home/tools/jasper_2019.06p001/lib/vhdl/packages/jasper_package/jasper_package.vhd(8): analyzing package 'jasper_package'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/generic_types.vhd'
+[INFO (VHDL-1014)] ../../generic_components/rtl/generic_types.vhd(11): analyzing package 'generic_types'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/generic_functions.vhd'
+[INFO (VHDL-1014)] ../../generic_components/rtl/generic_functions.vhd(10): analyzing package 'generic_functions'
+[INFO (VHDL-1013)] ../../generic_components/rtl/generic_functions.vhd(26): analyzing package body 'generic_functions'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/generic_components.vhd'
+[INFO (VHDL-1014)] ../../generic_components/rtl/generic_components.vhd(13): analyzing package 'generic_components'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components.vhd'
+[INFO (VHDL-1014)] ../rtl/block_interleaver_components.vhd(6): analyzing package 'block_interleaver_components'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver.vhd(7): analyzing entity 'block_interleaver'
+[INFO (VHDL-1010)] ../rtl/block_interleaver.vhd(31): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/rectangular_interleaver.vhd'
+[INFO (VHDL-1012)] ../rtl/rectangular_interleaver.vhd(8): analyzing entity 'rectangular_interleaver'
+[INFO (VHDL-1010)] ../rtl/rectangular_interleaver.vhd(31): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/interleaver_controller.vhd'
+[INFO (VHDL-1012)] ../rtl/interleaver_controller.vhd(5): analyzing entity 'interleaver_controller'
+[INFO (VHDL-1010)] ../rtl/interleaver_controller.vhd(28): analyzing architecture 'behaviour_ict'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/interleaver_data_path.vhd'
+[INFO (VHDL-1012)] ../rtl/interleaver_data_path.vhd(19): analyzing entity 'interleaver_data_path'
+[INFO (VHDL-1010)] ../rtl/interleaver_data_path.vhd(39): analyzing architecture 'structure_idp'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/flag_signals_generator.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/flag_signals_generator.vhd(14): analyzing entity 'flag_signals_generator'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/flag_signals_generator.vhd(34): analyzing architecture 'structure_fsg1'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/m2D_index_counter.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/m2D_index_counter.vhd(12): analyzing entity 'm2d_index_counter'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/m2D_index_counter.vhd(29): analyzing architecture 'dataflow'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/wr_rd_status_selector.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(11): analyzing entity 'wr_rd_status_selector'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(23): analyzing architecture 'structure_wrss'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/rectangular_deinterleaver.vhd'
+[INFO (VHDL-1012)] ../rtl/rectangular_deinterleaver.vhd(9): analyzing entity 'rectangular_deinterleaver'
+[INFO (VHDL-1010)] ../rtl/rectangular_deinterleaver.vhd(32): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/deinterleaver_data_path.vhd'
+[INFO (VHDL-1012)] ../rtl/deinterleaver_data_path.vhd(20): analyzing entity 'deinterleaver_data_path'
+[INFO (VHDL-1010)] ../rtl/deinterleaver_data_path.vhd(56): analyzing architecture 'structure_ddp'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/simplified_m2D_index_counter.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/simplified_m2D_index_counter.vhd(15): analyzing entity 'simplified_m2d_index_counter'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/simplified_m2D_index_counter.vhd(42): analyzing architecture 'dataflow'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/m2D_index_counter_core.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/m2D_index_counter_core.vhd(11): analyzing entity 'm2d_index_counter_core'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/m2D_index_counter_core.vhd(26): analyzing architecture 'dataflow'
+[-- (VHDL-1481)] Analyzing VHDL file '../rtl/block_interleaver_components/wr_rd_status_selector.vhd'
+[INFO (VHDL-1012)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(11): analyzing entity 'wr_rd_status_selector'
+[INFO (VHDL-1010)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(23): analyzing architecture 'structure_wrss'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/adder.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/adder.vhd(5): analyzing entity 'adder'
+[INFO (VHDL-1010)] ../../generic_components/rtl/adder.vhd(15): analyzing architecture 'bh_add'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/single_port_2D_ram.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/single_port_2D_ram.vhd(7): analyzing entity 'single_port_2d_ram'
+[INFO (VHDL-1010)] ../../generic_components/rtl/single_port_2D_ram.vhd(23): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/single_port_linear_ram.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/single_port_linear_ram.vhd(7): analyzing entity 'single_port_linear_ram'
+[INFO (VHDL-1010)] ../../generic_components/rtl/single_port_linear_ram.vhd(21): analyzing architecture 'behavioral'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/half_subtractor_unit.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/half_subtractor_unit.vhd(4): analyzing entity 'half_subtractor_unit'
+[INFO (VHDL-1010)] ../../generic_components/rtl/half_subtractor_unit.vhd(15): analyzing architecture 'dataflow_hsu'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/decrementer.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/decrementer.vhd(4): analyzing entity 'decrementer'
+[INFO (VHDL-1010)] ../../generic_components/rtl/decrementer.vhd(15): analyzing architecture 'dataflow_dec'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/half_adder_unit.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/half_adder_unit.vhd(4): analyzing entity 'half_adder_unit'
+[INFO (VHDL-1010)] ../../generic_components/rtl/half_adder_unit.vhd(15): analyzing architecture 'dataflow_hau'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/incrementer.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/incrementer.vhd(4): analyzing entity 'incrementer'
+[INFO (VHDL-1010)] ../../generic_components/rtl/incrementer.vhd(15): analyzing architecture 'dataflow_inc'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/up_down_counter.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/up_down_counter.vhd(12): analyzing entity 'up_down_counter'
+[INFO (VHDL-1010)] ../../generic_components/rtl/up_down_counter.vhd(22): analyzing architecture 'arch'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/sync_ld_dff.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/sync_ld_dff.vhd(5): analyzing entity 'sync_ld_dff'
+[INFO (VHDL-1010)] ../../generic_components/rtl/sync_ld_dff.vhd(16): analyzing architecture 'bh_reg'
+[-- (VHDL-1481)] Analyzing VHDL file '../../generic_components/rtl/comparator.vhd'
+[INFO (VHDL-1012)] ../../generic_components/rtl/comparator.vhd(5): analyzing entity 'comparator'
+[INFO (VHDL-1010)] ../../generic_components/rtl/comparator.vhd(16): analyzing architecture 'bh_comp'
+[-- (VHDL-1481)] Analyzing VHDL file 'rtl/block_interleaver_func_verification_model.vhd'
+[INFO (VHDL-1012)] rtl/block_interleaver_func_verification_model.vhd(9): analyzing entity 'block_interleaver_func_verification_model'
+[INFO (VHDL-1010)] rtl/block_interleaver_func_verification_model.vhd(37): analyzing architecture 'behavioral'
+INFO (ISW003): Top module name is "block_interleaver_func_verification_model".
+[INFO (VHDL-1067)] rtl/block_interleaver_func_verification_model.vhd(9): executing 'block_interleaver_func_verification_model(number_of_elements=70,number_of_lines=15,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver.vhd(7): executing 'block_interleaver(number_of_elements=70,number_of_lines=15,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/rectangular_interleaver.vhd(8): executing 'rectangular_interleaver(number_of_elements=70,number_of_lines=15,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/interleaver_controller.vhd(5): executing 'interleaver_controller(behaviour_ict)'
+[INFO (VHDL-9046)] ../rtl/interleaver_controller.vhd(31): creating type property for signal 'w_current_state'
+[INFO (VHDL-9046)] ../rtl/interleaver_controller.vhd(31): creating type property for signal 'w_next_state'
+[INFO (VHDL-1172)] ../rtl/interleaver_controller.vhd(183): others clause is never selected
+[INFO (VHDL-1067)] ../rtl/interleaver_data_path.vhd(19): executing 'interleaver_data_path(number_of_elements=70,number_of_lines=15,word_length=4)(structure_idp)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/comparator.vhd(5): executing 'comparator(word_length=4)(bh_comp)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/decrementer.vhd(4): executing 'decrementer(word_length=2)(dataflow_dec)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/half_subtractor_unit.vhd(4): executing 'half_subtractor_unit(dataflow_hsu)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/flag_signals_generator.vhd(14): executing 'flag_signals_generator(number_of_elements=70,word_length=7)(structure_fsg1)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/comparator.vhd(5): executing 'comparator(word_length=7)(bh_comp)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/sync_ld_dff.vhd(5): executing 'sync_ld_dff(word_length=7)(bh_reg)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/up_down_counter.vhd(12): executing 'up_down_counter(word_length=7)(arch)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/incrementer.vhd(4): executing 'incrementer(word_length=7)(dataflow_inc)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/half_adder_unit.vhd(4): executing 'half_adder_unit(dataflow_hau)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/decrementer.vhd(4): executing 'decrementer(word_length=7)(dataflow_dec)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/sync_ld_dff.vhd(5): executing 'sync_ld_dff(word_length=4)(bh_reg)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/sync_ld_dff.vhd(5): executing 'sync_ld_dff(word_length=2)(bh_reg)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/m2D_index_counter.vhd(12): executing 'm2D_index_counter(number_of_elements=70,number_of_lines=15)(dataflow)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/comparator.vhd(5): executing 'comparator(word_length=2)(bh_comp)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/m2D_index_counter_core.vhd(11): executing 'm2D_index_counter_core(dataflow)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/incrementer.vhd(4): executing 'incrementer(word_length=4)(dataflow_inc)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/single_port_2D_ram.vhd(7): executing 'single_port_2D_ram(number_of_elements=70,number_of_lines=15,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/wr_rd_status_selector.vhd(11): executing 'wr_rd_status_selector(structure_wrss)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/sync_ld_dff.vhd(5): executing 'sync_ld_dff(word_length=1)(bh_reg)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver.vhd(7): executing 'block_interleaver(number_of_elements=70,number_of_lines=15,word_length=4,mode=true)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/rectangular_deinterleaver.vhd(9): executing 'rectangular_deinterleaver(number_of_elements=70,number_of_lines=15,word_length=4)(behavioral)'
+[INFO (VHDL-1067)] ../rtl/deinterleaver_data_path.vhd(20): executing 'deinterleaver_data_path(number_of_elements=70,number_of_lines=15,word_length=4)(structure_ddp)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/adder.vhd(5): executing 'adder(word_length=7)(bh_add)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/incrementer.vhd(4): executing 'incrementer(word_length=3)(dataflow_inc)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/incrementer.vhd(4): executing 'incrementer(word_length=2)(dataflow_inc)'
+[INFO (VHDL-1067)] ../rtl/block_interleaver_components/simplified_m2D_index_counter.vhd(15): executing 'simplified_m2D_index_counter(number_of_elements=70,number_of_lines=15)(dataflow)'
+[INFO (VHDL-1067)] ../../generic_components/rtl/single_port_linear_ram.vhd(7): executing 'single_port_linear_ram(number_of_elements=70)(behavioral)'
+INFO (INL003): Clearing all state information (assumes, stopats, and so forth).
+INFO (IPM005): The name "functional_req::assume:0" is assigned to assumption "i_start_cw".
+INFO (IPM005): The name "functional_req::assume:1" is assigned to assumption "i_start_cw |=> not i_start_cw".
+INFO (IPM005): The name "functional_req::assume:2" is assigned to assumption "not i_start_cw |=> not i_start_cw".
+INFO (IPM005): The name "functional_req::assume:3" is assigned to assumption "i_start_cw |-> not i_end_cw and i_valid [*1:69] ##1 i_end_cw and i_valid".
+INFO (IPM005): The name "functional_req::assume:4" is assigned to assumption "i_end_cw |=> not i_valid".
+INFO (IPM005): The name "functional_req::assume:5" is assigned to assumption "not i_valid |=> not i_valid".
+INFO (IPM005): The name "functional_req::assume:6" is assigned to assumption "i_consume_int".
+INFO (IPM005): The name "functional_req::assume:7" is assigned to assumption "i_consume_deint".
+INFO (IPM004): The name "property:0" is assigned to assertion "o_valid and o_cnt = 1 |-> o_saved_data = o_data".
+WARNING (WOBS004): Non-sequence cover property can have non-LRM-compliant semantics. For LRM semantics, use the "elaborate" flag "-lrm_cover_property".
+INFO (IPM033): The name "cover:0" is assigned to cover "o_valid and o_cnt = 1 |-> o_saved_data = o_data".
+INFO (IPM031): Clearing proof results of all properties.
+INFO (IRS006): Current reset condition is "rst".
+INFO (IPF036): Starting proof on task: "functional_req", 2 properties to prove with 0 already proven/unreachable
+INFO (IRS029): Starting reset analysis: phase 1 of 4.
+INFO (IRS030): Running reset analysis: phase 2 of 4.
+INFO (IRS031): Running reset analysis: phase 3 of 4.
+INFO (IRS020): Starting the reset analysis simulation with a limit of 100 iterations (phase 4 of 4).
+INFO (IRS024): Reset iterations 0 to 4 analyzed.
+INFO (IRS018): Reset analysis simulation executed for 3 iterations. Assigned values for 83 of 611 design flops, 0 of 0 design latches, 75 of 75 internal elements.
+INFO (IRS039): Reset analysis complete.
+INFO (IPF031): Settings used for proof thread 0:
+    orchestration                 = off (auto)
+    time_limit                    = 288000s
+    per_property_time_limit       = 1s * 10 ^ scan
+    max_trace_length              = 142
+    engine_mode                   = Tri Ht 
+    proofgrid_per_engine_max_jobs = 1
+    max engine jobs               = Tri Ht, total 2
+    proofgrid_mode                = local
+    proofgrid_restarts            = 10
+0: Using multistage preprocessing
+0: Starting reduce
+0: Finished reduce in 0.008s
+0.0.PRE: Performing Proof Simplification...
+0.0.Tri: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Tri: Proof Simplification Iteration 1	[0.00 s]
+0.0.Tri: Proof Simplification Iteration 2	[0.02 s]
+0.0.Tri: Proof Simplification Iteration 3	[0.05 s]
+0.0.Tri: Proof Simplification Iteration 4	[0.09 s]
+0.0.PRE: Proof Simplification completed in 0,02 s
+0: About to start ProofGrid in its own thread with a limit of 10000 pending notifications and a limit of 10 traces.
+0: =============================== ProofGrid start ===============================
+0: ProofGrid usable level: 2
+0: ProofGrid is starting event handling
+0.0.Tri: Proofgrid shell started at 5683@optmaS1(local) jg_23510_optmaS1_3
+0.0.Tri: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Tri: Next scan (0) will use per property time limit: 1s * 10 ^ 0 = 1s
+0.0.Tri: Starting proof for property "property:0"	[0,00 s].
+0.0.Tri: Trace Attempt  1	[0,00 s]
+0.0.Ht: Proofgrid shell started at 5690@optmaS1(local) jg_23510_optmaS1_3
+0: Running jobs with 9 threads on optmaS1 with 8 cores.
+0.0.Ht: clocks: 1, declared: 1, disabling: 0, posedge: 1, negedge: 0, noedge: 0, bothedge: 0
+0.0.Ht: Trace Attempt  1	[0,12 s]
+0.0.Ht: Trace Attempt  2	[0,13 s]
+0.0.Ht: Trace Attempt  3	[0,14 s]
+0.0.Ht: Trace Attempt  4	[0,19 s]
+0.0.Ht: Trace Attempt  5	[0,21 s]
+0.0.Ht: Trace Attempt  7	[0,24 s]
+0.0.Ht: A trace with 7 cycles was found. [0,26 s]
+INFO (IPF047): 0.0.Ht: The cover property "cover:0" was covered in 7 cycles in 0.32 s.
+0.0.Tri:    0.02" ---- Launching main thread ----
+0.0.Ht: Trace Attempt  8	[0,31 s]
+0: ProofGrid usable level: 1
+0.0.Tri: Per property time limit expired (1,00 s) [1,05 s]
+0.0.Tri: Stopped processing property "property:0"	[1,05 s].
+0.0.Tri: Last scan. Per property time limit: 0s
+0.0.Tri: Starting proof for property "property:0"	[0,00 s].
+0.0.Tri: Trace Attempt  1	[0,00 s]
+0.0.Tri:    0.64" ---- Launching abstraction thread ----
+0.0.Tri:    0.75" ---- Launching multi-phase simplification thread ----
+0.0.Tri:    0.79" ---- Launching main thread ----
+0.0.Tri:    1.26" ---- Launching abstraction thread ----
+0.0.Tri:    1.42" ---- Launching multi-phase simplification thread ----
+0.0.Tri: Trace Attempt  2	[1,28 s]
+0.0.Tri: Trace Attempt  3	[1,31 s]
+0.0.Tri: Trace Attempt  4	[1,35 s]
+0.0.Tri: Trace Attempt  5	[1,78 s]
+0.0.Ht: Trace Attempt 23	[4,55 s]
+0.0.Tri:    5.70" Simplification phase 1 complete
+0.0.Tri: Trace Attempt 24	[5,93 s]
+0.0.Tri:    7.81" Simplification phase 2 complete
+0.0.Ht: Trace Attempt 28	[9,69 s]
+0.0.Tri: Trace Attempt 31	[11,08 s]
+0.0.Ht: Trace Attempt 33	[15,25 s]
+0.0.Tri: Trace Attempt 35	[15,92 s]
+0.0.Tri: Trace Attempt 38	[19,95 s]
+0.0.Ht: Trace Attempt 38	[22,33 s]
+0.0.Tri: Trace Attempt 41	[24,62 s]
+0.0.Tri:   26.38" Simplification phase 3 complete
+  26.38" ---- Completed simplification thread ----
+  26.38" ---- Restarting main thread on simplified netlist ----
+0.0.Tri:   27.08" ---- Restarting abstraction thread on simplified netlist ----
+0.0.Ht: Trace Attempt 41	[27,36 s]
+0.0.Ht: Trace Attempt 44	[34,49 s]
+0.0.Ht: Trace Attempt 46	[40,80 s]
+0.0.Ht: Trace Attempt 48	[46,91 s]
+0.0.Tri: Trace Attempt 43	[50,47 s]
+0.0.Ht: Trace Attempt 49	[52,42 s]
+0.0.Tri: Trace Attempt 45	[55,64 s]
+0.0.Ht: Trace Attempt 50	[57,50 s]
+0.0.Tri: Trace Attempt 48	[60,31 s]
+0.0.Tri: Trace Attempt 51	[66,68 s]
+0.0.Ht: Trace Attempt 52	[67,56 s]
+0.0.Ht: Trace Attempt 53	[72,94 s]
+0.0.Tri: Trace Attempt 53	[73,85 s]
+0.0.Ht: Trace Attempt 55	[80,19 s]
+0.0.Tri: Trace Attempt 55	[81,13 s]
+0.0.Tri: Trace Attempt 57	[87,95 s]
+0.0.Ht: Trace Attempt 57	[91,64 s]
+0.0.Tri: Trace Attempt 59	[96,56 s]
+0.0.Ht: Trace Attempt 58	[98,19 s]
+0.0.Tri: Trace Attempt 61	[103,14 s]
+0.0.Ht: Trace Attempt 60	[104,24 s]
+0.0.Tri: Trace Attempt 63	[110,50 s]
+0.0.Ht: Trace Attempt 62	[112,36 s]
+0.0.Tri: Trace Attempt 64	[115,95 s]
+0.0.Tri: Trace Attempt 65	[120,57 s]
+0.0.Ht: Trace Attempt 64	[121,30 s]
+0.0.Tri: Trace Attempt 66	[125,17 s]
+0.0.Tri: Trace Attempt 67	[130,91 s]
+0.0.Ht: Trace Attempt 66	[135,14 s]
+0.0.Tri: Trace Attempt 68	[137,65 s]
+0.0.Tri: Trace Attempt 69	[142,06 s]
+0.0.Ht: Trace Attempt 68	[146,81 s]
+0.0.Tri: Trace Attempt 70	[146,59 s]
+0.0.Tri: Trace Attempt 71	[152,59 s]
+0.0.Ht: Trace Attempt 70	[156,67 s]
+0.0.Tri: Trace Attempt 72	[157,44 s]
+0.0.Tri: Trace Attempt 73	[162,49 s]
+0.0.Ht: Trace Attempt 72	[170,17 s]
+0.0.Tri: Trace Attempt 75	[171,96 s]
+0.0.Tri: Trace Attempt 76	[178,77 s]
+0.0.Tri: Trace Attempt 77	[186,75 s]
+0.0.Ht: Trace Attempt 75	[187,96 s]
+0.0.Tri: Trace Attempt 78	[193,97 s]
+0.0.Ht: Trace Attempt 78	[203,30 s]
+0.0.Tri: Trace Attempt 79	[202,64 s]
+0.0.Tri: Trace Attempt 80	[213,79 s]
+0.0.Ht: Trace Attempt 79	[217,87 s]
+0.0.Tri: Trace Attempt 81	[221,48 s]
+0.0.Tri: Trace Attempt 82	[227,25 s]
+0.0.Tri: Trace Attempt 83	[231,88 s]
+0.0.Ht: Trace Attempt 81	[234,59 s]
+0.0.Tri: Trace Attempt 84	[239,46 s]
+0.0.Tri: Trace Attempt 85	[252,37 s]
+0.0.Ht: Trace Attempt 84	[255,22 s]
+0.0.Tri: Trace Attempt 86	[262,24 s]
+0.0.Tri: Trace Attempt 87	[268,88 s]
+0.0.Ht: Trace Attempt 86	[276,56 s]
+0.0.Tri: Trace Attempt 88	[279,09 s]
+0.0.Tri: Trace Attempt 89	[290,73 s]
+0.0.Tri: Trace Attempt 90	[303,56 s]
+0.0.Ht: Trace Attempt 88	[306,23 s]
+0.0.Tri: Trace Attempt 91	[313,75 s]
+0.0.Tri: Trace Attempt 92	[324,71 s]
+0.0.Ht: Trace Attempt 91	[328,69 s]
+0.0.Tri: Trace Attempt 93	[337,40 s]
+0.0.Tri: Trace Attempt 94	[345,51 s]
+0.0.Ht: Trace Attempt 93	[348,27 s]
+0.0.Tri: Trace Attempt 95	[354,64 s]
+0.0.Tri: Trace Attempt 96	[365,69 s]
+0.0.Ht: Trace Attempt 95	[375,42 s]
+0.0.Tri: Trace Attempt 97	[375,01 s]
+0.0.Tri: Trace Attempt 98	[383,68 s]
+0.0.Tri: Trace Attempt 99	[394,58 s]
+0.0.Ht: Trace Attempt 97	[402,47 s]
+0.0.Tri: Trace Attempt 100	[408,62 s]
+0.0.Tri: Trace Attempt 101	[421,10 s]
+0.0.Ht: Trace Attempt 100	[433,80 s]
+0.0.Tri: Trace Attempt 102	[436,51 s]
+0.0.Tri: Trace Attempt 103	[450,72 s]
+0.0.Ht: Trace Attempt 102	[460,78 s]
+0.0.Tri: Trace Attempt 104	[460,46 s]
+0.0.Tri: Trace Attempt 105	[472,18 s]
+0.0.Tri: Trace Attempt 106	[487,72 s]
+0.0.Ht: Trace Attempt 104	[490,33 s]
+0.0.Tri: Trace Attempt 107	[501,84 s]
+0.0.Tri: Trace Attempt 108	[518,78 s]
+0.0.Ht: Trace Attempt 107	[523,41 s]
+0.0.Tri: Trace Attempt 109	[530,51 s]
+0.0.Ht: Trace Attempt 109	[540,52 s]
+0.0.Tri: Trace Attempt 110	[545,91 s]
+0.0.Tri: Trace Attempt 111	[559,03 s]
+0.0.Ht: Trace Attempt 110	[563,63 s]
+0.0.Tri: Trace Attempt 112	[579,10 s]
+0.0.Ht: Trace Attempt 112	[589,25 s]
+0.0.Tri: Trace Attempt 113	[601,20 s]
+0.0.Ht: Trace Attempt 113	[604,47 s]
+0.0.Tri: Trace Attempt 114	[615,43 s]
+0.0.Ht: Trace Attempt 114	[627,00 s]
+0.0.Tri: Trace Attempt 115	[631,92 s]
+0.0.Ht: Trace Attempt 115	[644,74 s]
+0.0.Tri: Trace Attempt 116	[653,87 s]
+0.0.Ht: Trace Attempt 116	[660,59 s]
+0.0.Ht: Trace Attempt 117	[673,38 s]
+0.0.Tri: Trace Attempt 117	[680,74 s]
+0.0.Ht: Trace Attempt 118	[698,87 s]
+0.0.Tri: Trace Attempt 118	[707,91 s]
+0.0.Ht: Trace Attempt 119	[717,44 s]
+0.0.Tri: Trace Attempt 119	[725,12 s]
+0.0.Tri: Trace Attempt 120	[742,92 s]
+0.0.Ht: Trace Attempt 120	[743,94 s]
+0.0.Ht: Trace Attempt 121	[763,61 s]
+0.0.Tri: Trace Attempt 121	[767,20 s]
+0.0.Ht: Trace Attempt 122	[788,70 s]
+0.0.Tri: Trace Attempt 122	[792,07 s]
+0.0.Tri: Trace Attempt 123	[812,14 s]
+0.0.Ht: Trace Attempt 123	[813,93 s]
+0.0.Tri: Trace Attempt 124	[832,67 s]
+0.0.Ht: Trace Attempt 124	[838,87 s]
+0.0.Tri: Trace Attempt 125	[853,55 s]
+0.0.Tri: Requesting engine job to stop
+0.0.Ht: Requesting engine job to terminate
+INFO (IPF144): 0: Initiating shutdown of proof [863,40]
+0.0.Tri: A trace with 125 cycles was found. [862,15 s]
+INFO (IPF055): 0.0.Tri: A counterexample (cex) with 125 cycles was found for the property "property:0" in 862.25 s.
+0.0.Tri: Stopped processing property "property:0"	[862,27 s].
+0.0.Tri: All properties determined. [0,15 s]
+0.0.Ht: Interrupted (multi)
+0.0.Tri: Exited with Success (@ 863,46 s)
+0: ProofGrid usable level: 0
+0.0.Ht: All properties determined. [77,43 s]
+0.0.Ht: Exited with Success (@ 863,53 s)
+0: --------------------------------------------------------------
+ProofGrid Summary
+--------------------------------------------------------------
+     engines started                               :     2
+     engine jobs started                           :     2
+     jobs where 1 minute load exceeded core count  :     2
+     jobs where 5 minute load exceeded core count  :     2
+     jobs where 15 minute load exceeded core count :     2
+
+    Average time in state (seconds)
+    ------------------------------------------------------
+    Engine  Pending     Running        Dead    Utilization
+    ------------------------------------------------------
+    Tri        0.22      863.40        0.00       99.97 %
+     Ht        0.67      862.91        0.00       99.92 %
+    all        0.45      863.15        0.00       99.95 %
+
+    Data read    : 154.17 kiB
+    Data written : 2.28 kiB
+
+0: All pending notifications were processed.
+INFO (IPF059): Completed proof on task: "functional_req" for proof thread 0
+
+==============================================================
+SUMMARY
+==============================================================
+           Properties Considered              : 2
+                 assertions                   : 1
+                  - proven                    : 0 (0%)
+                  - bounded_proven (user)     : 0 (0%)
+                  - bounded_proven (auto)     : 0 (0%)
+                  - marked_proven             : 0 (0%)
+                  - cex                       : 1 (100%)
+                  - ar_cex                    : 0 (0%)
+                  - undetermined              : 0 (0%)
+                  - unknown                   : 0 (0%)
+                  - error                     : 0 (0%)
+                 covers                       : 1
+                  - unreachable               : 0 (0%)
+                  - bounded_unreachable (user): 0 (0%)
+                  - covered                   : 1 (100%)
+                  - ar_covered                : 0 (0%)
+                  - undetermined              : 0 (0%)
+                  - unknown                   : 0 (0%)
+                  - error                     : 0 (0%)
+Evaluating 'get_property_list -include {status {cex unreachable}} -task func'. expected: ''
+0,0 seconds
+FAILED
+expected
+    
+but got
+    functional_req::property:0
+instead
+ERROR: problem encountered at line 181 in file t.tcl
+
+INFO (IPL005): Received request to exit from the console.
+INFO: Waiting for proof threads to stop...
+INFO: Proof threads stopped.

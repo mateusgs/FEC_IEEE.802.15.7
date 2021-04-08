@@ -1,0 +1,28 @@
+proc check_end {} {
+	set r_state_values [visualize -get_value FEC_CHECKER.FSM_CHECKER.r_state -reset_window]
+	set result [lsearch -exact $r_state_values "END_FLOW"]
+	if {$result == -1} {
+		puts "ERROR: END_FLOW was not reached"
+		stop!
+	} else {
+		puts "INFO: END_FLOW reached"
+	}
+
+}
+
+proc check_values {} {
+	set dec_valid [visualize -get_value w_o_valid_dec -reset_window]
+	set dec_valid_ids [lsearch -exact $dec_valid "1'b1"]
+	set dec_values [visualize -get_value w_o_data_dec -reset_window]
+	set enc_values [visualize -get_value FEC_CHECKER.r_rom_enc_output -reset_window]
+	set result 1
+	foreach id $dec_valid_ids {
+		set dec [lindex $dec_values $id]
+		set enc [lindex $enc_values $id]
+		if {$dec != $enc} {
+			puts "ERROR: Wrong values ($dec (dec) != $enc (enc)) - cycle $id"
+			stop!
+		}
+	}
+	puts "INFO: dec == enc!"
+}
